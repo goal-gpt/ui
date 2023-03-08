@@ -1,14 +1,13 @@
 import "./App.scss";
 
 import React from "react";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+
+import { routesConfig } from "../routes";
 
 function App() {
-  return (
-    <>
-      <h1>This is who you are</h1>
-      <h2>You get to see some good stuff here</h2>
-    </>
-  );
+  const router = createBrowserRouter(routesConfig);
+  return <RouterProvider router={router} />;
 }
 
 export default App;

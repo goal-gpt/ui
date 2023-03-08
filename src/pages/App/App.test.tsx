@@ -1,10 +1,46 @@
-import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import React from "react";
 
+import {
+  createMemoryRouter,
+  render,
+  RouterProvider,
+  screen,
+} from "../../utils/testHelpers";
+import { routesConfig } from "../routes";
 import App from "./App";
 
-test("renders learn react link", () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+// const getById = queryByAttribute.bind(null, "id");
+
+test("routes correctly and renders key pages", async () => {
+  const user = userEvent.setup();
+
+  const { getByText } = render(<App />);
+
+  // verify page content for default route
+  const appElement = getByText(/eras/i);
+  expect(appElement).toBeInTheDocument();
+
+  // verify page content for /profile route
+  await user.click(getByText(/Profile/));
+  const profileLink = getByText(/Your lovely profile is here/i);
+  expect(profileLink).toBeInTheDocument();
+
+  // verify page content for /help route
+  await user.click(getByText(/Help/));
+  const helpLink = getByText(/Get your help here/i);
+  expect(helpLink).toBeInTheDocument();
+});
+
+test("renders error page when route is not found", () => {
+  const badRoute = "/not-a-route";
+  const router = createMemoryRouter(routesConfig, {
+    initialEntries: [badRoute],
+  });
+
+  render(<RouterProvider router={router} />);
+
+  // verify page content for default route
+  const content = screen.getByText(/Sorry, an unexpected error has occurred/i);
+  expect(content).toBeInTheDocument();
 });

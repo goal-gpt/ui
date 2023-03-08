@@ -8,13 +8,13 @@ function Error() {
     <div id="error-page">
       <h1>Oops!</h1>
       <p>Sorry, an unexpected error has occurred.</p>
-      <p>
+      <div>
         {(isRouteErrorResponse(error) && (
           <p>
             {error.status} {error.statusText}
           </p>
         )) || <p>Error message unknown!</p>}
-      </p>
+      </div>
     </div>
   );
 }
