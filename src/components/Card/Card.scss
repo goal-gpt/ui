@@ -1,0 +1,21 @@
+.card-container {
+  width: 90vw;
+  max-width: 260px;
+  height: 300px;
+}
+
+.swipe {
+  position: absolute;
+}
+
+.card-item {
+  position: relative;
+  background-color: #fff;
+  width: 80vw;
+  max-width: 260px;
+  height: 300px;
+  box-shadow: 0px 0px 60px 0px rgba(0, 0, 0, 0.3);
+  border-radius: 20px;
+  background-size: cover;
+  background-position: center;
+}

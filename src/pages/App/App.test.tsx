@@ -15,11 +15,11 @@ import App from "./App";
 test("routes correctly and renders key pages", async () => {
   const user = userEvent.setup();
 
-  const { getByText } = render(<App />);
+  const { getByRole, getByText } = render(<App />);
 
   // verify page content for default route
-  const appElement = getByText(/eras/i);
-  expect(appElement).toBeInTheDocument();
+  const mainElement = getByRole("main");
+  expect(mainElement).toBeInTheDocument();
 
   // verify page content for /profile route
   await user.click(getByText(/Profile/));
