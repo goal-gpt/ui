@@ -3,6 +3,7 @@ import "./Card.scss";
 import React, { useState } from "react";
 import { Container } from "react-bootstrap";
 
+import { logger } from "../../utils/logger";
 import { CardItem, CardItemData } from "./CardItem";
 
 const cards: CardItemData[] = [
@@ -30,12 +31,12 @@ export function CardList() {
   const [lastDirection, setLastDirection] = useState("");
 
   const swiped = (direction: string, nameToDelete: string) => {
-    console.log(`removing: ${nameToDelete}`);
+    logger.info(`removing: ${nameToDelete}`);
     setLastDirection(direction);
   };
 
   const outOfFrame = (title: string) => {
-    console.log(`${title} left the screen!`);
+    logger.info(`${title} left the screen!`);
   };
 
   return (
