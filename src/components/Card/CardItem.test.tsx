@@ -2,17 +2,20 @@
 import { render } from "@testing-library/react";
 import React from "react";
 
-import { CardItem } from "./CardItem";
+import { CardItem, CardItemData } from "./CardItem";
 
 describe("CardItem", () => {
   const handleSwipe = jest.fn();
   const handleLeftScreen = jest.fn();
 
-  const data = {
+  const data: CardItemData = {
     index: 0,
-    src: "https://example.com/image.jpg",
+    imgSrc: "https://example.com/image.jpg",
     title: "Example Card",
     text: "This is an example card.",
+    categories: ["category0", "category1"],
+    length: 100,
+    points: 10,
   };
   const props = {
     data,

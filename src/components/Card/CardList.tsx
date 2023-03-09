@@ -3,32 +3,13 @@ import "./Card.scss";
 import React, { useState } from "react";
 import { Container } from "react-bootstrap";
 
+import { mockCards } from "../../services/mockCardData";
 import { logger } from "../../utils/logger";
-import { CardItem, CardItemData } from "./CardItem";
-
-const cards: CardItemData[] = [
-  {
-    index: 0,
-    src: "https://picsum.photos/200",
-    title: "Card 1",
-    text: "This is card 1",
-  },
-  {
-    index: 1,
-    src: "https://picsum.photos/200",
-    title: "Card 2",
-    text: "This is card 2",
-  },
-  {
-    index: 2,
-    src: "https://picsum.photos/200",
-    title: "Card 3",
-    text: "This is card 3",
-  },
-];
+import { CardItem } from "./CardItem";
 
 export function CardList() {
   const [lastDirection, setLastDirection] = useState("");
+  const cards = mockCards;
 
   const swiped = (direction: string, nameToDelete: string) => {
     logger.info(`removing: ${nameToDelete}`);
@@ -39,6 +20,8 @@ export function CardList() {
     logger.info(`${title} left the screen!`);
   };
 
+  // useEffect(() => {
+
   return (
     <Container
       className="card-container d-flex flex-column align-items-center justify-content-center"
@@ -46,7 +29,6 @@ export function CardList() {
     >
       {cards.map((card) => (
         <CardItem
-          // ref={childRefs[card.index]}
           key={card.index}
           data={card}
           handleSwipe={(dir) => swiped(dir, card.title)}
