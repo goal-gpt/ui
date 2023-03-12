@@ -33,7 +33,7 @@ test("routes correctly and renders key pages", async () => {
 });
 
 test("renders error page when route is not found", () => {
-  const badRoute = "/not-a-route";
+  const badRoute = "/help/not-a-route";
   const router = createMemoryRouter(routesConfig, {
     initialEntries: [badRoute],
   });

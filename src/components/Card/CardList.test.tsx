@@ -10,11 +10,22 @@ describe("CardList component", () => {
   //   { index: 2, title: "Card 3", description: "This is card 3", src: "src3" },
   // ];
 
-  it("renders a list of cards", () => {
-    const { getByRole } = render(<CardList />);
+  it("renders a list of all cards if no category is supplied", () => {
+    const { getByRole } = render(<CardList category=""/>);
     const cardItems = getByRole("list");
     // TODO: this is flaky because it depends on how nested we put the CardItem components
     expect(cardItems.childNodes.length).toBe(3);
+  });
+
+  it("renders a list of cards with the matching category", () => {
+    const { getByRole } = render(<CardList category="category2"/>);
+    const cardItems = getByRole("list");
+    expect(cardItems.childNodes.length).toBe(2);
+  });
+
+  it("renders an error page when there is no matching category", () => {
+    expect(() => render(<CardList category="not-a-matching-category"/>))
+      .toThrow("Sorry, we do not have any content in that category. But please check back later. We are constantly adding new content!");
   });
 
   // it("calls the onSwipe function when a card is swiped", () => {
