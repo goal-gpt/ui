@@ -7,9 +7,9 @@ import { CardList } from "./CardList";
 jest.mock("react-router-dom", () => ({
   ...jest.requireActual("react-router-dom"),
   useParams: jest.fn(),
- }));
+}));
 
- describe("CardList component", () => {
+describe("CardList component", () => {
   // const mockCards = [
   //   { index: 0, title: "Card 1", description: "This is card 1", src: "src1" },
   //   { index: 1, title: "Card 2", description: "This is card 2", src: "src2" },
@@ -17,7 +17,7 @@ jest.mock("react-router-dom", () => ({
   // ];
 
   it("renders a list of all cards if no category is supplied", () => {
-    const params = {}
+    const params = {};
     jest.spyOn(ReactRouterDOM, "useParams").mockReturnValue(params);
 
     const { getByRole } = render(<CardList />);
@@ -39,16 +39,15 @@ jest.mock("react-router-dom", () => ({
     const params = { category: "not-a-matching-category" };
     jest.spyOn(ReactRouterDOM, "useParams").mockReturnValue(params);
 
-    expect(() => render(<CardList />))
-      .toThrow("Sorry, we do not have any content in that category. But please check back later. We are constantly adding new content!");
+    expect(() => render(<CardList />)).toThrow(
+      "Sorry, we do not have any content in that category. But please check back later. We are constantly adding new content!"
+    );
   });
 
   // it("calls the onSwipe function when a card is swiped", () => {
   //   const mockOnSwipe = jest.fn();
-  //   const { getByTestId } = render(
-  //     <CardList cards={mockCards} onSwipe={mockOnSwipe} />
-  //   );
-  //   const cardItem = getByTestId("card-item");
+  //   const { getByRole } = render(<CardList />);
+  //   const cardItem = getByRole("list");
   //   fireEvent.swipeStart(cardItem);
   //   fireEvent.swipeEnd(cardItem);
   //   expect(mockOnSwipe).toHaveBeenCalledWith("left");

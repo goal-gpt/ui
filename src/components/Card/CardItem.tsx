@@ -30,13 +30,13 @@ export function CardItem({
   return (
     <TinderCard
       // ref={ref}
-      className="swipe pressable"
+      className="swipe"
       key={index}
       onSwipe={handleSwipe}
       onCardLeftScreen={handleLeftScreen}
       swipeRequirementType="position"
     >
-      <Card role="listitem" className="card-item">
+      <Card role="listitem" className="card-item user-select-none">
         <Card.Img variant="top" src={imgSrc} draggable={false} />
         <Card.Body>
           <Card.Title>{title}</Card.Title>
