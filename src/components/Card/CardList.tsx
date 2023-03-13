@@ -2,6 +2,7 @@ import "./Card.scss";
 
 import React, { useState } from "react";
 import { Container } from "react-bootstrap";
+import { useParams } from "react-router-dom";
 
 import { mockCards } from "../../services/mockCardData";
 import { logger } from "../../utils/logger";
@@ -9,7 +10,20 @@ import { CardItem } from "./CardItem";
 
 export function CardList() {
   const [lastDirection, setLastDirection] = useState("");
-  const cards = mockCards;
+  const { category } = useParams();
+
+  // If no category is supplied, use all cards.
+  // Otherwise, use cards with a matching category
+  const cards =
+    category === undefined
+      ? mockCards
+      : mockCards.filter((mockCard) => mockCard.categories.includes(category));
+
+  // Throw error if there are no matching cards
+  if (cards.length === 0)
+    throw new Error(
+      "Sorry, we do not have any content in that category. But please check back later. We are constantly adding new content!"
+    );
 
   const swiped = (direction: string, nameToDelete: string) => {
     logger.info(`removing: ${nameToDelete}`);
@@ -19,8 +33,6 @@ export function CardList() {
   const outOfFrame = (title: string) => {
     logger.info(`${title} left the screen!`);
   };
-
-  // useEffect(() => {
 
   return (
     <Container

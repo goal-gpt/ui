@@ -1,22 +1,26 @@
 import React from "react";
-import { isRouteErrorResponse, useRouteError } from "react-router-dom";
+import { useRouteError } from "react-router-dom";
 
-function Error() {
-  const error = useRouteError();
+import { MainHeader } from "../../components/MainHeader";
+
+export function Error() {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const error: any = useRouteError();
 
   return (
     <div id="error-page">
+      <MainHeader />
       <h1>Oops!</h1>
-      <p>Sorry, an unexpected error has occurred.</p>
+      {(error && error.message && <p>{error.message}</p>) || (
+        <p>Sorry, an unexpected error has occurred.</p>
+      )}
       <div>
-        {(isRouteErrorResponse(error) && (
+        {error && error.status && error.statusText && (
           <p>
             {error.status} {error.statusText}
           </p>
-        )) || <p>Error message unknown!</p>}
+        )}
       </div>
     </div>
   );
 }
-
-export default Error;

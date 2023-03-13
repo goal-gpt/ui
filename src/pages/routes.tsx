@@ -12,6 +12,11 @@ export const routesConfig = [
     errorElement: <Error />,
   },
   {
+    path: "/:category",
+    element: <Main />,
+    errorElement: <Error />,
+  },
+  {
     path: "/help",
     element: <Help />,
     errorElement: <Error />,
