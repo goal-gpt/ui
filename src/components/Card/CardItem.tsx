@@ -4,7 +4,7 @@ import TinderCard from "react-tinder-card";
 
 export interface CardItemData {
   index: number;
-  url: string;
+  link: string;
   imgSrc: string;
   title: string;
   text: string;
@@ -26,7 +26,7 @@ export function CardItem({
   handleSwipe,
   handleLeftScreen,
 }: CardItemProps) {
-  const { index, url, imgSrc, title, text } = data;
+  const { index, link, imgSrc, title, text } = data;
 
   return (
     <TinderCard
@@ -42,6 +42,9 @@ export function CardItem({
         <Card.Body>
           <Card.Title>{title}</Card.Title>
           <Card.Text>{text}</Card.Text>
+          <Card.Link href={link} target="_blank">
+            {link}
+          </Card.Link>
         </Card.Body>
       </Card>
     </TinderCard>
