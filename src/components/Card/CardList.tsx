@@ -4,11 +4,14 @@ import React, { useState } from "react";
 import { Container } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 
-import { mockCards } from "../../services/mockCardData";
 import { logger } from "../../utils/logger";
-import { CardItem } from "./CardItem";
+import { CardItem, CardItemData } from "./CardItem";
 
-export function CardList() {
+export interface CardListProps {
+  cardItemData: CardItemData[];
+}
+
+export function CardList({ cardItemData }: CardListProps) {
   const [lastDirection, setLastDirection] = useState("");
   const { category } = useParams();
 
@@ -16,8 +19,8 @@ export function CardList() {
   // Otherwise, use cards with a matching category
   const cards =
     category === undefined
-      ? mockCards
-      : mockCards.filter((mockCard) => mockCard.categories.includes(category));
+      ? cardItemData
+      : cardItemData.filter((item) => item.categories.includes(category));
 
   // Throw error if there are no matching cards
   if (cards.length === 0)

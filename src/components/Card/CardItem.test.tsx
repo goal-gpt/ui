@@ -10,6 +10,7 @@ describe("CardItem", () => {
 
   const data: CardItemData = {
     index: 0,
+    url: "https://example.com/",
     imgSrc: "https://example.com/image.jpg",
     title: "Example Card",
     text: "This is an example card.",

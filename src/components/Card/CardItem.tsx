@@ -4,6 +4,7 @@ import TinderCard from "react-tinder-card";
 
 export interface CardItemData {
   index: number;
+  url: string;
   imgSrc: string;
   title: string;
   text: string;
@@ -25,7 +26,7 @@ export function CardItem({
   handleSwipe,
   handleLeftScreen,
 }: CardItemProps) {
-  const { index, imgSrc, title, text } = data;
+  const { index, url, imgSrc, title, text } = data;
 
   return (
     <TinderCard
