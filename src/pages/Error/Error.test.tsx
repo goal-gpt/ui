@@ -1,6 +1,6 @@
 import React from "react";
 import { render } from "@testing-library/react";
-import { MemoryRouter, isRouteErrorResponse } from "react-router-dom";
+import { MemoryRouter } from "react-router-dom";
 import * as ReactRouterDOM from "react-router-dom";
 
 import { Error } from "./Error";

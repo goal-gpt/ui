@@ -2,22 +2,20 @@ import "./Card.scss";
 
 import React, { useState } from "react";
 import { Container } from "react-bootstrap";
+import { useParams } from "react-router-dom";
 
 import { mockCards } from "../../services/mockCardData";
 import { logger } from "../../utils/logger";
 import { CardItem } from "./CardItem";
 
-export interface CardListProps {
-  category: string;
-}
-
-export function CardList({ category }: CardListProps) {
+export function CardList() {
   const [lastDirection, setLastDirection] = useState("");
+  const { category } = useParams();
 
   // If no category is supplied, use all cards.
   // Otherwise, use cards with a matching category
   const cards =
-    category === ""
+    category === undefined
       ? mockCards
       : mockCards.filter((mockCard) => mockCard.categories.includes(category));
 
