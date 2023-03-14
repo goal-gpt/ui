@@ -11,27 +11,30 @@ jest.mock("react-router-dom", () => ({
 }));
 
 describe("CardList component", () => {
-  // const mockCards = [
-  //   { index: 0, title: "Card 1", description: "This is card 1", src: "src1" },
-  //   { index: 1, title: "Card 2", description: "This is card 2", src: "src2" },
-  //   { index: 2, title: "Card 3", description: "This is card 3", src: "src3" },
-  // ];
-
   it("renders a list of all cards if no category is supplied", () => {
     const params = {};
     jest.spyOn(ReactRouterDOM, "useParams").mockReturnValue(params);
 
-    const { getByRole } = render(<CardList cardItemData={mockCards}/>);
+    const { getByRole } = render(<CardList cardItemData={mockCards} />);
     const cardItems = getByRole("list");
     // TODO: this is flaky because it depends on how nested we put the CardItem components
     expect(cardItems.childNodes.length).toBe(3);
   });
 
   it("renders a list of cards with the matching category", () => {
-    const params = { category: "category2" };
+    const params = { category: "category0" };
     jest.spyOn(ReactRouterDOM, "useParams").mockReturnValue(params);
 
-    const { getByRole } = render(<CardList cardItemData={mockCards}/>);
+    const { getByRole } = render(<CardList cardItemData={mockCards} />);
+    const cardItems = getByRole("list");
+    expect(cardItems.childNodes.length).toBe(1);
+  });
+
+  it("renders a list of cards with the matching category hyphen-insensitive", () => {
+    const params = { category: "category-3" };
+    jest.spyOn(ReactRouterDOM, "useParams").mockReturnValue(params);
+
+    const { getByRole } = render(<CardList cardItemData={mockCards} />);
     const cardItems = getByRole("list");
     expect(cardItems.childNodes.length).toBe(2);
   });
@@ -40,7 +43,7 @@ describe("CardList component", () => {
     const params = { category: "not-a-matching-category" };
     jest.spyOn(ReactRouterDOM, "useParams").mockReturnValue(params);
 
-    expect(() => render(<CardList cardItemData={mockCards}/>)).toThrow(
+    expect(() => render(<CardList cardItemData={mockCards} />)).toThrow(
       "Sorry, we do not have any content in that category. But please check back later. We are constantly adding new content!"
     );
   });

@@ -2,7 +2,6 @@ import { CardItemData } from "../components/Card";
 
 export const mockCards: CardItemData[] = [
   {
-    index: 0,
     link: "",
     imgSrc: "https://picsum.photos/200",
     title: "Card 1",
@@ -12,22 +11,20 @@ export const mockCards: CardItemData[] = [
     points: 10,
   },
   {
-    index: 1,
     link: "",
     imgSrc: "https://picsum.photos/200",
     title: "Card 2",
     text: "This is card 2",
-    categories: ["category1", "category2", "category3"],
+    categories: ["category1", "category 2", "category-3"],
     length: 80,
     points: 8,
   },
   {
-    index: 2,
     link: "",
     imgSrc: "https://picsum.photos/200",
     title: "Card 3",
     text: "This is card 3",
-    categories: ["category1", "category2", "category3"],
+    categories: ["category1", "category 2", "category-3"],
     length: 130,
     points: 13,
   },

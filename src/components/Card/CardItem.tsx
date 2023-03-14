@@ -3,7 +3,6 @@ import { Card } from "react-bootstrap";
 import TinderCard from "react-tinder-card";
 
 export interface CardItemData {
-  index: number;
   link: string;
   imgSrc: string;
   title: string;
@@ -26,13 +25,12 @@ export function CardItem({
   handleSwipe,
   handleLeftScreen,
 }: CardItemProps) {
-  const { index, link, imgSrc, title, text } = data;
+  const { link, imgSrc, title, text } = data;
 
   return (
     <TinderCard
       // ref={ref}
       className="swipe"
-      key={index}
       onSwipe={handleSwipe}
       onCardLeftScreen={handleLeftScreen}
       swipeRequirementType="position"

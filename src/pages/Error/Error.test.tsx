@@ -8,9 +8,9 @@ import { Error } from "./Error";
 jest.mock("react-router-dom", () => ({
   ...jest.requireActual("react-router-dom"),
   useRouteError: jest.fn(),
- }));
+}));
 
- describe("Error component", () => {
+describe("Error component", () => {
   it("renders default error message when no message prop is passed", () => {
     const { getByText } = render(
       <MemoryRouter>
@@ -18,7 +18,9 @@ jest.mock("react-router-dom", () => ({
       </MemoryRouter>
     );
 
-    expect(getByText("Sorry, an unexpected error has occurred.")).toBeInTheDocument();
+    expect(
+      getByText("Sorry, an unexpected error has occurred.")
+    ).toBeInTheDocument();
   });
 
   it("renders custom error message when message prop is passed", () => {
@@ -44,7 +46,9 @@ jest.mock("react-router-dom", () => ({
       </MemoryRouter>
     );
 
-    expect(getByText(`${error.status} ${error.statusText}`)).toBeInTheDocument();
+    expect(
+      getByText(`${error.status} ${error.statusText}`)
+    ).toBeInTheDocument();
   });
 
   it("doesn't display route error response when there's no error object returned by useRouteError", () => {
