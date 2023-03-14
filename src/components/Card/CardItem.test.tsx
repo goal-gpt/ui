@@ -9,7 +9,6 @@ describe("CardItem", () => {
   const handleLeftScreen = jest.fn();
 
   const data: CardItemData = {
-    index: 0,
     link: "https://example.com/",
     imgSrc: "https://example.com/image.jpg",
     title: "Example Card",

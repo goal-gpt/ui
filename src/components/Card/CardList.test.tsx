@@ -11,12 +11,6 @@ jest.mock("react-router-dom", () => ({
 }));
 
 describe("CardList component", () => {
-  // const mockCards = [
-  //   { index: 0, title: "Card 1", description: "This is card 1", src: "src1" },
-  //   { index: 1, title: "Card 2", description: "This is card 2", src: "src2" },
-  //   { index: 2, title: "Card 3", description: "This is card 3", src: "src3" },
-  // ];
-
   it("renders a list of all cards if no category is supplied", () => {
     const params = {};
     jest.spyOn(ReactRouterDOM, "useParams").mockReturnValue(params);

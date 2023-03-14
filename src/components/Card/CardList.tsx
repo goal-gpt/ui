@@ -44,7 +44,7 @@ export function CardList({ cardItemData }: CardListProps) {
     >
       {cards.map((card) => (
         <CardItem
-          key={card.index}
+          key={card.link}
           data={card}
           handleSwipe={(dir) => swiped(dir, card.title)}
           handleLeftScreen={() => outOfFrame(card.title)}
