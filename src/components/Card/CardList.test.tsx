@@ -15,17 +15,26 @@ describe("CardList component", () => {
     const params = {};
     jest.spyOn(ReactRouterDOM, "useParams").mockReturnValue(params);
 
-    const { getByRole } = render(<CardList cardItemData={mockCards}/>);
+    const { getByRole } = render(<CardList cardItemData={mockCards} />);
     const cardItems = getByRole("list");
     // TODO: this is flaky because it depends on how nested we put the CardItem components
     expect(cardItems.childNodes.length).toBe(3);
   });
 
   it("renders a list of cards with the matching category", () => {
-    const params = { category: "category2" };
+    const params = { category: "category0" };
     jest.spyOn(ReactRouterDOM, "useParams").mockReturnValue(params);
 
-    const { getByRole } = render(<CardList cardItemData={mockCards}/>);
+    const { getByRole } = render(<CardList cardItemData={mockCards} />);
+    const cardItems = getByRole("list");
+    expect(cardItems.childNodes.length).toBe(1);
+  });
+
+  it("renders a list of cards with the matching category hyphen-insensitive", () => {
+    const params = { category: "category-3" };
+    jest.spyOn(ReactRouterDOM, "useParams").mockReturnValue(params);
+
+    const { getByRole } = render(<CardList cardItemData={mockCards} />);
     const cardItems = getByRole("list");
     expect(cardItems.childNodes.length).toBe(2);
   });
@@ -34,7 +43,7 @@ describe("CardList component", () => {
     const params = { category: "not-a-matching-category" };
     jest.spyOn(ReactRouterDOM, "useParams").mockReturnValue(params);
 
-    expect(() => render(<CardList cardItemData={mockCards}/>)).toThrow(
+    expect(() => render(<CardList cardItemData={mockCards} />)).toThrow(
       "Sorry, we do not have any content in that category. But please check back later. We are constantly adding new content!"
     );
   });

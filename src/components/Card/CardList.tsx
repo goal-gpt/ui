@@ -20,7 +20,16 @@ export function CardList({ cardItemData }: CardListProps) {
   const cards =
     category === undefined
       ? cardItemData
-      : cardItemData.filter((item) => item.categories.includes(category));
+      : cardItemData.filter((item) => {
+          // Ensure that "record-keeping" will match "record-keeping"
+          // And that "financial-planning" will match "financial planning"
+          const categoryWithoutHyphens = category.replace("-", " ");
+          const categoriesWithoutHyphens = item.categories.map((c) =>
+            c.replace("-", " ")
+          );
+
+          return categoriesWithoutHyphens.includes(categoryWithoutHyphens);
+        });
 
   // Throw error if there are no matching cards
   if (cards.length === 0)
