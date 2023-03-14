@@ -73,7 +73,7 @@ export const cardItemData: CardItemData[] = [
     points: 0,
   },
   {
-    link: "https://www.getrichslowly.org/how-to-budget/",
+    link: "https://www.getrichslowly.org/how-to-budget",
     imgSrc:
       "https://www.getrichslowly.org/wp-content/uploads/how-to-budget-guide.jpg",
     title: "How to budget: A pain-free guide to building a budget that works",
@@ -124,7 +124,7 @@ export const cardItemData: CardItemData[] = [
     points: 0,
   },
   {
-    link: "https://www.investopedia.com/personal-finance/how-to-build-emergency-fund/",
+    link: "https://www.investopedia.com/personal-finance/how-to-build-emergency-fund",
     imgSrc:
       "https://www.investopedia.com/thmb/wDvwg71si21r1tyOTYmlF40v6o8=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/thinkstockphotos-200171422-001-5bfc2b4b46e0fb0026015ff2.jpg",
     title: "How to Build an Emergency Fund",
@@ -154,7 +154,7 @@ export const cardItemData: CardItemData[] = [
     points: 0,
   },
   {
-    link: "https://www.investopedia.com/articles/personal-finance/100516/setting-financial-goals/",
+    link: "https://www.investopedia.com/articles/personal-finance/100516/setting-financial-goals",
     imgSrc:
       "https://www.investopedia.com/thmb/UgFhPGJ-admf4boc9UZtHermrRY=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/GettyImages-1306844428-7898510289944252a593f9ed446c2251.jpg",
     title: "How to Set Financial Goals for Your Future",
@@ -178,7 +178,7 @@ export const cardItemData: CardItemData[] = [
     points: 0,
   },
   {
-    link: "https://www.clevergirlfinance.com/blog/the-purpose-of-budgets/",
+    link: "https://www.clevergirlfinance.com/blog/the-purpose-of-budgets",
     imgSrc:
       "https://www.clevergirlfinance.com/wp-content/uploads/2023/01/The-purpose-of-budgets.jpg",
     title: "The Purpose Of Budgets: 11 Critical Reasons Why You Need One!",
@@ -354,7 +354,7 @@ export const cardItemData: CardItemData[] = [
     points: 0,
   },
   {
-    link: "https://www.getrichslowly.org/power-of-compounding/",
+    link: "https://www.getrichslowly.org/power-of-compounding",
     imgSrc:
       "https://www.getrichslowly.org/wp-content/uploads/power-of-compounding.jpg",
     title: "The power of compounding: How your wealth snowball grows with time",
@@ -407,7 +407,7 @@ export const cardItemData: CardItemData[] = [
     points: 0,
   },
   {
-    link: "https://www.clevergirlfinance.com/blog/saving-money-in-a-jar/",
+    link: "https://www.clevergirlfinance.com/blog/saving-money-in-a-jar",
     imgSrc:
       "https://www.clevergirlfinance.com/wp-content/uploads/2022/11/Saving-money-in-a-jar.jpg",
     title: "6 Ideas For Saving Money In A Jar",
@@ -417,7 +417,7 @@ export const cardItemData: CardItemData[] = [
     points: 0,
   },
   {
-    link: "https://www.sofi.com/learn/content/how-to-start-an-emergency-fund/",
+    link: "https://www.sofi.com/learn/content/how-to-start-an-emergency-fund",
     imgSrc:
       "https://d32ijn7u0aqfv4.cloudfront.net/wp/wp-content/uploads/raw/firstaidkit-emergency_SOAD19054_959268466_is_780x440.jpg",
     title: "Starting (and Keeping) an Emergency Fund",
@@ -428,6 +428,117 @@ export const cardItemData: CardItemData[] = [
       "financial planning",
       "saving",
       "budgeting",
+    ],
+    length: 0,
+    points: 0,
+  },
+  {
+    link: "https://www.investopedia.com/investing-in-cryptocurrency-5215269",
+    imgSrc:
+      "https://www.investopedia.com/thmb/XCqCCcYl4gDg3T79pqvG448Jhis=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Primary_Images-421ad583334747108aab43b54152822f.jpg",
+    title: "https://www.investopedia.com/investing-in-cryptocurrency-5215269",
+    text: "If you are interested in investing in cryptocurrency, then you need to know how to get started. Learn about the risks and potential upside.",
+    categories: [
+      "crypto",
+      "cryptocurrency",
+      "digital assets",
+      "investment",
+      "blockchain",
+      "trading",
+    ],
+    length: 0,
+    points: 0,
+  },
+  {
+    link: "https://www.thetimes.co.uk/money-mentor/article/cryptocurrency-good-investment",
+    imgSrc:
+      "https://www.thetimes.co.uk/money-mentor/wp-content/uploads/2021/04/GettyImages-1314512617.jpg?resize=600,375",
+    title: "Is cryptocurrency a good investment?",
+    text: "Cryptocurrency may be a good investment if you are willing to accept it is a high risk gamble which could pay off – but also that there is a strong chance you could lose all of your money.",
+    categories: ["cryptocurrency", "investment", "risk management"],
+    length: 0,
+    points: 0,
+  },
+  {
+    link: "https://solberginvest.com/blog/the-ultimate-strategy-for-investing-in-shitcoins",
+    imgSrc:
+      "https://solberginvest.com/wp-content/uploads/2021/06/sincerely-media-XJnjN1eRSEk-unsplash-e1622813446672.jpg",
+    title: "The Ultimate Strategy For Investing In Shitcoins",
+    text: "Investing in shitcoins is really exciting. It can be insanely profitable, as these coins can go 10x in a matter of a few hours. That being said, it’s also one of the fastest ways to go broke if you mess up. What you need to do is to formulate a strategy before investing in shitcoins",
+    categories: [],
+    length: 0,
+    points: 0,
+  },
+  {
+    link: "https://www.coinbase.com/learn/crypto-basics/what-is-a-blockchain",
+    imgSrc:
+      "https://images.ctfassets.net/q5ulk4bp65r7/70c1NBb3A7nvNpx38gSvtd/725e6c5da4960a5a17657c02b80dd596/Learn_Illustration_Ultimate_Guide_Blockchain.png?w=768&fm=png",
+    title: "What is a blockchain?",
+    text: "Cryptocurrencies like Bitcoin and Ethereum are powered by a technology called the blockchain.",
+    categories: [
+      "crypto",
+      "cryptocurrency",
+      "blockchain",
+      "bitcoin",
+      "ethereum",
+      "digital assets",
+      "decentralized technology",
+    ],
+    length: 0,
+    points: 0,
+  },
+  {
+    link: "https://hackernoon.com/wtf-is-the-blockchain-1da89ba19348",
+    imgSrc:
+      "https://hackernoon.imgix.net/hn-images/1*dcRQxEbvbfPa1ESsylcDng.png",
+    title: "WTF is The Blockchain?",
+    text: "Unless you’re hiding under the rock, I am sure you’d have heard of Bitcoins and Blockchain. After all, they are the trending and media’s favorite topics these days — the buzzwords of the year. Even the people who’ve never mined a cryptocurrency or understand how it works, are talking about it. I have more non-technical friends than technical ones. They have been bugging me for weeks to explain this new buzzword to them. I guess there are thousands out there who feel the same. And when that happens, there comes a time to write something to which everyone can point the other lost souls to — that’s the purpose of this post — written in plain english that any regular internet user understands.",
+    categories: [
+      "blockchain",
+      "cryptocurrency",
+      "crypto",
+      "distributed ledger technology",
+      "decentralisation",
+      "bitcoin",
+      "ethereum",
+      "smart contracts",
+    ],
+    length: 0,
+    points: 0,
+  },
+  {
+    link: "https://hackernoon.com/making-sense-of-cryptoeconomics-5edea77e4e8d",
+    imgSrc:
+      "https://hackernoon.imgix.net/hn-images/1*_ywvkl6JQHRn2d00MRv4_A.png",
+    title: "Making Sense of 'Cryptoeconomics'",
+    text: "The term “cryptoeconomics” causes a lot of confusion. People are often unclear on what it is supposed to mean. The word itself can be misleading, as it suggests that there is a parallel “crypto” version of the whole of economics. This is wrong, and Parker is right to mock such a generalization. In simple terms, cryptoeconomics is the use of incentives and cryptography to design new kinds of systems, applications, and networks.",
+    categories: [
+      "cryptoeconomics",
+      "crypto",
+      "cryptocurrency",
+      "blockchain",
+      "smart contracts",
+      "game theory",
+      "mechanism design",
+      "token economics",
+    ],
+    length: 0,
+    points: 0,
+  },
+  {
+    link: "https://www.kraken.com/learn/what-is-blockchain-technology",
+    imgSrc:
+      "https://assets-cms.kraken.com/images/51n36hrp/facade/b4b7d7de97cd77488c1dc7654919b6cf2e6695b9-1638x837.png?w=2880&amp;fit=min",
+    title: "What is Blockchain Technology?",
+    text: "What is a blockchain technology? Learn how one of the central building blocks that powers crypto assets works with Kraken – the world’s most secure crypto exchange.",
+    categories: [
+      "blockchain",
+      "cryptocurrency",
+      "bitcoin",
+      "ethereum",
+      "decentralisation",
+      "distributed ledger technology",
+      "digital assets",
     ],
     length: 0,
     points: 0,
