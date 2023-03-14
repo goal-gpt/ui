@@ -23,9 +23,9 @@ export function CardList({ cardItemData }: CardListProps) {
       : cardItemData.filter((item) => {
           // Ensure that "record-keeping" will match "record-keeping"
           // And that "financial-planning" will match "financial planning"
-          const categoryWithoutHyphens = category.replace("-", " ");
+          const categoryWithoutHyphens = category.replaceAll("-", " ");
           const categoriesWithoutHyphens = item.categories.map((c) =>
-            c.replace("-", " ")
+            c.replaceAll("-", " ")
           );
 
           return categoriesWithoutHyphens.includes(categoryWithoutHyphens);
