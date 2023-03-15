@@ -57,11 +57,11 @@ export function CardList({ cardItemData }: CardListProps) {
           handleLeftScreen={() => outOfFrame(card.title)}
         />
       ))}
-      {lastDirection ? (
+      {/* {lastDirection ? (
         <h2 className="infoText">You swiped {lastDirection}</h2>
       ) : (
         ""
-      )}
+      )} */}
     </CardGroup>
   );
 }
