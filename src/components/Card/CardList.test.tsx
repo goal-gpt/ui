@@ -2,8 +2,8 @@ import { render } from "@testing-library/react";
 import React from "react";
 import * as ReactRouterDOM from "react-router-dom";
 
-import { CardList } from "./CardList";
 import { mockCards } from "../../services/mockCardData";
+import { CardList } from "./CardList";
 
 jest.mock("react-router-dom", () => ({
   ...jest.requireActual("react-router-dom"),
