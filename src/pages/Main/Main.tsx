@@ -33,13 +33,16 @@ function Main() {
           selectCard={handleSelect}
           removeCard={handleRemove}
         />
-        <QuizModal
-          card={quizState.activeQuiz}
-          show={quizState.showModal}
-          handleClose={() =>
-            setQuizState({ activeQuiz: null, showModal: false })
-          }
-        />
+        {/* This pattern is needed to implement a "new" modal with each quiz */}
+        {quizState.showModal && (
+          <QuizModal
+            card={quizState.activeQuiz}
+            show={quizState.showModal}
+            handleClose={() =>
+              setQuizState({ activeQuiz: null, showModal: false })
+            }
+          />
+        )}
       </Container>
     </div>
   );

@@ -11,21 +11,21 @@ export interface QuizModalProps {
   handleClose: () => void;
 }
 
+export const motivationalMessages = [
+  "You got this!",
+  "You're a rockstar!",
+  "Let's go!",
+  "Hooray!",
+  "You're awesome!",
+  "Let's do this!",
+  "Great choice!",
+  "Woohoo!",
+];
+
 export function QuizModal({ card, show, handleClose }: QuizModalProps) {
   const [timer, setTimer] = useState(5);
-  const [message, setMessage] = useState("You got this!");
+  const [message, setMessage] = useState(motivationalMessages[0]);
   const timeRef = useRef<NodeJS.Timeout | null>(null);
-
-  const motivationalMessages = [
-    "You got this!",
-    "You're a rockstar!",
-    "Let's go!",
-    "Hooray!",
-    "You're awesome!",
-    "Let's do this!",
-    "Great choice!",
-    "Woohoo!",
-  ];
 
   useEffect(() => {
     setMessage(
