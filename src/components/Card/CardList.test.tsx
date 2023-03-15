@@ -1,4 +1,4 @@
-import { render } from "@testing-library/react";
+import { fireEvent, render } from "@testing-library/react";
 import React from "react";
 import * as ReactRouterDOM from "react-router-dom";
 
@@ -64,6 +64,10 @@ describe("CardList component", () => {
     expect(() => render(<CardList {...mockCardListProps} />)).toThrow(
       "Sorry, we do not have any content in that category. But please check back later. We are constantly adding new content!"
     );
+  });
+
+  it("adds a card link to localstorage when card item is swiped", () => {
+    // TODO
   });
 
   // it("calls the onSwipe function when a card is swiped", () => {
