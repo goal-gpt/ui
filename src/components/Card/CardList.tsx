@@ -1,7 +1,7 @@
 import "./Card.scss";
 
 import React, { useState } from "react";
-import { Container } from "react-bootstrap";
+import { CardGroup } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 
 import { logger } from "../../utils/logger";
@@ -32,6 +32,7 @@ export function CardList({ cardItemData }: CardListProps) {
         });
 
   // Throw error if there are no matching cards
+  // TODO: perhaps instead of throwing an error we want to redirect to a `categories` page?
   if (cards.length === 0)
     throw new Error(
       "Sorry, we do not have any content in that category. But please check back later. We are constantly adding new content!"
@@ -47,10 +48,7 @@ export function CardList({ cardItemData }: CardListProps) {
   };
 
   return (
-    <Container
-      className="card-container d-flex flex-column align-items-center justify-content-center"
-      role="list"
-    >
+    <CardGroup className="d-flex flex-column align-items-center" role="list">
       {cards.map((card) => (
         <CardItem
           key={card.link}
@@ -64,6 +62,6 @@ export function CardList({ cardItemData }: CardListProps) {
       ) : (
         ""
       )}
-    </Container>
+    </CardGroup>
   );
 }

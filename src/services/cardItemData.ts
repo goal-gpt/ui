@@ -436,7 +436,7 @@ export const cardItemData: CardItemData[] = [
     link: "https://www.investopedia.com/investing-in-cryptocurrency-5215269",
     imgSrc:
       "https://www.investopedia.com/thmb/XCqCCcYl4gDg3T79pqvG448Jhis=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Primary_Images-421ad583334747108aab43b54152822f.jpg",
-    title: "https://www.investopedia.com/investing-in-cryptocurrency-5215269",
+    title: "How to Invest in Cryptocurrency",
     text: "If you are interested in investing in cryptocurrency, then you need to know how to get started. Learn about the risks and potential upside.",
     categories: [
       "crypto",
@@ -544,5 +544,3 @@ export const cardItemData: CardItemData[] = [
     points: 0,
   },
 ];
-
-console.log("length: ", cardItemData.length);

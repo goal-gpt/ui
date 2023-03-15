@@ -14,14 +14,12 @@ export interface CardItemData {
 
 export interface CardItemProps {
   data: CardItemData;
-  // ref: RefObject<string>;
   handleSwipe: (direction: string) => void;
   handleLeftScreen: (direction: string) => void;
 }
 
 export function CardItem({
   data,
-  // ref,
   handleSwipe,
   handleLeftScreen,
 }: CardItemProps) {
@@ -29,20 +27,21 @@ export function CardItem({
 
   return (
     <TinderCard
-      // ref={ref}
       className="swipe"
       onSwipe={handleSwipe}
       onCardLeftScreen={handleLeftScreen}
       swipeRequirementType="position"
     >
-      <Card role="listitem" className="card-item user-select-none">
-        <Card.Img variant="top" src={imgSrc} draggable={false} />
-        <Card.Body>
+      <Card className="user-select-none card-item" role="listitem">
+        <Card.Img className="card-img-top" src={imgSrc} draggable={false} />
+        <Card.Body className="d-flex flex-column">
           <Card.Title>{title}</Card.Title>
           <Card.Text>{text}</Card.Text>
-          <Card.Link href={link} target="_blank">
-            {link}
-          </Card.Link>
+          <Card.Footer className="mt-auto">
+            <Card.Link href={link} target="_blank">
+              {link}
+            </Card.Link>
+          </Card.Footer>
         </Card.Body>
       </Card>
     </TinderCard>
