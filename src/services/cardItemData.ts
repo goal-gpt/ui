@@ -544,3 +544,5 @@ export const cardItemData: CardItemData[] = [
     points: 0,
   },
 ];
+
+console.log("length: ", cardItemData.length);
