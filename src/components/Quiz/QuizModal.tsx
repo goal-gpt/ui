@@ -1,9 +1,8 @@
 import "./QuizModal.scss";
 
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Modal from "react-bootstrap/Modal";
 
-import { logger } from "../../utils/logger";
 import { CardItemData } from "../Card";
 
 export interface QuizModalProps {
@@ -13,7 +12,10 @@ export interface QuizModalProps {
 }
 
 export function QuizModal({ card, show, handleClose }: QuizModalProps) {
-  logger.debug(card); // Just to avoid errors for now
+  const [timer, setTimer] = useState(5);
+  const [message, setMessage] = useState("You got this!");
+  const timeRef = useRef<NodeJS.Timeout | null>(null);
+
   const motivationalMessages = [
     "You got this!",
     "You're a rockstar!",
@@ -25,19 +27,36 @@ export function QuizModal({ card, show, handleClose }: QuizModalProps) {
     "Woohoo!",
   ];
 
+  useEffect(() => {
+    setMessage(
+      motivationalMessages[
+        Math.floor(Math.random() * motivationalMessages.length)
+      ]
+    );
+    timeRef.current = setInterval(() => {
+      setTimer((time) => time - 1);
+    }, 1000);
+
+    return () => {
+      if (timeRef.current) clearInterval(timeRef.current);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (timer === 0 && timeRef.current) {
+      clearInterval(timeRef.current);
+      window.open(card?.link, "_blank");
+    }
+  }, [timer]);
+
   return (
     <Modal onHide={handleClose} show={show} backdrop="static" keyboard={false}>
       <Modal.Header closeButton>
-        <Modal.Title>
-          {
-            motivationalMessages[
-              Math.floor(Math.random() * motivationalMessages.length)
-            ]
-          }
-        </Modal.Title>
+        <Modal.Title>{message}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         {/* <Quiz quiz={card} /> */}
+        <p>Your article will open in {timer} seconds.</p>
         <p>Hello! This is your quiz</p>
       </Modal.Body>
     </Modal>
