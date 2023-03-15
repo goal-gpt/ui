@@ -3,7 +3,7 @@ import React from "react";
 import * as ReactRouterDOM from "react-router-dom";
 
 import { mockCards } from "../../services/mockCardData";
-import { CardList } from "./CardList";
+import { CardList, CardListProps } from "./CardList";
 
 jest.mock("react-router-dom", () => ({
   ...jest.requireActual("react-router-dom"),
@@ -13,10 +13,16 @@ jest.mock("react-router-dom", () => ({
 describe("CardList component", () => {
   let mockSelectCard: jest.Mock;
   let mockRemoveCard: jest.Mock;
+  let mockCardListProps: CardListProps;
 
   beforeEach(() => {
     mockSelectCard = jest.fn();
     mockRemoveCard = jest.fn();
+    mockCardListProps = {
+      cardItemData: mockCards,
+      selectCard: mockSelectCard,
+      removeCard: mockRemoveCard,
+    };
   });
 
   afterEach(() => {
@@ -27,13 +33,7 @@ describe("CardList component", () => {
     const params = {};
     jest.spyOn(ReactRouterDOM, "useParams").mockReturnValue(params);
 
-    const { getByRole } = render(
-      <CardList
-        cardItemData={mockCards}
-        selectCard={mockSelectCard}
-        removeCard={mockRemoveCard}
-      />
-    );
+    const { getByRole } = render(<CardList {...mockCardListProps} />);
     const cardItems = getByRole("list");
     // TODO: this is flaky because it depends on how nested we put the CardItem components
     expect(cardItems.childNodes.length).toBe(3);
@@ -43,13 +43,7 @@ describe("CardList component", () => {
     const params = { category: "category0" };
     jest.spyOn(ReactRouterDOM, "useParams").mockReturnValue(params);
 
-    const { getByRole } = render(
-      <CardList
-        cardItemData={mockCards}
-        selectCard={mockSelectCard}
-        removeCard={mockRemoveCard}
-      />
-    );
+    const { getByRole } = render(<CardList {...mockCardListProps} />);
     const cardItems = getByRole("list");
     expect(cardItems.childNodes.length).toBe(1);
   });
@@ -58,13 +52,7 @@ describe("CardList component", () => {
     const params = { category: "category-3" };
     jest.spyOn(ReactRouterDOM, "useParams").mockReturnValue(params);
 
-    const { getByRole } = render(
-      <CardList
-        cardItemData={mockCards}
-        selectCard={mockSelectCard}
-        removeCard={mockRemoveCard}
-      />
-    );
+    const { getByRole } = render(<CardList {...mockCardListProps} />);
     const cardItems = getByRole("list");
     expect(cardItems.childNodes.length).toBe(2);
   });
@@ -73,15 +61,7 @@ describe("CardList component", () => {
     const params = { category: "not-a-matching-category" };
     jest.spyOn(ReactRouterDOM, "useParams").mockReturnValue(params);
 
-    expect(() =>
-      render(
-        <CardList
-          cardItemData={mockCards}
-          selectCard={mockSelectCard}
-          removeCard={mockRemoveCard}
-        />
-      )
-    ).toThrow(
+    expect(() => render(<CardList {...mockCardListProps} />)).toThrow(
       "Sorry, we do not have any content in that category. But please check back later. We are constantly adding new content!"
     );
   });
