@@ -38,9 +38,9 @@ export function CardItem({
           <Card.Title>{title}</Card.Title>
           <Card.Text>{text}</Card.Text>
           <Card.Footer className="mt-auto">
-            <Card.Link href={link} target="_blank">
+            <a href={link} target="_blank" rel="noreferrer">
               {link}
-            </Card.Link>
+            </a>
           </Card.Footer>
         </Card.Body>
       </Card>
