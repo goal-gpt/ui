@@ -4,7 +4,6 @@ import React, { useEffect, useState } from "react";
 import { CardGroup } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 
-import { logger } from "../../utils/logger";
 import { CardItem, CardItemData } from "./CardItem";
 
 export interface CardListProps {
@@ -55,11 +54,6 @@ export function CardList({
     }
   };
 
-  // TODO: We might not need this
-  const outOfFrame = (card: CardItemData) => {
-    logger.info(`${card.title} left the screen!`);
-  };
-
   return (
     <CardGroup className="d-flex flex-column align-items-center" role="list">
       {cards.map((card) => (
@@ -67,7 +61,7 @@ export function CardList({
           key={card.link}
           data={card}
           handleSwipe={(dir) => swiped(dir, card)}
-          handleLeftScreen={() => outOfFrame(card)}
+          handleLeftScreen={() => ""}
         />
       ))}
     </CardGroup>
