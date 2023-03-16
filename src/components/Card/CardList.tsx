@@ -1,7 +1,7 @@
 import "./Card.scss";
 
 import React, { useEffect, useState } from "react";
-import { CardGroup } from "react-bootstrap";
+import { Col, Container, Row } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 
 import { CardItem, CardItemData } from "./CardItem";
@@ -55,15 +55,27 @@ export function CardList({
   };
 
   return (
-    <CardGroup className="d-flex flex-column align-items-center" role="list">
-      {cards.map((card) => (
-        <CardItem
-          key={card.link}
-          data={card}
-          handleSwipe={(dir) => swiped(dir, card)}
-          handleLeftScreen={() => ""}
-        />
-      ))}
-    </CardGroup>
+    <Container fluid>
+      <Row className="d-grid justify-content-center">
+        {cards.map((card) => (
+          <CardItem
+            key={card.link}
+            data={card}
+            handleSwipe={(dir) => swiped(dir, card)}
+            handleLeftScreen={() => ""}
+          />
+        ))}
+      </Row>
+      <Row className="mt-3 justify-content-between">
+        <Col />
+        <Col className="d-flex align-items-center justify-content-center">
+          {"<"} Swipe left to skip!
+        </Col>
+        <Col className="d-flex align-items-center justify-content-center">
+          Swipe right to take a quiz! {">"}
+        </Col>
+        <Col />
+      </Row>
+    </Container>
   );
 }

@@ -1,7 +1,6 @@
 import "./Main.scss";
 
 import React, { useState } from "react";
-import { Container } from "react-bootstrap";
 
 import { CardItemData, CardList } from "../../components/Card";
 import { MainHeader } from "../../components/MainHeader";
@@ -27,23 +26,21 @@ function Main() {
   return (
     <div className="main" role="main">
       <MainHeader />
-      <Container>
-        <CardList
-          cardItemData={cardItemData}
-          selectCard={handleSelect}
-          removeCard={handleRemove}
+      <CardList
+        cardItemData={cardItemData}
+        selectCard={handleSelect}
+        removeCard={handleRemove}
+      />
+      {/* This pattern is needed to implement a "new" modal with each quiz */}
+      {quizState.showModal && (
+        <QuizModal
+          card={quizState.activeQuiz}
+          show={quizState.showModal}
+          handleClose={() =>
+            setQuizState({ activeQuiz: null, showModal: false })
+          }
         />
-        {/* This pattern is needed to implement a "new" modal with each quiz */}
-        {quizState.showModal && (
-          <QuizModal
-            card={quizState.activeQuiz}
-            show={quizState.showModal}
-            handleClose={() =>
-              setQuizState({ activeQuiz: null, showModal: false })
-            }
-          />
-        )}
-      </Container>
+      )}
     </div>
   );
 }
