@@ -1,6 +1,6 @@
 import "./QuizModal.scss";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Modal from "react-bootstrap/Modal";
 
 import { CardItemData } from "../Card";
@@ -23,9 +23,7 @@ export const motivationalMessages = [
 ];
 
 export function QuizModal({ card, show, handleClose }: QuizModalProps) {
-  const [timer, setTimer] = useState(5);
   const [message, setMessage] = useState(motivationalMessages[0]);
-  const timeRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     setMessage(
@@ -33,21 +31,7 @@ export function QuizModal({ card, show, handleClose }: QuizModalProps) {
         Math.floor(Math.random() * motivationalMessages.length)
       ]
     );
-    timeRef.current = setInterval(() => {
-      setTimer((time) => time - 1);
-    }, 1000);
-
-    return () => {
-      if (timeRef.current) clearInterval(timeRef.current);
-    };
-  }, []);
-
-  useEffect(() => {
-    if (timer === 0 && timeRef.current) {
-      clearInterval(timeRef.current);
-      window.open(card?.link, "_blank");
-    }
-  }, [timer]);
+  }, [card]);
 
   return (
     <Modal onHide={handleClose} show={show} backdrop="static" keyboard={false}>
@@ -56,7 +40,13 @@ export function QuizModal({ card, show, handleClose }: QuizModalProps) {
       </Modal.Header>
       <Modal.Body>
         {/* <Quiz quiz={card} /> */}
-        <p>Your article will open in {timer} seconds.</p>
+        <h2>{card?.title}</h2>
+        <h3>
+          Click here to read your article:{" "}
+          <a href={card?.link} target="_blank" rel="noreferrer">
+            {card?.link}
+          </a>
+        </h3>
         <p>Hello! This is your quiz</p>
       </Modal.Body>
     </Modal>
