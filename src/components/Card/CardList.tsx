@@ -56,7 +56,7 @@ export function CardList({
 
   return (
     <Container fluid>
-      <Row className="d-grid justify-content-center">
+      <Row className="d-grid justify-content-center" role="list">
         {cards.map((card) => (
           <CardItem
             key={card.link}
