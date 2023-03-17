@@ -20,30 +20,49 @@ export function CardList({
   const { category } = useParams();
   const [cards, setCards] = useState<CardItemData[]>([]);
 
+  // Remove cards whose links are stored in localstorage
+  const filterByCompletion = (
+    unfilteredCards: CardItemData[]
+  ): CardItemData[] => {
+    const completedContentLinks: string[] = JSON.parse(
+      localStorage.getItem("eras.completedCardLinks") || "[]"
+    );
+
+    return unfilteredCards.filter((item) => {
+      return !completedContentLinks.includes(item.link);
+    });
+  };
+
   // If no category is supplied, use all cards.
   // Otherwise, use cards with a matching category
-  useEffect(() => {
-    const newCards =
-      category === undefined
-        ? cardItemData
-        : cardItemData.filter((item) => {
-            // Ensure that "record-keeping" will match "record-keeping"
-            // And that "financial-planning" will match "financial planning"
-            const categoryWithoutHyphens = category.replaceAll("-", " ");
-            const categoriesWithoutHyphens = item.categories.map((c) =>
-              c.replaceAll("-", " ")
-            );
+  const filterByCategory = (
+    unfilteredCards: CardItemData[]
+  ): CardItemData[] => {
+    return category === undefined
+      ? unfilteredCards
+      : unfilteredCards.filter((item) => {
+          // Ensure that "record-keeping" will match "record-keeping"
+          // And that "financial-planning" will match "financial planning"
+          const categoryWithoutHyphens = category.replaceAll("-", " ");
+          const categoriesWithoutHyphens = item.categories.map((c) =>
+            c.replaceAll("-", " ")
+          );
 
-            return categoriesWithoutHyphens.includes(categoryWithoutHyphens);
-          });
+          return categoriesWithoutHyphens.includes(categoryWithoutHyphens);
+        });
+  };
+
+  useEffect(() => {
+    const cardsToComplete = filterByCompletion(cardItemData);
+    const cardsToShow = filterByCategory(cardsToComplete);
 
     // Throw error if there are no matching cards
     // TODO: instead of throwing an error we might want to redirect to a `categories` page
-    if (newCards.length === 0)
+    if (cardsToShow.length === 0)
       throw new Error(
         "Sorry, we do not have any content in that category. But please check back later. We are constantly adding new content!"
       );
-    setCards(newCards);
+    setCards(cardsToShow);
   }, []);
 
   const swiped = (direction: string, card: CardItemData) => {

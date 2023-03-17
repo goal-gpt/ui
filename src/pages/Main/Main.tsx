@@ -13,7 +13,7 @@ function Main() {
     activeQuiz: CardItemData | null;
     showModal: boolean;
   }>({ activeQuiz: null, showModal: false });
-  const [lastCardLink, setLastCardLink] = useState("");
+  const [lastCompletedCardLink, setLastCompletedCardLink] = useState("");
 
   const handleSelect = (card: CardItemData) => {
     setQuizState({ activeQuiz: card, showModal: true });
@@ -25,15 +25,18 @@ function Main() {
   };
 
   useEffect(() => {
-    const cardLinks: string[] = JSON.parse(
-      localStorage.getItem("eras.cardLinks") || "[]"
+    const completedCardLinks: string[] = JSON.parse(
+      localStorage.getItem("eras.completedCardLinks") || "[]"
     );
 
     // Pushes empty string into the array when initialized
-    // Leaving the empty string seem less harmful than checking that every `lastCardLink !== ""`
-    cardLinks.push(lastCardLink);
-    localStorage.setItem("eras.cardLinks", JSON.stringify(cardLinks));
-  }, [lastCardLink]);
+    // Leaving the empty string seem less harmful than checking that every `lastCompletedCardLink !== ""`
+    completedCardLinks.push(lastCompletedCardLink);
+    localStorage.setItem(
+      "eras.completedCardLinks",
+      JSON.stringify(completedCardLinks)
+    );
+  }, [lastCompletedCardLink]);
 
   return (
     <div className="main" role="main">
@@ -50,7 +53,7 @@ function Main() {
           show={quizState.showModal}
           handleClose={(isCompleted: boolean) => {
             const link = quizState.activeQuiz?.link;
-            if (isCompleted && link) setLastCardLink(link);
+            if (isCompleted && link) setLastCompletedCardLink(link);
             setQuizState({ activeQuiz: null, showModal: false });
           }}
         />
