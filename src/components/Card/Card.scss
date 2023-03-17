@@ -5,18 +5,21 @@
 }
 
 .swipe {
-  position: absolute;
-  top: 15vh;
+  grid-row: 1;
+  grid-column: 1;
+}
+
+.card-img-top {
+  width: 100%;
+  min-height: 15vw;
+  max-height: 15vw;
+  object-fit: cover;
 }
 
 .card-item {
-  position: relative;
-  background-color: #fff;
-  width: 80vw;
-  max-width: 260px;
-  height: 300px;
-  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.3);
-  border-radius: 20px;
-  background-size: cover;
-  background-position: center;
+  max-width: 40vw;
+  min-height: 70vh;
+  max-height: 70vh;
+  overflow: hidden;
+  box-shadow: 2px 4px 4px rgba(0, 0, 0, 0.04);
 }

@@ -9,7 +9,12 @@ import { Link } from "react-router-dom";
 
 export function MainHeader() {
   return (
-    <Navbar bg="primary" className="main-navbar" role="navigation">
+    <Navbar
+      bg="light"
+      variant="light"
+      className="main-navbar mb-3"
+      role="navigation"
+    >
       <Container>
         <Navbar.Brand as={Link} to="/">
           <Image

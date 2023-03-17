@@ -1,6 +1,7 @@
 import "./Profile.scss";
 
 import React from "react";
+import { Container } from "react-bootstrap";
 
 import { MainHeader } from "../../components/MainHeader";
 
@@ -8,9 +9,9 @@ function Profile() {
   return (
     <>
       <MainHeader />
-      <div className="profile">
+      <Container>
         <p>Your lovely profile is here!</p>
-      </div>
+      </Container>
     </>
   );
 }
