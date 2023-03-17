@@ -48,9 +48,9 @@ function Main() {
         <QuizModal
           card={quizState.activeQuiz}
           show={quizState.showModal}
-          handleClose={() => {
+          handleClose={(isCompleted: boolean) => {
             const link = quizState.activeQuiz?.link;
-            if (link) setLastCardLink(link);
+            if (isCompleted && link) setLastCardLink(link);
             setQuizState({ activeQuiz: null, showModal: false });
           }}
         />

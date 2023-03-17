@@ -1,6 +1,7 @@
 import "./QuizModal.scss";
 
 import React, { useEffect, useState } from "react";
+import { Button, Form } from "react-bootstrap";
 import Modal from "react-bootstrap/Modal";
 
 import { CardItemData } from "../Card";
@@ -8,7 +9,7 @@ import { CardItemData } from "../Card";
 export interface QuizModalProps {
   card: CardItemData | null;
   show: boolean;
-  handleClose: () => void;
+  handleClose: (isCompleted: boolean) => void;
 }
 
 export const motivationalMessages = [
@@ -22,6 +23,48 @@ export const motivationalMessages = [
   "Woohoo!",
 ];
 
+export interface QuizFormProps {
+  handleClose: (isCompleted: boolean) => void;
+}
+
+// TODO: replace with proper quiz logic
+function QuizForm(props: QuizFormProps) {
+  const [formValue, setFormValue] = useState(false);
+  const { handleClose } = props;
+
+  return (
+    <Form
+      onSubmit={(ev) => {
+        ev.preventDefault();
+        handleClose(formValue);
+      }}
+    >
+      <div key="default-radio" className="mb-3">
+        <Form.Check
+          type="radio"
+          id="quiz-radio-true"
+          label="true (correct answer)"
+          value="true"
+          checked={formValue === true}
+          onChange={() => setFormValue(true)}
+        />
+
+        <Form.Check
+          type="radio"
+          label="false"
+          id="quiz-radio-false"
+          value="false"
+          checked={formValue === false}
+          onChange={() => setFormValue(false)}
+        />
+        <Button variant="primary" type="submit">
+          Submit
+        </Button>
+      </div>
+    </Form>
+  );
+}
+
 export function QuizModal({ card, show, handleClose }: QuizModalProps) {
   const [message, setMessage] = useState(motivationalMessages[0]);
 
@@ -34,7 +77,12 @@ export function QuizModal({ card, show, handleClose }: QuizModalProps) {
   }, [card]);
 
   return (
-    <Modal onHide={handleClose} show={show} backdrop="static" keyboard={false}>
+    <Modal
+      onHide={() => handleClose(false)}
+      show={show}
+      backdrop="static"
+      keyboard={false}
+    >
       <Modal.Header closeButton>
         <Modal.Title>{message}</Modal.Title>
       </Modal.Header>
@@ -48,6 +96,11 @@ export function QuizModal({ card, show, handleClose }: QuizModalProps) {
           </a>
         </h3>
         <p>Hello! This is your quiz</p>
+        <QuizForm
+          handleClose={(isCompleted) => {
+            handleClose(isCompleted);
+          }}
+        />
       </Modal.Body>
     </Modal>
   );
