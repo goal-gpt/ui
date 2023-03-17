@@ -182,7 +182,7 @@ export const cardItemData: CardItemData[] = [
     imgSrc:
       "https://www.clevergirlfinance.com/wp-content/uploads/2023/01/The-purpose-of-budgets.jpg",
     title: "The Purpose Of Budgets: 11 Critical Reasons Why You Need One!",
-    text: "The purpose of budgets isn&#039;t to rein you in. Instead, this tool can help you reach your financial goals. Find out why budgeting matters.",
+    text: "The purpose of budgets isn't to rein you in. Instead, this tool can help you reach your financial goals. Find out why budgeting matters.",
     categories: [
       "budgeting",
       "money management",
@@ -385,7 +385,7 @@ export const cardItemData: CardItemData[] = [
     imgSrc:
       "https://www.thebalancemoney.com/thmb/REUTDwIFstIzWgeEiDVQwx56udI=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/GettyImages-875247398-5bf05be246e0fb0051285d80.jpg",
     title: "How to Get Into the Habit of Saving More Money",
-    text: "Focus on small wins, make automatic deposits, and resist the temptation to splurge. Soon you&#39;ll be on your way to meeting your savings goals.",
+    text: "Focus on small wins, make automatic deposits, and resist the temptation to splurge. Soon you'll be on your way to meeting your savings goals.",
     categories: ["money management", "saving", "financial habits", "budgeting"],
     length: 0,
     points: 0,
@@ -539,6 +539,26 @@ export const cardItemData: CardItemData[] = [
       "decentralisation",
       "distributed ledger technology",
       "digital assets",
+    ],
+    length: 0,
+    points: 0,
+  },
+  {
+    link: "https://www.worth.com/how-cryptocurrency-could-inspire-a-new-kind-of-financial-literacy",
+    imgSrc:
+      "https://www.worth.com/wp-content/uploads/2021/03/andre-francois-mckenzie-9qpCNwDeBVU-unsplash-scaled-e1617133903685.jpg",
+    title: "How Cryptocurrency Could Inspire a New Kind of Financial Literacy",
+    text: "As we embark on a new era of money, we’re in a unique moment. Cryptocurrency trading has attracted the interest of a whole new swath of the population. If we use this moment well, we have the opportunity to design a new financial literacy.",
+    categories: [
+      "cryptocurrency",
+      "crypto",
+      "financial literacy",
+      "personal finance",
+      "investing",
+      "blockchain",
+      "wealth management",
+      "economics",
+      "financial planning",
     ],
     length: 0,
     points: 0,
