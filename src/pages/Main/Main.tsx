@@ -24,18 +24,29 @@ function Main() {
     logger.info(`Removing ${card.title}`);
   };
 
-  useEffect(() => {
-    const completedCardLinks: string[] = JSON.parse(
-      localStorage.getItem("eras.completedCardLinks") || "[]"
-    );
+  const getCardLinks = (): string[] => {
+    return JSON.parse(localStorage.getItem("eras.completedCardLinks") || "[]");
+  };
 
-    // Pushes empty string into the array when initialized
-    // Leaving the empty string seem less harmful than checking that every `lastCompletedCardLink !== ""`
+  const storeCardLinks = (cardLinks: string[]) => {
+    localStorage.setItem("eras.completedCardLinks", JSON.stringify(cardLinks));
+  };
+
+  useEffect(() => {
+    const completedCardLinks = getCardLinks();
+
     completedCardLinks.push(lastCompletedCardLink);
-    localStorage.setItem(
-      "eras.completedCardLinks",
-      JSON.stringify(completedCardLinks)
-    );
+    storeCardLinks(completedCardLinks);
+
+    return () => {
+      const cardLinksToCleanUp = getCardLinks();
+
+      const cleanedUpCardLinks = cardLinksToCleanUp.filter((link) => {
+        return link !== "";
+      });
+
+      storeCardLinks(cleanedUpCardLinks);
+    };
   }, [lastCompletedCardLink]);
 
   return (
