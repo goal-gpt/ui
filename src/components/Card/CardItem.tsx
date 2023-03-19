@@ -2,6 +2,14 @@ import React from "react";
 import { Card } from "react-bootstrap";
 import TinderCard from "react-tinder-card";
 
+// If there are no incorrect answers, it is a fill-in-the-blank question
+// Otherwise, it is multiple-choice
+export interface GameItem {
+  question: string;
+  correctAnswers: string[];
+  incorrectAnswers?: string[];
+}
+
 export interface CardItemData {
   link: string;
   imgSrc: string;
@@ -10,6 +18,7 @@ export interface CardItemData {
   categories: string[];
   length: number;
   points: number;
+  game: GameItem[];
 }
 
 export interface CardItemProps {

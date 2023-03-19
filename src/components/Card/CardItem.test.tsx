@@ -3,20 +3,14 @@ import { render } from "@testing-library/react";
 import React from "react";
 
 import { CardItem, CardItemData } from "./CardItem";
+import { cardItemData } from "../../services/mockCardItemData";
 
 describe("CardItem", () => {
   const handleSwipe = jest.fn();
   const handleLeftScreen = jest.fn();
 
-  const data: CardItemData = {
-    link: "https://example.com/",
-    imgSrc: "https://example.com/image.jpg",
-    title: "Example Card",
-    text: "This is an example card.",
-    categories: ["category0", "category1"],
-    length: 100,
-    points: 10,
-  };
+  const data = cardItemData[0];
+  
   const props = {
     data,
     handleSwipe,

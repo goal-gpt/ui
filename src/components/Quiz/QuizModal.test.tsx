@@ -3,6 +3,7 @@ import React from "react";
 import { renderWithRouter, screen } from "../../utils/testHelpers";
 import { CardItemData } from "../Card";
 import { motivationalMessages, QuizModal, QuizModalProps } from ".";
+import { cardItemData } from "../../services/mockCardItemData";
 
 describe("QuizModal", () => {
   let mockHandleClose: jest.Mock;
@@ -11,15 +12,7 @@ describe("QuizModal", () => {
   let testProps: QuizModalProps;
 
   beforeEach(() => {
-    mockCard = {
-      link: "https://example.com/",
-      imgSrc: "https://example.com/image.jpg",
-      title: "Example Card",
-      text: "This is an example card.",
-      categories: ["category0", "category1"],
-      length: 100,
-      points: 10,
-    };
+    mockCard = cardItemData[0];
     mockHandleClose = jest.fn();
     mockShow = true;
     testProps = {

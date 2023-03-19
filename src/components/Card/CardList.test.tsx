@@ -2,7 +2,7 @@ import { render } from "@testing-library/react";
 import React from "react";
 import * as ReactRouterDOM from "react-router-dom";
 
-import { mockCards } from "../../services/mockCardData";
+import { cardItemData } from "../../services/mockCardItemData";
 import { CardList, CardListProps } from "./CardList";
 
 jest.mock("react-router-dom", () => ({
@@ -19,7 +19,7 @@ describe("CardList component", () => {
     mockSelectCard = jest.fn();
     mockRemoveCard = jest.fn();
     mockCardListProps = {
-      cardItemData: mockCards,
+      cardItemData: cardItemData,
       selectCard: mockSelectCard,
       removeCard: mockRemoveCard,
     };
