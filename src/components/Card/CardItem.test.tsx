@@ -10,7 +10,7 @@ describe("CardItem", () => {
   const handleLeftScreen = jest.fn();
 
   const data = cardItemData[0];
-  
+
   const props = {
     data,
     handleSwipe,
