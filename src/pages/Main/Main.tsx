@@ -1,6 +1,6 @@
 import "./Main.scss";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { CardItemData, CardList } from "../../components/Card";
 import { MainHeader } from "../../components/MainHeader";
@@ -13,6 +13,7 @@ function Main() {
     activeQuiz: CardItemData | null;
     showModal: boolean;
   }>({ activeQuiz: null, showModal: false });
+  const [lastCompletedCardLink, setLastCompletedCardLink] = useState("");
 
   const handleSelect = (card: CardItemData) => {
     setQuizState({ activeQuiz: card, showModal: true });
@@ -22,6 +23,31 @@ function Main() {
     // TODO: add this to the user's history
     logger.info(`Removing ${card.title}`);
   };
+
+  const getCardLinks = (): string[] => {
+    return JSON.parse(localStorage.getItem("eras.completedCardLinks") || "[]");
+  };
+
+  const storeCardLinks = (cardLinks: string[]) => {
+    localStorage.setItem("eras.completedCardLinks", JSON.stringify(cardLinks));
+  };
+
+  useEffect(() => {
+    const completedCardLinks = getCardLinks();
+
+    completedCardLinks.push(lastCompletedCardLink);
+    storeCardLinks(completedCardLinks);
+
+    return () => {
+      const cardLinksToCleanUp = getCardLinks();
+
+      const cleanedUpCardLinks = cardLinksToCleanUp.filter((link) => {
+        return link !== "";
+      });
+
+      storeCardLinks(cleanedUpCardLinks);
+    };
+  }, [lastCompletedCardLink]);
 
   return (
     <div className="main" role="main">
@@ -36,9 +62,11 @@ function Main() {
         <QuizModal
           card={quizState.activeQuiz}
           show={quizState.showModal}
-          handleClose={() =>
-            setQuizState({ activeQuiz: null, showModal: false })
-          }
+          handleClose={(isCompleted: boolean) => {
+            const link = quizState.activeQuiz?.link;
+            if (isCompleted && link) setLastCompletedCardLink(link);
+            setQuizState({ activeQuiz: null, showModal: false });
+          }}
         />
       )}
     </div>
