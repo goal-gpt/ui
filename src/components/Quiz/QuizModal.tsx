@@ -1,7 +1,7 @@
 import "./QuizModal.scss";
 
 import React, { SetStateAction, useEffect, useState } from "react";
-import { Button, Form } from "react-bootstrap";
+import { Alert, Button, Form } from "react-bootstrap";
 import Modal from "react-bootstrap/Modal";
 
 import { CardItemData, GameItem } from "../Card";
@@ -24,7 +24,8 @@ export const motivationalMessages = [
 ];
 
 export interface QuizFormProps {
-  handleClose: (isCompleted: boolean) => void;
+  setIsCompleted: React.Dispatch<SetStateAction<boolean>>;
+  setShowGrade: React.Dispatch<SetStateAction<boolean>>;
   card: CardItemData | null;
 }
 
@@ -77,33 +78,35 @@ function Play(props: PlayProps) {
 
 function QuizForm(props: QuizFormProps) {
   const [formValues, setFormValues] = useState({});
-  const { handleClose, card } = props;
+  const { setIsCompleted, setShowGrade, card } = props;
+  // const [showQuizAlert, setShowQuizAlert] = useState(false);
+  // const [isCompleted, setIsCompleted] = useState(false);
 
-  const gradeQuiz = () => {
-    if (!card) handleClose(false);
-    else {
-      const results = card.gameItems.map((gameItem) => {
-        return (
-          formValues[gameItem.question as keyof object] ===
-          gameItem.correctAnswer
-        );
-      });
+  const gradeQuiz = (event: React.FormEvent<HTMLFormElement>): boolean => {
+    event.preventDefault();
+    if (!card) return false;
 
-      // Set isCompleted to false if any answers are incorrect
-      const isCompleted = !results.some((result) => {
-        return result === false;
-      });
+    const results = card.gameItems.map((gameItem) => {
+      return (
+        formValues[gameItem.question as keyof object] === gameItem.correctAnswer
+      );
+    });
 
-      console.log(`isCompleted: ${isCompleted}!`);
-      handleClose(isCompleted);
-    }
+    // Set grade to false if any answers are incorrect
+    const grade = !results.some((result) => {
+      return result === false;
+    });
+
+    console.log(`grade: ${grade}!`);
+    return grade;
   };
 
   return (
     <Form
-      onSubmit={(ev) => {
-        ev.preventDefault();
-        gradeQuiz();
+      onSubmit={(event) => {
+        const grade = gradeQuiz(event);
+        setIsCompleted(grade);
+        setShowGrade(true);
       }}
     >
       <div key="default-radio" className="mb-3">
@@ -126,6 +129,8 @@ function QuizForm(props: QuizFormProps) {
 
 export function QuizModal({ card, show, handleClose }: QuizModalProps) {
   const [message, setMessage] = useState(motivationalMessages[0]);
+  const [showGrade, setShowGrade] = useState(false);
+  const [isCompleted, setIsCompleted] = useState(false);
 
   useEffect(() => {
     setMessage(
@@ -157,11 +162,35 @@ export function QuizModal({ card, show, handleClose }: QuizModalProps) {
         <hr />
         <h3>Quiz</h3>
         <QuizForm
-          handleClose={(isCompleted) => {
-            handleClose(isCompleted);
-          }}
+          setIsCompleted={setIsCompleted}
+          setShowGrade={setShowGrade}
           card={card}
         />
+        <Alert
+          variant={isCompleted ? "success" : "warning"}
+          onClose={() => {
+            setShowGrade(false);
+            handleClose(isCompleted);
+          }}
+          show={showGrade}
+          dismissible
+        >
+          {isCompleted && <Alert.Heading>Congrats! You passed!</Alert.Heading>}
+          {!isCompleted && (
+            <Alert.Heading>Sorry, you missed a few.</Alert.Heading>
+          )}
+          {isCompleted && (
+            <p>Well done! You&apos;re on your way to mastering your finances</p>
+          )}
+          {!isCompleted && (
+            <p>
+              Learning is a journey. Just by consuming {`"${card?.title}"`},
+              you&apos;ve improved your financial skills. You&apos;ll get
+              another chance to take take this quiz and improve your skills even
+              more!
+            </p>
+          )}
+        </Alert>
       </Modal.Body>
     </Modal>
   );
