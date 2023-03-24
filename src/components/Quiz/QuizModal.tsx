@@ -1,10 +1,11 @@
 import "./QuizModal.scss";
 
 import React, { useEffect, useState } from "react";
-import { Button, Form } from "react-bootstrap";
+import { Alert } from "react-bootstrap";
 import Modal from "react-bootstrap/Modal";
 
 import { CardItemData } from "../Card";
+import { QuizForm } from "./QuizForm";
 
 export interface QuizModalProps {
   card: CardItemData | null;
@@ -23,50 +24,18 @@ export const motivationalMessages = [
   "Woohoo!",
 ];
 
-export interface QuizFormProps {
-  handleClose: (isCompleted: boolean) => void;
-}
-
-// TODO: replace with proper quiz logic
-function QuizForm(props: QuizFormProps) {
-  const [formValue, setFormValue] = useState(false);
-  const { handleClose } = props;
-
-  return (
-    <Form
-      onSubmit={(ev) => {
-        ev.preventDefault();
-        handleClose(formValue);
-      }}
-    >
-      <div key="default-radio" className="mb-3">
-        <Form.Check
-          type="radio"
-          id="quiz-radio-true"
-          label="true (correct answer)"
-          value="true"
-          checked={formValue === true}
-          onChange={() => setFormValue(true)}
-        />
-
-        <Form.Check
-          type="radio"
-          label="false"
-          id="quiz-radio-false"
-          value="false"
-          checked={formValue === false}
-          onChange={() => setFormValue(false)}
-        />
-        <Button variant="primary" type="submit">
-          Submit
-        </Button>
-      </div>
-    </Form>
-  );
-}
-
 export function QuizModal({ card, show, handleClose }: QuizModalProps) {
   const [message, setMessage] = useState(motivationalMessages[0]);
+  const [showGrade, setShowGrade] = useState(false);
+  const [isCompleted, setIsCompleted] = useState(false);
+
+  const getCardLinks = (): string[] => {
+    return JSON.parse(localStorage.getItem("eras.completedCardLinks") || "[]");
+  };
+
+  const storeCardLinks = (cardLinks: string[]) => {
+    localStorage.setItem("eras.completedCardLinks", JSON.stringify(cardLinks));
+  };
 
   useEffect(() => {
     setMessage(
@@ -75,6 +44,15 @@ export function QuizModal({ card, show, handleClose }: QuizModalProps) {
       ]
     );
   }, [card]);
+
+  useEffect(() => {
+    if (isCompleted && card) {
+      const completedCardLinks = getCardLinks();
+
+      completedCardLinks.push(card.link);
+      storeCardLinks(completedCardLinks);
+    }
+  }, [isCompleted]);
 
   return (
     <Modal
@@ -95,12 +73,38 @@ export function QuizModal({ card, show, handleClose }: QuizModalProps) {
             {card?.link}
           </a>
         </h3>
-        <p>Hello! This is your quiz</p>
+        <hr />
+        <h3>Quiz</h3>
         <QuizForm
-          handleClose={(isCompleted) => {
+          setIsCompleted={setIsCompleted}
+          setShowGrade={setShowGrade}
+          card={card}
+        />
+        <Alert
+          variant={isCompleted ? "success" : "warning"}
+          onClose={() => {
+            setShowGrade(false);
             handleClose(isCompleted);
           }}
-        />
+          show={showGrade}
+          dismissible
+        >
+          {(isCompleted && (
+            <Alert.Heading>Congrats! You passed!</Alert.Heading>
+          )) || <Alert.Heading>Sorry, you missed some.</Alert.Heading>}
+          {(isCompleted && (
+            <p>
+              Well done! You&apos;re on your way to mastering your finances.
+            </p>
+          )) || (
+            <p>
+              Learning is a journey. Just by consuming {`"${card?.title}"`},
+              you&apos;ve improved your financial skills. You&apos;ll get
+              another chance to take take this quiz and improve your skills even
+              more!
+            </p>
+          )}
+        </Alert>
       </Modal.Body>
     </Modal>
   );

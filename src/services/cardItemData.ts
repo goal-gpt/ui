@@ -23,6 +23,7 @@ export const cardItemData: CardItemData[] = [
     ],
     length: 0,
     points: 0,
+    questionItems: [],
   },
   {
     link: "https://www.nerdwallet.com/article/finance/how-to-budget",
@@ -48,6 +49,7 @@ export const cardItemData: CardItemData[] = [
     ],
     length: 0,
     points: 0,
+    questionItems: [],
   },
   {
     link: "https://n26.com/en-eu/blog/budgeting-tips",
@@ -71,6 +73,7 @@ export const cardItemData: CardItemData[] = [
     ],
     length: 0,
     points: 0,
+    questionItems: [],
   },
   {
     link: "https://www.getrichslowly.org/how-to-budget",
@@ -94,6 +97,7 @@ export const cardItemData: CardItemData[] = [
     ],
     length: 0,
     points: 0,
+    questionItems: [],
   },
   {
     link: "https://www.investopedia.com/articles/pf/10/8-tips-organize-finances.asp",
@@ -122,6 +126,7 @@ export const cardItemData: CardItemData[] = [
     ],
     length: 0,
     points: 0,
+    questionItems: [],
   },
   {
     link: "https://www.investopedia.com/personal-finance/how-to-build-emergency-fund",
@@ -152,6 +157,7 @@ export const cardItemData: CardItemData[] = [
     ],
     length: 0,
     points: 0,
+    questionItems: [],
   },
   {
     link: "https://www.investopedia.com/articles/personal-finance/100516/setting-financial-goals",
@@ -176,6 +182,7 @@ export const cardItemData: CardItemData[] = [
     ],
     length: 0,
     points: 0,
+    questionItems: [],
   },
   {
     link: "https://www.clevergirlfinance.com/blog/the-purpose-of-budgets",
@@ -203,6 +210,7 @@ export const cardItemData: CardItemData[] = [
     ],
     length: 0,
     points: 0,
+    questionItems: [],
   },
   {
     link: "https://hbr.org/2021/08/why-are-we-so-emotional-about-money",
@@ -231,6 +239,7 @@ export const cardItemData: CardItemData[] = [
     ],
     length: 0,
     points: 0,
+    questionItems: [],
   },
   {
     link: "https://www.inverse.com/mind-body/how-to-achieve-financial-success-the-healthy-way",
@@ -252,6 +261,7 @@ export const cardItemData: CardItemData[] = [
     ],
     length: 0,
     points: 0,
+    questionItems: [],
   },
   {
     link: "https://www.vox.com/even-better/23591325/money-debt-emotions-financial-therapist",
@@ -279,6 +289,7 @@ export const cardItemData: CardItemData[] = [
     ],
     length: 0,
     points: 0,
+    questionItems: [],
   },
   {
     link: "https://www.cnbc.com/2021/06/28/here-are-5-ways-to-spend-money-that-can-actually-make-you-happier.html",
@@ -302,6 +313,7 @@ export const cardItemData: CardItemData[] = [
     ],
     length: 0,
     points: 0,
+    questionItems: [],
   },
   {
     link: "https://www.thebalancemoney.com/how-to-set-savings-and-financial-goals-5095454",
@@ -330,6 +342,7 @@ export const cardItemData: CardItemData[] = [
     ],
     length: 0,
     points: 0,
+    questionItems: [],
   },
   {
     link: "https://www.bogleheads.org/wiki/Emergency_fund",
@@ -352,6 +365,7 @@ export const cardItemData: CardItemData[] = [
     ],
     length: 0,
     points: 0,
+    questionItems: [],
   },
   {
     link: "https://www.getrichslowly.org/power-of-compounding",
@@ -379,6 +393,7 @@ export const cardItemData: CardItemData[] = [
     ],
     length: 0,
     points: 0,
+    questionItems: [],
   },
   {
     link: "https://www.thebalancemoney.com/getting-into-money-saving-habit-4125552",
@@ -389,6 +404,7 @@ export const cardItemData: CardItemData[] = [
     categories: ["money management", "saving", "financial habits", "budgeting"],
     length: 0,
     points: 0,
+    questionItems: [],
   },
   {
     link: "https://n26.com/en-eu/blog/emergency-fund-and-rainy-day-fund",
@@ -405,6 +421,7 @@ export const cardItemData: CardItemData[] = [
     ],
     length: 0,
     points: 0,
+    questionItems: [],
   },
   {
     link: "https://www.clevergirlfinance.com/blog/saving-money-in-a-jar",
@@ -415,6 +432,7 @@ export const cardItemData: CardItemData[] = [
     categories: ["personal finance", "saving", "budgeting", "money management"],
     length: 0,
     points: 0,
+    questionItems: [],
   },
   {
     link: "https://www.sofi.com/learn/content/how-to-start-an-emergency-fund",
@@ -431,6 +449,7 @@ export const cardItemData: CardItemData[] = [
     ],
     length: 0,
     points: 0,
+    questionItems: [],
   },
   {
     link: "https://www.investopedia.com/investing-in-cryptocurrency-5215269",
@@ -448,6 +467,7 @@ export const cardItemData: CardItemData[] = [
     ],
     length: 0,
     points: 0,
+    questionItems: [],
   },
   {
     link: "https://www.thetimes.co.uk/money-mentor/article/cryptocurrency-good-investment",
@@ -458,6 +478,7 @@ export const cardItemData: CardItemData[] = [
     categories: ["cryptocurrency", "investment", "risk management"],
     length: 0,
     points: 0,
+    questionItems: [],
   },
   {
     link: "https://solberginvest.com/blog/the-ultimate-strategy-for-investing-in-shitcoins",
@@ -468,6 +489,7 @@ export const cardItemData: CardItemData[] = [
     categories: [],
     length: 0,
     points: 0,
+    questionItems: [],
   },
   {
     link: "https://www.coinbase.com/learn/crypto-basics/what-is-a-blockchain",
@@ -486,6 +508,7 @@ export const cardItemData: CardItemData[] = [
     ],
     length: 0,
     points: 0,
+    questionItems: [],
   },
   {
     link: "https://hackernoon.com/wtf-is-the-blockchain-1da89ba19348",
@@ -505,6 +528,7 @@ export const cardItemData: CardItemData[] = [
     ],
     length: 0,
     points: 0,
+    questionItems: [],
   },
   {
     link: "https://hackernoon.com/making-sense-of-cryptoeconomics-5edea77e4e8d",
@@ -524,6 +548,7 @@ export const cardItemData: CardItemData[] = [
     ],
     length: 0,
     points: 0,
+    questionItems: [],
   },
   {
     link: "https://www.kraken.com/learn/what-is-blockchain-technology",
@@ -542,6 +567,7 @@ export const cardItemData: CardItemData[] = [
     ],
     length: 0,
     points: 0,
+    questionItems: [],
   },
   {
     link: "https://www.worth.com/how-cryptocurrency-could-inspire-a-new-kind-of-financial-literacy",
@@ -562,5 +588,6 @@ export const cardItemData: CardItemData[] = [
     ],
     length: 0,
     points: 0,
+    questionItems: [],
   },
 ];
