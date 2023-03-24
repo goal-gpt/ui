@@ -36,42 +36,77 @@ export interface PlayProps {
   setFormValues: React.Dispatch<SetStateAction<object>>;
 }
 
+export type PlayType = "multiple-choice" | "fill-in-the-blank";
+
 function Play(props: PlayProps) {
   const [responses, setResponses] = useState<string[]>([]);
   const [formValue, setFormValue] = useState("");
   const { gameItem, gameItemIndex, formValues, setFormValues } = props;
+  const [playType, setPlayType] = useState<PlayType>("multiple-choice");
 
   useEffect(() => {
-    const unsortedResponses = gameItem.incorrectAnswers
-      ? [gameItem.correctAnswer].concat(gameItem.incorrectAnswers)
-      : [gameItem.correctAnswer];
-    setResponses(unsortedResponses.sort(() => Math.random() - 0.5));
+    if (gameItem.incorrectAnswers) {
+      const unsortedResponses = [gameItem.correctAnswer].concat(
+        gameItem.incorrectAnswers
+      );
+      setResponses(unsortedResponses.sort(() => Math.random() - 0.5));
+    } else {
+      // Assumes there is only one blank to fill
+      setPlayType("fill-in-the-blank");
+    }
   }, []);
 
   return (
     <>
-      <p>{gameItem.question}</p>
-      {responses.map((response, i) => (
-        <Form.Check
-          key={`${gameItem.question} ${response}`}
-          type="radio"
-          id={`quiz-play-${gameItemIndex}-${i}`}
-          label={response}
-          value={response}
-          name={gameItem.question}
-          checked={formValue === response}
-          onChange={(e) => {
-            // Set value for this gameItem
-            setFormValue(e.target.value);
+      {playType === "multiple-choice" && [
+        <p>{gameItem.question}</p>,
+        responses.map((response, i) => (
+          <Form.Check
+            key={`${gameItem.question} ${response}`}
+            type="radio"
+            id={`quiz-play-${gameItemIndex}-${i}`}
+            label={response}
+            value={response}
+            name={gameItem.question}
+            checked={formValue === response}
+            onChange={(e) => {
+              // Set value for this gameItem
+              setFormValue(e.target.value);
 
-            // Set values for the quiz
-            setFormValues({
-              ...formValues,
-              [e.target.name]: e.target.value,
-            });
-          }}
-        />
-      ))}
+              // Set values for the quiz
+              setFormValues({
+                ...formValues,
+                [e.target.name]: e.target.value,
+              });
+            }}
+          />
+        )),
+      ]}
+      {playType === "fill-in-the-blank" && [
+        <p>
+          {gameItem.question.replace(gameItem.correctAnswer, "__________")}
+        </p>,
+        <Form.Group
+          className="mb-3"
+          controlId={`quiz-play-${gameItemIndex}-fib`}
+        >
+          <Form.Label>Answer</Form.Label>
+          <Form.Control
+            key={`${gameItem.question} ${gameItem.correctAnswer}`}
+            name={gameItem.question}
+            onChange={(e) => {
+              // Set value for this gameItem
+              setFormValue(e.target.value);
+
+              // Set values for the quiz
+              setFormValues({
+                ...formValues,
+                [e.target.name]: e.target.value,
+              });
+            }}
+          />
+        </Form.Group>,
+      ]}
     </>
   );
 }
@@ -85,9 +120,10 @@ function QuizForm(props: QuizFormProps) {
     if (!card) return false;
 
     const results = card.gameItems.map((gameItem) => {
-      return (
-        formValues[gameItem.question as keyof object] === gameItem.correctAnswer
-      );
+      const formValue: string = formValues[gameItem.question as keyof object];
+
+      // Make everything lowercase for the fill-in-the-blank answers
+      return formValue.toLowerCase() === gameItem.correctAnswer.toLowerCase();
     });
 
     // Set grade to false if any answers are incorrect
