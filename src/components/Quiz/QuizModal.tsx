@@ -79,8 +79,6 @@ function Play(props: PlayProps) {
 function QuizForm(props: QuizFormProps) {
   const [formValues, setFormValues] = useState({});
   const { setIsCompleted, setShowGrade, card } = props;
-  // const [showQuizAlert, setShowQuizAlert] = useState(false);
-  // const [isCompleted, setIsCompleted] = useState(false);
 
   const gradeQuiz = (event: React.FormEvent<HTMLFormElement>): boolean => {
     event.preventDefault();
@@ -93,12 +91,9 @@ function QuizForm(props: QuizFormProps) {
     });
 
     // Set grade to false if any answers are incorrect
-    const grade = !results.some((result) => {
+    return !results.some((result) => {
       return result === false;
     });
-
-    console.log(`grade: ${grade}!`);
-    return grade;
   };
 
   return (
@@ -132,6 +127,14 @@ export function QuizModal({ card, show, handleClose }: QuizModalProps) {
   const [showGrade, setShowGrade] = useState(false);
   const [isCompleted, setIsCompleted] = useState(false);
 
+  const getCardLinks = (): string[] => {
+    return JSON.parse(localStorage.getItem("eras.completedCardLinks") || "[]");
+  };
+
+  const storeCardLinks = (cardLinks: string[]) => {
+    localStorage.setItem("eras.completedCardLinks", JSON.stringify(cardLinks));
+  };
+
   useEffect(() => {
     setMessage(
       motivationalMessages[
@@ -139,6 +142,15 @@ export function QuizModal({ card, show, handleClose }: QuizModalProps) {
       ]
     );
   }, [card]);
+
+  useEffect(() => {
+    if (isCompleted && card) {
+      const completedCardLinks = getCardLinks();
+
+      completedCardLinks.push(card.link);
+      storeCardLinks(completedCardLinks);
+    }
+  }, [isCompleted]);
 
   return (
     <Modal
@@ -175,14 +187,14 @@ export function QuizModal({ card, show, handleClose }: QuizModalProps) {
           show={showGrade}
           dismissible
         >
-          {isCompleted && <Alert.Heading>Congrats! You passed!</Alert.Heading>}
-          {!isCompleted && (
-            <Alert.Heading>Sorry, you missed a few.</Alert.Heading>
-          )}
-          {isCompleted && (
-            <p>Well done! You&apos;re on your way to mastering your finances</p>
-          )}
-          {!isCompleted && (
+          {(isCompleted && (
+            <Alert.Heading>Congrats! You passed!</Alert.Heading>
+          )) || <Alert.Heading>Sorry, you missed some.</Alert.Heading>}
+          {(isCompleted && (
+            <p>
+              Well done! You&apos;re on your way to mastering your finances.
+            </p>
+          )) || (
             <p>
               Learning is a journey. Just by consuming {`"${card?.title}"`},
               you&apos;ve improved your financial skills. You&apos;ll get
