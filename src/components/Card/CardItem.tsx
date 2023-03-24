@@ -4,7 +4,7 @@ import TinderCard from "react-tinder-card";
 
 // If there are o incorrect answers, it is multiple-choice
 // Otherwise, it is fill-in-the-blank with a single blank
-export interface GameItem {
+export interface QuestionItem {
   question: string;
   correctAnswer: string;
   incorrectAnswers?: string[];
@@ -18,7 +18,7 @@ export interface CardItemData {
   categories: string[];
   length: number;
   points: number;
-  gameItems: GameItem[];
+  questionItems: QuestionItem[];
 }
 
 export interface CardItemProps {

@@ -29,7 +29,10 @@ export function CardList({
     );
 
     return unfilteredCards.filter((item) => {
-      return !completedContentLinks.includes(item.link);
+      return (
+        !completedContentLinks.includes(item.link) &&
+        item.questionItems.length !== 0
+      );
     });
   };
 

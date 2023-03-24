@@ -9,7 +9,7 @@ export const cardItemData: CardItemData[] = [
     categories: ["category0", "category1"],
     length: 100,
     points: 10,
-    gameItems: [
+    questionItems: [
       {
         question: "How long is a piece of string?",
         correctAnswer: "1",
@@ -34,7 +34,7 @@ export const cardItemData: CardItemData[] = [
     categories: ["category1", "category 2", "category-3"],
     length: 80,
     points: 8,
-    gameItems: [
+    questionItems: [
       {
         question: "How long is a piece of string?",
         correctAnswer: "2",
@@ -59,7 +59,7 @@ export const cardItemData: CardItemData[] = [
     categories: ["category1", "category 2", "category-3"],
     length: 130,
     points: 13,
-    gameItems: [
+    questionItems: [
       {
         question: "How long is a piece of string?",
         correctAnswer: "3",

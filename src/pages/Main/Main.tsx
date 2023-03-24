@@ -5,7 +5,7 @@ import React, { useState } from "react";
 import { CardItemData, CardList } from "../../components/Card";
 import { MainHeader } from "../../components/MainHeader";
 import { QuizModal } from "../../components/Quiz";
-import { cardItemData } from "../../services/mockCardItemData";
+import { cardItemData } from "../../services/cardItemData";
 import { logger } from "../../utils/logger";
 
 function Main() {

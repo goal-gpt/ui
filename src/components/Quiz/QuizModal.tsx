@@ -1,10 +1,11 @@
 import "./QuizModal.scss";
 
-import React, { SetStateAction, useEffect, useState } from "react";
-import { Alert, Button, Form } from "react-bootstrap";
+import React, { useEffect, useState } from "react";
+import { Alert } from "react-bootstrap";
 import Modal from "react-bootstrap/Modal";
 
-import { CardItemData, GameItem } from "../Card";
+import { CardItemData } from "../Card";
+import { QuizForm } from "./QuizForm";
 
 export interface QuizModalProps {
   card: CardItemData | null;
@@ -22,141 +23,6 @@ export const motivationalMessages = [
   "Great choice!",
   "Woohoo!",
 ];
-
-export interface QuizFormProps {
-  setIsCompleted: React.Dispatch<SetStateAction<boolean>>;
-  setShowGrade: React.Dispatch<SetStateAction<boolean>>;
-  card: CardItemData | null;
-}
-
-export interface PlayProps {
-  gameItem: GameItem;
-  gameItemIndex: number;
-  formValues: object;
-  setFormValues: React.Dispatch<SetStateAction<object>>;
-}
-
-export type PlayType = "multiple-choice" | "fill-in-the-blank";
-
-function Play(props: PlayProps) {
-  const [responses, setResponses] = useState<string[]>([]);
-  const [formValue, setFormValue] = useState("");
-  const { gameItem, gameItemIndex, formValues, setFormValues } = props;
-  const [playType, setPlayType] = useState<PlayType>("multiple-choice");
-
-  useEffect(() => {
-    if (gameItem.incorrectAnswers) {
-      const unsortedResponses = [gameItem.correctAnswer].concat(
-        gameItem.incorrectAnswers
-      );
-      setResponses(unsortedResponses.sort(() => Math.random() - 0.5));
-    } else {
-      // Assumes there is only one blank to fill
-      setPlayType("fill-in-the-blank");
-    }
-  }, []);
-
-  return (
-    <>
-      {playType === "multiple-choice" && [
-        <p>{gameItem.question}</p>,
-        responses.map((response, i) => (
-          <Form.Check
-            key={`${gameItem.question} ${response}`}
-            type="radio"
-            id={`quiz-play-${gameItemIndex}-${i}`}
-            label={response}
-            value={response}
-            name={gameItem.question}
-            checked={formValue === response}
-            onChange={(e) => {
-              // Set value for this gameItem
-              setFormValue(e.target.value);
-
-              // Set values for the quiz
-              setFormValues({
-                ...formValues,
-                [e.target.name]: e.target.value,
-              });
-            }}
-          />
-        )),
-      ]}
-      {playType === "fill-in-the-blank" && [
-        <p>
-          {gameItem.question.replace(gameItem.correctAnswer, "__________")}
-        </p>,
-        <Form.Group
-          className="mb-3"
-          controlId={`quiz-play-${gameItemIndex}-fib`}
-        >
-          <Form.Label>Answer</Form.Label>
-          <Form.Control
-            key={`${gameItem.question} ${gameItem.correctAnswer}`}
-            name={gameItem.question}
-            onChange={(e) => {
-              // Set value for this gameItem
-              setFormValue(e.target.value);
-
-              // Set values for the quiz
-              setFormValues({
-                ...formValues,
-                [e.target.name]: e.target.value,
-              });
-            }}
-          />
-        </Form.Group>,
-      ]}
-    </>
-  );
-}
-
-function QuizForm(props: QuizFormProps) {
-  const [formValues, setFormValues] = useState({});
-  const { setIsCompleted, setShowGrade, card } = props;
-
-  const gradeQuiz = (event: React.FormEvent<HTMLFormElement>): boolean => {
-    event.preventDefault();
-    if (!card) return false;
-
-    const results = card.gameItems.map((gameItem) => {
-      const formValue: string = formValues[gameItem.question as keyof object];
-
-      // Make everything lowercase for the fill-in-the-blank answers
-      return formValue.toLowerCase() === gameItem.correctAnswer.toLowerCase();
-    });
-
-    // Set grade to false if any answers are incorrect
-    return !results.some((result) => {
-      return result === false;
-    });
-  };
-
-  return (
-    <Form
-      onSubmit={(event) => {
-        const grade = gradeQuiz(event);
-        setIsCompleted(grade);
-        setShowGrade(true);
-      }}
-    >
-      <div key="default-radio" className="mb-3">
-        {card?.gameItems.map((gameItem, i) => (
-          <Play
-            key={gameItem.question}
-            gameItem={gameItem}
-            gameItemIndex={i}
-            formValues={formValues}
-            setFormValues={setFormValues}
-          />
-        ))}
-        <Button variant="primary" type="submit">
-          Submit
-        </Button>
-      </div>
-    </Form>
-  );
-}
 
 export function QuizModal({ card, show, handleClose }: QuizModalProps) {
   const [message, setMessage] = useState(motivationalMessages[0]);
