@@ -62,6 +62,7 @@ export function Question({
         )),
       ]}
       {questionType === "fill-in-the-blank" && [
+        // TODO: make creating the blank case-insensitive
         <p key={questionItem.question}>
           {questionItem.question.replace(
             questionItem.correctAnswer,
