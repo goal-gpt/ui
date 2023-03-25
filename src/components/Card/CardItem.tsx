@@ -19,6 +19,7 @@ export interface CardItemData {
   length: number;
   points: number;
   questionItems: QuestionItem[];
+  testedContent?: string;
 }
 
 export interface CardItemProps {
