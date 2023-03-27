@@ -51,7 +51,9 @@ export function Question({
   return (
     <>
       {questionType === "multiple-choice" && [
-        <p key={questionItem.question}>{questionItem.question}</p>,
+        <p key={questionItem.question}>
+          {questionIndex + 1}. {questionItem.question}
+        </p>,
         responses.map((response, i) => (
           <Form.Check
             key={`${questionItem.question} ${response}`}
@@ -77,6 +79,7 @@ export function Question({
       {questionType === "fill-in-the-blank" && [
         // TODO: make creating the blank case-insensitive
         <p key={questionItem.question}>
+          {questionIndex + 1}.{" "}
           {questionItem.question.replace(
             questionItem.correctAnswer,
             "__________"
