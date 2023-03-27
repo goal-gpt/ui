@@ -16,10 +16,31 @@
   object-fit: cover;
 }
 
+.eras-card-img-btm {
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+
 .card-item {
   max-width: 40vw;
   min-height: 70vh;
   max-height: 70vh;
   overflow: hidden;
   box-shadow: 2px 4px 4px rgba(0, 0, 0, 0.04);
+}
+
+@media (max-width: 768px) {
+  .card-img-top {
+    width: 100%;
+    min-height: 50vw;
+    max-height: 50vw;
+    object-fit: cover;
+  }
+
+  .card-item {
+    max-width: 80vw;
+    min-height: 60vh;
+    max-height: 60vh;  
+  }
 }
