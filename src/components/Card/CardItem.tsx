@@ -35,6 +35,48 @@ export function CardItem({
 }: CardItemProps) {
   const { link, imgSrc, title, text } = data;
 
+  const getTruncatededTitle = (): string => {
+    const truncatableLength = title.length;
+    const truncatedTitle =
+      window.innerWidth >= 768
+        ? title.substring(0, 110)
+        : title.substring(0, 50);
+
+    return truncatedTitle.length < truncatableLength
+      ? `${truncatedTitle} ...`
+      : truncatedTitle;
+  };
+
+  const getTruncatededText = (): string => {
+    const truncatableLength = text.length;
+    const truncatedText =
+      window.innerWidth >= 768 ? text.substring(0, 400) : text.substring(0, 90);
+
+    return truncatedText.length < truncatableLength
+      ? `${truncatedText} ...`
+      : truncatedText;
+  };
+
+  const getTruncatedSource = (): string => {
+    const trunctableURL = new URL(link);
+    const indexOfLastPeriod = trunctableURL.host.lastIndexOf(".");
+    const hostWithoutTLD = trunctableURL.host.substring(0, indexOfLastPeriod);
+    const indexOfSecondToLastPeriod = hostWithoutTLD.lastIndexOf(".");
+    const source =
+      indexOfSecondToLastPeriod > 0
+        ? hostWithoutTLD.substring(indexOfSecondToLastPeriod + 1)
+        : hostWithoutTLD;
+    const sourceLength = source.length;
+    const truncatedSource =
+      window.innerWidth >= 768
+        ? source.substring(0, 50)
+        : source.substring(0, 25);
+
+    return truncatedSource.length < sourceLength
+      ? `${truncatedSource} ...`
+      : truncatedSource;
+  };
+
   return (
     <TinderCard
       className="swipe"
@@ -43,10 +85,14 @@ export function CardItem({
       swipeRequirementType="position"
     >
       <Card className="user-select-none card-item" role="listitem">
-        <Card.Img className="card-img-top" src={imgSrc} draggable={false} />
+        <Card.Img
+          className="card-img-top eras-card-img-btm"
+          src={imgSrc}
+          draggable={false}
+        />
         <Card.Body className="d-flex flex-column">
-          <Card.Title>{title}</Card.Title>
-          <Card.Text>{text}</Card.Text>
+          <Card.Title>{getTruncatededTitle()}</Card.Title>
+          <Card.Text>{getTruncatededText()}</Card.Text>
           <Card.Footer className="mt-auto">
             <Card.Link
               href={link}
@@ -54,7 +100,7 @@ export function CardItem({
               rel="noreferrer"
               className="pressable"
             >
-              {link}
+              {getTruncatedSource()}
             </Card.Link>
           </Card.Footer>
         </Card.Body>

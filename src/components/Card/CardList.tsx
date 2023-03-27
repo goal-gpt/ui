@@ -65,7 +65,7 @@ export function CardList({
       throw new Error(
         "Sorry, we do not have any content in that category. But please check back later. We are constantly adding new content!"
       );
-    setCards(cardsToShow);
+    setCards(cardsToShow.sort(() => Math.random() - 0.5));
   }, []);
 
   const swiped = (direction: string, card: CardItemData) => {
@@ -89,14 +89,10 @@ export function CardList({
         ))}
       </Row>
       <Row className="mt-3 justify-content-between">
-        <Col />
-        <Col className="d-flex align-items-center justify-content-center">
-          {"<"} Swipe left to skip!
-        </Col>
-        <Col className="d-flex align-items-center justify-content-center">
-          Swipe right to take a quiz! {">"}
-        </Col>
-        <Col />
+        <Col md={4} xs={1} />
+        <Col>{"<"} Swipe left to skip!</Col>
+        <Col>Swipe right to take a quiz! {">"}</Col>
+        <Col md={4} xs={1} />
       </Row>
     </Container>
   );
