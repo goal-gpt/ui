@@ -28,7 +28,20 @@ export function Question({
       const unsortedResponses = [questionItem.correctAnswer].concat(
         questionItem.incorrectAnswers
       );
-      setResponses(unsortedResponses.sort(() => Math.random() - 0.5));
+
+      // Try to ensure responses with "all" or "none" of the above
+      // are at the bottom
+      const responsesWithAbove = unsortedResponses.filter((r) =>
+        r.includes("above")
+      );
+      const responsesWithoutAbove = unsortedResponses.filter(
+        (r) => !r.includes("above")
+      );
+      const randomizedResponses = responsesWithoutAbove.sort(
+        () => Math.random() - 0.5
+      );
+
+      setResponses(randomizedResponses.concat(responsesWithAbove));
     } else {
       // Assumes there is only one blank to fill
       setQuestionType("fill-in-the-blank");

@@ -84,23 +84,40 @@ export const cardItemData: CardItemData[] = [
       "https://images.ctfassets.net/q33z48p65a6w/6DL2li0mx2cMX1p4G8tLaE/cfa1fb8f6586fdae68a33577c4a21323/budgeting-tips-How-to-save-money-N26.jpeg?fit=thumb&fm=webp&h=1075&q=70&w=1920",
     title: "5 smart budgeting tips for first-time savers",
     text: "Working out how to budget your money doesn’t need to be hard. These personal budgeting tips are all you need to know to start saving money today.",
-    categories: [
-      "budgeting",
-      "money management",
-      "financial planning",
-      "saving",
-      "expenses",
-      "income",
-      "goal setting",
-      "debt management",
-      "credit cards",
-      "emergency fund",
-      "retirement planning",
-      "investing",
-    ],
+    categories: ["budgeting", "saving"],
     length: 0,
     points: 0,
-    questionItems: [],
+    questionItems: [
+      {
+        question: "What is the first step to creating a budget?",
+        correctAnswer: "Determine why you want to start saving money",
+        incorrectAnswers: [
+          "Make a list of your expenses",
+          "Create specific, yet challenging objectives",
+        ],
+      },
+      {
+        question:
+          "Short-term savings goals might include a nice piece of furniture, a weekend vacation, a down payment on a car, or an emergency fund.",
+        correctAnswer: "emergency",
+      },
+      {
+        question: "What is the 50/30/20 rule?",
+        correctAnswer:
+          "A rule of thumb for splitting your income into three categories: needs, wants, and savings",
+        incorrectAnswers: [
+          "A rule for saving money by cutting all variable costs",
+          "A rule for dividing your income into two categories: fixed and variable expenses",
+        ],
+      },
+      {
+        question:
+          "SMART goal-setting method stands for Specific, Measurable, Attainable, Relevant, and Time-bound.",
+        correctAnswer: "Time-bound",
+      },
+    ],
+    testedContent:
+      "Although it may seem daunting, working out how to budget your money doesn’t need to be hard. With these practical budgeting tips, saving up for your short- and long-term goals can almost seem effortless. And these tips aren’t just for those with a ton of disposable income. If you’re wondering how to budget money on low income, we’ve got you covered with smart methods such as the 50/30/20 budget rule.\nRead on to learn about five of our favorite tried-and-true budgeting tips.\n1. Don’t ask how to budget money—ask why you want to budget\nIt may sound simple, but the first step to creating a budget is to determine exactly why you want to start saving money.\nThe key to success in any endeavor is to create specific, yet challenging objectives. Understanding what motivates you to save can go a long way toward creating clear, achievable savings targets. And keeping your savings goals in mind can help you to stay focused and on track, even when things aren’t so easy.\nHere are three questions you might want to ask yourself before making your budget:\nWhat is important to you? For example, do you live to travel? Do you dream of becoming a homeowner? Or would you like to save up for studying?\nWhat is a realistic, yet challenging, goal that you want to save for?\nIs this goal motivating enough that you will want to stick with it, even if there are periods in which saving becomes a little tricky?\n2. Distinguish between short-term savings goals and long-term saving goals\nOnce you’ve asked yourself why you want to start saving, the next step in building a budget is to divide your savings goals into short- and long-term plans.\nWhat is a short-term savings goal? These relatively modest targets may include the following:\nA nice piece of furniture\nA weekend vacation\nA down payment on a car\nAn emergency fund\nLong-term savings goals might look like:\nA deposit for a flat or a house\nPaying off any long-standing debt\nStarting up your own business\nA trip around the world\nSaving for retirement\nHaving a combination of both short- and long-term saving goals can make the larger goals seem less intimidating. As you gradually achieve your short-term goals, you may realize how possible it is to save money and be in control of your finances. And this can make your long-term goals feel increasingly attainable.\nHow to budget money realistically\nBefore starting your budget, consider whether your short- and long-term savings goals are realistic. There’s nothing more demotivating than setting an idealized, yet totally unattainable goal and watching it become increasingly impossible to achieve.\nA fantastic personal budgeting tip is to follow psychologist Edwin Locke’s SMART goal-setting method. SMART stands for: Specific, Measurable, Attainable, Relevant, and Time-bound. As long as your budgeting goals adhere to each and every one of these five descriptions, they’re realistic enough for you to start your budget.\n3. Track your spending to create a solid budget\nIf you want to start budgeting effectively, you need to understand exactly how much is coming in and out of your account every month.\nThe best way to do this is to track all of your income and expenses over a 30-day period. This means being aware of every single transaction and either noting it down in a spreadsheet or using a budgeting app such as You Need a Budget.\n4. Separate fixed expenses from variable expenses\nOnce you’ve got a good overview of where all your money is coming and going each month, the next step is to separate your expenditures into fixed and variable costs.\nThe category of fixed costs may include:\nMonthly rent\nHeating and electricity bills\nInsurance costs (i.e. car, personal liability or property)\nStudent loan repayments\nVariable costs, which may change monthly or even weekly, include:\nGrocery shopping\nEntertainment (i.e. nights out, cinema trips, concerts)\nClothes shopping\nEating out\nPersonal budgeting tips for reducing your variable costs\nWhile your fixed costs do not offer you much—if any—flexibility with regards to saving, your variable costs do. This doesn’t mean that you have to stop going out and having fun. It just means building everyday habits to help you save a bit more.\nHere are some budgeting tips you might want to consider to lower your variable costs:\nPrep your meals at home instead of going out for lunch at work.\nConsider if you really need to upgrade your phone to the latest model if your current model is working just fine.\nChoose one day a week where you don’t spend anything on variable costs.\nAdopt the save now, spend later technique. This means setting aside your money for your savings goals and fixed costs at the beginning of the month and only using the remaining balance to pay for your monthly variable costs.\n5. Plan a monthly budget\nSo, you’ve worked out why you want to budget, what you want to save for, and what your fixed and variable costs are. Now it’s time to work out how to save money each month.\nOf course, this varies dramatically from person to person. You may be a freelancer with variable income or a full-time employee with a steady paycheck. Or maybe you’re trying to stretch every last dollar to save on low income. Whatever the case may be, we’ve compiled some smart budgeting tips that can work with any level of income.\nThe 50/20/30 rule\nThe 50/30/20 rule encourages your budget to look as follows:\n50% of your income goes towards your “needs,” i.e. your fixed costs such as rent and bills.\n30% is allocated to your “wants,” i.e. your variable costs such as eating out, trips to the hairdresser and clothes shopping.\n20% goes into your savings or towards paying off debt.\nThe 50/30/20 rule was actually created by US senator Elizabeth Warren, a bankruptcy specialist at Harvard, as a way to show American citizens how to budget and save money and how to budget money on a low income.\nIf you decide to opt for the 50/30/20 method, consider automating your expenses each month. This means that your income is automatically divided at the beginning of the month in accordance with the 50/30/20 rule. By doing this, you’ll only be left with the 30% allocated to “wants” in your bank account, which you can then spend during the month without worrying about whether you are overspending or not meeting your budgeting goals.\nThe zero-based budget\nThe zero-based budgeting method differs slightly from the 50/30/20 approach in that it looks at assigning each penny a specific job. At the end of the month, all income minus all expenditures should equal zero; there should be no left-over money in your account.\nThis means fine-tuning your budget so that you know exactly how much you are spending on your fixed, variable and savings costs each month, to the cent. This is a very detail-orientated approach to budgeting, and means that you need to be acutely aware of all of your monthly transactions as they happen.\nCreate a budgeting contingency plan\nLife always comes with a few surprises, so it’s a good idea to have a budgeting contingency plan for when things get a little complicated. One of the best budgeting tips is to prepare for when you may not be able to stick so closely to your plan. This stops you from becoming demotivated and losing track of your budgeting goals completely.\nHere are some tips for creating a contingency plan:\nFactor in saving for an emergency fund as part of your budget. This could mean saving five percent of your income every month for those unforeseeable circumstances.\nCreate a fallback budget which you refer to in an emergency. This budget cuts out everything that isn’t essential for everyday life, i.e. variable costs. This frees up some money to use in an emergency.\nSources: expertprogrammanagement(Locke’s SMART method) Goal-Setting Theory of Motivation by Fred C. Lunenburg",
   },
   {
     link: "https://www.getrichslowly.org/how-to-budget",
@@ -233,25 +250,47 @@ export const cardItemData: CardItemData[] = [
     text: "The purpose of budgets isn't to rein you in. Instead, this tool can help you reach your financial goals. Find out why budgeting matters.",
     categories: [
       "budgeting",
-      "money management",
-      "financial planning",
+      "financial management",
       "saving",
-      "expenses",
-      "income",
       "financial goals",
-      "debt management",
-      "credit cards",
-      "emergency fund",
-      "retirement planning",
-      "investing",
-      "cash flow management",
-      "mindset",
-      "discipline",
-      "prioritization",
     ],
     length: 0,
     points: 0,
-    questionItems: [],
+    questionItems: [
+      {
+        question:
+          "Why is it difficult to save for unforeseen emergencies without a set budget?",
+        correctAnswer: "You may prioritize other expenses over saving",
+        incorrectAnswers: [
+          "Without a budget, you don’t know how much to save",
+          "You can forget to save money",
+          "None of the above",
+        ],
+      },
+      {
+        question:
+          "What percentage of Americans weren’t sure how much they spent in a month in the survey from Mint?",
+        correctAnswer: "65%",
+        incorrectAnswers: ["45%", "55%", "75%"],
+      },
+      {
+        question:
+          "What is the right mindset to have when it comes to budgeting?",
+        correctAnswer: "A mindset of financial freedom",
+        incorrectAnswers: [
+          "A mindset of constraint",
+          "A mindset of guilt",
+          "None of the above",
+        ],
+      },
+      {
+        question:
+          "While you can keep track with pen and paper, there are automated spending trackers out there. Personally, the author likes to use a spreadsheet to keep track of his/her spending.",
+        correctAnswer: "spreadsheet",
+      },
+    ],
+    testedContent:
+      'Many of us associate budgets with being an annoying part of managing our financial lives. At worst, some of us think of budgets as a major constraint on how we would like to live our life. But a deeper understanding of the purpose of budgets might make sticking to it a bit more palatable.\nLet’s explore the many purposes of budgets. Hopefully, you’ll walk away from this article with some motivation to start or stay on budget!\nWhat is the purpose of budgets?\nThe most basic purpose of budgeting is to track your income and expenses. Through a budget, you might monitor how much cash is flowing in and out of your household.\nBeyond basic tracking, one of the purposes of budgeting is to help you plan your money goals and manage your funds to hit those goals.\nWithout a budget in place, it’s all too easy to prioritize what’s right in front of you over your future financial security.\nFor example, a budget can include a line item for sinking funds. If you set aside a certain amount of funds every month, you’ll have those savings to fall back on in an emergency. But it’s often very challenging to save for unforeseen emergencies without a set budget to guide you.\n11 reasons you need a budget\nA recent survey from Mint discovered that around 65% of Americans weren’t sure how much they spent in the last month.\nAt the same time, a survey from Debt.com found that 85% of respondents have used a budget to keep themselves out of debt or pay off debt.\nFor those that don’t stick to a budget, the reasons included taking too much time, feeling anxious about budgeting, not having enough income, and a source of conflict between partners.\nWhether you currently stick to a budget or not, many reasons might encourage you to stay on top of a budget. And if you struggle with answering, "what is the purpose of budgets?" below you’ll find a look at eleven key reasons why you need a budget.\n1. Track spending\nFirst and foremost, a budget helps you keep track of your spending. When you keep tabs on your spending, it’s easier to stay on track toward your financial goals.\nImpulse spending is less likely to happen if you know it will be recorded in your budget.\nHow to keep track\nPerhaps the most important purpose of budgeting is to stay on top of your expenses. Within your budget, you’ll need to keep a log of the purchases you make. While you can keep track with pen and paper, there are automated spending trackers out there.\nPersonally, I like to use a spreadsheet to keep track of my spending. At the end of every month, I can see exactly how much I spent and where all of the money went.\n2. Track income\nOn the flip side of tracking your expenses, one of the purposes of budgeting is to help you track your income. After all, you cannot keep spending unless you have money coming through the door.\nWhen first building your budget, you’ll typically work backward from how much you make.\nFor example, if you have $3,000 in income per month, you would divide that over your spending obligations and savings goals.\nTracking income can reveal that you need to earn more\nBut in some cases, tracking your income will illuminate that your income is too low to make ends meet. Although this discovery can be disheartening, uncovering an uncomfortable gap between your expenses and your income is critical.\nOnce you understand the gap, you can start building your income by pursuing raises or creating other income streams.\n3. Plan out savings goals\nWhether you’ve labeled them or not, everyone has savings goals. For example, saving for a luxurious vacation, retirement, or a new vehicle all count as savings goals. You likely have your own unique savings goals.\nIt’s often easier to make progress toward these goals by including them in your monthly budget. When you map out a budget, consider including a set amount of money for your goals.\nFor example, you might choose to dedicate $100 per month toward a down payment on a house. Whatever your savings goals are, the purpose of budgets is to present a pathway to achieving them.\n4. Take control of your finances\nWithout a budget, it’s easy to let life happen to your finances. Life without a budget can be more difficult than it needs to be.\nFor example, many feel the pressure to overspend around the holidays. Although the holidays come around at the same time every year, it’s easy for these expenses to sneak up on your budget.\nWith a budget in place, you can include a holiday sinking fund for the festivities.\nSo if you\'re wondering "what is the purpose of budgets?", it is to help you plan for future expenses. Instead of just getting through today, a budget can help you think about tomorrow.\n5. Financial freedom\nWhen you think of a budget, you might start to feel constrained. But the reality is that with the right mindset, one of the purposes of budgets is to provide financial freedom.\nA carefully thought-out budget gives you the freedom to spend within those limits.\nExamples of financial freedom\nFor example, you might set a discretionary purchase category in your budget. The next time you head to the store, you won’t have to feel guilty about making a purchase that fits within those boundaries.\nBeyond freedom from spending guilt, a budget can help you move toward financial freedom. If you set aside money each month, you might break the paycheck-to-paycheck cycle or even retire early at some point.\n6. Track your progress toward financial goals\nFinancial goals come in many shapes and sizes. Depending on where you are in your financial journey, your goals will look different.\nA few popular financial goals include paying off credit cards, eliminating car loans, building an emergency fund, and saving for retirement. But everyone can set up a financial goal for their unique situation.\nA key feature of budgeting is the ability to monitor your progress toward long-term financial goals. With the help of your budget, you can stick with your savings strategy to make your financial goals a reality.\n7. Highlight wasteful spending\nOne of the purposes of budgets is to help you highlight wasteful spending.\nFor most of us, wasteful spending creeps into our lives over time. Whether we spring for extra clutter that turns into junk around the house or overspend on things that don’t matter to us, most of us will spot some level of wasteful spending.\nUnderstand what categories you typically overspend on\nWhile a budget might not totally eliminate wasteful spending, it can help you uncover what categories you are likely to overspend within.\nPersonally, I tend to overspend on food during busy periods of my life. When I notice that my food spending is growing too fast, it’s a good reminder to slow things down and get back into my meal-planning routine. \nWhen you spot overspending, don’t feel guilty. Instead, try to move forward with less wasteful spending next time around.\n8. Lower financial stress\nFinancial stress can put pressure on everyone in the household. But without a budget, it’s easy for financial stress to get out of control.\nEssentially, the purpose of budgets is to help us understand how much we can afford to spend in any given category. Without these guardrails in place, it’s all too easy to overspend on something that just doesn’t fit in the budget.\nUnfortunately, overspending outside of our budgets can lead to taking on debt. Luckily, a proactive approach to managing your finances with a budget can help you avoid stress.\n9. Increases financial communication for couples\nManaging money as a couple has its challenges. The purpose of a budget for your household is that it can serve as a neutral tool for both parties to understand the situation better.\nWith the help of a shared budget, both partners can see how their spending affects the household. Instead of one partner pointing out the issue, a budget can lay out the problem in black and white. Typically, a budget is a good place to start money conversations as a couple.\n10. Assess spending triggers\nEmotional spending is an issue that many Americans struggle with. According to one study, 49% of Americans report emotions as a cause for spending more money than they can afford to.\nWhen you are tracking your purchases through a budget, you can look over the expenses with a clear head. Sometimes, you’ll be able to spot your spending triggers.\nFor example, you might notice that you head to the store after a bad day at work. As you start to recognize the signs, you can make small changes that could really impact your financial situation.\n11. Match your spending with your values\nWhen you build a budget, you have the opportunity to spend your money based on your values.\nWithin your budget, you can choose to spend money on the hobbies and experiences that matter to you. Plus, you can cut out things that you don’t want to support.\nA value-based budget can be a game-changer for your budgeting mindset. Instead of feeling trapped by a budget, choosing to align your spending with your values can help you feel in control of your budget.\nThe purpose of budgets is to stay in control of your finances!\nWhen you set a budget and stick to it, you are taking control of your financial situation. You can use your money system to work toward your long-term financial goals.\nDon’t be afraid to give this a try. The purposes of budgeting are too important to be overlooked and can help you spend intentionally and save more money!\n',
   },
   {
     link: "https://hbr.org/2021/08/why-are-we-so-emotional-about-money",
