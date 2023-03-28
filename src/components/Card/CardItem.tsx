@@ -4,7 +4,7 @@ import TinderCard from "react-tinder-card";
 
 import { API } from "./CardList";
 
-// If there are o incorrect answers, it is multiple-choice
+// If there are no incorrect answers, it is multiple-choice
 // Otherwise, it is fill-in-the-blank with a single blank
 export interface QuestionItem {
   question: string;
@@ -38,13 +38,6 @@ export function CardItem({
   handleLeftScreen,
 }: CardItemProps) {
   const { link, imgSrc, title, text } = data;
-  // const cardRef = useRef<typeof TinderCard>(null);
-
-  // const handleButtonClick = () => {
-  //   if (cardRef.current) {
-  //     cardRef.current.onSwipe("right");
-  //   }
-  // };
 
   const getTruncatedTitle = (): string => {
     const truncatableLength = title.length;
