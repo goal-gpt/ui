@@ -133,21 +133,21 @@ export function CardList({
         ))}
       </Row>
       <Row className="mt-3 justify-content-between">
-        <Col md={4} xs={1} />
-        <Col>
-          <Button onClick={() => swipe("left")}>
+        <Col md={3} xs={1} />
+        <Col className="d-flex align-items-center justify-content-center">
+          <Button onClick={() => swipe("left")} variant="info">
             {"<"} Swipe left to skip!
           </Button>
         </Col>
         {/* <Col>
           <Button onClick={() => goBack()}>Undo swipe!</Button>
         </Col> */}
-        <Col>
-          <Button onClick={() => swipe("right")}>
-            Swipe right to take a quiz! {">"}
+        <Col className="d-flex align-items-center justify-content-center">
+          <Button onClick={() => swipe("right")} variant="secondary">
+            Swipe right to quiz! {">"}
           </Button>
         </Col>
-        <Col md={4} xs={1} />
+        <Col md={3} xs={1} />
       </Row>
     </Container>
   );
