@@ -2,10 +2,12 @@
 import { render } from "@testing-library/react";
 import React from "react";
 
-import { CardItem, CardItemData } from "./CardItem";
 import { cardItemData } from "../../services/mockCardItemData";
+import { CardItem } from "./CardItem";
+import { API } from "./CardList";
 
 describe("CardItem", () => {
+  const apiRef = React.createRef<API>();
   const handleSwipe = jest.fn();
   const handleLeftScreen = jest.fn();
 
@@ -13,6 +15,7 @@ describe("CardItem", () => {
 
   const props = {
     data,
+    apiRef,
     handleSwipe,
     handleLeftScreen,
   };

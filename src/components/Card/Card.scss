@@ -21,9 +21,8 @@
   border-bottom-left-radius: 0;
 }
 
-
 .card-item {
-  max-width: 40vw;
+  max-width: 50vw;
   min-height: 70vh;
   max-height: 70vh;
   overflow: hidden;
@@ -41,6 +40,6 @@
   .card-item {
     max-width: 80vw;
     min-height: 60vh;
-    max-height: 60vh;  
+    max-height: 60vh;
   }
 }
