@@ -2,6 +2,8 @@ import React from "react";
 import { Card } from "react-bootstrap";
 import TinderCard from "react-tinder-card";
 
+import { API } from "./CardList";
+
 // If there are o incorrect answers, it is multiple-choice
 // Otherwise, it is fill-in-the-blank with a single blank
 export interface QuestionItem {
@@ -24,18 +26,27 @@ export interface CardItemData {
 
 export interface CardItemProps {
   data: CardItemData;
+  apiRef: React.RefObject<API>;
   handleSwipe: (direction: string) => void;
   handleLeftScreen: (direction: string) => void;
 }
 
 export function CardItem({
   data,
+  apiRef,
   handleSwipe,
   handleLeftScreen,
 }: CardItemProps) {
   const { link, imgSrc, title, text } = data;
+  // const cardRef = useRef<typeof TinderCard>(null);
 
-  const getTruncatededTitle = (): string => {
+  // const handleButtonClick = () => {
+  //   if (cardRef.current) {
+  //     cardRef.current.onSwipe("right");
+  //   }
+  // };
+
+  const getTruncatedTitle = (): string => {
     const truncatableLength = title.length;
     const truncatedTitle =
       window.innerWidth >= 768
@@ -47,7 +58,7 @@ export function CardItem({
       : truncatedTitle;
   };
 
-  const getTruncatededText = (): string => {
+  const getTruncatedText = (): string => {
     const truncatableLength = text.length;
     const truncatedText =
       window.innerWidth >= 768 ? text.substring(0, 400) : text.substring(0, 90);
@@ -79,6 +90,7 @@ export function CardItem({
 
   return (
     <TinderCard
+      ref={apiRef}
       className="swipe"
       onSwipe={handleSwipe}
       onCardLeftScreen={handleLeftScreen}
@@ -91,8 +103,8 @@ export function CardItem({
           draggable={false}
         />
         <Card.Body className="d-flex flex-column">
-          <Card.Title>{getTruncatededTitle()}</Card.Title>
-          <Card.Text>{getTruncatededText()}</Card.Text>
+          <Card.Title>{getTruncatedTitle()}</Card.Title>
+          <Card.Text>{getTruncatedText()}</Card.Text>
           <Card.Footer className="mt-auto">
             <Card.Link
               href={link}
