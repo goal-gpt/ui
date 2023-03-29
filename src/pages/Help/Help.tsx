@@ -65,8 +65,12 @@ function Help() {
               {faqs.map((item: FAQItem) => {
                 return (
                   <Accordion.Item eventKey={item.id}>
-                    <Accordion.Header>{item.title}</Accordion.Header>
-                    <Accordion.Body>{item.body}</Accordion.Body>
+                    <Accordion.Header className="text-neutral-dark">
+                      {item.title}
+                    </Accordion.Header>
+                    <Accordion.Body className="text-neutral-light">
+                      {item.body}
+                    </Accordion.Body>
                   </Accordion.Item>
                 );
               })}

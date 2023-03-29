@@ -147,7 +147,11 @@ export function CardList({
           <Button onClick={() => goBack()}>Undo swipe!</Button>
         </Col> */}
         <Col className="d-flex align-items-center justify-content-center">
-          <Button onClick={() => swipe("right")} variant="secondary">
+          <Button
+            onClick={() => swipe("right")}
+            variant="secondary"
+            className="text-secondary-contrast"
+          >
             Right for a quiz! {">"}
           </Button>
         </Col>
