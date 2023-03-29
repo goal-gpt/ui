@@ -136,9 +136,7 @@ export function CardList({
       <Row className="mt-3 justify-content-between">
         <Col md={3} xs={1} />
         <Col className="d-flex align-items-center justify-content-center">
-          <Button onClick={() => swipe("left")} variant="primary">
-            {"<"} Left to skip!
-          </Button>
+          <Button onClick={() => swipe("left")}>{"<"} Left to skip!</Button>
         </Col>
         {/* <Col>
           <Button onClick={() => goBack()}>Undo swipe!</Button>
