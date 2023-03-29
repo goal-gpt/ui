@@ -61,7 +61,7 @@ function Help() {
         <Row>
           <Col lg={2} md={1} sm={0} />
           <Col>
-            <Accordion alwaysOpen>
+            <Accordion>
               {faqs.map((item: FAQItem) => {
                 return (
                   <Accordion.Item eventKey={item.id}>
