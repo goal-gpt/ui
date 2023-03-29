@@ -1,6 +1,7 @@
 import React, { SetStateAction, useState } from "react";
-import { Button, Form } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 
+import { Button } from "../Button";
 import { CardItemData } from "../Card/CardItem";
 import { Question } from "./Question";
 
@@ -57,9 +58,7 @@ export function QuizForm({
             setFormValues={setFormValues}
           />
         ))}
-        <Button variant="primary" type="submit">
-          Submit
-        </Button>
+        <Button type="submit">Submit</Button>
       </div>
     </Form>
   );
