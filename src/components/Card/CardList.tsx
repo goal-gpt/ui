@@ -1,9 +1,10 @@
 import "./Card.scss";
 
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { Button, Col, Container, Row } from "react-bootstrap";
+import { Col, Container, Row } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 
+import { Button } from "../Button";
 import { CardItem, CardItemData } from "./CardItem";
 
 // The API interface in react-tinder-card wasn't exported, so it's copied here
@@ -135,11 +136,7 @@ export function CardList({
       <Row className="mt-3 justify-content-between">
         <Col md={3} xs={1} />
         <Col className="d-flex align-items-center justify-content-center">
-          <Button
-            onClick={() => swipe("left")}
-            variant="primary"
-            className="text-primary-contrast"
-          >
+          <Button onClick={() => swipe("left")} variant="primary">
             {"<"} Left to skip!
           </Button>
         </Col>
@@ -147,11 +144,7 @@ export function CardList({
           <Button onClick={() => goBack()}>Undo swipe!</Button>
         </Col> */}
         <Col className="d-flex align-items-center justify-content-center">
-          <Button
-            onClick={() => swipe("right")}
-            variant="secondary"
-            className="text-secondary-contrast"
-          >
+          <Button onClick={() => swipe("right")} variant="secondary">
             Right for a quiz! {">"}
           </Button>
         </Col>
