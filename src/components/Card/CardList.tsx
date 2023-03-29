@@ -136,7 +136,7 @@ export function CardList({
         <Col md={3} xs={1} />
         <Col className="d-flex align-items-center justify-content-center">
           <Button onClick={() => swipe("left")} variant="info">
-            {"<"} Swipe left to skip!
+            {"<"} Left to skip!
           </Button>
         </Col>
         {/* <Col>
@@ -144,7 +144,7 @@ export function CardList({
         </Col> */}
         <Col className="d-flex align-items-center justify-content-center">
           <Button onClick={() => swipe("right")} variant="secondary">
-            Swipe right to quiz! {">"}
+            Right for a quiz! {">"}
           </Button>
         </Col>
         <Col md={3} xs={1} />
