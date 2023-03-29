@@ -96,8 +96,12 @@ export function CardItem({
           draggable={false}
         />
         <Card.Body className="d-flex flex-column">
-          <Card.Title>{getTruncatedTitle()}</Card.Title>
-          <Card.Text>{getTruncatedText()}</Card.Text>
+          <Card.Title className="text-neutral-dark">
+            {getTruncatedTitle()}
+          </Card.Title>
+          <Card.Text className="text-neutral-light">
+            {getTruncatedText()}
+          </Card.Text>
           <Card.Footer className="mt-auto">
             <Card.Link
               href={link}
