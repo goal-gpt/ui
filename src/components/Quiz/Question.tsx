@@ -1,5 +1,5 @@
 import React, { SetStateAction, useEffect, useState } from "react";
-import { Form } from "react-bootstrap";
+import { FloatingLabel, Form, Row } from "react-bootstrap";
 
 import { QuestionItem } from "../Card";
 
@@ -49,64 +49,77 @@ export function Question({
   }, []);
 
   return (
-    <>
-      {questionType === "multiple-choice" && [
-        <p key={questionItem.question}>
-          {questionIndex + 1}. {questionItem.question}
-        </p>,
-        responses.map((response, i) => (
-          <Form.Check
-            key={`${questionItem.question} ${response}`}
-            type="radio"
-            id={`quiz-question-${questionIndex}-${i}`}
-            label={response}
-            value={response}
-            name={questionItem.question}
-            checked={formValue === response}
-            onChange={(e) => {
-              // Set value for this questionItem
-              setFormValue(e.target.value);
+    <Row>
+      {questionType === "multiple-choice" && (
+        <Form.Group className="mb-3">
+          <Form.Label>
+            <div className="mb-2">
+              {questionIndex + 1}. {questionItem.question}
+            </div>
+          </Form.Label>
+          {responses.map((response, i) => (
+            <Form.Check
+              key={`${questionItem.question} ${response}`}
+              type="radio"
+              id={`quiz-question-${questionIndex}-${i}`}
+              label={response}
+              value={response}
+              name={questionItem.question}
+              checked={formValue === response}
+              onChange={(e) => {
+                // Set value for this questionItem
+                setFormValue(e.target.value);
 
-              // Set values for the quiz
-              setFormValues({
-                ...formValues,
-                [e.target.name]: e.target.value,
-              });
-            }}
-          />
-        )),
-      ]}
-      {questionType === "fill-in-the-blank" && [
+                // Set values for the quiz
+                setFormValues({
+                  ...formValues,
+                  [e.target.name]: e.target.value,
+                });
+              }}
+            />
+          ))}
+        </Form.Group>
+      )}
+      {questionType === "fill-in-the-blank" && (
         // TODO: make creating the blank case-insensitive
-        <p key={questionItem.question}>
-          {questionIndex + 1}.{" "}
-          {questionItem.question.replace(
-            questionItem.correctAnswer,
-            "__________"
-          )}
-        </p>,
         <Form.Group
           className="mb-3"
           controlId={`quiz-question-${questionIndex}-fib`}
-          key={`form-group ${questionItem.question}`}
         >
-          <Form.Label>Answer</Form.Label>
-          <Form.Control
-            key={`${questionItem.question} ${questionItem.correctAnswer}`}
-            name={questionItem.question}
-            onChange={(e) => {
-              // Set value for this questionItem
-              setFormValue(e.target.value);
+          <Form.Label
+            htmlFor={`${questionItem.question} ${questionItem.correctAnswer}`}
+          >
+            <div className="mb-3">
+              {questionIndex + 1}.{" "}
+              {questionItem.question.replace(
+                questionItem.correctAnswer,
+                "__________"
+              )}
+            </div>
+          </Form.Label>
+          <FloatingLabel
+            controlId={`${questionItem.question} ${questionItem.correctAnswer}`}
+            label="Your answer"
+          >
+            <Form.Control
+              id={`${questionItem.question} ${questionItem.correctAnswer}`}
+              name={questionItem.question}
+              onChange={(e) => {
+                // Set value for this questionItem
+                setFormValue(e.target.value);
 
-              // Set values for the quiz
-              setFormValues({
-                ...formValues,
-                [e.target.name]: e.target.value,
-              });
-            }}
-          />
-        </Form.Group>,
-      ]}
-    </>
+                // Set values for the quiz
+                setFormValues({
+                  ...formValues,
+                  [e.target.name]: e.target.value,
+                });
+              }}
+              placeholder="Your answer here"
+              type="text"
+            />
+          </FloatingLabel>
+        </Form.Group>
+      )}
+    </Row>
   );
 }

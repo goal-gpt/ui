@@ -1,9 +1,9 @@
 import React from "react";
 
+import { cardItemData } from "../../services/mockCardItemData";
 import { renderWithRouter, screen } from "../../utils/testHelpers";
 import { CardItemData } from "../Card";
 import { motivationalMessages, QuizModal, QuizModalProps } from ".";
-import { cardItemData } from "../../services/mockCardItemData";
 
 describe("QuizModal", () => {
   let mockHandleClose: jest.Mock;

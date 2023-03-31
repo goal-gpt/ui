@@ -1,7 +1,8 @@
+import { fireEvent, render } from "@testing-library/react";
 import React from "react";
-import { render, fireEvent } from "@testing-library/react";
-import { Question, QuestionProps } from "./Question";
+
 import { QuestionItem } from "../Card";
+import { Question, QuestionProps } from "./Question";
 
 const formValues = {};
 const setFormValues = jest.fn();
@@ -20,7 +21,7 @@ describe("Question", () => {
       incorrectAnswers: ["London", "Madrid", "Berlin"],
     };
     const questionProps: QuestionProps = {
-      questionItem: questionItem,
+      questionItem,
       ...props,
     };
 
@@ -58,7 +59,7 @@ describe("Question", () => {
       question: "The capital of France is Paris.",
       correctAnswer: "Paris",
     };
-    const questionProps = { questionItem: questionItem, ...props };
+    const questionProps = { questionItem, ...props };
 
     it("renders a fill-in-the-blank question correctly", () => {
       const { getByText, getByLabelText } = render(
@@ -68,14 +69,16 @@ describe("Question", () => {
       expect(
         getByText("1. The capital of France is __________.")
       ).toBeInTheDocument();
-      expect(getByLabelText("Answer")).toBeInTheDocument();
+      expect(getByLabelText("Your answer")).toBeInTheDocument();
     });
 
     it("updates the form values when a fill-in-the-blank question is answered", () => {
       const { getByLabelText } = render(<Question {...questionProps} />);
 
       const answer = "Paris";
-      fireEvent.change(getByLabelText("Answer"), { target: { value: answer } });
+      fireEvent.change(getByLabelText("Your answer"), {
+        target: { value: answer },
+      });
 
       expect(setFormValues).toHaveBeenCalledWith({
         [questionItem.question]: answer,

@@ -29,6 +29,7 @@ export function QuizForm({
       if (!formValue) return false;
 
       // Make everything lowercase to compare the fill-in-the-blank answers
+      // TODO: we need a more robust way to compare answers, because something like "high-interest debt" should match "high interest debt"
       return (
         formValue.toLowerCase() === questionItem.correctAnswer.toLowerCase()
       );
@@ -42,24 +43,23 @@ export function QuizForm({
 
   return (
     <Form
+      className="mb-3"
       onSubmit={(event) => {
         const grade = gradeQuiz(event);
         setIsCompleted(grade);
         setShowGrade(true);
       }}
     >
-      <div key={`quiz-form ${card?.title}`} className="mb-3">
-        {card?.questionItems.map((questionItem, i) => (
-          <Question
-            key={questionItem.question}
-            questionItem={questionItem}
-            questionIndex={i}
-            formValues={formValues}
-            setFormValues={setFormValues}
-          />
-        ))}
-        <Button type="submit">Submit</Button>
-      </div>
+      {card?.questionItems.map((questionItem, i) => (
+        <Question
+          key={questionItem.question}
+          questionItem={questionItem}
+          questionIndex={i}
+          formValues={formValues}
+          setFormValues={setFormValues}
+        />
+      ))}
+      <Button type="submit">Submit</Button>
     </Form>
   );
 }
