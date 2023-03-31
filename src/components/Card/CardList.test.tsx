@@ -1,4 +1,4 @@
-import { fireEvent, render } from "@testing-library/react";
+import { render } from "@testing-library/react";
 import React from "react";
 import * as ReactRouterDOM from "react-router-dom";
 
@@ -19,7 +19,7 @@ describe("CardList component", () => {
     mockSelectCard = jest.fn();
     mockRemoveCard = jest.fn();
     mockCardListProps = {
-      cardItemData: cardItemData,
+      cardItemData,
       selectCard: mockSelectCard,
       removeCard: mockRemoveCard,
     };

@@ -10,6 +10,7 @@
     "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended"
   ],
+  "ignorePatterns": ["node_modules/", "build/", "dist/", "coverage/"],
   "overrides": [
     {
       "files": ["**/*.test.jsx"],
@@ -42,7 +43,8 @@
     "react/jsx-props-no-spreading": "off",
     "simple-import-sort/imports": "error",
     "simple-import-sort/exports": "error",
-    "import/no-extraneous-dependencies": ["error", { "devDependencies": true }]
+    "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
+    "prefer-destructuring": ["error", { "object": true, "array": false }]
   },
   "settings": {
     "import/resolver": {
