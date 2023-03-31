@@ -65,7 +65,7 @@ export function QuizModal({ card, show, handleClose }: QuizModalProps) {
         <Modal.Title>{message}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <h4 className="my-2">Click on the link to read your article: </h4>
+        <h4 className="my-2">Click on the link to read the article: </h4>
         <h2>{card?.title}</h2>
         <a href={card?.link} target="_blank" rel="noreferrer">
           {card?.link}
