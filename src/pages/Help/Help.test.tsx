@@ -5,6 +5,6 @@ import Help from "./Help";
 
 test("checks that help is provided", () => {
   renderWithRouter(<Help />);
-  const headerImage = screen.getByText(/get your help here/i);
+  const headerImage = screen.getByText(/Frequently Asked Questions/i);
   expect(headerImage).toBeInTheDocument();
 });

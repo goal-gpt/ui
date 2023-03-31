@@ -28,7 +28,7 @@ test("routes correctly and renders key pages", async () => {
 
   // verify page content for /help route
   await user.click(getByText(/Help/));
-  const helpLink = getByText(/Get your help here/i);
+  const helpLink = getByText(/Frequently Asked Questions/i);
   expect(helpLink).toBeInTheDocument();
 });
 
