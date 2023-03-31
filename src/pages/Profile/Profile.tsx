@@ -5,6 +5,7 @@ import { Container, ListGroup } from "react-bootstrap";
 
 import { CardItemData } from "../../components/Card";
 import { MainHeader } from "../../components/MainHeader";
+import { cardItemData } from "../../services/cardItemData";
 
 interface CategoriesCounts {
   [key: string]: number;
