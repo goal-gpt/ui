@@ -10,6 +10,7 @@ import { cardItemData } from "../../services/cardItemData";
 function Profile() {
   const [completedCards, setCompletedCards] = useState<CardItemData[]>([]);
   const [hasMetrics, setHasMetrics] = useState<boolean>(false);
+  const [categories, setCategories] = useState<string[]>([]);
 
   useEffect(() => {
     const completedCardLinks: string[] = JSON.parse(
@@ -24,6 +25,13 @@ function Profile() {
 
   useEffect(() => {
     if (completedCards.length) setHasMetrics(true);
+
+    const categoriesArrays = completedCards.map((card) => card.categories);
+
+    // Set array of unique content categories
+    setCategories(
+      Array.from(new Set(categoriesArrays.flatMap((category) => category)))
+    );
   }, [completedCards]);
 
   return (
@@ -31,11 +39,17 @@ function Profile() {
       <MainHeader />
       <Container>
         {(hasMetrics && (
-          <ListGroup>
-            <ListGroup.Item>
-              Completed quizzes: {completedCards.length}
-            </ListGroup.Item>
-          </ListGroup>
+          <>
+            <h2>Your Metrics</h2>
+            <ListGroup>
+              <ListGroup.Item>
+                # of quizzes completed: {completedCards.length}
+              </ListGroup.Item>
+              <ListGroup.Item>
+                # of categories covered: {categories.join(", ")}
+              </ListGroup.Item>
+            </ListGroup>
+          </>
         )) || (
           <p>
             Once you&apos;ve completed some quizzes, come back here to track
