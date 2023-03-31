@@ -54,12 +54,13 @@ describe("Question", () => {
   });
 
   describe("Fill-in-the-blank", () => {
+    const questionItem: QuestionItem = {
+      question: "The capital of France is Paris.",
+      correctAnswer: "Paris",
+    };
+    const questionProps = { questionItem: questionItem, ...props };
+
     it("renders a fill-in-the-blank question correctly", () => {
-      const questionItem: QuestionItem = {
-        question: "The capital of France is Paris.",
-        correctAnswer: "Paris",
-      };
-      const questionProps = { questionItem: questionItem, ...props };
       const { getByText, getByLabelText } = render(
         <Question {...questionProps} />
       );
@@ -68,6 +69,17 @@ describe("Question", () => {
         getByText("1. The capital of France is __________.")
       ).toBeInTheDocument();
       expect(getByLabelText("Answer")).toBeInTheDocument();
+    });
+
+    it("updates the form values when a fill-in-the-blank question is answered", () => {
+      const { getByLabelText } = render(<Question {...questionProps} />);
+
+      const answer = "Paris";
+      fireEvent.change(getByLabelText("Answer"), { target: { value: answer } });
+
+      expect(setFormValues).toHaveBeenCalledWith({
+        [questionItem.question]: answer,
+      });
     });
   });
 });
