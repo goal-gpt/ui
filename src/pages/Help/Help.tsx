@@ -45,7 +45,6 @@ const faqs: FAQItem[] = [
 ];
 
 // TODO: this serves as public documentation of our app. Features such as the 'undo' button should be added when they are implemented.
-
 function Help() {
   return (
     <div className="help">
