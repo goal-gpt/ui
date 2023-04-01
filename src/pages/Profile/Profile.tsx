@@ -7,16 +7,17 @@ import { CardItemData } from "../../components/Card";
 import { MainHeader } from "../../components/MainHeader";
 import { cardItemData } from "../../services/cardItemData";
 
-export interface CategoriesMetrics {
+export interface CategoriesCounts {
   [key: string]: number;
 }
 
 function Profile() {
   const [completedCards, setCompletedCards] = useState<CardItemData[]>([]);
   const [hasMetrics, setHasMetrics] = useState<boolean>(false);
-  const [categoriesMetrics, setCategoriesMetrics] = useState<CategoriesMetrics>(
+  const [categoriesCounts, setCategoriesCounts] = useState<CategoriesCounts>(
     {}
   );
+  const [wordCount, setWordCount] = useState<number>(0);
 
   useEffect(() => {
     const completedCardLinks: string[] = JSON.parse(
@@ -33,7 +34,7 @@ function Profile() {
     if (completedCards.length) setHasMetrics(true);
 
     // Store # of quizzes per category
-    const categoriesMetricsTemp: CategoriesMetrics = {};
+    const categoriesMetricsTemp: CategoriesCounts = {};
     completedCards.forEach((card) => {
       card.categories.forEach((category) => {
         categoriesMetricsTemp[category] =
@@ -43,7 +44,15 @@ function Profile() {
       });
     });
 
-    setCategoriesMetrics(categoriesMetricsTemp);
+    setCategoriesCounts(categoriesMetricsTemp);
+
+    // Count spaces in total testedContent
+    const totalSpaces = completedCards.reduce(
+      (accumulator, currentValue) =>
+        accumulator + (currentValue.testedContent?.match(/ /g)?.length || 0),
+      0
+    );
+    setWordCount(totalSpaces);
   }, [completedCards]);
 
   return (
@@ -58,15 +67,19 @@ function Profile() {
                 # of quizzes completed: {completedCards.length}
               </ListGroup.Item>
               <ListGroup.Item>
-                # of categories covered: {Object.keys(categoriesMetrics).length}
+                # of categories covered: {Object.keys(categoriesCounts).length}
               </ListGroup.Item>
               <ListGroup.Item>
                 # of quizzes per covered category:
-                {Object.keys(categoriesMetrics).map((category) => (
+                {Object.keys(categoriesCounts).map((category) => (
                   <li key={category}>
-                    {category}: {categoriesMetrics[category as keyof object]}
+                    {category}: {categoriesCounts[category as keyof object]}
                   </li>
                 ))}
+              </ListGroup.Item>
+              <ListGroup.Item>
+                Amount of consumed content:{" over "}
+                {Math.round(wordCount / 100) * 100} words
               </ListGroup.Item>
             </ListGroup>
           </>
