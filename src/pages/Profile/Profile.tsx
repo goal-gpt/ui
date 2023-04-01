@@ -61,7 +61,7 @@ function Profile() {
       <Container>
         {(hasMetrics && (
           <>
-            <h2>Your Metrics</h2>
+            <h2>Your Learning</h2>
             <ListGroup>
               <ListGroup.Item>
                 # of quizzes completed: {completedCards.length}
