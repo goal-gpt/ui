@@ -29,8 +29,7 @@ export function Question({
         questionItem.incorrectAnswers
       );
 
-      // Try to ensure responses with "all" or "none" of the above
-      // are at the bottom
+      // Try to ensure responses with "all" or "none" of the above are at the bottom
       const responsesWithAbove = unsortedResponses.filter((r) =>
         r.includes("above")
       );
