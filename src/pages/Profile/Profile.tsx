@@ -7,10 +7,16 @@ import { CardItemData } from "../../components/Card";
 import { MainHeader } from "../../components/MainHeader";
 import { cardItemData } from "../../services/cardItemData";
 
+export interface CategoriesMetrics {
+  [key: string]: number;
+}
+
 function Profile() {
   const [completedCards, setCompletedCards] = useState<CardItemData[]>([]);
   const [hasMetrics, setHasMetrics] = useState<boolean>(false);
-  const [categories, setCategories] = useState<string[]>([]);
+  const [categoriesMetrics, setCategoriesMetrics] = useState<CategoriesMetrics>(
+    {}
+  );
 
   useEffect(() => {
     const completedCardLinks: string[] = JSON.parse(
@@ -26,12 +32,18 @@ function Profile() {
   useEffect(() => {
     if (completedCards.length) setHasMetrics(true);
 
-    const categoriesArrays = completedCards.map((card) => card.categories);
+    // Store # of quizzes per category
+    const categoriesMetricsTemp: CategoriesMetrics = {};
+    completedCards.forEach((card) => {
+      card.categories.forEach((category) => {
+        categoriesMetricsTemp[category] =
+          category in categoriesMetricsTemp
+            ? (categoriesMetricsTemp[category] += 1)
+            : 1;
+      });
+    });
 
-    // Set array of unique content categories
-    setCategories(
-      Array.from(new Set(categoriesArrays.flatMap((category) => category)))
-    );
+    setCategoriesMetrics(categoriesMetricsTemp);
   }, [completedCards]);
 
   return (
@@ -46,7 +58,15 @@ function Profile() {
                 # of quizzes completed: {completedCards.length}
               </ListGroup.Item>
               <ListGroup.Item>
-                # of categories covered: {categories.join(", ")}
+                # of categories covered: {Object.keys(categoriesMetrics).length}
+              </ListGroup.Item>
+              <ListGroup.Item>
+                # of quizzes per covered category:
+                {Object.keys(categoriesMetrics).map((category) => (
+                  <li key={category}>
+                    {category}: {categoriesMetrics[category as keyof object]}
+                  </li>
+                ))}
               </ListGroup.Item>
             </ListGroup>
           </>
