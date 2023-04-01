@@ -5,6 +5,10 @@ import { Button } from "../Button";
 import { CardItemData } from "../Card/CardItem";
 import { Question } from "./Question";
 
+export interface QuizFormValues {
+  [key: string]: string;
+}
+
 export interface QuizFormProps {
   setIsCompleted: React.Dispatch<SetStateAction<boolean>>;
   setShowGrade: React.Dispatch<SetStateAction<boolean>>;
@@ -16,15 +20,14 @@ export function QuizForm({
   setShowGrade,
   card,
 }: QuizFormProps) {
-  const [formValues, setFormValues] = useState({});
+  const [formValues, setFormValues] = useState<QuizFormValues>({});
 
   const gradeQuiz = (event: React.FormEvent<HTMLFormElement>): boolean => {
     event.preventDefault();
     if (!card) return false;
 
     const results = card.questionItems.map((questionItem) => {
-      const formValue: string =
-        formValues[questionItem.question as keyof object];
+      const formValue: string = formValues[questionItem.question];
 
       if (!formValue) return false;
 
