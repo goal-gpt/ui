@@ -5,13 +5,17 @@ import { Container, ListGroup } from "react-bootstrap";
 
 import { CardItemData } from "../../components/Card";
 import { MainHeader } from "../../components/MainHeader";
-import { cardItemData } from "../../services/cardItemData";
 
-export interface CategoriesCounts {
+interface CategoriesCounts {
   [key: string]: number;
 }
 
-function Profile() {
+export interface ProfileProps {
+  cardItemData: CardItemData[];
+}
+
+function Profile(props: ProfileProps) {
+  const { cardItemData } = props;
   const [completedCards, setCompletedCards] = useState<CardItemData[]>([]);
   const [hasMetrics, setHasMetrics] = useState<boolean>(false);
   const [categoriesCounts, setCategoriesCounts] = useState<CategoriesCounts>(

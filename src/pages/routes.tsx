@@ -1,5 +1,6 @@
 import React from "react";
 
+import { cardItemData } from "../services/cardItemData";
 import { Error } from "./Error";
 import { Help } from "./Help";
 import { Main } from "./Main";
@@ -23,7 +24,7 @@ export const routesConfig = [
   },
   {
     path: "/profile",
-    element: <Profile />,
+    element: <Profile cardItemData={cardItemData} />,
     errorElement: <Error />,
   },
 ];
