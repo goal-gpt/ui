@@ -14,7 +14,7 @@ function Main() {
     activeQuiz: CardItemData | null;
     showModal: boolean;
   }>({ activeQuiz: null, showModal: false });
-  const [showWelcome, setShowWelcome] = useState<boolean>(true);
+  const [showWelcome, setShowWelcome] = useState<boolean>(false);
 
   const handleSelect = (card: CardItemData) => {
     setQuizState({ activeQuiz: card, showModal: true });
