@@ -23,7 +23,7 @@ test("routes correctly and renders key pages", async () => {
 
   // verify page content for /profile route
   await user.click(getByText(/Profile/));
-  const profileContent = getByText(/Your Progress/i, {selector: 'h2'});
+  const profileContent = getByText(/Your Progress/i, { selector: "h2" });
   expect(profileContent).toBeInTheDocument();
 
   // verify page content for /help route
