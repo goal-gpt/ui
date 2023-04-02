@@ -63,30 +63,28 @@ function Profile(props: ProfileProps) {
     <>
       <MainHeader />
       <Container>
+        <h2>Your Progress</h2>
         {(hasMetrics && (
-          <>
-            <h2>Your Learning</h2>
-            <ListGroup>
-              <ListGroup.Item>
-                # of quizzes completed: {completedCards.length}
-              </ListGroup.Item>
-              <ListGroup.Item>
-                # of categories covered: {Object.keys(categoriesCounts).length}
-              </ListGroup.Item>
-              <ListGroup.Item>
-                # of quizzes per covered category:
-                {Object.keys(categoriesCounts).map((category) => (
-                  <li key={category}>
-                    {category}: {categoriesCounts[category as keyof object]}
-                  </li>
-                ))}
-              </ListGroup.Item>
-              <ListGroup.Item>
-                Amount of consumed content:{" over "}
-                {Math.round(wordCount / 100) * 100} words
-              </ListGroup.Item>
-            </ListGroup>
-          </>
+          <ListGroup>
+            <ListGroup.Item>
+              # of quizzes completed: {completedCards.length}
+            </ListGroup.Item>
+            <ListGroup.Item>
+              # of categories covered: {Object.keys(categoriesCounts).length}
+            </ListGroup.Item>
+            <ListGroup.Item>
+              # of quizzes per covered category:
+              {Object.keys(categoriesCounts).map((category) => (
+                <li key={category}>
+                  {category}: {categoriesCounts[category as keyof object]}
+                </li>
+              ))}
+            </ListGroup.Item>
+            <ListGroup.Item>
+              Amount of consumed content:{" over "}
+              {Math.round(wordCount / 100) * 100} words
+            </ListGroup.Item>
+          </ListGroup>
         )) || (
           <p>
             Once you&apos;ve completed some quizzes, come back here to track
