@@ -1,6 +1,7 @@
 import "./Main.scss";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { Alert, Col, Row } from "react-bootstrap";
 
 import { CardItemData, CardList } from "../../components/Card";
 import { MainHeader } from "../../components/MainHeader";
@@ -13,6 +14,7 @@ function Main() {
     activeQuiz: CardItemData | null;
     showModal: boolean;
   }>({ activeQuiz: null, showModal: false });
+  const [showWelcome, setShowWelcome] = useState<boolean>(true);
 
   const handleSelect = (card: CardItemData) => {
     setQuizState({ activeQuiz: card, showModal: true });
@@ -23,9 +25,51 @@ function Main() {
     logger.info(`Removing ${card.title}`);
   };
 
+  const handleWelcomeClose = () => {
+    setShowWelcome(false);
+    window.localStorage.setItem("eras.welcomed", "true");
+  };
+
+  useEffect(() => {
+    const welcomed = window.localStorage.getItem("eras.welcomed") || "false";
+
+    setShowWelcome(welcomed === "false");
+  }, []);
+
   return (
     <div className="main" role="main">
       <MainHeader />
+      <Row>
+        <Col md={3} xs={1} />
+        <Col>
+          <Alert
+            variant="info"
+            onClose={handleWelcomeClose}
+            show={showWelcome}
+            transition={false}
+            closeLabel="close-welcome"
+            dismissible
+          >
+            <Alert.Heading>
+              Welcome to <b>eras</b> v0.2 🌅!
+            </Alert.Heading>
+            <p>
+              Improving your personal finance skills is a journey. We are glad
+              to be on it with you!
+            </p>
+            <hr />
+            <p className="mb-0">
+              We are constantly making the app better. If you have any
+              suggestions or other feedback, send us an email:{" "}
+              <Alert.Link href="mailto:eras.fyi@gmail.com">
+                eras.fyi@gmail.com
+              </Alert.Link>
+              .
+            </p>
+          </Alert>
+        </Col>
+        <Col md={3} xs={1} />
+      </Row>
       <CardList
         cardItemData={cardItemData}
         selectCard={handleSelect}
