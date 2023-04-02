@@ -28,14 +28,18 @@ export function CardList({
   const [cards, setCards] = useState<CardItemData[]>([]);
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const currentIndexRef = useRef(currentIndex);
+  const [skipped, setSkipped] = useState<boolean>(false);
+  const [areMoreCards, setAreMoreCards] = useState<boolean>(false);
+
+  const getCompletedContentLinks = (): string[] => {
+    return JSON.parse(localStorage.getItem("eras.completedCardLinks") || "[]");
+  };
 
   // Remove cards whose links are stored in localstorage
   const filterByCompletion = (
     unfilteredCards: CardItemData[]
   ): CardItemData[] => {
-    const completedContentLinks: string[] = JSON.parse(
-      localStorage.getItem("eras.completedCardLinks") || "[]"
-    );
+    const completedContentLinks = getCompletedContentLinks();
 
     return unfilteredCards.filter((item) => {
       return (
@@ -78,6 +82,7 @@ export function CardList({
     updateCurrentIndex(index - 1);
     if (direction === "left" || direction === "down") {
       removeCard(cards[index]);
+      setSkipped(true);
     } else {
       selectCard(cards[index]);
     }
@@ -90,6 +95,32 @@ export function CardList({
         await cardRef.swipe(dir); // Swipe the card!
       }
     }
+  };
+
+  const setup = () => {
+    const cardsToComplete = filterByCompletion(cardItemData);
+    const cardsToShow = filterByCategory(cardsToComplete);
+
+    setAreMoreCards(cardsToComplete.length > cardsToShow.length);
+
+    // Throw error if there are no matching cards
+    // TODO: instead of throwing an error we might want to redirect to a `categories` page
+    if (cardsToShow.length === 0)
+      throw new Error(
+        "Sorry, we do not have any content in that category. But please check back later. We are constantly adding new content!"
+      );
+    setCards(cardsToShow.sort(() => Math.random() - 0.5));
+    setCurrentIndex(cardsToShow.length - 1);
+    setSkipped(false);
+  };
+
+  const areSkippedOrMissedCards = (): boolean => {
+    if (skipped) return skipped;
+
+    const linksToShow = cards.map((card) => card.link);
+    const completedCardLinks = getCompletedContentLinks();
+
+    return linksToShow.some((link) => !completedCardLinks.includes(link));
   };
 
   // TODO: figure out how to reset cards
@@ -107,46 +138,71 @@ export function CardList({
   // };
 
   useEffect(() => {
-    const cardsToComplete = filterByCompletion(cardItemData);
-    const cardsToShow = filterByCategory(cardsToComplete);
-
-    // Throw error if there are no matching cards
-    // TODO: instead of throwing an error we might want to redirect to a `categories` page
-    if (cardsToShow.length === 0)
-      throw new Error(
-        "Sorry, we do not have any content in that category. But please check back later. We are constantly adding new content!"
-      );
-    setCards(cardsToShow.sort(() => Math.random() - 0.5));
-    setCurrentIndex(cardsToShow.length - 1);
+    setup();
   }, []);
 
   return (
     <Container fluid>
-      <Row className="d-grid justify-content-center" role="list">
-        {cards.map((card, index) => (
-          <CardItem
-            apiRef={childRefs[index]}
-            key={card.link}
-            data={card}
-            handleSwipe={(dir: string) => swiped(dir, index)}
-          />
-        ))}
-      </Row>
-      <Row className="mt-3 justify-content-between">
-        <Col md={3} xs={1} />
-        <Col className="d-flex align-items-center justify-content-center">
-          <Button onClick={() => swipe("left")}>{"<"} Left to skip!</Button>
-        </Col>
-        {/* <Col>
-          <Button onClick={() => goBack()}>Undo swipe!</Button>
-        </Col> */}
-        <Col className="d-flex align-items-center justify-content-center">
-          <Button onClick={() => swipe("right")} variant="secondary">
-            Right for a quiz! {">"}
-          </Button>
-        </Col>
-        <Col md={3} xs={1} />
-      </Row>
+      {(currentIndex > -1 && (
+        <>
+          <Row className="d-grid justify-content-center" role="list">
+            {cards.map((card, index) => (
+              <CardItem
+                apiRef={childRefs[index]}
+                key={card.link}
+                data={card}
+                handleSwipe={(dir: string) => swiped(dir, index)}
+              />
+            ))}
+          </Row>
+          <Row className="mt-3 justify-content-between">
+            <Col md={3} xs={1} />
+            <Col className="d-flex align-items-center justify-content-center">
+              <Button onClick={() => swipe("left")}>{"<"} Left to skip!</Button>
+            </Col>
+            {/* <Col>
+      <Button onClick={() => goBack()}>Undo swipe!</Button>
+    </Col> */}
+            <Col className="d-flex align-items-center justify-content-center">
+              <Button onClick={() => swipe("right")} variant="secondary">
+                Right for a quiz! {">"}
+              </Button>
+            </Col>
+            <Col md={3} xs={1} />
+          </Row>
+        </>
+      )) || (
+        <Row>
+          <Col md={3} xs={1} />
+          <Col>
+            <p>
+              Looks like you&apos;ve reached the end. Please check back later.
+              We are constantly adding new content!
+            </p>
+            {areSkippedOrMissedCards() && (
+              <p>
+                Click{" "}
+                <a
+                  href="/"
+                  onClick={(event) => {
+                    event.preventDefault();
+                    setup();
+                  }}
+                >
+                  here
+                </a>{" "}
+                to review what you skipped or missed.
+              </p>
+            )}
+            {areMoreCards && (
+              <p>
+                Click <a href="/">here</a> to learn something new.
+              </p>
+            )}
+          </Col>
+          <Col md={3} xs={1} />
+        </Row>
+      )}
     </Container>
   );
 }
