@@ -23,13 +23,13 @@ test("routes correctly and renders key pages", async () => {
 
   // verify page content for /profile route
   await user.click(getByText(/Profile/));
-  const profileLink = getByText(/Your lovely profile is here/i);
-  expect(profileLink).toBeInTheDocument();
+  const profileContent = getByText(/Your Progress/i, {selector: 'h2'});
+  expect(profileContent).toBeInTheDocument();
 
   // verify page content for /help route
   await user.click(getByText(/Help/));
-  const helpLink = getByText(/Frequently Asked Questions/i);
-  expect(helpLink).toBeInTheDocument();
+  const helpContent = getByText(/Frequently Asked Questions/i);
+  expect(helpContent).toBeInTheDocument();
 });
 
 test("renders error page when route is not found", () => {

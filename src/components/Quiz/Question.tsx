@@ -2,6 +2,7 @@ import React, { SetStateAction, useEffect, useState } from "react";
 import { FloatingLabel, Form, Row } from "react-bootstrap";
 
 import { QuestionItem } from "../Card";
+import { QuizFormValues } from "./QuizForm";
 
 export type QuestionType = "multiple-choice" | "fill-in-the-blank";
 
@@ -9,7 +10,7 @@ export interface QuestionProps {
   questionItem: QuestionItem;
   questionIndex: number;
   formValues: object;
-  setFormValues: React.Dispatch<SetStateAction<object>>;
+  setFormValues: React.Dispatch<SetStateAction<QuizFormValues>>;
 }
 
 export function Question({
