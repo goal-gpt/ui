@@ -72,7 +72,7 @@ describe("Profile", () => {
 
     it("displays the amount of consumed content when at least one quiz is completed", () => {
       const consumedContentElement = getByTextHTMLElement(
-        /amount of consumed content: over 200 words/i
+        /amount of tested content: over 200 words/i
       );
       expect(consumedContentElement).toBeInTheDocument();
     });

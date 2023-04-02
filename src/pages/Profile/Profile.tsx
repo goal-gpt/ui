@@ -81,7 +81,7 @@ function Profile(props: ProfileProps) {
               ))}
             </ListGroup.Item>
             <ListGroup.Item>
-              Amount of consumed content:{" over "}
+              Amount of tested content:{" over "}
               {Math.round(wordCount / 100) * 100} words
             </ListGroup.Item>
           </ListGroup>
