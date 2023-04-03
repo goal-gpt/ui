@@ -49,7 +49,7 @@
     "lint": "eslint ./ --color",
     "lint-fix": "eslint --fix --ext .js,.jsx,.ts,.tsx .",
     "lint-staged": "lint-staged --config lint-staged.config.js",
-    "prepare": "husky install && chmod ug+x .husky/*"
+    "prepare": "husky install"
   },
   "eslintConfig": {
     "extends": [
