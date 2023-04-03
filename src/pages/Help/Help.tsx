@@ -53,7 +53,7 @@ function Help() {
         <Row className="mb-3">
           <Col lg={2} md={1} sm={0} />
           <Col className="d-flex align-items-center justify-content-center">
-            <h1>Frequently Asked Questions</h1>
+            <h1 className="text-center">Frequently Asked Questions</h1>
           </Col>
           <Col lg={2} md={1} sm={0} />
         </Row>

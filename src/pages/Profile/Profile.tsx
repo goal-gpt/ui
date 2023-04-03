@@ -1,7 +1,7 @@
 import "./Profile.scss";
 
 import React, { useEffect, useState } from "react";
-import { Container, ListGroup } from "react-bootstrap";
+import { Col, Container, ListGroup, Row } from "react-bootstrap";
 
 import { CardItemData } from "../../components/Card";
 import { MainHeader } from "../../components/MainHeader";
@@ -63,34 +63,40 @@ function Profile(props: ProfileProps) {
     <>
       <MainHeader />
       <Container>
-        <h2>Your Progress</h2>
-        {(hasMetrics && (
-          <ListGroup>
-            <ListGroup.Item>
-              # of quizzes completed: {completedCards.length}
-            </ListGroup.Item>
-            <ListGroup.Item>
-              # of categories covered: {Object.keys(categoriesCounts).length}
-            </ListGroup.Item>
-            <ListGroup.Item>
-              # of quizzes per covered category:
-              {Object.keys(categoriesCounts).map((category) => (
-                <li key={category}>
-                  {category}: {categoriesCounts[category as keyof object]}
-                </li>
-              ))}
-            </ListGroup.Item>
-            <ListGroup.Item>
-              Amount of tested content:{" over "}
-              {Math.round(wordCount / 100) * 100} words
-            </ListGroup.Item>
-          </ListGroup>
-        )) || (
-          <p>
-            Once you&apos;ve completed some quizzes, come back here to track
-            your progress!
-          </p>
-        )}
+        <Row className="mb-3">
+          <Col className="d-flex align-items-center justify-content-center">
+            <h1 className="text-center">Your Progress</h1>
+          </Col>
+        </Row>
+        <Row>
+          {(hasMetrics && (
+            <ListGroup>
+              <ListGroup.Item>
+                # of quizzes completed: {completedCards.length}
+              </ListGroup.Item>
+              <ListGroup.Item>
+                # of categories covered: {Object.keys(categoriesCounts).length}
+              </ListGroup.Item>
+              <ListGroup.Item>
+                # of quizzes per covered category:
+                {Object.keys(categoriesCounts).map((category) => (
+                  <li key={category}>
+                    {category}: {categoriesCounts[category as keyof object]}
+                  </li>
+                ))}
+              </ListGroup.Item>
+              <ListGroup.Item>
+                Amount of tested content:{" over "}
+                {Math.round(wordCount / 100) * 100} words
+              </ListGroup.Item>
+            </ListGroup>
+          )) || (
+            <p>
+              Once you&apos;ve completed some quizzes, come back here to track
+              your progress!
+            </p>
+          )}
+        </Row>
       </Container>
     </>
   );
