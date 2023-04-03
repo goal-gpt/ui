@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Card } from "react-bootstrap";
 import TinderCard from "react-tinder-card";
 
@@ -28,16 +28,11 @@ export interface CardItemProps {
   data: CardItemData;
   apiRef: React.RefObject<API>;
   handleSwipe: (direction: string) => void;
-  handleLeftScreen: (direction: string) => void;
 }
 
-export function CardItem({
-  data,
-  apiRef,
-  handleSwipe,
-  handleLeftScreen,
-}: CardItemProps) {
+export function CardItem({ data, apiRef, handleSwipe }: CardItemProps) {
   const { link, imgSrc, title, text } = data;
+  const [isHidden, setIsHidden] = useState(false);
 
   const getTruncatedTitle = (): string => {
     const truncatableLength = title.length;
@@ -84,9 +79,9 @@ export function CardItem({
   return (
     <TinderCard
       ref={apiRef}
-      className="swipe"
+      className={`swipe ${isHidden ? "hidden" : ""}`}
       onSwipe={handleSwipe}
-      onCardLeftScreen={handleLeftScreen}
+      onCardLeftScreen={() => setIsHidden(true)}
       swipeRequirementType="position"
     >
       <Card className="user-select-none card-item" role="listitem">
