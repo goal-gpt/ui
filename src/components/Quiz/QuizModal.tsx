@@ -60,6 +60,9 @@ export function QuizModal({ card, show, handleClose }: QuizModalProps) {
       show={show}
       backdrop="static"
       keyboard={false}
+      centered
+      scrollable
+      fullscreen="md-down"
     >
       <Modal.Header closeButton>
         <Modal.Title>{message}</Modal.Title>

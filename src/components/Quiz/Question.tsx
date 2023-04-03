@@ -82,13 +82,8 @@ export function Question({
       )}
       {questionType === "fill-in-the-blank" && (
         // TODO: make creating the blank case-insensitive
-        <Form.Group
-          className="mb-3"
-          controlId={`quiz-question-${questionIndex}-fib`}
-        >
-          <Form.Label
-            htmlFor={`${questionItem.question} ${questionItem.correctAnswer}`}
-          >
+        <Form.Group className="mb-3">
+          <Form.Label>
             <div className="mb-3">
               {questionIndex + 1}.{" "}
               {questionItem.question.replace(
@@ -102,7 +97,6 @@ export function Question({
             label="Your answer"
           >
             <Form.Control
-              id={`${questionItem.question} ${questionItem.correctAnswer}`}
               name={questionItem.question}
               onChange={(e) => {
                 // Set value for this questionItem

@@ -129,7 +129,6 @@ export function CardList({
             key={card.link}
             data={card}
             handleSwipe={(dir: string) => swiped(dir, index)}
-            handleLeftScreen={() => ""}
           />
         ))}
       </Row>
