@@ -10,7 +10,12 @@ export function Button({ children, ...props }: ButtonProps): JSX.Element {
   const textColorClass = `text-${variant}-contrast`;
 
   return (
-    <BootstrapButton variant={variant} className={textColorClass} {...props}>
+    <BootstrapButton
+      variant={variant}
+      className={textColorClass}
+      style={{ height: "100%", width: "100%" }}
+      {...props}
+    >
       {children}
     </BootstrapButton>
   );
