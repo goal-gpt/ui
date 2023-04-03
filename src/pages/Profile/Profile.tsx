@@ -84,7 +84,7 @@ function Profile(props: ProfileProps) {
                   # of quizzes per covered category:
                   {Object.keys(categoriesCounts).map((category) => (
                     <li key={category}>
-                      {category}: {categoriesCounts[category as keyof object]}
+                      {category}: {categoriesCounts[category]}
                     </li>
                   ))}
                 </ListGroup.Item>
