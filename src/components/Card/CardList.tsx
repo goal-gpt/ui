@@ -158,13 +158,19 @@ export function CardList({
           <Row className="mt-3 justify-content-between">
             <Col md={3} xs={1} />
             <Col className="d-flex align-items-center justify-content-center">
-              <Button onClick={() => swipe("left")}>{"<"} Left to skip!</Button>
+              <Button aria-label="left-button" onClick={() => swipe("left")}>
+                {"<"} Left to skip!
+              </Button>
             </Col>
             {/* <Col>
       <Button onClick={() => goBack()}>Undo swipe!</Button>
     </Col> */}
             <Col className="d-flex align-items-center justify-content-center">
-              <Button onClick={() => swipe("right")} variant="secondary">
+              <Button
+                onClick={() => swipe("right")}
+                variant="secondary"
+                aria-label="right-button"
+              >
                 Right for a quiz! {">"}
               </Button>
             </Col>
@@ -177,13 +183,14 @@ export function CardList({
           <Col>
             <p>
               Looks like you&apos;ve reached the end. Please check back later.
-              We are constantly adding new content!
+              We add new content regularly!
             </p>
             {areSkippedOrMissedCards() && (
               <p>
                 Click{" "}
                 <a
                   href="/"
+                  aria-label="review-link"
                   onClick={(event) => {
                     event.preventDefault();
                     setup();
@@ -196,7 +203,11 @@ export function CardList({
             )}
             {areMoreCards && (
               <p>
-                Click <a href="/">here</a> to learn something new.
+                Click{" "}
+                <a href="/" aria-label="all-categories-link">
+                  here
+                </a>{" "}
+                to learn something new.
               </p>
             )}
           </Col>

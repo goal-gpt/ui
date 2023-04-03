@@ -1,4 +1,4 @@
-import { render } from "@testing-library/react";
+import { fireEvent, render } from "@testing-library/react";
 import React from "react";
 import * as ReactRouterDOM from "react-router-dom";
 
@@ -66,8 +66,93 @@ describe("CardList component", () => {
     );
   });
 
-  it("adds a card link to localstorage when card item is swiped", () => {
-    // TODO
+  describe("there are no more cards to show", () => {
+    beforeEach(() => {
+      const params = { category: "category-3" };
+      jest.spyOn(ReactRouterDOM, "useParams").mockReturnValue(params);
+    });
+
+    it("displays a message about reaching the end", () => {
+      const { getByRole, getByLabelText, getByText } = render(
+        <CardList {...mockCardListProps} />
+      );
+      const cardItems = getByRole("list");
+      const leftButton = getByLabelText("left-button");
+
+      for (let index = 0; index < cardItems.childNodes.length; index++) {
+        fireEvent.click(leftButton);
+      }
+
+      const reachedTheEndText = getByText(
+        "Looks like you've reached the end. Please check back later. We add new content regularly!"
+      );
+
+      expect(reachedTheEndText).toBeInTheDocument();
+    });
+
+    it("provides a link to reset skipped or missed cards if cards have been skipped", () => {
+      const { getByRole, getByLabelText, queryByLabelText } = render(
+        <CardList {...mockCardListProps} />
+      );
+      const cardItems = getByRole("list");
+      const leftButton0 = getByLabelText("left-button");
+
+      for (let index = 0; index < cardItems.childNodes.length; index++) {
+        fireEvent.click(leftButton0);
+      }
+      const leftButtonAfterSkips = queryByLabelText("left-button");
+
+      expect(leftButtonAfterSkips).toBeNull();
+      const reviewLink = getByLabelText("review-link");
+      expect(reviewLink).toBeInTheDocument();
+
+      fireEvent.click(reviewLink);
+      const leftButtonAfterClickingReviewLink = getByLabelText("left-button");
+      expect(leftButtonAfterClickingReviewLink).toBeInTheDocument();
+    });
+
+    it("provides a link to reset skipped or missed cards if cards have been missed", () => {
+      // TODO
+    });
+
+    it("provides a link to uncompleted cards in all categories if there are any uncompleted cards in other categories", () => {
+      const { getByRole, getByLabelText } = render(
+        <CardList {...mockCardListProps} />
+      );
+      const cardItems = getByRole("list");
+      const leftButton0 = getByLabelText("left-button");
+
+      for (let index = 0; index < cardItems.childNodes.length; index++) {
+        fireEvent.click(leftButton0);
+      }
+
+      const allCategoriesLink = getByLabelText("all-categories-link");
+      expect(allCategoriesLink).toBeInTheDocument();
+
+      fireEvent.click(allCategoriesLink);
+      // TODO: test that after the clicking the link, user is routed to view with cards in all categories with uncompleted cards
+    });
+
+    it("does not provide a link to uncompleted cards in all categories if there are no uncompleted cards in other categories", () => {
+      // Mock that the first card item, which is not category-3, is completed
+      // So there are no uncompleted cards in other categories
+      jest
+        .spyOn(Object.getPrototypeOf(window.localStorage), "getItem")
+        .mockReturnValue(JSON.stringify([cardItemData[0].link]));
+
+      const { getByRole, getByLabelText, queryByLabelText } = render(
+        <CardList {...mockCardListProps} />
+      );
+      const cardItems = getByRole("list");
+      const leftButton0 = getByLabelText("left-button");
+
+      for (let index = 0; index < cardItems.childNodes.length; index++) {
+        fireEvent.click(leftButton0);
+      }
+
+      const allCategoriesLink = queryByLabelText("all-categories-link");
+      expect(allCategoriesLink).toBeNull();
+    });
   });
 
   // it("calls the onSwipe function when a card is swiped", () => {
