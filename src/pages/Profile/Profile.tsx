@@ -69,33 +69,38 @@ function Profile(props: ProfileProps) {
           </Col>
         </Row>
         <Row>
-          {(hasMetrics && (
-            <ListGroup>
-              <ListGroup.Item>
-                # of quizzes completed: {completedCards.length}
-              </ListGroup.Item>
-              <ListGroup.Item>
-                # of categories covered: {Object.keys(categoriesCounts).length}
-              </ListGroup.Item>
-              <ListGroup.Item>
-                # of quizzes per covered category:
-                {Object.keys(categoriesCounts).map((category) => (
-                  <li key={category}>
-                    {category}: {categoriesCounts[category as keyof object]}
-                  </li>
-                ))}
-              </ListGroup.Item>
-              <ListGroup.Item>
-                Amount of tested content:{" over "}
-                {Math.round(wordCount / 100) * 100} words
-              </ListGroup.Item>
-            </ListGroup>
-          )) || (
-            <p>
-              Once you&apos;ve completed some quizzes, come back here to track
-              your progress!
-            </p>
-          )}
+          <Col lg={2} md={1} sm={0} />
+          <Col>
+            {(hasMetrics && (
+              <ListGroup>
+                <ListGroup.Item>
+                  # of quizzes completed: {completedCards.length}
+                </ListGroup.Item>
+                <ListGroup.Item>
+                  # of categories covered:{" "}
+                  {Object.keys(categoriesCounts).length}
+                </ListGroup.Item>
+                <ListGroup.Item>
+                  # of quizzes per covered category:
+                  {Object.keys(categoriesCounts).map((category) => (
+                    <li key={category}>
+                      {category}: {categoriesCounts[category]}
+                    </li>
+                  ))}
+                </ListGroup.Item>
+                <ListGroup.Item>
+                  Amount of tested content:{" over "}
+                  {Math.round(wordCount / 100) * 100} words
+                </ListGroup.Item>
+              </ListGroup>
+            )) || (
+              <p>
+                Once you&apos;ve completed some quizzes, come back here to track
+                your progress!
+              </p>
+            )}
+          </Col>
+          <Col lg={2} md={1} sm={0} />
         </Row>
       </Container>
     </>
