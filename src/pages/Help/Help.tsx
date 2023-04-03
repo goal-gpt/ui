@@ -2,49 +2,100 @@ import "./Help.scss";
 
 import React from "react";
 import { Accordion, Col, Container, Row } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 import { MainHeader } from "../../components/MainHeader";
 
 type FAQItem = {
   id: string;
   title: string;
-  body: string;
+  body: JSX.Element;
 };
 
 const faqs: FAQItem[] = [
   {
     id: "1",
     title: "What is eras?",
-    body: "eras is a tool to aid you with your financial literacy journey. Our app aims to make it financial education content fun, targeted and rewarding.\nOur app is currently in beta. If you have any feedback, please email us at eras.fyi@gmail.com!",
+    body: (
+      <>
+        <p>
+          eras is a tool to aid you with your financial literacy journey. Our
+          app aims to make it financial education content fun, targeted and
+          rewarding.
+        </p>
+        <p>
+          Our app is currently in beta. If you have any feedback, please email
+          us at <Link to="mailto:eras.fyi@gmail.com">eras.fyi@gmail.com</Link>!
+        </p>
+      </>
+    ),
   },
   {
     id: "2",
     title: "How do I use eras?",
-    body: "To use eras, simply start swiping through our content! If an article interests you, swipe right. If it doesn't, swipe left.\nOnce you swiped right, you will be presented with a quiz. After you've read the article, come back and answer the questions!",
+    body: (
+      <>
+        <p>
+          To use eras, simply start swiping through our content! If an article
+          interests you, swipe right. If it doesn&apos;t, swipe left.
+        </p>
+        <p>
+          Once you swiped right, you will be presented with a quiz. After
+          you&apos;ve read the article, come back and answer the questions!
+        </p>
+      </>
+    ),
   },
   {
     id: "3",
     title: "How can I see the articles I've attempted before?",
-    body: "This is a feature we're working on! We will update the profile page with your progress, attempts and scores.",
+    body: (
+      <p>
+        This is a feature we&apos;re working on! We will update the profile page
+        with your progress, attempts and scores.
+      </p>
+    ),
   },
   {
     id: "4",
     title: "My answers were correct. How come I was told I was wrong?",
-    body: "We're sorry to hear that! We're still in beta, so we're working on improving our quiz questions and answers. If you think a question was buggy, please email us at eras.fyi@gmail.com and we'll look into it.",
+    body: (
+      <p>
+        We&apos;re sorry to hear that! We&apos;re still in beta, so we&apos;re
+        working on improving our quiz questions and answers. If you think a
+        question was buggy, please email us at{" "}
+        <Link to="mailto:eras.fyi@gmail.com">eras.fyi@gmail.com</Link> and
+        we&apos;ll look into it.
+      </p>
+    ),
   },
   {
     id: "5",
     title: "I have other feedback to share. How can I do that?",
-    body: "We'd love to hear from you! Please email us at eras.fyi@gmail.com. Thank you so much for your support!",
+    body: (
+      <p>
+        We&apos;d love to hear from you! Please email us at{" "}
+        <Link to="mailto:eras.fyi@gmail.com">eras.fyi@gmail.com</Link>. Thank
+        you so much for your support!
+      </p>
+    ),
   },
   {
     id: "6",
     title: "What is on the roadmap for eras?",
-    body: "We're working on adding more content and improving the user experience. We're still working on getting the core features out, which will be required before we start building even cooler features to make learning fun and rewarding. Stay tuned for our updates!",
+    body: (
+      <p>
+        We&apos;re working on adding more content and improving the user
+        experience. We&apos;re still working on getting the core features out,
+        which will be required before we start building even cooler features to
+        make learning fun and rewarding. Stay tuned for our updates!
+      </p>
+    ),
   },
 ];
 
-// TODO: this serves as public documentation of our app. Features such as the 'undo' button should be added when they are implemented.
+// Note: this serves as public documentation of our app, let's update it regularly.
+// TODO: Features such as the 'undo' button should be added when they are implemented.
 function Help() {
   return (
     <div className="help">
