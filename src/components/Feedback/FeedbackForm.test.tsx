@@ -1,16 +1,16 @@
 import "@testing-library/jest-dom/extend-expect";
 
-import emailjs from "@emailjs/browser";
+// import emailjs from "@emailjs/browser";
 import { fireEvent, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import React from "react";
 
-import { logger } from "../../utils/logger";
+import { logger, sendEmailJS } from "../../utils";
 import { renderWithRouter } from "../../utils/testHelpers";
 import { FeedbackForm, FeedbackFormProps } from "./FeedbackForm";
 
-jest.mock("@emailjs/browser");
-const emailjsMock = emailjs.send as jest.MockedFunction<typeof emailjs.send>;
+jest.mock("../../utils/email");
+const emailjsMock = sendEmailJS as jest.MockedFunction<typeof sendEmailJS>;
 
 jest.mock("../../utils/logger");
 const loggerMock = logger.info as jest.MockedFunction<typeof logger.info>;
@@ -131,12 +131,11 @@ describe("FeedbackForm", () => {
 
     await waitFor(() => {
       expect(emailjsMock).toHaveBeenCalledTimes(1);
-      expect(emailjsMock).toHaveBeenCalledWith(
-        "test_service",
-        "test_template",
-        { comments: "Great quiz!", quiz: "test", rating: "none" },
-        "test_id"
-      );
+      expect(emailjsMock).toHaveBeenCalledWith({
+        comments: "Great quiz!",
+        quiz: "test",
+        rating: "none",
+      });
     });
     expect(loggerMock).toHaveBeenCalledWith("SUCCESS!", 200, "OK");
     await waitFor(() => expect(commentsInput).toHaveValue(""));

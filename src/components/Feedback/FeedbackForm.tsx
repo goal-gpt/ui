@@ -1,4 +1,3 @@
-import emailjs from "@emailjs/browser";
 import React, { ChangeEvent, FormEvent, useState } from "react";
 import { Col, FloatingLabel, Form, Row, Spinner } from "react-bootstrap";
 import {
@@ -8,7 +7,7 @@ import {
   HandThumbsUpFill,
 } from "react-bootstrap-icons";
 
-import { logger } from "../../utils/logger";
+import { logger, sendEmailJS } from "../../utils";
 import { Button } from "../Button";
 
 export interface FeedbackFormProps {
@@ -69,19 +68,8 @@ export function FeedbackForm({ quiz }: FeedbackFormProps) {
     event.preventDefault();
     setLoading(true);
 
-    // EmailJS configuration
-    const serviceID = process.env.REACT_APP_EMAILJS_SERVICE_ID || "";
-    const templateID = process.env.REACT_APP_EMAILJS_TEMPLATE_ID || "";
-    const userID = process.env.REACT_APP_EMAILJS_USER_ID || "";
-
     try {
-      const response = await emailjs.send(
-        serviceID,
-        templateID,
-        { ...formData, quiz },
-        userID
-      );
-
+      const response = await sendEmailJS({ ...formData, quiz });
       logger.info("SUCCESS!", response.status, response.text);
       setFormData({ rating: "none", comments: "" });
     } catch (err) {
