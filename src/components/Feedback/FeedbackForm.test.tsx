@@ -38,9 +38,7 @@ describe("FeedbackForm", () => {
       <FeedbackForm {...defaultProps} />
     );
 
-    expect(
-      getByLabelText("Share your feedback on this quiz")
-    ).toBeInTheDocument();
+    expect(getByLabelText("Share your feedback")).toBeInTheDocument();
     expect(getByText("Submit")).toBeInTheDocument();
   });
 
@@ -100,7 +98,7 @@ describe("FeedbackForm", () => {
       renderWithRouter(<FeedbackForm quiz="test" />);
 
     const thumbsUp = getByRole("button", { name: /thumbs-up/i });
-    const comments = getByLabelText("Share your feedback on this quiz");
+    const comments = getByLabelText("Share your feedback");
     const submitButton = getByText("Submit");
 
     fireEvent.click(thumbsUp);
@@ -122,7 +120,7 @@ describe("FeedbackForm", () => {
       <FeedbackForm quiz="test" />
     );
 
-    const commentsInput = getByLabelText(/share your feedback on this quiz/i);
+    const commentsInput = getByLabelText(/share your feedback/i);
     fireEvent.change(commentsInput, { target: { value: "Great quiz!" } });
 
     const submitButton = getByRole("button", { name: /submit/i });
@@ -150,7 +148,7 @@ describe("FeedbackForm", () => {
       <FeedbackForm quiz="test" />
     );
 
-    const commentsInput = getByLabelText(/share your feedback on this quiz/i);
+    const commentsInput = getByLabelText(/share your feedback/i);
     fireEvent.change(commentsInput, { target: { value: "Great quiz!" } });
 
     const submitButton = getByRole("button", { name: /submit/i });

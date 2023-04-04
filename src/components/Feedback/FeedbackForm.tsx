@@ -1,7 +1,15 @@
 import "./FeedbackForm.scss";
 
 import React, { ChangeEvent, FormEvent, useState } from "react";
-import { Card, Col, FloatingLabel, Form, Row, Spinner } from "react-bootstrap";
+import {
+  Card,
+  Col,
+  Container,
+  FloatingLabel,
+  Form,
+  Row,
+  Spinner,
+} from "react-bootstrap";
 import {
   HandThumbsDown,
   HandThumbsDownFill,
@@ -92,59 +100,62 @@ export function FeedbackForm({ quiz }: FeedbackFormProps) {
   return (
     <Card className="my-4">
       <Form className="formBox" onSubmit={sendEmail}>
-        <Form.Group>
-          <Row className="mb-3">
-            <Col lg={2} md={1} sm={0} />
-            <Col className="d-flex align-items-center justify-content-center">
-              <ThumbIcon
-                IconComponent={HandThumbsUp}
-                FillIconComponent={HandThumbsUpFill}
-                currentRating={formData.rating}
-                rating="up"
-                onClick={handleThumbClick}
-                size={THUMB_SIZE}
+        <Container>
+          <Card.Title>How did you find this quiz?</Card.Title>
+          <Form.Group>
+            <Row className="my-3">
+              <Col lg={2} md={1} sm={0} />
+              <Col className="d-flex align-items-center justify-content-center">
+                <ThumbIcon
+                  IconComponent={HandThumbsUp}
+                  FillIconComponent={HandThumbsUpFill}
+                  currentRating={formData.rating}
+                  rating="up"
+                  onClick={handleThumbClick}
+                  size={THUMB_SIZE}
+                />
+              </Col>
+              <Col className="d-flex align-items-center justify-content-center">
+                <ThumbIcon
+                  IconComponent={HandThumbsDown}
+                  FillIconComponent={HandThumbsDownFill}
+                  currentRating={formData.rating}
+                  rating="down"
+                  onClick={handleThumbClick}
+                  size={THUMB_SIZE}
+                />
+              </Col>
+              <Col lg={2} md={1} sm={0} />
+            </Row>
+          </Form.Group>
+          <Form.Group>
+            <FloatingLabel
+              controlId="feedback-comments"
+              label="Share your feedback"
+            >
+              <Form.Control
+                type="text"
+                name="comments"
+                value={formData.comments}
+                onChange={handleCommentsChange}
+                placeholder="Your comments here"
+                role="textbox"
               />
-            </Col>
-            <Col className="d-flex align-items-center justify-content-center">
-              <ThumbIcon
-                IconComponent={HandThumbsDown}
-                FillIconComponent={HandThumbsDownFill}
-                currentRating={formData.rating}
-                rating="down"
-                onClick={handleThumbClick}
-                size={THUMB_SIZE}
-              />
-            </Col>
-            <Col lg={2} md={1} sm={0} />
-          </Row>
-        </Form.Group>
-        <Form.Group>
-          <FloatingLabel
-            controlId="feedback-comments"
-            label="Share your feedback on this quiz"
+            </FloatingLabel>
+          </Form.Group>
+          <Button
+            className="mt-3"
+            variant="secondary"
+            type="submit"
+            disabled={loading}
           >
-            <Form.Control
-              type="text"
-              name="comments"
-              value={formData.comments}
-              onChange={handleCommentsChange}
-              placeholder="Your comments here"
-              role="textbox"
-            />
-          </FloatingLabel>
-        </Form.Group>
-        <Button
-          className="mt-3"
-          variant="secondary"
-          type="submit"
-          disabled={loading}
-        >
-          {loading ? (
-            <Spinner animation="border" role="status" size="sm" />
-          ) : (
-            "Submit"
-          )}
-        </Button>
+            {loading ? (
+              <Spinner animation="border" role="status" size="sm" />
+            ) : (
+              "Submit"
+            )}
+          </Button>
+        </Container>
       </Form>
     </Card>
   );
