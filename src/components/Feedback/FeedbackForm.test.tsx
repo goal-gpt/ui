@@ -19,10 +19,17 @@ describe("FeedbackForm", () => {
   const defaultProps: FeedbackFormProps = {
     quiz: "sampleQuiz",
   };
+  const OLD_ENV = process.env;
 
   beforeEach(() => {
     emailjsMock.mockReset();
     loggerMock.mockReset();
+    jest.resetModules(); // Most important - it clears the cache
+    process.env = { ...OLD_ENV }; // Make a copy
+  });
+
+  afterAll(() => {
+    process.env = OLD_ENV; // Restore old environment
   });
 
   it("should render the form correctly", () => {
@@ -105,6 +112,9 @@ describe("FeedbackForm", () => {
   });
 
   it("should display a spinner while sending an email and clear the form on success", async () => {
+    process.env.REACT_APP_EMAILJS_SERVICE_ID = "test_service";
+    process.env.REACT_APP_EMAILJS_TEMPLATE_ID = "test_template";
+    process.env.REACT_APP_EMAILJS_USER_ID = "test_id";
     emailjsMock.mockResolvedValue({ status: 200, text: "OK" });
 
     const { getByRole, getByLabelText } = renderWithRouter(
@@ -119,7 +129,15 @@ describe("FeedbackForm", () => {
 
     expect(getByRole("status")).toBeInTheDocument();
 
-    await waitFor(() => expect(emailjsMock).toHaveBeenCalledTimes(1));
+    await waitFor(() => {
+      expect(emailjsMock).toHaveBeenCalledTimes(1);
+      expect(emailjsMock).toHaveBeenCalledWith(
+        "test_service",
+        "test_template",
+        { comments: "Great quiz!", quiz: "test", rating: "none" },
+        "test_id"
+      );
+    });
     expect(loggerMock).toHaveBeenCalledWith("SUCCESS!", 200, "OK");
     await waitFor(() => expect(commentsInput).toHaveValue(""));
   });
