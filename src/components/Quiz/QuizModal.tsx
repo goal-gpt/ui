@@ -5,6 +5,7 @@ import { Alert } from "react-bootstrap";
 import Modal from "react-bootstrap/Modal";
 
 import { CardItemData } from "../Card";
+import { FeedbackForm } from "../Feedback";
 import { QuizForm } from "./QuizForm";
 
 export interface QuizModalProps {
@@ -80,6 +81,7 @@ export function QuizModal({ card, show, handleClose }: QuizModalProps) {
           setShowGrade={setShowGrade}
           card={card}
         />
+        <FeedbackForm quiz={card?.link} />
         <Alert
           variant={isCompleted ? "success" : "warning"}
           onClose={() => {

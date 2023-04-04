@@ -1,8 +1,9 @@
-import React from "react";
 import { Matcher, SelectorMatcherOptions } from "@testing-library/react";
-import Profile from "./Profile";
-import { renderWithRouter } from "../../utils/testHelpers";
+import React from "react";
+
 import { cardItemData } from "../../services/mockCardItemData";
+import { renderWithRouter } from "../../utils/testHelpers";
+import Profile from "./Profile";
 
 describe("Profile", () => {
   it("renders the main header", () => {
@@ -36,7 +37,7 @@ describe("Profile", () => {
         .map((card) => card.link);
 
       jest
-        .spyOn(window.localStorage.__proto__, "getItem")
+        .spyOn(Object.getPrototypeOf(window.localStorage), "getItem")
         .mockReturnValue(JSON.stringify(completedCardLinks));
 
       const { getByText } = renderWithRouter(
