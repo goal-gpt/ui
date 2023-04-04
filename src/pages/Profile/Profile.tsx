@@ -94,7 +94,7 @@ function Profile(props: ProfileProps) {
                 </ListGroup.Item>
               </ListGroup>
             )) || (
-              <p>
+              <p className="text-center">
                 Once you&apos;ve completed some quizzes, come back here to track
                 your progress!
               </p>
