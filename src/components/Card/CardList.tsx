@@ -28,7 +28,7 @@ export function CardList({
   const [cards, setCards] = useState<CardItemData[]>([]);
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const currentIndexRef = useRef(currentIndex);
-  const [skipped, setSkipped] = useState<boolean>(false);
+  const [anySkipped, setAnySkipped] = useState<boolean>(false);
   const [areMoreCards, setAreMoreCards] = useState<boolean>(false);
 
   const getCompletedContentLinks = (): string[] => {
@@ -82,7 +82,7 @@ export function CardList({
     updateCurrentIndex(index - 1);
     if (direction === "left" || direction === "down") {
       removeCard(cards[index]);
-      setSkipped(true);
+      setAnySkipped(true);
     } else {
       selectCard(cards[index]);
     }
@@ -111,11 +111,11 @@ export function CardList({
       );
     setCards(cardsToShow.sort(() => Math.random() - 0.5));
     setCurrentIndex(cardsToShow.length - 1);
-    setSkipped(false);
+    setAnySkipped(false);
   };
 
   const areSkippedOrMissedCards = (): boolean => {
-    if (skipped) return skipped;
+    if (anySkipped) return anySkipped;
 
     const linksToShow = cards.map((card) => card.link);
     const completedCardLinks = getCompletedContentLinks();
