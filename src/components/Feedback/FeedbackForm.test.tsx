@@ -24,12 +24,13 @@ describe("FeedbackForm", () => {
   beforeEach(() => {
     emailjsMock.mockReset();
     loggerMock.mockReset();
-    jest.resetModules(); // Most important - it clears the cache
+    jest.resetModules();
     process.env = { ...OLD_ENV }; // Make a copy
   });
 
   afterAll(() => {
     process.env = OLD_ENV; // Restore old environment
+    jest.clearAllMocks();
   });
 
   it("should render the form correctly", () => {
