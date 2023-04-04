@@ -1,6 +1,6 @@
 import emailjs from "@emailjs/browser";
 import React, { ChangeEvent, FormEvent, useState } from "react";
-import { Col, FloatingLabel, Form, Row } from "react-bootstrap";
+import { Col, FloatingLabel, Form, Row, Spinner } from "react-bootstrap";
 import {
   HandThumbsDown,
   HandThumbsDownFill,
@@ -61,10 +61,13 @@ export function FeedbackForm({ quiz }: FeedbackFormProps) {
     rating: "none",
     comments: "",
   });
+  const [loading, setLoading] = useState<boolean>(false);
+
   const THUMB_SIZE = 32;
 
   const sendEmail = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setLoading(true);
 
     // EmailJS configuration
     const serviceID = process.env.REACT_APP_EMAILJS_SERVICE_ID || "";
@@ -75,14 +78,16 @@ export function FeedbackForm({ quiz }: FeedbackFormProps) {
       const response = await emailjs.send(
         serviceID,
         templateID,
-        { formData, quiz },
+        { ...formData, quiz },
         userID
       );
 
       logger.info("SUCCESS!", response.status, response.text);
-      // onFormSubmitted();
+      setFormData({ rating: "none", comments: "" });
     } catch (err) {
       logger.info("FAILED...", err);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -137,8 +142,17 @@ export function FeedbackForm({ quiz }: FeedbackFormProps) {
           />
         </FloatingLabel>
       </Form.Group>
-      <Button className="mt-3" variant="secondary" type="submit">
-        Submit
+      <Button
+        className="mt-3"
+        variant="secondary"
+        type="submit"
+        disabled={loading}
+      >
+        {loading ? (
+          <Spinner animation="border" role="status" size="sm" />
+        ) : (
+          "Submit"
+        )}
       </Button>
     </Form>
   );

@@ -1,17 +1,29 @@
-// FeedbackForm.test.tsx
 import "@testing-library/jest-dom/extend-expect";
 
+import emailjs from "@emailjs/browser";
 import { fireEvent, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import React from "react";
 
+import { logger } from "../../utils/logger";
 import { renderWithRouter } from "../../utils/testHelpers";
 import { FeedbackForm, FeedbackFormProps } from "./FeedbackForm";
+
+jest.mock("@emailjs/browser");
+const emailjsMock = emailjs.send as jest.MockedFunction<typeof emailjs.send>;
+
+jest.mock("../../utils/logger");
+const loggerMock = logger.info as jest.MockedFunction<typeof logger.info>;
 
 describe("FeedbackForm", () => {
   const defaultProps: FeedbackFormProps = {
     quiz: "sampleQuiz",
   };
+
+  beforeEach(() => {
+    emailjsMock.mockReset();
+    loggerMock.mockReset();
+  });
 
   it("should render the form correctly", () => {
     const { getByLabelText, getByText } = renderWithRouter(
@@ -90,5 +102,43 @@ describe("FeedbackForm", () => {
     await waitFor(() => {
       expect(queryByText("This is a test comment.")).not.toBeInTheDocument();
     });
+  });
+
+  it("should display a spinner while sending an email and clear the form on success", async () => {
+    emailjsMock.mockResolvedValue({ status: 200, text: "OK" });
+
+    const { getByRole, getByLabelText } = renderWithRouter(
+      <FeedbackForm quiz="test" />
+    );
+
+    const commentsInput = getByLabelText(/share your feedback on this quiz/i);
+    fireEvent.change(commentsInput, { target: { value: "Great quiz!" } });
+
+    const submitButton = getByRole("button", { name: /submit/i });
+    fireEvent.click(submitButton);
+
+    expect(getByRole("status")).toBeInTheDocument();
+
+    await waitFor(() => expect(emailjsMock).toHaveBeenCalledTimes(1));
+    expect(loggerMock).toHaveBeenCalledWith("SUCCESS!", 200, "OK");
+    await waitFor(() => expect(commentsInput).toHaveValue(""));
+  });
+
+  it("should log an error message if sending the email fails", async () => {
+    const error = new Error("Send email failed");
+    emailjsMock.mockRejectedValue(error);
+
+    const { getByRole, getByLabelText } = renderWithRouter(
+      <FeedbackForm quiz="test" />
+    );
+
+    const commentsInput = getByLabelText(/share your feedback on this quiz/i);
+    fireEvent.change(commentsInput, { target: { value: "Great quiz!" } });
+
+    const submitButton = getByRole("button", { name: /submit/i });
+    fireEvent.click(submitButton);
+
+    await waitFor(() => expect(emailjsMock).toHaveBeenCalledTimes(1));
+    expect(loggerMock).toHaveBeenCalledWith("FAILED...", error);
   });
 });
