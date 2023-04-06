@@ -69,11 +69,12 @@ export function QuizModal({ card, show, handleClose }: QuizModalProps) {
         <Modal.Title>{message}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <h4 className="my-2">Click on the link to read the article: </h4>
-        <h2>{card?.title}</h2>
-        <a href={card?.link} target="_blank" rel="noreferrer">
-          {card?.link}
-        </a>
+        <h4 className="my-2">Click here to learn: </h4>
+        <h2>
+          <a href={card?.link} target="_blank" rel="noreferrer">
+            {card?.title}
+          </a>
+        </h2>
         <hr />
         <h3>Quiz</h3>
         <QuizForm
@@ -81,7 +82,6 @@ export function QuizModal({ card, show, handleClose }: QuizModalProps) {
           setShowGrade={setShowGrade}
           card={card}
         />
-        <FeedbackForm quiz={card?.link} />
         <Alert
           variant={isCompleted ? "success" : "warning"}
           onClose={() => {
@@ -107,6 +107,7 @@ export function QuizModal({ card, show, handleClose }: QuizModalProps) {
             </p>
           )}
         </Alert>
+        <FeedbackForm quiz={card?.link} />
       </Modal.Body>
     </Modal>
   );
