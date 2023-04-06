@@ -66,9 +66,7 @@ describe("Question", () => {
         <Question {...questionProps} />
       );
 
-      expect(
-        getByText("1. The capital of France is __________.")
-      ).toBeInTheDocument();
+      expect(getByText("1. The capital of France is .")).toBeInTheDocument();
       expect(getByLabelText("Your answer")).toBeInTheDocument();
     });
 

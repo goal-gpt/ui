@@ -31,7 +31,7 @@ describe("QuizModal", () => {
 
   it("renders the quiz", () => {
     renderWithRouter(<QuizModal {...testProps} />);
-    const text = screen.getByText(/the article/i);
+    const text = screen.getByText(/click here to learn/i);
     expect(text).toBeInTheDocument();
   });
 
