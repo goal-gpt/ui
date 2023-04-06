@@ -48,13 +48,16 @@ export function Question({
     }
   }, []);
 
-  const blank = (
+  const blankSpan = (
     <span style={{ borderBottom: "1px solid" }}>
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     </span>
   );
 
-  const questionWithBlank = (question: string, answer: string): JSX.Element => {
+  const questionWithBlankSpan = (
+    question: string,
+    answer: string
+  ): JSX.Element => {
     const answerIndex = question.indexOf(answer);
     const questionBeforeBlank = question.substring(0, answerIndex);
     const questionAfterBlank = question.substring(answerIndex + answer.length);
@@ -62,10 +65,17 @@ export function Question({
     return (
       <>
         {questionBeforeBlank}
-        {blank}
+        {blankSpan}
         {questionAfterBlank}
       </>
     );
+  };
+
+  const getQuestionWithBlankUnderscores = (
+    question: string,
+    answer: string
+  ): string => {
+    return question.replace(answer, "__________");
   };
 
   return (
@@ -81,7 +91,7 @@ export function Question({
             <Form.Check
               key={`${questionItem.question} ${response}`}
               type="radio"
-              id={`quiz-question-${questionIndex}-${i}`}
+              id={`quiz-question-${questionIndex}-mc-${i}`}
               label={response}
               value={response}
               name={questionItem.question}
@@ -106,18 +116,21 @@ export function Question({
           <Form.Label>
             <div className="mb-3">
               {questionIndex + 1}.{" "}
-              {questionWithBlank(
+              {questionWithBlankSpan(
                 questionItem.question,
                 questionItem.correctAnswer
               )}
             </div>
           </Form.Label>
           <FloatingLabel
-            controlId={`${questionItem.question} ${questionItem.correctAnswer}`}
+            controlId={`quiz-question-${questionIndex}-fib`}
             label="Your answer"
           >
             <Form.Control
-              name={questionItem.question}
+              name={getQuestionWithBlankUnderscores(
+                questionItem.question,
+                questionItem.correctAnswer
+              )}
               onChange={(e) => {
                 // Set value for this questionItem
                 setFormValue(e.target.value);
@@ -125,7 +138,7 @@ export function Question({
                 // Set values for the quiz
                 setFormValues({
                   ...formValues,
-                  [e.target.name]: e.target.value,
+                  [questionItem.question]: e.target.value,
                 });
               }}
               placeholder="Your answer here"
