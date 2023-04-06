@@ -643,7 +643,7 @@ export const cardItemData: CardItemData[] = [
     text: "Does compounding matter to your investment returns? HELL YES! Your contributions matter most but it's the power of compounding that leads to a wealth snowball. Want proof? Just look at these numbers...",
     categories: [
       "compounding",
-      "investment",
+      "investing",
       "saving",
       "wealth management",
       "retirement planning",
@@ -1009,7 +1009,6 @@ export const cardItemData: CardItemData[] = [
           "Coins with high market cap and clear use-case",
         ],
       },
-
       {
         question:
           "What coins does the author recommend investors focus on first?",
@@ -1020,7 +1019,6 @@ export const cardItemData: CardItemData[] = [
           "Stablecoins",
         ],
       },
-
       {
         question: "How can investors evaluate shitcoins?",
         correctAnswer: "By looking at the community and marketing efforts",
@@ -1030,7 +1028,6 @@ export const cardItemData: CardItemData[] = [
           "By looking at how long the coin has been around",
         ],
       },
-
       {
         question:
           "The author says that, in general, it is better to take profits out gradually.",
@@ -1059,13 +1056,11 @@ export const cardItemData: CardItemData[] = [
           "A type of credit card",
         ],
       },
-
       {
         question:
           "Bitcoin is a form of digital money. And the underlying technology that makes it possible is a blockchain.",
         correctAnswer: "digital money",
       },
-
       {
         question: "Where does new cryptocurrency come from?",
         correctAnswer: "From a large peer-to-peer network of computers",
@@ -1075,7 +1070,6 @@ export const cardItemData: CardItemData[] = [
           "From a centralized organization",
         ],
       },
-
       {
         question: "Who invented the blockchain?",
         correctAnswer: "C. Satoshi Nakamoto.",
@@ -1091,21 +1085,95 @@ export const cardItemData: CardItemData[] = [
       "https://hackernoon.imgix.net/hn-images/1*dcRQxEbvbfPa1ESsylcDng.png",
     title: "WTF is The Blockchain?",
     text: "Unless you’re hiding under the rock, I am sure you’d have heard of Bitcoins and Blockchain. After all, they are the trending and media’s favorite topics these days — the buzzwords of the year. Even the people who’ve never mined a cryptocurrency or understand how it works, are talking about it. I have more non-technical friends than technical ones. They have been bugging me for weeks to explain this new buzzword to them. I guess there are thousands out there who feel the same. And when that happens, there comes a time to write something to which everyone can point the other lost souls to — that’s the purpose of this post — written in plain english that any regular internet user understands.",
-    categories: [],
+    categories: ["blockchain", "crypto", "cryptocurrency", "decentralization"],
     length: 0,
     points: 0,
-    questionItems: [],
+    questionItems: [
+      {
+        question:
+          "What does transferring money mean in the context of blockchain?",
+        correctAnswer: "Making an entry in a register.",
+        incorrectAnswers: [
+          "Sending physical bills from one person to another.",
+          "Sending an email to a bank.",
+          "Calling a bank to request a transfer.",
+        ],
+      },
+      {
+        question:
+          "It is difficult to calculate the input given the output of a hashing function.",
+        correctAnswer: "difficult",
+      },
+      {
+        question:
+          "It is easy to verify if the predicted input yields the required output of a hashing function.",
+        correctAnswer: "verify",
+      },
+      {
+        question:
+          "What is the vulnerable reason why blockchains might collapse?",
+        correctAnswer:
+          "The assumption that the majority of a crowd is always honest",
+        incorrectAnswers: [
+          "The use of a magic machine",
+          "The calculation of the sealing number",
+          "The number of pages in a folder",
+        ],
+      },
+    ],
+    testedContent:
+      "WTF is The Blockchain? The ultimate 3500-word guide in plain English to understand Blockchain. Unless you're hiding under the rock, I am sure you'd have heard of Bitcoins and Blockchain. After all, they are the trending and media's favorite topics these days — the buzzwords of the year. Even the people who've never mined a cryptocurrency or understand how it works, are talking about it. I have more non-technical friends than technical ones. They have been bugging me for weeks to explain this new buzzword to them. I guess there are thousands out there who feel the same. And when that happens, there comes a time to write something to which everyone can point the other lost souls to — that's the purpose of this post — written in plain english that any regular internet user understands. By the way, I am curator of a weekly newsletter, Unmade, which delivers one idea from the future to your inboxes. Blockchain: why do we even need something this complex? \"For every complex problem there is an answer that is clear, simple, and wrong.\" — H. L. Mencken Unlike every other post on the internet, instead of first defining the Blockchain, we'll understand the problem it solves. Imagine, Joe is your best friend. He is traveling overseas, and on the fifth day of his vacation, he calls you and says, \"Dude, I need some money. I have run out of it.\" You reply, \"Sending some right away,\" and hung up. You then call your account manager at your bank and tell him, \"Please transfer $1000 from my account to Joe's account.\" Your account manager replies, \"Yes, sir.\" He opens up the register, checks your account balance to see if you have enough balance to transfer $1000 to Joe. Because you're a rich man, you have plenty; thus, he makes an entry in the register like the following: The Transaction Register Note: We're not talking about computers only to keep things simple. You call Joe and tell him, \"I've transferred the money. Next time, you'd go to your bank, you can withdraw the $1000 that I have just transferred.\" What just happened? You and Joe both trusted the bank to manage your money. There was no real movement of physical bills to transfer the money. All that was needed was an entry in the register. Or more precisely, an entry in the register that neither you nor Joe controls or owns. And that is the problem of the current systems. To establish trust between ourselves, we depend on individual third-parties. For years, we've depended on these middlemen to trust each other. You might ask, \"what is the problem depending on them?\" The problem is that they are singular in number. If a chaos has to be injected in the society, all it requires is one person/organization to go corrupt, intentionally or unintentionally. What if that register in which the transaction was logged gets burnt in a fire? What if, by mistake, your account manager had written $1500 instead of $1000? What if he did that on purpose? For years, we have been putting all our eggs in one basket and that too in someone else's. Could there be a system where we can still transfer money without needing the bank? To answer this question, we'll need to drill down further and ask ourselves a better question (after all, only better questions lead to better answers). Think about it for a second, what does transferring money means? Just an entry in the register. The better question would then be — Is there a way to maintain the register among ourselves instead of someone else doing it for us? Now, that is a question worth exploring. And the answer is what you might have already guessed. The blockchain is the answer to the profound question. It is a method to maintain that register among ourselves instead of depending on someone else to do it for us. Are you still with me? Good. Because now, when several questions have started popping in your mind, we will learn how this distributed register works. Yes, but tell me, how does it work? The requirement of this method is that there must be enough people who would like not to depend on a third-party. Only then this group can maintain the register on their own. \"It might make sense just to get some Bitcoin in case it catches on. If enough people think the same way, that becomes a self-fulfilling prophecy.\" — Satoshi Nakamoto in 2009 How many are enough? At least three. For our example, we will assume ten individuals want to give up on banks or any third-party. Upon mutual agreement, they have details of each other's accounts all the time — without knowing the other's identity. 1. An Empty Folder Everyone contains an empty folder with themselves to start with. As we'll progress, all these ten individuals will keep adding pages to their currently empty folders. And this collection of pages will form the register that tracks the transactions. 2. When A Transaction Happens Next, everyone in the network sits with a blank page and a pen in their hands. Everyone is ready to write any transaction that occurs within the system. Now, if #2 wants to send $10 to #9. To make the transaction, #2 shouts and tells everyone, \"I want to transfer $10 to #9. So, everyone, please make a note of it on your pages.\" Everyone checks whether #2 has enough balance to transfer $10 to #9. If she has enough balance, everyone then makes a note of the transaction on their blank pages. First transaction on the page The transaction is then considered to be complete. 3. Transactions Continue Happening As the time passes, more people in the network feel the need to transfer money to others. Whenever they want to make a transaction, they announce it to everyone else. As soon as a person listens to the announcement, (s)he writes it on his/her page. This exercise continues until everyone runs out of space on the current page. Assuming a page has space to record ten transactions, as soon as the tenth transaction is made, everybody runs out of the space. When page gets filled It's time to put the page away in the folder and bring out a new page and repeat the process from the step 2 above. 4. Putting Away The Page Before we put away the page in our folders, we need to seal it with a unique key that everyone in the network agrees upon. By sealing it, we will make sure that no one can make any changes to it once its copies have been put away in everyone's folder — not today, not tomorrow and not even after a year. Once in the folder, it will always stay in the folder — sealed. Moreover, if everyone trusts the seal, everyone trusts the contents of the page. And this sealing of the page is the crux of this method. [Jargon Box] It is called ‘mining' on the page to secure it, but for the simplicity of it, we'll keep calling it ‘sealing.' Earlier the third-party/middleman gave us the trust that whatever they have written in the register will never be altered. In a distributed and decentralized system like ours, this seal will provide the trust instead. Interesting! How do we seal the page then? Before we learn how we can seal the page, we'll know how the seal works, in general. And as a pre-requisite to it is learning about something that I like to call… The Magic Machine Imagine a machine surrounded by thick walls. If you send a box with something inside it from the left, it will spit out a box containing something else. [Jargon Box] This machine is called ‘Hash Function,' but we aren't in a mood to be too technical. So, for today, these are ‘The Magic Machines.' The Magic Machine (aka Hashing Function) Suppose, you send the number 4 inside it from the left, we'd find that it spat out the following word on its right: ‘dcbea.' How did it convert the number 4 to this word? No one knows. Moreover, it is an irreversible process. Given the word, ‘dcbea,' it is impossible to tell what the machine was fed on the left. But every time you'd feed the number 4 to the machine, it will always spit out the same word, ‘dcbea.' hash(4) == dcbea Given the word, ‘dcbea,' it is impossible to tell what the machine was fed on the left. But every time you'd feed the number 4 to the machine, it will always spit out the same word, ‘dcbea.' Let's try sending in a different number. How about 26? hash(26) == 94c8e We got ‘94c8e' this time. Interesting! So, the words can contain the numbers too. What if I ask you the following question now: \"Can you tell me what should I send from the left side of the machine such that I get a word that starts with three leading zeroes from the right side of it? For example, 000ab or 00098 or 000fa or anything among the others.\" Predicting the input Think about the question for a moment. I've told you the machine has a property that we cannot calculate what we must send from the left after we're given the expected output on the right. With such a machine given to us, how can we answer the question I asked? I can think of one method. Why not try every number in the universe one by one until we get a word that starts with three leading zeroes? Try everything to calculate the input Being optimistic, after several thousand attempts, we'll end up with a number that will yield the required output on the right. It was extremely difficult to calculate the input given the output. But at the same time, it will always be incredibly easy to verify if the predicted input yields the required output. Remember that the machine spits out the same word for a number every time. How difficult do you think the answer is if I give you a number, say 72533, and ask you the question, \"Does this number, when fed into the machine, yields a word that starts with three leading zeroes?\" All you need to do is, throw the number in the machine and see what did you get on the right side of it. That's it. The most important property of such machines is that — \"Given an output, it is extremely difficult to calculate the input, but given the input and the output, it is pretty easy to verify if the input leads to the output.\" We'll remember this one property of the Magic Machines (or Hash Functions) through the rest of the post: Given an output, it is extremely difficult to calculate the input, but given an input and output, it is pretty easy to verify if the input leads to the output. How to use these machines to seal a page? We'll use this magic machine to generate a seal for our page. Like always, we'll start with an imaginary situation. Imagine I give you two boxes. The first box contains the number 20893. I, then, ask you, \"Can you figure out a number that when added to the number in the first box and fed to the machine will give us a word that starts with three leading zeroes?\" This is a similar situation as we saw previously and we have learned that the only way to calculate such a number is by trying every number available in the entire universe. After several thousand attempts, we'll stumble upon a number, say 21191, which when added to 20893 (i.e. 21191 + 20893 = 42084) and fed to the machine, will yield a word that satisfies our requirements. In such a case, this number, 21191 becomes the seal for the number 20893. Assume there is a page that bears the number 20893 written on it. To seal that page (i.e. no one can change the contents of it), we will put a badge labeled ‘21191' on top of it. As soon as the sealing number (i.e. 21191) is stuck on the page, the page is sealed. The sealed number [Jargon Box] The sealing number is called ‘Proof Of Work,' meaning that this number is the proof that efforts had been made to calculate it. We are good with calling it ‘sealing number' for our purposes. If anyone wants to verify whether the page was altered, all he would have to do is — add the contents of the page with the sealing number and feed to the magic machine. If the machine gives out a word with three leading zeroes, the contents were untouched. If the word that comes out doesn't meet our requirements, we can throw away the page because its contents were compromised, and are of no use. We'll use a similar sealing mechanism to seal all our pages and eventually arrange them in our respective folders. Finally, sealing our page… To seal our page that contains the transactions of the network, we'll need to figure out a number that when appended to the list of transactions and fed to the machine, we get a word that starts with three leading zeroes on the right. Note: I have been using the phrase ‘word starting with three leading zeroes' only as an example. It illustrates how Hashing Functions work. The real challenges are much more complicated than this. Once that number is calculated after spending time and electricity on the machine, the page is sealed with that number. If ever, someone tries to change the contents of the page, the sealing number will allow anyone to verify the integrity of the page. Now that we know about sealing the page, we will go back to the time when we had finished writing the tenth transaction on the page, and we ran out of space to write more. As soon as everyone runs out of the page to write further transactions, they indulge in calculating the sealing number for the page so that it can be tucked away in the folder. Everyone in the network does the calculation. The first one in the network to figure out the sealing number announces it to everyone else. Immediately on hearing the sealing number, everyone verifies if it yields the required output or not. If it does, everyone labels their pages with this number and put it away in their folders. But what if for someone, say #7, the sealing number that was announced doesn't yield the required output? Such cases are not unusual. The possible reasons for this could be: He might have misheard the transactions that were announced in the network He might have miswritten the transactions that were announced in the network He might have tried to cheat or be dishonest when writing transactions, either to favor himself or someone else in the network No matter what the reason is, #7 has only one choice — to discard his page and copy it from someone else so that he too can put it in the folder. Unless he doesn't put his page in the folder, he cannot continue writing further transactions, thus, forbidding him to be part of the network. Whatever sealing number the majority agrees upon, becomes the honest sealing number. Then why does everyone spend resources doing the calculation when they know that someone else will calculate and announce it to them? Why not sit idle and wait for the announcement? Great question. This is where the incentives come in the picture. Everyone who is the part of the Blockchain is eligible for rewards. The first one to calculate the sealing number gets rewarded with free money for his efforts (i.e. expended CPU power and electricity). Simply imagine, if #5 calculates the sealing number of a page, he gets rewarded with some free money, say $1, that gets minted out of thin air. In other words, the account balance of #5 gets incremented with $1 without decreasing anyone else's account balance. That's how Bitcoin got into existence. It was the first currency to be transacted on a Blockchain (i.e. distributed registers). And in return, to keep the efforts going on in the network, people were awarded Bitcoins. When enough people possess Bitcoins, they grow in value, making other people wanting Bitcoins; making Bitcoins grow in value even further; making even more people wanting Bitcoins; making them grow in value even further; and so on. The rewards make everyone keep working in the network. And once everyone tucks away the page in their folders, they bring out a new blank page and repeat the whole process all over again — doing it forever. [Jargon Box] Think of a single page as a Block of transactions and the folder as the Chain of pages (Blocks), therefore, turning it into a Blockchain. And that, my friends, is how Blockchain works. Except that there's one tiny thing I didn't tell you. Yet. Imagine there are five pages in the folder already — all sealed with a sealing number. What if I go back to the second page and modify a transaction to favor myself? The sealing number will let anyone detect the inconsistency in the transactions, right? What if I go ahead and calculate a new sealing number too for the modified transactions and label the page with that instead? To prevent this problem of someone going back and modifying a page (Block) as well as the sealing number, there's a little twist to how a sealing number is calculated. Protecting modifications to the sealing numbers Remember how I told you that I had given you two boxes — one containing the number 20893 and another empty for you to calculate? In reality, to calculate the sealing number in a Blockchain, instead of two boxes, there are three — two pre-filled and one to be calculated. And when the contents of all those three boxes are added and fed to the machine, the answer that comes out from the right side must satisfy the required conditions. We already know that one box contains the list of transactions and one box will contain the sealing number. The third box contains the output of the magic machine for the previous page. With this neat little trick, we have made sure that every page depends on its previous page. Therefore, if someone has to modify a historical page, he would also have to change the contents and the sealing number of all the pages after that, to keep the chain consistent. If one individual, out of the ten we imagined in the beginning, tries to cheat and modify the contents of the Blockchain (the folder containing the pages with the list of transactions), he would have to adjust several pages and also calculate the new sealing numbers for all those pages. We know how difficult it is to calculate the sealing numbers. Therefore, one dishonest guy in the network cannot beat the nine honest guys. What will happen is, from the page the dishonest guy tries to cheat, he would be creating another chain in the network, but that chain would never be able to catch up with the honest chain — simply because one guy's efforts and speed cannot beat cumulative efforts and speed of nine. Hence, guaranteeing that the longest chain in a network is the honest chain. Longest chain is the honest chain. Longest chain is the honest chain. When I told you that one dishonest guy cannot beat nine honest guys, did it ring any bell in your head? What if, instead of one, six guys turn dishonest? In that case, the protocol will fall flat on its face. And it is known as \"51% Attack\". If the majority of the individuals in the network decides to turn dishonest and cheat the rest of the network, the protocol will fail its purpose. And that's the only vulnerable reason why Blockchains might collapse if they ever will. Know that, it is unlikely to happen but we must all know the vulnerable points of the system. It is built on the assumption that the majority of a crowd is always honest. And that, my friends, is all there is about Blockchains. If you ever find someone feeling left behind and wondering, \"WTF is the Blockchain?\" you know where you can point them to. Bookmark the link. Can think of someone right now who should read this? The ‘Share' button is all yours. — About the author Mohit Mamoria is the curator of a weekly newsletter, Unmade, which delivers one idea from the future to your inboxes. You might also like Who owns the Blockchain?_How democratic is the decentralization?_medium.com Blockchain and The Great Game of Attention_Everything you wanted to know about Blockchain, Tokens and their major use-cases_keepingstock.net",
   },
   {
     link: "https://hackernoon.com/making-sense-of-cryptoeconomics-5edea77e4e8d",
     imgSrc:
       "https://hackernoon.imgix.net/hn-images/1*_ywvkl6JQHRn2d00MRv4_A.png",
     title: "Making Sense of 'Cryptoeconomics'",
-    text: "The term “cryptoeconomics” causes a lot of confusion. People are often unclear on what it is supposed to mean. The word itself can be misleading, as it suggests that there is a parallel “crypto” version of the whole of economics. This is wrong, and Parker is right to mock such a generalization. In simple terms, cryptoeconomics is the use of incentives and cryptography to design new kinds of systems, applications, and networks.",
-    categories: [],
+    text: 'The term "cryptoeconomics" causes a lot of confusion. People are often unclear on what it is supposed to mean. The word itself can be misleading, as it suggests that there is a parallel "crypto" version of the whole of economics. This is wrong, and Parker is right to mock such a generalization. In simple terms, cryptoeconomics is the use of incentives and cryptography to design new kinds of systems, applications, and networks.',
+    categories: [
+      "cryptoeconomics",
+      "crypto",
+      "blockchain",
+      "game theory",
+      "economic theory",
+    ],
     length: 0,
     points: 0,
-    questionItems: [],
+    questionItems: [
+      {
+        question:
+          "Cryptoeconomics is the use of incentives and cryptography to design new kinds of systems, applications, and networks.",
+        correctAnswer: "systems",
+      },
+      {
+        question:
+          "What is the role of economic incentives in Bitcoin's design?",
+        correctAnswer:
+          "Economic incentives are used to enlist miners to support the network",
+        incorrectAnswers: [
+          "Economic incentives are not used in Bitcoin's design",
+          "Economic incentives are only used to penalize bad actors",
+          "Economic incentives are used to make Bitcoin transactions faster",
+        ],
+      },
+      {
+        question:
+          "Using cryptoeconomic design provides a reliable way to achieve blockchain consensus without a central trusted party.",
+        correctAnswer: "reliable",
+      },
+      {
+        question:
+          "What is the main advantage of understanding the mechanism design of a project holding an ICO?",
+        correctAnswer: "It helps determine the value and utility of the token",
+        incorrectAnswers: [
+          "It eliminates the need for a token sale",
+          "It reduces the cost of transaction fees",
+          "It provides a reliable way to achieve consensus without a central trusted party",
+        ],
+      },
+    ],
+    testedContent:
+      'Example 1: Consensus protocols Blockchains are able to reach reliable consensus without having to rely on a central trusted party — a product of cryptoeconomic design. Bitcoin\'s solution, which we surveyed above, is called "proof-of-work" consensus because miners must commit work — in the form of hardware and electricity — in order to participate in the network and receive mining rewards. Improving proof-of-work systems and designing alternatives to them is one active area of cryptoeconomic research and design. Ethereum\'s current proof-of-work consensus mechanism includes many variations and improvements on the original design, enabling faster block times and being more resistant to the mining centralization that can result from ASICs. In the near future, ethereum plans to migrate to a "proof-of-stake" consensus protocol called Casper. This is an alternative to proof-of-work that does not require "mining" in the usual sense: there is no need for specialized mining hardware or huge expenditures of electricity. Remember that the whole point of requiring miners to buy hardware and spend electricity is to impose a cost on miners, as a way of raising the cumulative cost of attempting a 51 percent attack sufficiently high that it becomes too expensive. The idea behind proof-of-stake systems is to use deposits of cryptocurrency to create the same disincentive, rather than real-world investments like hardware and electricity. In order to mine in a proof-of-stake system, you must commit a certain amount of ether into a smart contract "bond." Just like in proof-of-work, this raises the cost of a 51 percent attack — an attacker would have to commit a very large amount of ether to successfully attack the network, which they would then lose forever. Casper is being designed by Vlad Zamfir, Vitalik Buterin, and others at the Ethereum Foundation. You can read more about the history of Casper\'s designin this series of posts by Zamfir or hear him talk about it on a recent podcast. Buterin wrote a long post about Casper\'s design philosophy here, and there is a useful FAQ on the ethereum GitHub wiki here. Example 2: Cryptoeconomic application design Once we have solved the fundamental problem of blockchain consensus, we are able to build applications that sit "on top" of a blockchain like ethereum. The underlying blockchain gives us (1) a unit of value that can be used to create incentives and penalties, and (2) a toolkit with which we can design conditional logic in the form of "smart contract code." The applications we build with these tools can also be a product of cryptoeconomic design. For instance, the prediction market Augur requires cryptoeconomic mechanisms in order to function. Using its native token REP, Augur creates asystem of incentives that rewards users for reporting the "truth" to the application, which is then used to settle bets in the prediction market. This is the innovation that makes a decentralized prediction market possible. Another prediction market, Gnosis, uses a similar method, though also lets users specify other mechanisms for determining true outcomes (commonly called "oracles"). Cryptoeconomics is also applied to design token sales or ICOs. Gnosis, for instance, used a "Dutch auction" as a model for its token auction, on the theory that this would result in a more fair distribution (an experiment that had mixed results). We mentioned earlier that one area where mechanism design has been applied is in the design of auctions, and token sales gives us a new opportunity to apply some of that theory. These are a different kind of problem than building the underlying consensus protocols, but they share enough similarities that both can be fairly seen as cryptoeconomic. Building these applications requires an understanding of how incentives shape users\' behaviour and careful design of economicmechanisms that can reliably produce a certain result. They also require an understanding of the capabilities and limitations of the underlying blockchain on which the application is built. Many blockchain applications are not necessarily products of cryptoeconomics; for instance, applications like Status and MetaMask — wallets or platforms that let users interact with the ethereum blockchain. These do not involve any additional cryptoeconomic mechanisms beyond those that are already part of the underlying blockchain. Example 3: State channels Cryptoeconomics also includes the practice of designing much smaller sets of interactions between individuals. The most notable of these are state channels. State channels are not an application but a valuable technique that can be used by most blockchain applications to become more efficient. A fundamental limitation of blockchain applications is that blockchains are expensive. Sending transactions requires fees, and using ethereum to run smart-contract code is comparatively costly to other kinds of computation. The idea behind state channels is that we can make blockchains more efficient by moving many processes off-chain, while still retaining a blockchain\'s characteristic trustworthiness, through the use of cryptoeconomic design. Imagine Alice and Bob want to exchange a large number of small payments of cryptocurrency. The normal way for them to do this would be to send transactions to the blockchain. This is inefficient — it requires paying transaction fees and waiting for the confirmation of new blocks. Instead, imagine that Alice and Bob sign transactions that could be submitted to the blockchain, but are not. They pass these back and forth between one another, as fast as they want — there are no fees at this point, because nothing is actually hitting the blockchain yet. Each update "trumps" the last one, updating the balance between the parties. When Alice and Bob have finished exchanging small payments, they "close out" the channel by submitting the final state (i.e. the most recent signed transaction) to the blockchain, paying only a single transaction fee for an unlimited number of transactions between themselves. They can trust this process because both Alice and Bob know that each update passed between them could be sent to the blockchain. If the channel is properly designed, there is no way to cheat — say, by trying to submit a previous update as though it were the most recent — since recourse to the blockchain is always available. For illustrative purposes, you can think of this as similar to how we interact with other trusted sources, like a legal system. When two parties sign a contract, most of the time they never need to take that contract to court and ask a judge to interpret and enforce it. If the contract is properly designed, both parties simply do what they promised to do, and never interact with the courts at all. The fact that either party could go to the court and have the contract enforced is enough to make the contract useful. This technique is not just useful for payments, but for any update to the state of an ethereum program — hence the more general term "state channel" rather than the narrow "payment channel." Instead of sending payments back and forth, we can send updates to a smart contract back and forth. We can even send entire ethereum smart contracts that, if needed, will be sent to the blockchain and executed. These programs never have to be executed to be useful. All that is needed is a sufficiently high guarantee that they could be executed if necessary. In the future, most blockchain applications will use state channels in some form. It is almost always a strict improvement to require less on-chain operation, and many things done on-chain today can be moved into state channels while still preserving a sufficiently high guarantee to be useful. The description above skips over many important details and nuances of how state channels work. For a more detailed description, Ledger Labs built a toy implementation last summer that demonstrates the basic concept. Liam Horne and Jeff Coleman recently announced they are developing generalized state channels under the banner Counterfactual, with support form L4 and Vitalik Buterin. Conclusion Thinking about the blockchain space through the lens of cryptoeconomics is helpful. Once you understand the idea, it helps to clarify many of the controversies and debates in our industry. For instance, "permissioned" blockchains that are centrally managed and do not use proof-of-work have been a source of constant controversy since they were first proposed. This area of work is often referred to as "distributed ledger technology" and is focused on financial and enterprise use cases. Many partisans of blockchain technology dislike them — they may be blockchains in the literal sense, but there is something about them that feels wrong. They seem to reject the thing that many people see as the whole point of blockchain technology: being able to produce consensus without relying on a central party or traditional financial systems. A cleaner way to make this distinction is between blockchains that are products of cryptoeconomics and blockchains that are not. Blockchains that are simply distributed ledgers and do not rely on cryptoeconomic design to produce consensus or align incentives might be useful for some applications. But they are distinct from blockchains whose whole purpose is to use cryptography and economic incentives to produce consensus that could not exist before, like bitcoin and ethereum. These are two different technologies, and the clearest way of distinguishing between them is whether or not they are products of cryptoeconomics. Secondly, we should expect that there will be cryptoeconomic consensus protocols that do not rely on a literal chain of blocks. Obviously, such a technology would have something in common with blockchain technology as we call it today, but labelling them blockchains would be inaccurate. Again,the relevant organizing concept is whether such a protocol is the product of cryptoeconomics, not whether it is a blockchain. The ICO craze has also focused attention on this distinction, though few have articulated it clearly. Many people independently identified that one of the strongest signs of a token\'s value is whether it forms a necessary component of the application to which it is connected. To put this in clearer terms, the question should be: is the token part of a necessary cryptoeconomic mechanism in the application? Understanding the mechanism design of a project holding an ICO is an essential tool in determining that token\'s utility and likely value. In the past years, we\'ve moved from thinking about this new field solely through the lens of one application (bitcoin), to thinking about it in terms of one underlying technology (blockchains). What needs to happen now is to step back once again and view this industry in terms of a unifying approach to solving problems: cryptoeconomics. Thanks to Jeff Coleman, Ethan Wilding, and Vlad Zamfir for their comments on an earlier draft of this article.',
   },
   {
     link: "https://www.kraken.com/learn/what-is-blockchain-technology",
@@ -1113,10 +1181,41 @@ export const cardItemData: CardItemData[] = [
       "https://assets-cms.kraken.com/images/51n36hrp/facade/b4b7d7de97cd77488c1dc7654919b6cf2e6695b9-1638x837.png?w=2880&amp;fit=min",
     title: "What is Blockchain Technology?",
     text: "What is a blockchain technology? Learn how one of the central building blocks that powers crypto assets works with Kraken – the world’s most secure crypto exchange.",
-    categories: [],
+    categories: ["blockchain", "crypto", "cryptocurrency"],
     length: 0,
     points: 0,
-    questionItems: [],
+    questionItems: [
+      {
+        question: "Blockchain creates a trusted record using cryptography.",
+        correctAnswer: "trusted",
+      },
+      {
+        question: "What is cryptography?",
+        correctAnswer: "The technique used for securing private communication",
+        incorrectAnswers: [
+          "A type of programming language",
+          "A method of storing data in a distributed ledger",
+          "A way to delete information from a blockchain",
+        ],
+      },
+      {
+        question: "What is a distributed ledger?",
+        correctAnswer:
+          "A reliable record owned and maintained by all participants",
+        incorrectAnswers: [
+          "A record owned and maintained by a single entity",
+          "A ledger that is not protected by cryptography",
+          "A type of programming language",
+        ],
+      },
+      {
+        question:
+          "Blockchain technology’s original, and still most popular, use case is to power cryptocurrencies.",
+        correctAnswer: "cryptocurrencies",
+      },
+    ],
+    testedContent:
+      "What is Blockchain Technology? The Beginner’s Guide to Blockchain If you’re just getting started with cryptocurrency, you have probably heard the term “blockchain technology” used to describe a wide variety of concepts. The term is, admittedly, a broad one. You’re just as likely to encounter blockchain in a white paper for a new cryptocurrency as you are in an advertisement from a major company like IBM. So, what does the term mean and why is it so widely used? Blockchain most often refers to a network of computers that uses a common software to order data in such a way that, after being sequenced, ensures it can’t be adjusted or tampered with by any one dishonest user. Put another way, a blockchain creates a trusted record using cryptography. While most commonly associated with the Bitcoin white paper, the concept is an older one, and elements of this design can be traced to the work on which Bitcoin’s creator, Satoshi Nakamoto, referenced in the project’s founding document. Note: as of 2020, there remains debate over what the definition of blockchain technology should be and if and when it’s being correctly applied. This is due to the fact that there has been an effort to abstract the architecture of blockchains for uses beyond the ordering of transactions in cryptocurrencies. Some of these efforts will undoubtedly stretch the technology’s application too far, contributing to a more realistic understanding of its expected impact. What is blockchain technology How does blockchain work? At its most broad, the term blockchain describes a public records system managed by a distributed network of computers called nodes. These nodes must constantly work to record all updates to the network. What makes a blockchain unique is that all nodes maintain a copy of the ledger. Before diving deeper into the technology, it is important to understand the characteristics that make a blockchain work. Generally (and with some exceptions), blockchains aim to be:  Auditable – Updates stored in the blockchain can easily be tracked and verified. Distributed – Blockchains often aim to remain outside the control of a single entity (or are collectively managed by a broad set of known stakeholders). Immutable – Once a transaction is recorded on the ledger, it can never be changed (or if it is, it must be to the agreement of its stakeholders). Pseudonymous - Each user that interacts with the blockchain does so with a generated address that does not reveal their identity. Components of blockchain technology In order to fully understand blockchain technology’s potential, one needs to dig deep into the components that power it. To start off, at the root of the technology lies cryptography, the techniques used for secure private communication, and encryption, the process of encoding that information. Cryptography Blockchains today are secured by cryptography, the technique used for securing private communication and the movement of digital data. Cryptography is the science behind creating codes and cyphers that allows people to transmit information in a private and secure way. In the early 1900s, cryptography was mainly used by the military and spy agencies, particularly during war, where secret communications were a vital way to send information between posts. Today, cryptography helps secure transmissions that are held blockchains, making the process of sending and receiving data and information more efficient and cost effective. Distributed Ledger On blockchains, digital data is protected through the use of cryptography in a way that creates a reliable record owned and maintained by all participants called a “distributed ledger.” Envisioned as an alternative to trusted databases, distributed ledgers aim to allow users greater oversight into the maintenance of their data, while reducing liability for companies or entities that might today serve as the central owner of this sensitive information. Given this impact, there are a variety of industries and organizations using blockchains to set up a trusted network to streamline the sharing of information and the record-keeping process, while improving their performance and security. Smart Contracts Central to the distributed ledgers are webs of “smart contracts,” if-then agreements that, when coded in software, can govern the business transactions. The idea is that, on the blockchain, a program embedded in a protocol’s code could quickly and digitally enforce the kind of contract that today needs to be implemented by a middleman like an insurance agent or financial intermediary. Since business transactions are governed by contracts, the execution of smart contracts on the blockchain helps the transactional process run more smoothly. What is blockchain used for? As mentioned, the idea that there are blockchain use cases beyond cryptocurrency is still new. This means there has been an endless number of proposed use cases for these computing networks, some more realistic and practical than others. Below is a list of industries that have attempted to incorporate blockchain technology with varying degrees of success. Cryptocurrency Blockchain technology’s original, and still most popular, use case is to power cryptocurrencies. In fact, some would argue blockchains are their central element, allowing users to run software that then enforces the rules around their currencies, making this data scarce and valuable. Because of their blockchains, cryptocurrencies can be borderless, durable, irreversible, permissionless or pseudonymous. If you would like more information on how blockchains help power cryptocurrencies, feel free to read our ‘What is Cryptocurrency?’ guide, which offers a more extensive explanation. Financial Services Given blockchains can now govern digital money supplies, major companies have sought to extend this technology further to other types of financial services. As such, it’s believed blockchains could solve inefficiencies in parts of the financial system – inter-bank transactions, clearing and settlements – that have typically been the domain of some of the world’s largest and most opaque financial entities. The idea is these institutions can use blockchain technology to cut costs, better adhere to regulation and generally upgrade the somewhat antiquated technology that helps them run. Business Management One of the most talked about use-cases for blockchain technology is using it to manage supply chains for businesses. Global trade is a trillion dollar industry, with goods and services being shipped across the world daily. In order for something to travel from one place to the next, there are multiple supply chain participants, each relying on different systems to approve and process transactions. Blockchain technology could help reduce the barriers formed from these different systems, removing certain costs and potential points of failures along the way. Record-Keeping Records today, be it health care, real estate or voting, are often maintained by centralized data centers, which brings added costs and risks to the entities entrusted with them. By nature, this means that information is vulnerable to security breaches and can be difficult and expensive to access. Many industries need a more efficient and secure system for managing these records while performing and recording other complex transactions. This is where blockchain technology comes in, and there is some hope it could help solve these long-standing issues, offering a mechanism for recording and maintaining comprehensive records while allowing individuals to have more control over their own data.",
   },
   {
     link: "https://www.worth.com/how-cryptocurrency-could-inspire-a-new-kind-of-financial-literacy",
@@ -1124,10 +1223,50 @@ export const cardItemData: CardItemData[] = [
       "https://www.worth.com/wp-content/uploads/2021/03/andre-francois-mckenzie-9qpCNwDeBVU-unsplash-scaled-e1617133903685.jpg",
     title: "How Cryptocurrency Could Inspire a New Kind of Financial Literacy",
     text: "As we embark on a new era of money, we’re in a unique moment. Cryptocurrency trading has attracted the interest of a whole new swath of the population. If we use this moment well, we have the opportunity to design a new financial literacy.",
-    categories: [],
+    categories: [
+      "crypto",
+      "cryptocurrency",
+      "financial literacy",
+      "investing",
+      "risk",
+    ],
     length: 0,
     points: 0,
-    questionItems: [],
+    questionItems: [
+      {
+        question:
+          "What percentage of Americans own cryptocurrency according to a recent study?",
+        correctAnswer: "15%",
+        incorrectAnswers: ["5%", "10%", "20%"],
+      },
+      {
+        question:
+          "While most cryptocurrency buyers are highly financially literate, many are much less financially literate and approach the crypto with a gambler's mindset, drawn to the high-stakes risk and reward of the surging price.",
+        correctAnswer: "gambler's",
+      },
+      {
+        question:
+          "What is the potential benefit of gamifying financial literacy in the cryptocurrency market?",
+        correctAnswer:
+          "It could help users learn about financial risk and return in a safe environment",
+        incorrectAnswers: [
+          "It could attract more unsophisticated users to invest in cryptocurrency",
+          "It could encourage users to take greater risks in the market",
+          "It could lead to a more speculative mindset among cryptocurrency traders",
+        ],
+      },
+      {
+        question:
+          "What is the potential downside of a lack of financial literacy in the cryptocurrency market?",
+        correctAnswer:
+          "It could lead to a greater divide between the rich and tech-savvy and the poor and",
+        incorrectAnswers: [
+          "It could lead to government regulation that stifles innovation in the market",
+          "It could create a bubble that eventually bursts, causing widespread financial harm",
+          "It could attract fraudsters and hackers who target unsophisticated traders",
+        ],
+      },
+    ],
   },
   {
     link: "https://www.bogleheads.org/wiki/Prioritizing_investments",
