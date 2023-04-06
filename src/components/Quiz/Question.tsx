@@ -48,6 +48,26 @@ export function Question({
     }
   }, []);
 
+  const blank = (
+    <span style={{ borderBottom: "1px solid" }}>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    </span>
+  );
+
+  const questionWithBlank = (question: string, answer: string): JSX.Element => {
+    const answerIndex = question.indexOf(answer);
+    const questionBeforeBlank = question.substring(0, answerIndex);
+    const questionAfterBlank = question.substring(answerIndex + answer.length);
+
+    return (
+      <>
+        {questionBeforeBlank}
+        {blank}
+        {questionAfterBlank}
+      </>
+    );
+  };
+
   return (
     <Row>
       {questionType === "multiple-choice" && (
@@ -86,9 +106,9 @@ export function Question({
           <Form.Label>
             <div className="mb-3">
               {questionIndex + 1}.{" "}
-              {questionItem.question.replace(
-                questionItem.correctAnswer,
-                "__________"
+              {questionWithBlank(
+                questionItem.question,
+                questionItem.correctAnswer
               )}
             </div>
           </Form.Label>
