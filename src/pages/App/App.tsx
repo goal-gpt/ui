@@ -3,6 +3,7 @@ import "./App.scss";
 import React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
+import { Cookie } from "../../components/Cookie";
 import { routesConfig } from "../routes";
 
 function Fallback() {
@@ -11,7 +12,12 @@ function Fallback() {
 
 function App() {
   const router = createBrowserRouter(routesConfig);
-  return <RouterProvider router={router} fallbackElement={<Fallback />} />;
+  return (
+    <>
+      <Cookie />
+      <RouterProvider router={router} fallbackElement={<Fallback />} />
+    </>
+  );
 }
 
 export default App;
