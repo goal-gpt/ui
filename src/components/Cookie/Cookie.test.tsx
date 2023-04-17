@@ -8,7 +8,7 @@ describe("Cookie component", () => {
     render(<Cookie />);
 
     const consentMessage = screen.getByText(
-      /This website uses cookies to store your quizzes./i
+      /This website uses cookies and Local Storage to store your quizzes/i
     );
 
     expect(consentMessage).toBeInTheDocument();

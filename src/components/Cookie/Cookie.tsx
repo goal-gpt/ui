@@ -6,13 +6,16 @@ export function Cookie() {
     <CookieConsent
       location="bottom"
       buttonText="Accept"
-      cookieName="myAwesomeCookieName2"
-      style={{ background: "#2B373B" }}
-      buttonStyle={{ color: "#4e503b", fontSize: "13px" }}
+      cookieName="erasConsent"
+      containerClasses="bg-neutral-light text-neutral-light-contrast"
+      contentClasses="mx-4"
+      // buttonWrapperClasses="w-100"
+      buttonClasses="bg-primary text-primary-contrast px-4 mx-4 w-24"
       expires={150}
     >
-      This website uses cookies to store your quizzes. We don&apos;t use them
-      for anything else!
+      This website uses cookies and Local Storage to store your quizzes, nothing
+      else! If you clear your browser&apos;s history then your quizzes will be
+      deleted.
     </CookieConsent>
   );
 }
