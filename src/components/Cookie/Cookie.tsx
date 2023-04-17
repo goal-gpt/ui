@@ -9,7 +9,6 @@ export function Cookie() {
       cookieName="erasConsent"
       containerClasses="bg-neutral-light text-neutral-light-contrast"
       contentClasses="mx-4"
-      // buttonWrapperClasses="w-100"
       buttonClasses="bg-primary text-primary-contrast px-4 mx-4 w-24"
       expires={150}
     >
