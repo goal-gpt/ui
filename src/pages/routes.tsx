@@ -1,6 +1,7 @@
 import React from "react";
 
 import { cardItemData } from "../services/cardItemData";
+import { Login } from "./Auth";
 import { Error } from "./Error";
 import { Help } from "./Help";
 import { Main } from "./Main";
@@ -25,6 +26,11 @@ export const routesConfig = [
   {
     path: "/profile",
     element: <Profile cardItemData={cardItemData} />,
+    errorElement: <Error />,
+  },
+  {
+    path: "/login",
+    element: <Login />,
     errorElement: <Error />,
   },
 ];

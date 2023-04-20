@@ -5,6 +5,7 @@ import { Col, Container, ListGroup, Row } from "react-bootstrap";
 
 import { CardItemData } from "../../components/Card";
 import { MainHeader } from "../../components/MainHeader";
+import { useAuth } from "../App/RequireAuth";
 
 interface CategoriesCounts {
   [key: string]: number;
@@ -15,6 +16,7 @@ export interface ProfileProps {
 }
 
 function Profile(props: ProfileProps) {
+  const { session } = useAuth();
   const { cardItemData } = props;
   const [completedCards, setCompletedCards] = useState<CardItemData[]>([]);
   const [hasMetrics, setHasMetrics] = useState<boolean>(false);
@@ -101,6 +103,13 @@ function Profile(props: ProfileProps) {
             )}
           </Col>
           <Col lg={2} md={1} sm={0} />
+        </Row>
+        <Row>
+          {session ? (
+            <div>You&apos;re logged in!</div>
+          ) : (
+            <p>You must be logged in to see this.</p>
+          )}
         </Row>
       </Container>
     </>
