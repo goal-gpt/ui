@@ -33,12 +33,6 @@ export function MainHeader() {
             <Nav.Link as={Link} id="nav-profile" to="/profile">
               Profile
             </Nav.Link>
-            {/* <Nav.Link as={Link} id="nav-login" to="/login">
-              Login
-            </Nav.Link> */}
-            {/* <Nav.Link as={Link} id="nav-logout" to="/logout">
-              Logout
-            </Nav.Link> */}
           </Nav>
         </Navbar.Collapse>
         <LoginToggle />
