@@ -6,15 +6,16 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 export function Button({ children, ...props }: ButtonProps): JSX.Element {
-  const { variant } = props;
+  const { className: ogClass, variant } = props;
   const textColorClass = `text-${variant}-contrast`;
+  const newClass = `${textColorClass} ${ogClass}`;
 
   return (
     <BootstrapButton
-      variant={variant}
-      className={textColorClass}
-      style={{ height: "100%", width: "100%" }}
       {...props}
+      variant={variant}
+      className={newClass}
+      style={{ height: "100%", width: "100%" }}
     >
       {children}
     </BootstrapButton>

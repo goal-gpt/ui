@@ -7,8 +7,8 @@ import { ToastContainer } from "react-toastify";
 
 import { Cookie } from "../../components/Cookie";
 import { supabase } from "../../services/supabase";
+import { AuthContext } from "../Auth/RequireAuth";
 import { routesConfig } from "../routes";
-import { AuthContext } from "./RequireAuth";
 
 function Fallback() {
   return <div>Loading...</div>;

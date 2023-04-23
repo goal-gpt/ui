@@ -6,7 +6,9 @@ interface RequireAuthProps {
   children: ReactElement;
 }
 
-export function RequireAuth({ children }: RequireAuthProps): JSX.Element {
+export default function RequireAuth({
+  children,
+}: RequireAuthProps): JSX.Element {
   const { session } = useAuth();
 
   if (!session) {

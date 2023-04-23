@@ -3,9 +3,11 @@ import "./Profile.scss";
 import React, { useEffect, useState } from "react";
 import { Col, Container, ListGroup, Row } from "react-bootstrap";
 
+import { Button } from "../../components/Button";
 import { CardItemData } from "../../components/Card";
 import { MainHeader } from "../../components/MainHeader";
-import { useAuth } from "../App/RequireAuth";
+import { supabase } from "../../services/supabase";
+import { useAuth } from "../Auth/RequireAuth";
 
 interface CategoriesCounts {
   [key: string]: number;
@@ -61,6 +63,11 @@ function Profile(props: ProfileProps) {
     setWordCount(totalSpaces);
   }, [completedCards]);
 
+  // TODO: move all of these supabase functions into a separate file
+  const handleUserLogout = async () => {
+    await supabase.auth.signOut();
+  };
+
   return (
     <>
       <MainHeader />
@@ -106,9 +113,16 @@ function Profile(props: ProfileProps) {
         </Row>
         <Row>
           {session ? (
-            <div>You&apos;re logged in!</div>
+            <Row className="d-flex align-items-center justify-content-center">
+              <div className="text-center my-3">You&apos;re logged in!</div>
+              <Button className="w-25 h-75" onClick={handleUserLogout}>
+                Logout
+              </Button>
+            </Row>
           ) : (
-            <p>You must be logged in to see this.</p>
+            <div className="text-center my-3">
+              You must be logged in to see this.
+            </div>
           )}
         </Row>
       </Container>

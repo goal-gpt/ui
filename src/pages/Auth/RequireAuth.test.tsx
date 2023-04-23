@@ -2,7 +2,7 @@ import { Session } from "@supabase/supabase-js";
 import React, { render, screen } from "@testing-library/react";
 import { MemoryRouter as Router, Navigate } from "react-router-dom";
 
-import { AuthContext, AuthContextValue, RequireAuth } from "./RequireAuth";
+import RequireAuth, { AuthContext, AuthContextValue } from "./RequireAuth";
 
 jest.mock("react-router-dom", () => {
   const originalModule = jest.requireActual("react-router-dom");

@@ -44,7 +44,7 @@ describe("Login", () => {
 
     renderWithRouter(<Login />);
     const emailInput = screen.getByPlaceholderText("Your email");
-    const loginButton = screen.getByText("Login", { selector: "button" });
+    const loginButton = screen.getByText("Get Magic Link!");
 
     userEvent.type(emailInput, "test@example.com");
     fireEvent.submit(loginButton);
@@ -63,7 +63,7 @@ describe("Login", () => {
 
     renderWithRouter(<Login />);
     const emailInput = screen.getByPlaceholderText("Your email");
-    const loginButton = screen.getByText("Login", { selector: "button" });
+    const loginButton = screen.getByText("Get Magic Link!");
 
     userEvent.type(emailInput, "test@example.com");
     fireEvent.submit(loginButton);
