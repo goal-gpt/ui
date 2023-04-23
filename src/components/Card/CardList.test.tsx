@@ -79,7 +79,6 @@ describe("CardList component", () => {
       const cardItems = getByRole("list");
       const leftButton = getByLabelText("left-button");
 
-      // eslint-disable-next-line no-plusplus
       for (let index = 0; index < cardItems.childNodes.length; index++) {
         fireEvent.click(leftButton);
       }
@@ -98,7 +97,6 @@ describe("CardList component", () => {
       const cardItems = getByRole("list");
       const leftButton0 = getByLabelText("left-button");
 
-      // eslint-disable-next-line no-plusplus
       for (let index = 0; index < cardItems.childNodes.length; index++) {
         fireEvent.click(leftButton0);
       }
@@ -124,7 +122,6 @@ describe("CardList component", () => {
       const cardItems = getByRole("list");
       const leftButton0 = getByLabelText("left-button");
 
-      // eslint-disable-next-line no-plusplus
       for (let index = 0; index < cardItems.childNodes.length; index++) {
         fireEvent.click(leftButton0);
       }
@@ -149,7 +146,6 @@ describe("CardList component", () => {
       const cardItems = getByRole("list");
       const leftButton0 = getByLabelText("left-button");
 
-      // eslint-disable-next-line no-plusplus
       for (let index = 0; index < cardItems.childNodes.length; index++) {
         fireEvent.click(leftButton0);
       }
