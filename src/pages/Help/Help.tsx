@@ -114,7 +114,7 @@ function Help() {
             <Accordion>
               {faqs.map((item: FAQItem) => {
                 return (
-                  <Accordion.Item eventKey={item.id}>
+                  <Accordion.Item eventKey={item.id} key={item.id}>
                     <Accordion.Header className="text-neutral-dark">
                       {item.title}
                     </Accordion.Header>
