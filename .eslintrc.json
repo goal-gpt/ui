@@ -44,7 +44,8 @@
     "simple-import-sort/imports": "error",
     "simple-import-sort/exports": "error",
     "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
-    "prefer-destructuring": ["error", { "object": true, "array": false }]
+    "prefer-destructuring": ["error", { "object": true, "array": false }],
+    "no-plusplus": "off"
   },
   "settings": {
     "import/resolver": {

@@ -1,7 +1,7 @@
 import React from "react";
 
-import { renderWithRouter, screen } from "../../utils/testHelpers";
-import Help from "./Help";
+import { renderWithRouter, screen } from "../../src/utils/testHelpers";
+import Help from ".";
 
 test("checks that help is provided", () => {
   renderWithRouter(<Help />);

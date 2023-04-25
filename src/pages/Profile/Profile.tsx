@@ -1,5 +1,3 @@
-import "./Profile.scss";
-
 import React, { useEffect, useState } from "react";
 import { Col, Container, ListGroup, Row } from "react-bootstrap";
 

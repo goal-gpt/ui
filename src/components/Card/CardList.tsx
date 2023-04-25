@@ -1,8 +1,8 @@
-import "./Card.scss";
+import "./Card.module.scss";
 
+import { useRouter } from "next/router";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
-import { useParams } from "react-router-dom";
 
 import { Button } from "../Button";
 import { CardItem, CardItemData } from "./CardItem";
@@ -24,7 +24,8 @@ export function CardList({
   selectCard,
   removeCard,
 }: CardListProps) {
-  const { category } = useParams();
+  const router = useRouter();
+  const { category } = router.query as { category: string };
   const [cards, setCards] = useState<CardItemData[]>([]);
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const currentIndexRef = useRef(currentIndex);
@@ -91,7 +92,9 @@ export function CardList({
   const swipe = async (dir: string) => {
     if (currentIndex >= 0 && currentIndex < cards.length) {
       const cardRef = childRefs[currentIndex].current;
+      console.log(childRefs);
       if (cardRef) {
+        console.log(cardRef);
         await cardRef.swipe(dir); // Swipe the card!
       }
     }
@@ -148,7 +151,7 @@ export function CardList({
           <Row className="d-grid justify-content-center" role="list">
             {cards.map((card, index) => (
               <CardItem
-                apiRef={childRefs[index]}
+                ref={childRefs[index]}
                 key={card.link}
                 data={card}
                 handleSwipe={(dir: string) => swiped(dir, index)}

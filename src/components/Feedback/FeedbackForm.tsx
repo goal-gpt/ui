@@ -1,4 +1,4 @@
-import "./FeedbackForm.scss";
+import "./FeedbackForm.module.scss";
 
 import React, { ChangeEvent, FormEvent, useState } from "react";
 import {

@@ -1,4 +1,4 @@
-import "./QuizModal.scss";
+import "./QuizModal.module.scss";
 
 import React, { useEffect, useState } from "react";
 import { Alert } from "react-bootstrap";
@@ -71,7 +71,12 @@ export function QuizModal({ card, show, handleClose }: QuizModalProps) {
       <Modal.Body>
         <h4 className="my-2">Click here to learn: </h4>
         <h2>
-          <a href={card?.link} target="_blank" rel="noreferrer">
+          <a
+            className="external-link"
+            href={card?.link}
+            target="_blank"
+            rel="noreferrer"
+          >
             {card?.title}
           </a>
         </h2>
