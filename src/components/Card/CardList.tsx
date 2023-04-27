@@ -90,15 +90,22 @@ export function CardList({
     }
   };
 
-  // const swipe = async (dir: string) => {
-  //   console.log(childRefs);
-  //   if (currentIndex >= 0 && currentIndex < cards.length) {
-  //     const cardRef = childRefs[currentIndex].current;
-  //     if (cardRef) {
-  //       console.log(cardRef);
-  //       await cardRef.swipe(dir); // Swipe the card!
-  //     }
+  // const swipe = async (dir: string, index: number) => {
+  // console.log(childRefs);
+  // if (currentIndex >= 0 && currentIndex < cards.length) {
+  //   const cardRef = childRefs[currentIndex].current;
+  //   if (cardRef) {
+  //     console.log(cardRef);
+  //     await cardRef.swipe(dir); // Swipe the card!
   //   }
+  // }
+  // updateCurrentIndex(index - 1);
+  // if (dir === "left" || dir === "down") {
+  //   removeCard(cards[currentIndex]);
+  //   setAnySkipped(true);
+  // } else {
+  //   selectCard(cards[currentIndex]);
+  // }
   // };
 
   const setup = () => {
@@ -165,7 +172,7 @@ export function CardList({
               <Button
                 aria-label="left-button"
                 disabled
-                //  onClick={() => swipe("left")}
+                // onClick={() => swipe("left", currentIndex)}
               >
                 {"<"} Left to skip!
               </Button>
@@ -175,7 +182,7 @@ export function CardList({
     </Col> */}
             <Col className="d-flex align-items-center justify-content-center">
               <Button
-                // onClick={() => swipe("right")}
+                // onClick={() => swipe("right", currentIndex)}
                 variant="secondary"
                 aria-label="right-button"
                 disabled

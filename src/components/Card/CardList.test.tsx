@@ -1,14 +1,23 @@
 import { fireEvent, render } from "@testing-library/react";
+import { useRouter } from "next/router";
 import React from "react";
-import * as ReactRouterDOM from "react-router-dom";
 
 import { cardItemData } from "../../services/mockCardItemData";
 import { CardList, CardListProps } from "./CardList";
 
-jest.mock("react-router-dom", () => ({
-  ...jest.requireActual("react-router-dom"),
-  useParams: jest.fn(),
+jest.mock("next/router", () => ({
+  useRouter: jest.fn(),
 }));
+
+function simulateSwipeLeft(element: ChildNode) {
+  fireEvent.mouseDown(element, { clientX: 1000, clientY: 100 });
+
+  // Simulate the movement of the swipe
+  fireEvent.mouseMove(element, { clientX: 50, clientY: 100 });
+
+  // Simulate the end of the swipe
+  fireEvent.mouseUp(element);
+}
 
 describe("CardList component", () => {
   let mockSelectCard: jest.Mock;
@@ -30,8 +39,8 @@ describe("CardList component", () => {
   });
 
   it("renders a list of all cards if no category is supplied", () => {
-    const params = {};
-    jest.spyOn(ReactRouterDOM, "useParams").mockReturnValue(params);
+    const query = {};
+    (useRouter as jest.Mock).mockReturnValue({ query });
 
     const { getByRole } = render(<CardList {...mockCardListProps} />);
     const cardItems = getByRole("list");
@@ -40,8 +49,8 @@ describe("CardList component", () => {
   });
 
   it("renders a list of cards with the matching category", () => {
-    const params = { category: "category0" };
-    jest.spyOn(ReactRouterDOM, "useParams").mockReturnValue(params);
+    const query = { category: "category0" };
+    (useRouter as jest.Mock).mockReturnValue({ query });
 
     const { getByRole } = render(<CardList {...mockCardListProps} />);
     const cardItems = getByRole("list");
@@ -49,8 +58,8 @@ describe("CardList component", () => {
   });
 
   it("renders a list of cards with the matching category hyphen-insensitive", () => {
-    const params = { category: "category-3" };
-    jest.spyOn(ReactRouterDOM, "useParams").mockReturnValue(params);
+    const query = { category: "category-3" };
+    (useRouter as jest.Mock).mockReturnValue({ query });
 
     const { getByRole } = render(<CardList {...mockCardListProps} />);
     const cardItems = getByRole("list");
@@ -58,8 +67,8 @@ describe("CardList component", () => {
   });
 
   it("renders an error page when there is no matching category", () => {
-    const params = { category: "not-a-matching-category" };
-    jest.spyOn(ReactRouterDOM, "useParams").mockReturnValue(params);
+    const query = { category: "not-a-matching-category" };
+    (useRouter as jest.Mock).mockReturnValue({ query });
 
     expect(() => render(<CardList {...mockCardListProps} />)).toThrow(
       "Sorry, we do not have any content in that category. But please check back later. We are constantly adding new content!"
@@ -68,8 +77,8 @@ describe("CardList component", () => {
 
   describe("there are no more cards to show", () => {
     beforeEach(() => {
-      const params = { category: "category-3" };
-      jest.spyOn(ReactRouterDOM, "useParams").mockReturnValue(params);
+      const query = { category: "category-3" };
+      (useRouter as jest.Mock).mockReturnValue({ query });
     });
 
     it("displays a message about reaching the end", () => {
@@ -120,10 +129,9 @@ describe("CardList component", () => {
         <CardList {...mockCardListProps} />
       );
       const cardItems = getByRole("list");
-      const leftButton0 = getByLabelText("left-button");
 
       for (let index = 0; index < cardItems.childNodes.length; index++) {
-        fireEvent.click(leftButton0);
+        simulateSwipeLeft(cardItems.childNodes[index]);
       }
 
       const allCategoriesLink = getByLabelText("all-categories-link");
@@ -140,14 +148,13 @@ describe("CardList component", () => {
         .spyOn(Object.getPrototypeOf(window.localStorage), "getItem")
         .mockReturnValue(JSON.stringify([cardItemData[0].link]));
 
-      const { getByRole, getByLabelText, queryByLabelText } = render(
+      const { getByRole, queryByLabelText } = render(
         <CardList {...mockCardListProps} />
       );
       const cardItems = getByRole("list");
-      const leftButton0 = getByLabelText("left-button");
 
       for (let index = 0; index < cardItems.childNodes.length; index++) {
-        fireEvent.click(leftButton0);
+        simulateSwipeLeft(cardItems.childNodes[index]);
       }
 
       const allCategoriesLink = queryByLabelText("all-categories-link");
