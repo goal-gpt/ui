@@ -4,10 +4,22 @@ import { Card } from "react-bootstrap";
 
 import styles from "./Card.module.scss";
 import { API } from "./CardList";
+// import TinderCard from "react-tinder-card";
+// import { Props } from "./ForwardedTinderCard";
 
 export const TinderCard = dynamic(() => import("react-tinder-card"), {
   ssr: false,
 });
+
+// export const TinderCardWithRef = forwardRef<API, Props>(
+//   ({ children, ...props }, ref) => {
+//     return (
+//       <TinderCard ref={ref} {...props}>
+//         {children}
+//       </TinderCard>
+//     );
+//   }
+// );
 
 // If there are no incorrect answers, it is multiple-choice
 // Otherwise, it is fill-in-the-blank with a single blank
@@ -121,3 +133,5 @@ export const CardItem = forwardRef<API, CardItemProps>(
     );
   }
 );
+
+export default CardItem;

@@ -5,7 +5,8 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 
 import { Button } from "../Button";
-import { CardItem, CardItemData } from "./CardItem";
+import { CardItemData } from "./CardItem";
+import CardItem from "./CardItemWrapper";
 
 // The API interface in react-tinder-card wasn't exported, so it's copied here
 export interface API {
@@ -89,16 +90,16 @@ export function CardList({
     }
   };
 
-  const swipe = async (dir: string) => {
-    if (currentIndex >= 0 && currentIndex < cards.length) {
-      const cardRef = childRefs[currentIndex].current;
-      console.log(childRefs);
-      if (cardRef) {
-        console.log(cardRef);
-        await cardRef.swipe(dir); // Swipe the card!
-      }
-    }
-  };
+  // const swipe = async (dir: string) => {
+  //   console.log(childRefs);
+  //   if (currentIndex >= 0 && currentIndex < cards.length) {
+  //     const cardRef = childRefs[currentIndex].current;
+  //     if (cardRef) {
+  //       console.log(cardRef);
+  //       await cardRef.swipe(dir); // Swipe the card!
+  //     }
+  //   }
+  // };
 
   const setup = () => {
     const cardsToComplete = filterByCompletion(cardItemData);
@@ -161,7 +162,11 @@ export function CardList({
           <Row className="mt-3 justify-content-between">
             <Col md={3} xs={1} />
             <Col className="d-flex align-items-center justify-content-center">
-              <Button aria-label="left-button" onClick={() => swipe("left")}>
+              <Button
+                aria-label="left-button"
+                disabled
+                //  onClick={() => swipe("left")}
+              >
                 {"<"} Left to skip!
               </Button>
             </Col>
@@ -170,9 +175,10 @@ export function CardList({
     </Col> */}
             <Col className="d-flex align-items-center justify-content-center">
               <Button
-                onClick={() => swipe("right")}
+                // onClick={() => swipe("right")}
                 variant="secondary"
                 aria-label="right-button"
+                disabled
               >
                 Right for a quiz! {">"}
               </Button>
