@@ -24,7 +24,10 @@ function Login() {
   const handleLogin = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setLoading(true);
-    const { error } = await supabase.auth.signInWithOtp({ email });
+    const { error } = await supabase.auth.signInWithOtp({
+      email,
+      options: { emailRedirectTo: process.env.LOGIN_REDIRECT_URL },
+    });
 
     if (error) {
       logger.error(error.message);
