@@ -26,7 +26,7 @@ function Login() {
     setLoading(true);
     const { error } = await supabase.auth.signInWithOtp({
       email,
-      options: { emailRedirectTo: process.env.REACT_APP_LOGIN_REDIRECT_URL },
+      options: { emailRedirectTo: window.location.origin },
     });
 
     if (error) {
