@@ -1,5 +1,5 @@
 // fireEvent
-import { render } from "@testing-library/react";
+import { act, render } from "@testing-library/react";
 import React from "react";
 
 import { cardItemData } from "../../services/mockCardItemData";
@@ -25,8 +25,11 @@ describe("CardItem", () => {
   });
 
   it("renders correctly", () => {
-    const { getByRole } = render(<CardItem {...props} />);
-    expect(getByRole("listitem")).toBeInTheDocument();
+    act(() => {
+      const { getByRole } = render(<CardItem {...props} />);
+      expect(getByRole("listitem")).toBeInTheDocument();
+    });
+    // const { getByRole } = render(<CardItem {...props} />);
   });
 
   // it("calls handleSwipe when swiped left", () => {

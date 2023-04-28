@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Alert, Col, Row } from "react-bootstrap";
 
-import { CardItemData, CardList } from "../../components/Card";
-import { MainHeader } from "../../components/MainHeader";
-import { QuizModal } from "../../components/Quiz";
 import { cardItemData } from "../../services/cardItemData";
 import { logger } from "../../utils/logger";
+import { CardItemData, CardList } from "../Card";
+import { MainHeader } from "../MainHeader";
+import { QuizModal } from "../Quiz";
 
 function Main() {
   const [quizState, setQuizState] = useState<{

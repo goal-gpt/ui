@@ -1,19 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { Col, Container, ListGroup, Row } from "react-bootstrap";
 
-import { CardItemData } from "../../components/Card";
-import { MainHeader } from "../../components/MainHeader";
+import { CardItemData } from "../../src/components/Card";
+import { MainHeader } from "../../src/components/MainHeader";
+import { cardItemData } from "../../src/services/cardItemData";
 
 interface CategoriesCounts {
   [key: string]: number;
 }
 
-export interface ProfileProps {
-  cardItemData: CardItemData[];
-}
+// export interface ProfileProps {
+//   cardItemData: CardItemData[];
+// }
 
-function Profile(props: ProfileProps) {
-  const { cardItemData } = props;
+function Profile() {
+  // const { cardItemData } = props;
   const [completedCards, setCompletedCards] = useState<CardItemData[]>([]);
   const [hasMetrics, setHasMetrics] = useState<boolean>(false);
   const [categoriesCounts, setCategoriesCounts] = useState<CategoriesCounts>(

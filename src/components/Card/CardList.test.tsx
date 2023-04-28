@@ -82,14 +82,13 @@ describe("CardList component", () => {
     });
 
     it("displays a message about reaching the end", () => {
-      const { getByRole, getByLabelText, getByText } = render(
+      const { getByRole, getByText } = render(
         <CardList {...mockCardListProps} />
       );
       const cardItems = getByRole("list");
-      const leftButton = getByLabelText("left-button");
 
       for (let index = 0; index < cardItems.childNodes.length; index++) {
-        fireEvent.click(leftButton);
+        simulateSwipeLeft(cardItems.childNodes[index]);
       }
 
       const reachedTheEndText = getByText(
@@ -104,10 +103,9 @@ describe("CardList component", () => {
         <CardList {...mockCardListProps} />
       );
       const cardItems = getByRole("list");
-      const leftButton0 = getByLabelText("left-button");
 
       for (let index = 0; index < cardItems.childNodes.length; index++) {
-        fireEvent.click(leftButton0);
+        simulateSwipeLeft(cardItems.childNodes[index]);
       }
       const leftButtonAfterSkips = queryByLabelText("left-button");
 

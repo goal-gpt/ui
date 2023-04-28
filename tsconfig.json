@@ -17,6 +17,12 @@
     "jsx": "preserve",
     "incremental": true
   },
-  "include": ["src", "pages/index.tsx", "pages/_document.tsx", "pages/help"],
+  "include": [
+    "src",
+    "pages/old.tsx",
+    "pages/_document.tsx",
+    "pages/help",
+    "pages/profile"
+  ],
   "exclude": ["node_modules"]
 }

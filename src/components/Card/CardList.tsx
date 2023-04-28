@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 
+import { logger } from "../../utils";
 import { Button } from "../Button";
 import { CardItemData } from "./CardItem";
 import CardItem from "./CardItemWrapper";
@@ -32,7 +33,6 @@ export function CardList({
   const currentIndexRef = useRef(currentIndex);
   const [anySkipped, setAnySkipped] = useState<boolean>(false);
   const [areMoreCards, setAreMoreCards] = useState<boolean>(false);
-
   const getCompletedContentLinks = (): string[] => {
     return JSON.parse(localStorage.getItem("eras.completedCardLinks") || "[]");
   };
