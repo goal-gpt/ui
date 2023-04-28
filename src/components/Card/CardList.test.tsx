@@ -3,21 +3,12 @@ import { useRouter } from "next/router";
 import React from "react";
 
 import { cardItemData } from "../../services/mockCardItemData";
+import { simulateSwipeLeft } from "../../utils";
 import { CardList, CardListProps } from "./CardList";
 
 jest.mock("next/router", () => ({
   useRouter: jest.fn(),
 }));
-
-function simulateSwipeLeft(element: ChildNode) {
-  fireEvent.mouseDown(element, { clientX: 1000, clientY: 100 });
-
-  // Simulate the movement of the swipe
-  fireEvent.mouseMove(element, { clientX: 50, clientY: 100 });
-
-  // Simulate the end of the swipe
-  fireEvent.mouseUp(element);
-}
 
 describe("CardList component", () => {
   let mockSelectCard: jest.Mock;
@@ -38,12 +29,12 @@ describe("CardList component", () => {
     jest.clearAllMocks();
   });
 
-  it("renders a list of all cards if no category is supplied", () => {
+  it("renders a list of all cards if no category is supplied", async () => {
     const query = {};
     (useRouter as jest.Mock).mockReturnValue({ query });
 
-    const { getByRole } = render(<CardList {...mockCardListProps} />);
-    const cardItems = getByRole("list");
+    const { findByRole } = render(<CardList {...mockCardListProps} />);
+    const cardItems = await findByRole("list");
     // TODO: this is flaky because it depends on how nested we put the CardItem components
     expect(cardItems.childNodes.length).toBe(3);
   });

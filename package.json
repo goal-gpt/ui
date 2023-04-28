@@ -52,7 +52,7 @@
     "dev": "next dev",
     "start": "next start",
     "build": "next build",
-    "test": "jest test --watch --verbose",
+    "test": "jest test --watch",
     "test-prod": "jest test --silent --coverage --watchAll=false",
     "format": "prettier --write \"**/*.{js,jsx,json,md,ts,tsx}\"",
     "lint": "eslint ./ --color",

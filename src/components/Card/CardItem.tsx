@@ -99,12 +99,14 @@ export const CardItem = forwardRef<API, CardItemProps>(
     return (
       <TinderCard
         ref={ref}
-        className={`${styles.swipe} ${isHidden ? styles.hidden : ""}`}
+        className={`${styles.swipe} user-select-none ${styles.cardItem} ${
+          isHidden ? styles.hidden : ""
+        }`}
         onSwipe={handleSwipe}
         onCardLeftScreen={() => setIsHidden(true)}
         swipeRequirementType="position"
       >
-        <Card className={`user-select-none ${styles.cardItem}`} role="listitem">
+        <Card role="listitem">
           <Card.Img
             className={`${styles.cardImgTop} ${styles.erasCardImgBtm}`}
             src={imgSrc}

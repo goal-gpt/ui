@@ -1,13 +1,11 @@
-// import { render } from "@testing-library/react";
-// import userEvent from "@testing-library/user-event";
-// import React from "react";
+import { fireEvent } from "@testing-library/react";
 
-// export const renderWithRouter = (ui: React.ReactElement) => {
-//   return {
-//     user: userEvent.setup(),
-//     ...render(ui),
-//   };
-// };
+export function simulateSwipeLeft(element: ChildNode) {
+  fireEvent.mouseDown(element, { clientX: 0, clientY: 100 });
 
-// export * from "@testing-library/react";
-// export { userEvent };
+  // Simulate the movement of the swipe
+  fireEvent.mouseMove(element, { clientX: -2000, clientY: 100 });
+
+  // Simulate the end of the swipe
+  fireEvent.mouseUp(element);
+}
