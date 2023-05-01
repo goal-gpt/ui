@@ -1,12 +1,13 @@
 import "./Card.module.scss";
 
+import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 
 import { Button } from "../Button";
 import { CardItemData } from "./CardItem";
-import CardItem from "./CardItemWrapper";
+import CardItem from "./CardItem";
 
 // The API interface in react-tinder-card wasn't exported, so it's copied here
 export interface API {
@@ -203,7 +204,7 @@ export function CardList({
             {areSkippedOrMissedCards() && (
               <p>
                 Click{" "}
-                <a
+                <Link
                   href="/"
                   aria-label="review-link"
                   onClick={(event) => {
@@ -212,16 +213,16 @@ export function CardList({
                   }}
                 >
                   here
-                </a>{" "}
+                </Link>{" "}
                 to review what you skipped or missed.
               </p>
             )}
             {areMoreCards && (
               <p>
                 Click{" "}
-                <a href="/" aria-label="all-categories-link">
+                <Link href="/" aria-label="all-categories-link">
                   here
-                </a>{" "}
+                </Link>{" "}
                 to learn something new.
               </p>
             )}

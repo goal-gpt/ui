@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "ESNext",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
@@ -22,7 +22,9 @@
     "pages/old.tsx",
     "pages/_document.tsx",
     "pages/help",
-    "pages/profile"
+    "pages/profile",
+    "__tests__/help.test.tsx",
+    "__tests__/profile.test.tsx"
   ],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "**/*.test.ts", "**/*.test.tsx"]
 }

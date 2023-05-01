@@ -5,12 +5,20 @@ import {
 } from "@testing-library/react";
 import React from "react";
 
-import { cardItemData } from "../../src/services/mockCardItemData";
-import Profile from ".";
+import Profile from "../pages/profile";
+import { cardItemData } from "../src/services/cardItemData";
+// import { cardItemData as mockCards } from "../src/services/mockCardItemData";
 
-jest.mock("../../src/services/cardItemData", () => ({
-  cardItemData,
-}));
+jest.mock("../src/services/cardItemData", () => {
+  const {
+    cardItemData: mockCards,
+  } = require("../src/services/mockCardItemData"); // eslint-disable-line @typescript-eslint/no-var-requires
+
+  return {
+    // cardItemData: jest.fn(() => mockCards),
+    cardItemData: mockCards,
+  };
+});
 
 describe("Profile", () => {
   it("renders the main header", () => {
