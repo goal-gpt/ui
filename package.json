@@ -15,7 +15,6 @@
     "react-cookie-consent": "^8.0.1",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.43.9",
-    "react-scripts": "5.0.1",
     "react-tinder-card": "^1.6.2",
     "ts-node": "^10.9.1",
     "web-vitals": "^2.1.4"
@@ -43,7 +42,7 @@
     "lint-staged": "^13.2.0",
     "next-router-mock": "^0.9.3",
     "prettier": "^2.8.4",
-    "sass": "^1.62.0",
+    "sass": "^1.62.1",
     "ts-jest": "^29.1.0",
     "tsc-files": "^1.1.3",
     "typescript": "^5.0.4"
@@ -53,7 +52,7 @@
     "dev": "next dev",
     "start": "next start",
     "build": "next build",
-    "test": "jest test --watch --verbose",
+    "test": "jest test --watch",
     "test-prod": "jest test --silent --coverage --watchAll=false",
     "format": "prettier --write \"**/*.{js,jsx,json,md,ts,tsx}\"",
     "lint": "next lint",

@@ -1,5 +1,3 @@
-import "./Card.module.scss";
-
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useEffect, useMemo, useRef, useState } from "react";
