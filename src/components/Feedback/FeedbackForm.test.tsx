@@ -110,9 +110,9 @@ describe("FeedbackForm", () => {
   });
 
   it("should display a spinner while sending an email and clear the form on success", async () => {
-    process.env.REACT_APP_EMAILJS_SERVICE_ID = "test_service";
-    process.env.REACT_APP_EMAILJS_TEMPLATE_ID = "test_template";
-    process.env.REACT_APP_EMAILJS_USER_ID = "test_id";
+    process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID = "test_service";
+    process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID = "test_template";
+    process.env.NEXT_PUBLIC_EMAILJS_USER_ID = "test_id";
     emailjsMock.mockResolvedValue({ status: 200, text: "OK" });
 
     const { getByRole, getByLabelText } = render(<FeedbackForm quiz="test" />);
