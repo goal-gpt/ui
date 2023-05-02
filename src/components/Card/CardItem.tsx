@@ -31,7 +31,6 @@ export interface CardItemData {
 
 export interface CardItemProps {
   data: CardItemData;
-  // apiRef: React.Ref<API>;
   handleSwipe: (direction: string) => void;
 }
 
@@ -87,14 +86,14 @@ export const CardItem = forwardRef<API, CardItemProps>(
     return (
       <TinderCard
         ref={ref}
-        className={`${styles.swipe} user-select-none ${styles.cardItem} ${
+        className={`${styles.swipe} user-select-none${
           isHidden ? styles.hidden : ""
         }`}
         onSwipe={handleSwipe}
         onCardLeftScreen={() => setIsHidden(true)}
         swipeRequirementType="position"
       >
-        <Card role="listitem">
+        <Card role="listitem" className={`${styles.cardItem} `}>
           <Card.Img
             className={`${styles.cardImgTop} ${styles.erasCardImgBtm}`}
             src={imgSrc}
