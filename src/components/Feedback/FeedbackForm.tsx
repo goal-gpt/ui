@@ -1,5 +1,3 @@
-import "./FeedbackForm.module.scss";
-
 import React, { ChangeEvent, FormEvent, useState } from "react";
 import {
   Card,
@@ -19,6 +17,7 @@ import {
 
 import { logger, sendEmailJS } from "../../utils";
 import { Button } from "../Button";
+import styles from "./FeedbackForm.module.scss";
 
 export interface FeedbackFormProps {
   quiz: string | undefined;
@@ -99,7 +98,7 @@ export function FeedbackForm({ quiz }: FeedbackFormProps) {
 
   return (
     <Card className="my-4">
-      <Form className="formBox" onSubmit={sendEmail}>
+      <Form className={`${styles.formBox}`} onSubmit={sendEmail}>
         <Container>
           <Card.Title>How did you find this quiz?</Card.Title>
           <Form.Group>

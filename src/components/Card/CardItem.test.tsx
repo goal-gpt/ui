@@ -54,8 +54,8 @@ describe("CardItem component", () => {
     simulateSwipeLeft(card);
 
     // now the card should be hidden
-    // TODO: this doesn't work
-    // await waitFor(() => expect(card).toHaveClass("hidden"));
+    // TODO: fix this test as it doesn't work
+    // await waitFor(() => expect(card.parentElement).toHaveClass("hidden"));
   });
 
   describe("getTruncatedText function", () => {

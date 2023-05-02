@@ -1,5 +1,4 @@
-import "./QuizModal.module.scss";
-
+import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { Alert } from "react-bootstrap";
 import Modal from "react-bootstrap/Modal";
@@ -7,6 +6,7 @@ import Modal from "react-bootstrap/Modal";
 import { CardItemData } from "../Card";
 import { FeedbackForm } from "../Feedback";
 import { QuizForm } from "./QuizForm";
+import styles from "./QuizModal.module.scss";
 
 export interface QuizModalProps {
   card: CardItemData | null;
@@ -71,14 +71,14 @@ export function QuizModal({ card, show, handleClose }: QuizModalProps) {
       <Modal.Body>
         <h4 className="my-2">Click here to learn: </h4>
         <h2>
-          <a
-            className="external-link"
-            href={card?.link}
+          <Link
+            className={styles.externalLink}
+            href={card?.link || "#"}
             target="_blank"
             rel="noreferrer"
           >
             {card?.title}
-          </a>
+          </Link>
         </h2>
         <hr />
         <h3>Quiz</h3>

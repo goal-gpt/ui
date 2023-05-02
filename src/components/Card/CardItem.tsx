@@ -86,7 +86,7 @@ export const CardItem = forwardRef<API, CardItemProps>(
     return (
       <TinderCard
         ref={ref}
-        className={`${styles.swipe} user-select-none${
+        className={`${styles.swipe} user-select-none ${
           isHidden ? styles.hidden : ""
         }`}
         onSwipe={handleSwipe}
