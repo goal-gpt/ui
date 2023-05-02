@@ -5,6 +5,8 @@ import Image from "react-bootstrap/Image";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 
+import LoginToggle from "../LoginToggle/LoginToggle";
+
 export function MainHeader() {
   return (
     <Navbar bg="light" variant="light" className="mb-4" role="navigation">
@@ -31,6 +33,7 @@ export function MainHeader() {
             </Nav.Link>
           </Nav>
         </Navbar.Collapse>
+        <LoginToggle />
       </Container>
     </Navbar>
   );

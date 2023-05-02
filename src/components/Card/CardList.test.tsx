@@ -6,10 +6,6 @@ import { cardItemData } from "../../services/mockCardItemData";
 import { simulateSwipeLeft } from "../../utils";
 import { CardList, CardListProps } from "./CardList";
 
-jest.mock("next/router", () => ({
-  useRouter: jest.fn(),
-}));
-
 describe("CardList component", () => {
   let mockSelectCard: jest.Mock;
   let mockRemoveCard: jest.Mock;

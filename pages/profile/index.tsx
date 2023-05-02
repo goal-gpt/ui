@@ -1,6 +1,8 @@
+import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
 import React, { useEffect, useState } from "react";
 import { Col, Container, ListGroup, Row } from "react-bootstrap";
 
+import { Button } from "../../src/components/Button";
 import { CardItemData } from "../../src/components/Card";
 import { MainHeader } from "../../src/components/MainHeader";
 import { cardItemData } from "../../src/services/cardItemData";
@@ -10,6 +12,8 @@ interface CategoriesCounts {
 }
 
 function Profile() {
+  const supabaseClient = useSupabaseClient();
+  const user = useUser();
   const [completedCards, setCompletedCards] = useState<CardItemData[]>([]);
   const [hasMetrics, setHasMetrics] = useState<boolean>(false);
   const [categoriesCounts, setCategoriesCounts] = useState<CategoriesCounts>(
@@ -53,6 +57,11 @@ function Profile() {
     setWordCount(totalSpaces);
   }, [completedCards]);
 
+  // TODO: move all of these supabase functions into a separate file
+  const handleUserLogout = async () => {
+    await supabaseClient.auth.signOut();
+  };
+
   return (
     <>
       <MainHeader />
@@ -95,6 +104,20 @@ function Profile() {
             )}
           </Col>
           <Col lg={2} md={1} sm={0} />
+        </Row>
+        <Row>
+          {user ? (
+            <Row className="d-flex align-items-center justify-content-center">
+              <div className="text-center my-3">You&apos;re logged in!</div>
+              <Button className="w-25 h-50" onClick={handleUserLogout}>
+                Logout
+              </Button>
+            </Row>
+          ) : (
+            <div className="text-center my-3">
+              You must be logged in to see this.
+            </div>
+          )}
         </Row>
       </Container>
     </>

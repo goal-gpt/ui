@@ -55,10 +55,7 @@
     "react/jsx-props-no-spreading": "off",
     "simple-import-sort/imports": "error",
     "simple-import-sort/exports": "error",
-    "import/no-extraneous-dependencies": [
-      "off",
-      { "devDependencies": ["**test**", "jest**"] }
-    ],
+    "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
     "prefer-destructuring": ["error", { "object": true, "array": false }],
     "no-plusplus": "off"
   },
