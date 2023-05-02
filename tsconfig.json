@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "ESNext",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
@@ -14,7 +14,17 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react"
+    "jsx": "preserve",
+    "incremental": true
   },
-  "include": ["src"]
+  "include": [
+    "src",
+    "pages/old.tsx",
+    "pages/_document.tsx",
+    "pages/help",
+    "pages/profile",
+    "__tests__/help.test.tsx",
+    "__tests__/profile.test.tsx"
+  ],
+  "exclude": ["node_modules", "**/*.test.ts", "**/*.test.tsx"]
 }

@@ -1,7 +1,7 @@
+import { render, screen } from "@testing-library/react";
 import React from "react";
 
 import { cardItemData } from "../../services/mockCardItemData";
-import { renderWithRouter, screen } from "../../utils/testHelpers";
 import { CardItemData } from "../Card";
 import { motivationalMessages, QuizModal, QuizModalProps } from ".";
 
@@ -24,19 +24,18 @@ describe("QuizModal", () => {
   });
 
   afterEach(() => {
-    jest.runOnlyPendingTimers();
     jest.useRealTimers();
     jest.clearAllMocks();
   });
 
   it("renders the quiz", () => {
-    renderWithRouter(<QuizModal {...testProps} />);
+    render(<QuizModal {...testProps} />);
     const text = screen.getByText(/click here to learn/i);
     expect(text).toBeInTheDocument();
   });
 
   it("displays a motivational message", () => {
-    renderWithRouter(<QuizModal {...testProps} />);
+    render(<QuizModal {...testProps} />);
     const regex = new RegExp(motivationalMessages.join("|"), "i");
     const messageElement = screen.getByText(regex);
     expect(messageElement).toBeInTheDocument();

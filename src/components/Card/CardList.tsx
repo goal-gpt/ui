@@ -1,11 +1,11 @@
-import "./Card.scss";
-
+import Link from "next/link";
+import { useRouter } from "next/router";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
-import { useParams } from "react-router-dom";
 
 import { Button } from "../Button";
-import { CardItem, CardItemData } from "./CardItem";
+import { CardItemData } from "./CardItem";
+import CardItem from "./CardItem";
 
 // The API interface in react-tinder-card wasn't exported, so it's copied here
 export interface API {
@@ -24,13 +24,13 @@ export function CardList({
   selectCard,
   removeCard,
 }: CardListProps) {
-  const { category } = useParams();
+  const router = useRouter();
+  const { category } = router.query as { category: string };
   const [cards, setCards] = useState<CardItemData[]>([]);
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const currentIndexRef = useRef(currentIndex);
   const [anySkipped, setAnySkipped] = useState<boolean>(false);
   const [areMoreCards, setAreMoreCards] = useState<boolean>(false);
-
   const getCompletedContentLinks = (): string[] => {
     return JSON.parse(localStorage.getItem("eras.completedCardLinks") || "[]");
   };
@@ -88,14 +88,23 @@ export function CardList({
     }
   };
 
-  const swipe = async (dir: string) => {
-    if (currentIndex >= 0 && currentIndex < cards.length) {
-      const cardRef = childRefs[currentIndex].current;
-      if (cardRef) {
-        await cardRef.swipe(dir); // Swipe the card!
-      }
-    }
-  };
+  // const swipe = async (dir: string, index: number) => {
+  // console.log(childRefs);
+  // if (currentIndex >= 0 && currentIndex < cards.length) {
+  //   const cardRef = childRefs[currentIndex].current;
+  //   if (cardRef) {
+  //     console.log(cardRef);
+  //     await cardRef.swipe(dir); // Swipe the card!
+  //   }
+  // }
+  // updateCurrentIndex(index - 1);
+  // if (dir === "left" || dir === "down") {
+  //   removeCard(cards[currentIndex]);
+  //   setAnySkipped(true);
+  // } else {
+  //   selectCard(cards[currentIndex]);
+  // }
+  // };
 
   const setup = () => {
     const cardsToComplete = filterByCompletion(cardItemData);
@@ -148,7 +157,7 @@ export function CardList({
           <Row className="d-grid justify-content-center" role="list">
             {cards.map((card, index) => (
               <CardItem
-                apiRef={childRefs[index]}
+                ref={childRefs[index]}
                 key={card.link}
                 data={card}
                 handleSwipe={(dir: string) => swiped(dir, index)}
@@ -158,7 +167,11 @@ export function CardList({
           <Row className="mt-3 justify-content-between">
             <Col md={3} xs={1} />
             <Col className="d-flex align-items-center justify-content-center">
-              <Button aria-label="left-button" onClick={() => swipe("left")}>
+              <Button
+                aria-label="left-button"
+                disabled
+                // onClick={() => swipe("left", currentIndex)}
+              >
                 {"<"} Left to skip!
               </Button>
             </Col>
@@ -167,9 +180,10 @@ export function CardList({
     </Col> */}
             <Col className="d-flex align-items-center justify-content-center">
               <Button
-                onClick={() => swipe("right")}
+                // onClick={() => swipe("right", currentIndex)}
                 variant="secondary"
                 aria-label="right-button"
+                disabled
               >
                 Right for a quiz! {">"}
               </Button>
@@ -188,7 +202,7 @@ export function CardList({
             {areSkippedOrMissedCards() && (
               <p>
                 Click{" "}
-                <a
+                <Link
                   href="/"
                   aria-label="review-link"
                   onClick={(event) => {
@@ -197,16 +211,16 @@ export function CardList({
                   }}
                 >
                   here
-                </a>{" "}
+                </Link>{" "}
                 to review what you skipped or missed.
               </p>
             )}
             {areMoreCards && (
               <p>
                 Click{" "}
-                <a href="/" aria-label="all-categories-link">
+                <Link href="/" aria-label="all-categories-link">
                   here
-                </a>{" "}
+                </Link>{" "}
                 to learn something new.
               </p>
             )}

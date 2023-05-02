@@ -1,10 +1,8 @@
-import "./Help.scss";
-
+import Link from "next/link";
 import React from "react";
 import { Accordion, Col, Container, Row } from "react-bootstrap";
-import { Link } from "react-router-dom";
 
-import { MainHeader } from "../../components/MainHeader";
+import { MainHeader } from "../../src/components/MainHeader";
 
 type FAQItem = {
   id: string;
@@ -25,7 +23,8 @@ const faqs: FAQItem[] = [
         </p>
         <p>
           Our app is currently in beta. If you have any feedback, please email
-          us at <Link to="mailto:eras.fyi@gmail.com">eras.fyi@gmail.com</Link>!
+          us at <Link href="mailto:eras.fyi@gmail.com">eras.fyi@gmail.com</Link>
+          !
         </p>
       </>
     ),
@@ -64,7 +63,7 @@ const faqs: FAQItem[] = [
         We&apos;re sorry to hear that! We&apos;re still in beta, so we&apos;re
         working on improving our quiz questions and answers. If you think a
         question was buggy, please email us at{" "}
-        <Link to="mailto:eras.fyi@gmail.com">eras.fyi@gmail.com</Link> and
+        <Link href="mailto:eras.fyi@gmail.com">eras.fyi@gmail.com</Link> and
         we&apos;ll look into it.
       </p>
     ),
@@ -75,7 +74,7 @@ const faqs: FAQItem[] = [
     body: (
       <p>
         We&apos;d love to hear from you! Please email us at{" "}
-        <Link to="mailto:eras.fyi@gmail.com">eras.fyi@gmail.com</Link>. Thank
+        <Link href="mailto:eras.fyi@gmail.com">eras.fyi@gmail.com</Link>. Thank
         you so much for your support!
       </p>
     ),

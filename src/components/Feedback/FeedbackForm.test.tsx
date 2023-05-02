@@ -1,12 +1,10 @@
 import "@testing-library/jest-dom/extend-expect";
 
-// import emailjs from "@emailjs/browser";
-import { fireEvent, waitFor } from "@testing-library/react";
+import { fireEvent, render, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import React from "react";
 
 import { logger, sendEmailJS } from "../../utils";
-import { renderWithRouter } from "../../utils/testHelpers";
 import { FeedbackForm, FeedbackFormProps } from "./FeedbackForm";
 
 jest.mock("../../utils/email");
@@ -34,7 +32,7 @@ describe("FeedbackForm", () => {
   });
 
   it("should render the form correctly", () => {
-    const { getByLabelText, getByText } = renderWithRouter(
+    const { getByLabelText, getByText } = render(
       <FeedbackForm {...defaultProps} />
     );
 
@@ -43,7 +41,7 @@ describe("FeedbackForm", () => {
   });
 
   it("handles user input", async () => {
-    const { getByRole } = renderWithRouter(<FeedbackForm {...defaultProps} />);
+    const { getByRole } = render(<FeedbackForm {...defaultProps} />);
     const input = getByRole("textbox");
 
     await userEvent.type(input, "This is my feedback");
@@ -51,7 +49,7 @@ describe("FeedbackForm", () => {
   });
 
   it("should toggle thumbs up and thumbs down correctly", () => {
-    const { getByRole } = renderWithRouter(<FeedbackForm quiz="test" />);
+    const { getByRole } = render(<FeedbackForm quiz="test" />);
 
     const thumbsUp = getByRole("button", { name: /hand-thumbs-up/i });
     const thumbsDown = getByRole("button", { name: /hand-thumbs-down/i });
@@ -94,8 +92,9 @@ describe("FeedbackForm", () => {
   });
 
   it("should allow submitting the form", async () => {
-    const { getByLabelText, getByRole, getByText, queryByText } =
-      renderWithRouter(<FeedbackForm quiz="test" />);
+    const { getByLabelText, getByRole, getByText, queryByText } = render(
+      <FeedbackForm quiz="test" />
+    );
 
     const thumbsUp = getByRole("button", { name: /thumbs-up/i });
     const comments = getByLabelText("Share your feedback");
@@ -116,9 +115,7 @@ describe("FeedbackForm", () => {
     process.env.REACT_APP_EMAILJS_USER_ID = "test_id";
     emailjsMock.mockResolvedValue({ status: 200, text: "OK" });
 
-    const { getByRole, getByLabelText } = renderWithRouter(
-      <FeedbackForm quiz="test" />
-    );
+    const { getByRole, getByLabelText } = render(<FeedbackForm quiz="test" />);
 
     const commentsInput = getByLabelText(/share your feedback/i);
     fireEvent.change(commentsInput, { target: { value: "Great quiz!" } });
@@ -144,9 +141,7 @@ describe("FeedbackForm", () => {
     const error = new Error("Send email failed");
     emailjsMock.mockRejectedValue(error);
 
-    const { getByRole, getByLabelText } = renderWithRouter(
-      <FeedbackForm quiz="test" />
-    );
+    const { getByRole, getByLabelText } = render(<FeedbackForm quiz="test" />);
 
     const commentsInput = getByLabelText(/share your feedback/i);
     fireEvent.change(commentsInput, { target: { value: "Great quiz!" } });

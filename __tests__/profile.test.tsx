@@ -1,24 +1,33 @@
-import { Matcher, SelectorMatcherOptions } from "@testing-library/react";
+import {
+  Matcher,
+  render,
+  SelectorMatcherOptions,
+} from "@testing-library/react";
 import React from "react";
 
-import { cardItemData } from "../../services/mockCardItemData";
-import { renderWithRouter } from "../../utils/testHelpers";
-import Profile from "./Profile";
+import Profile from "../pages/profile";
+import { cardItemData } from "../src/services/cardItemData";
+
+jest.mock("../src/services/cardItemData", () => {
+  const {
+    cardItemData: mockCards,
+  } = require("../src/services/mockCardItemData"); // eslint-disable-line @typescript-eslint/no-var-requires
+
+  return {
+    cardItemData: mockCards,
+  };
+});
 
 describe("Profile", () => {
   it("renders the main header", () => {
-    const { getByText } = renderWithRouter(
-      <Profile cardItemData={cardItemData} />
-    );
+    const { getByText } = render(<Profile />);
     const headerElement = getByText(/home/i);
     expect(headerElement).toBeInTheDocument();
   });
 
   describe("There are no completed quizzes", () => {
     it("renders a message when no quizzes have been completed", () => {
-      const { getByText } = renderWithRouter(
-        <Profile cardItemData={cardItemData} />
-      );
+      const { getByText } = render(<Profile />);
       const messageElement = getByText(
         /once you've completed some quizzes, come back here to track your progress!/i
       );
@@ -35,14 +44,11 @@ describe("Profile", () => {
       const completedCardLinks = cardItemData
         .slice(0, 2)
         .map((card) => card.link);
-
       jest
         .spyOn(Object.getPrototypeOf(window.localStorage), "getItem")
         .mockReturnValue(JSON.stringify(completedCardLinks));
 
-      const { getByText } = renderWithRouter(
-        <Profile cardItemData={cardItemData} />
-      );
+      const { getByText } = render(<Profile />);
       getByTextHTMLElement = getByText;
     });
 
