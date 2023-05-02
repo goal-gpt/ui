@@ -1,12 +1,9 @@
-import "./UserIndicator.scss";
-
+import { useUser } from "@supabase/auth-helpers-react";
 import React from "react";
-
-import { useAuth } from "../../pages/Auth/RequireAuth";
 
 export function UserIndicator() {
   // TODO: expand this into its own navigation menu, with the profile picture in a circle etc
-  const { session } = useAuth();
+  const user = useUser();
 
-  return <div>{session?.user?.email}</div>;
+  return <>{user && <div role="">{user?.email}</div>}</>;
 }

@@ -1,35 +1,25 @@
-import { Session } from "@supabase/supabase-js";
-import React, { render, screen } from "@testing-library/react";
+import { useUser } from "@supabase/auth-helpers-react";
+import { render, screen } from "@testing-library/react";
+import React from "react";
 
-import { AuthContext } from "../../pages/Auth/RequireAuth";
 import { UserIndicator } from "./UserIndicator";
 
+jest.mock("@supabase/auth-helpers-react");
+
 describe("UserIndicator", () => {
-  it("renders nothing when user is not logged in", () => {
-    const mockAuthContextValue = { session: null };
-    render(
-      <AuthContext.Provider value={mockAuthContextValue}>
-        <UserIndicator />
-      </AuthContext.Provider>
-    );
+  it("displays the user email when the user is logged in", () => {
+    (useUser as jest.Mock).mockReturnValue({ email: "test@example.com" });
 
-    expect(screen.queryByText(/@/)).not.toBeInTheDocument();
-  });
-
-  it("renders user email when user is logged in", () => {
-    const mockSession: Session = {
-      user: {
-        email: "test@example.com",
-      },
-    } as Session;
-
-    const mockAuthContextValue = { session: mockSession };
-    render(
-      <AuthContext.Provider value={mockAuthContextValue}>
-        <UserIndicator />
-      </AuthContext.Provider>
-    );
+    render(<UserIndicator />);
 
     expect(screen.getByText("test@example.com")).toBeInTheDocument();
+  });
+
+  it("does not display email when the user is not logged in", () => {
+    (useUser as jest.Mock).mockReturnValue(null);
+
+    const { container } = render(<UserIndicator />);
+
+    expect(container.firstChild).toBeNull();
   });
 });

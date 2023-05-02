@@ -1,53 +1,35 @@
-import { Session } from "@supabase/gotrue-js";
-import { fireEvent, screen } from "@testing-library/react";
+import { useUser } from "@supabase/auth-helpers-react";
+import { render, screen } from "@testing-library/react";
+import { useRouter } from "next/router";
 import React from "react";
 
-import { useAuth } from "../../pages/Auth/RequireAuth";
-import { renderWithRouter } from "../../utils";
 import LoginToggle from "./LoginToggle";
 
-const mockNavigate = jest.fn();
-
-jest.mock("react-router-dom", () => ({
-  ...jest.requireActual("react-router-dom"),
-  useNavigate: () => mockNavigate,
+jest.mock("@supabase/auth-helpers-react", () => ({
+  useUser: jest.fn(),
 }));
-jest.mock("../../pages/Auth/RequireAuth");
-const authMock = useAuth as jest.MockedFunction<typeof useAuth>;
 
 describe("LoginToggle", () => {
-  afterEach(() => {
-    jest.clearAllMocks();
+  it("renders Login button if user is not logged in", () => {
+    (useUser as jest.Mock).mockReturnValue(null);
+    render(<LoginToggle />);
+    expect(screen.getByText("Login")).toBeInTheDocument();
   });
 
-  test("renders login button when there is no session", () => {
-    authMock.mockReturnValue({ session: null });
-
-    renderWithRouter(<LoginToggle />);
-
-    expect(screen.getByRole("button", { name: /login/i })).toBeInTheDocument();
+  it("renders UserIndicator if user is logged in", () => {
+    (useUser as jest.Mock).mockReturnValue({ email: "test@email.com" });
+    render(<LoginToggle />);
+    expect(screen.getByText("test@email.com")).toBeInTheDocument();
   });
 
-  test("navigates to /login when login button is clicked", () => {
-    authMock.mockReturnValue({ session: null });
+  it("navigates to /login when Login button is clicked", () => {
+    const mockPush = jest.fn();
+    (useRouter as jest.Mock).mockReturnValue({ push: mockPush });
+    (useUser as jest.Mock).mockReturnValue(null);
 
-    renderWithRouter(<LoginToggle />);
+    render(<LoginToggle />);
+    screen.getByText("Login").click();
 
-    fireEvent.click(screen.getByRole("button", { name: /login/i }));
-
-    expect(mockNavigate).toHaveBeenCalledWith("/login");
-  });
-
-  test("renders UserIndicator when there is a session", () => {
-    authMock.mockReturnValue({
-      session: { user: { id: "123", email: "user@example.com" } } as Session,
-    });
-
-    renderWithRouter(<LoginToggle />);
-
-    expect(
-      screen.queryByRole("button", { name: /login/i })
-    ).not.toBeInTheDocument();
-    expect(screen.getByText("user@example.com")).toBeInTheDocument();
+    expect(mockPush).toHaveBeenCalledWith("/login");
   });
 });

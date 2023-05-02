@@ -1,21 +1,11 @@
-import { render } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
-import React from "react";
-import { MemoryRouter } from "react-router-dom";
+import { fireEvent } from "@testing-library/react";
 
-export const renderWithRouter = (
-  ui: React.ReactElement,
-  { route = "/" }: { route?: string } = {}
-) => {
-  window.history.pushState({}, "Test page", route);
+export function simulateSwipeLeft(element: ChildNode) {
+  fireEvent.mouseDown(element, { clientX: 0, clientY: 100 });
 
-  return {
-    user: userEvent.setup(),
-    ...render(ui, {
-      wrapper: MemoryRouter,
-    }),
-  };
-};
+  // Simulate the movement of the swipe
+  fireEvent.mouseMove(element, { clientX: -2000, clientY: 100 });
 
-export * from "@testing-library/react";
-export * from "react-router-dom";
+  // Simulate the end of the swipe
+  fireEvent.mouseUp(element);
+}
