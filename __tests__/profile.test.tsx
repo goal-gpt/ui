@@ -7,7 +7,6 @@ import React from "react";
 
 import Profile from "../pages/profile";
 import { cardItemData } from "../src/services/cardItemData";
-// import { cardItemData as mockCards } from "../src/services/mockCardItemData";
 
 jest.mock("../src/services/cardItemData", () => {
   const {
@@ -15,7 +14,6 @@ jest.mock("../src/services/cardItemData", () => {
   } = require("../src/services/mockCardItemData"); // eslint-disable-line @typescript-eslint/no-var-requires
 
   return {
-    // cardItemData: jest.fn(() => mockCards),
     cardItemData: mockCards,
   };
 });

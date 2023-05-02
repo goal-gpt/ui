@@ -9,12 +9,7 @@ interface CategoriesCounts {
   [key: string]: number;
 }
 
-// export interface ProfileProps {
-//   cardItemData: CardItemData[];
-// }
-
 function Profile() {
-  // const { cardItemData } = props;
   const [completedCards, setCompletedCards] = useState<CardItemData[]>([]);
   const [hasMetrics, setHasMetrics] = useState<boolean>(false);
   const [categoriesCounts, setCategoriesCounts] = useState<CategoriesCounts>(
