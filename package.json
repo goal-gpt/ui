@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@emailjs/browser": "^3.10.0",
+    "@microsoft/fetch-event-source": "^2.0.1",
     "@react-spring/web": "^9.7.1",
     "@supabase/auth-helpers-nextjs": "^0.6.1",
     "@supabase/auth-helpers-react": "^0.3.1",
