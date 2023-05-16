@@ -1,6 +1,7 @@
 import React from "react";
 import { Col, Row } from "react-bootstrap";
 
+import { ChatBox } from "../src/components/Chat";
 import { MainHeader } from "../src/components/MainHeader";
 
 function Main() {
@@ -9,7 +10,9 @@ function Main() {
       <MainHeader />
       <Row>
         <Col md={3} xs={1} />
-        <Col></Col>
+        <Col>
+          <ChatBox />
+        </Col>
         <Col md={3} xs={1} />
       </Row>
     </div>
