@@ -4,7 +4,7 @@ import React from "react";
 import { ChatMessage, ChatMessage as ChatMessageProps } from "./ChatMessage";
 
 describe("ChatMessage", () => {
-  test("renders with correct role and content", () => {
+  it("renders with correct role and content", () => {
     const mockMessage: ChatMessageProps = {
       role: "user",
       content: "Test message",
@@ -20,7 +20,7 @@ describe("ChatMessage", () => {
     expect(screen.getByText("Test message")).toBeInTheDocument();
   });
 
-  test("renders with assistant role correctly", () => {
+  it("renders with assistant role correctly", () => {
     const mockMessage: ChatMessageProps = {
       role: "assistant",
       content: "Test assistant message",

@@ -18,7 +18,7 @@ jest.mock("next/router", () => ({
 }));
 
 describe("Main component", () => {
-  test("checks that main is rendered", () => {
+  it("checks that main is rendered", () => {
     const { getByRole } = render(<Main />);
     const headerImage = getByRole("main");
     expect(headerImage).toBeInTheDocument();

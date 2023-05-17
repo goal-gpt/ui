@@ -15,13 +15,13 @@ describe("ChatBox", () => {
     });
   });
 
-  test("renders without crashing", () => {
+  it("renders without crashing", () => {
     render(<ChatBox />);
     expect(screen.getByPlaceholderText("Send a message")).toBeInTheDocument();
     expect(screen.getByRole("button", { name: /send/i })).toBeInTheDocument();
   });
 
-  test("inputs message correctly", async () => {
+  it("inputs message correctly", async () => {
     render(<ChatBox />);
     const input = screen.getByPlaceholderText("Send a message");
     await act(async () => {
@@ -30,7 +30,7 @@ describe("ChatBox", () => {
     expect(input).toHaveValue("Test message");
   });
 
-  test("sends message on form submit", async () => {
+  it("sends message on form submit", async () => {
     const mockSendMessage = jest.fn();
     (useChat as jest.Mock).mockReturnValue({
       chatHistory: [],

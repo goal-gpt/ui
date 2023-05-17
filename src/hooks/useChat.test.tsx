@@ -1,32 +1,30 @@
-// import { fetchEventSource } from "@microsoft/fetch-event-source";
-import { act, renderHook } from "@testing-library/react";
+import { act, renderHook, waitFor } from "@testing-library/react";
 
-import { useChat } from "./useChat";
-
-jest.mock("@microsoft/fetch-event-source", () => ({
-  fetchEventSource: jest.fn(),
-}));
+import { FatalError, useChat } from "./useChat";
 
 describe("useChat", () => {
-  beforeAll(() => {
-    jest.useFakeTimers();
-  });
-
-  afterEach(() => {
-    jest.clearAllMocks();
-    jest.clearAllTimers();
+  beforeEach(() => {
+    global.fetch = jest.fn(() =>
+      Promise.resolve({
+        ok: true,
+        status: 200,
+        json: () => Promise.resolve("Test response"),
+        headers: {
+          get: () => "application/json",
+        },
+      })
+    ) as jest.Mock;
   });
 
   afterAll(() => {
-    jest.useRealTimers();
+    jest.restoreAllMocks();
   });
 
   it("should initialize with correct defaults", () => {
     const { result } = renderHook(() => useChat());
-
+    expect(result.current.state).toBe("idle");
     expect(result.current.currentChat).toBeNull();
     expect(result.current.chatHistory).toEqual([]);
-    expect(result.current.state).toBe("idle");
   });
 
   it("should clear the chat history", () => {
@@ -45,32 +43,41 @@ describe("useChat", () => {
     expect(result.current.chatHistory).toEqual([]);
   });
 
-  // TODO: finish this test for sendMessage
-  // it("should send a message and update chat history", async () => {
-  //   (fetchEventSource as jest.Mock).mockImplementation((url, options) => {
-  //     options.onmessage({ event: "open" });
-  //     options.onmessage({
-  //       event: "delta",
-  //       data: JSON.stringify({ role: "assistant", content: "Hello" }),
-  //     });
-  //     options.onmessage({ event: "done" });
-  //     return { close: jest.fn() };
-  //   });
+  it("send message", async () => {
+    const message = "Test message";
+    const { result } = renderHook(() => useChat());
+    act(() => {
+      result.current.sendMessage(message, []);
+    });
+    expect(result.current.state).toBe("waiting");
 
-  //   const { result } = renderHook(() => useChat());
+    act(() => {
+      waitFor(() => {
+        expect(result.current.state).toBe("idle");
+        expect(result.current.chatHistory).toEqual([
+          { role: "user", content: message },
+          { role: "assistant", content: "Test response" },
+        ]);
+      });
+    });
+  });
 
-  //   act(() => {
-  //     result.current.sendMessage("Hello", []);
-  //   });
-
-  //   // Wait for the updates to propagate
-  //   await waitFor(() => {
-  //     expect(result.current.currentChat).toBe("Hello");
-  //     expect(result.current.chatHistory).toEqual([
-  //       { role: "user", content: "Hello" },
-  //       { role: "assistant", content: "Hello" },
-  //     ]);
-  //     expect(result.current.state).toBe("idle");
-  //   });
-  // });
+  it("handle error", async () => {
+    (fetch as jest.Mock).mockImplementationOnce(() =>
+      Promise.resolve({
+        ok: false,
+        status: 400,
+        headers: {
+          get: () => "application/json",
+        },
+      })
+    );
+    const message = "Test message";
+    const { result } = renderHook(() => useChat());
+    await waitFor(() => {
+      expect(result.current.sendMessage(message, [])).rejects.toThrow(
+        FatalError
+      );
+    });
+  });
 });
