@@ -20,9 +20,11 @@ jest.mock("../src/services/cardItemData", () => {
 
 describe("Profile", () => {
   it("renders the main header", () => {
-    const { getByText } = render(<Profile />);
-    const headerElement = getByText(/home/i);
-    expect(headerElement).toBeInTheDocument();
+    const { getByAltText } = render(<Profile />);
+    const headerImage = getByAltText(
+      /eras logo: yellow lines gradually reaching the horizon/i
+    );
+    expect(headerImage).toBeInTheDocument();
   });
 
   describe("There are no completed quizzes", () => {

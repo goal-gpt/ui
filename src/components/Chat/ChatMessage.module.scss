@@ -1,0 +1,25 @@
+.chatMessage {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0.5rem;
+}
+
+.chatMessageHuman {
+  justify-content: flex-end;
+  background-color: var(--bs-primary-semi-light);
+}
+
+.chatMessageAI {
+  justify-content: flex-start;
+  background-color: var(--bs-primary-light);
+}
+
+.chatMessageHuman p,
+.chatMessageAI p {
+  background-color: inherit;
+  margin: 0;
+  padding: 8px 16px;
+  word-break: break-word;
+  text-align: left;
+}
