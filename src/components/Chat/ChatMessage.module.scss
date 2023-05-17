@@ -1,0 +1,27 @@
+// @use "../../../pages/index.scss";
+
+.chatMessage {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0.5rem;
+}
+
+.chatMessageUser {
+  justify-content: flex-end;
+  background-color: var(--bs-primary-semi-light);
+}
+
+.chatMessageAssistant {
+  justify-content: flex-start;
+  background-color: var(--bs-primary-light);
+}
+
+.chatMessageUser p,
+.chatMessageAssistant p {
+  background-color: inherit;
+  margin: 0;
+  padding: 8px 16px;
+  word-break: break-word;
+  text-align: left;
+}

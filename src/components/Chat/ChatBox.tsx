@@ -45,8 +45,8 @@ function ChatBox() {
           )}
         </Row>
       </Container>
-      <Row>
-        <Form onSubmit={handleFormSubmit}>
+      <Row className="mt-3">
+        <Form onSubmit={handleFormSubmit} role="form">
           <Stack direction="horizontal" gap={2}>
             <Form.Control
               className="me-auto"
