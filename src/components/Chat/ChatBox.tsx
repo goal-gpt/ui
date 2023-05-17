@@ -27,7 +27,7 @@ function ChatBox() {
     setMessage("");
     if (newMessage !== "") {
       try {
-        await sendMessage(newMessage, chatHistory);
+        await sendMessage(newMessage);
       } catch (err) {
         logger.error(`Error while sending message: ${err}`);
       }

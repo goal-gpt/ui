@@ -2,7 +2,10 @@ import { useMemo, useState } from "react";
 
 import { ChatMessage } from "../components/Chat/ChatMessage";
 
-const API_PATH = "http://localhost:50321/functions/v1/sera";
+const API_PATH =
+  process.env.NODE_ENV === "development"
+    ? "http://localhost:50321/functions/v1/sera"
+    : process.env.NEXT_PUBLIC_SUPABASE_EDGE_FUNCTION_URL || "";
 
 // const EventStreamContentType = "text/event-stream";
 const JsonContentType = "application/json";
@@ -21,16 +24,14 @@ export function useChat() {
   // Lets us cancel the stream
   const abortController = useMemo(() => new AbortController(), []);
 
-  /**
-   * Cancels the current chat and adds the current chat to the history
-   */
+  // NOTE: this is not used yet
   function cancel() {
     setState("idle");
     abortController.abort();
     if (currentChat) {
       const newHistory = [
         ...chatHistory,
-        { role: "user", content: currentChat } as const,
+        { role: "human", content: currentChat } as const,
       ];
 
       setChatHistory(newHistory);
@@ -39,36 +40,19 @@ export function useChat() {
   }
 
   /**
-   * Clears the chat history
-   */
-
-  function clear() {
-    console.log("clearing chat history");
-    setChatHistory([]);
-  }
-
-  /**
    * Sends a new message to the AI function and streams the response
    */
-  const sendMessage = async (
-    message: string,
-    chatHistory: Array<ChatMessage>
-  ) => {
+  const sendMessage = async (message: string) => {
     setState("waiting");
     let chatContent = "";
-    const newHistory = [
-      ...chatHistory,
-      { role: "user", content: message } as const,
-    ];
 
-    setChatHistory(newHistory);
+    setChatHistory((chatHistory) => [
+      ...chatHistory,
+      { role: "human", content: message },
+    ]);
+
     const body = JSON.stringify({
-      // Only send the most recent messages. This can also
-      // be done in the serverless function, but we do it here
-      // to avoid sending too much data
-      // TODO: we can also send in a chunk of history
-      // messages: newHistory.slice(-appConfig.historyLength),
-      query: message,
+      message,
     });
 
     try {
@@ -91,7 +75,7 @@ export function useChat() {
         chatContent = data;
         setChatHistory((curr) => [
           ...curr,
-          { role: "assistant", content: chatContent } as const,
+          { role: "AI", content: chatContent } as const,
         ]);
         setCurrentChat(null);
         setState("idle");
@@ -115,5 +99,5 @@ export function useChat() {
     }
   };
 
-  return { sendMessage, currentChat, chatHistory, cancel, clear, state };
+  return { sendMessage, currentChat, chatHistory, cancel, state };
 }

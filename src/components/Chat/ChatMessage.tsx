@@ -4,7 +4,7 @@ import { Row } from "react-bootstrap";
 import styles from "./ChatMessage.module.scss";
 
 export interface ChatMessage {
-  role: "user" | "assistant";
+  role: "human" | "AI";
   content: string;
 }
 interface Props {

@@ -5,18 +5,18 @@
   padding: 0.5rem;
 }
 
-.chatMessageUser {
+.chatMessageHuman {
   justify-content: flex-end;
   background-color: var(--bs-primary-semi-light);
 }
 
-.chatMessageAssistant {
+.chatMessageAI {
   justify-content: flex-start;
   background-color: var(--bs-primary-light);
 }
 
-.chatMessageUser p,
-.chatMessageAssistant p {
+.chatMessageHuman p,
+.chatMessageAI p {
   background-color: inherit;
   margin: 0;
   padding: 8px 16px;

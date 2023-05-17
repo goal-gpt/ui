@@ -6,7 +6,7 @@ import { ChatMessage, ChatMessage as ChatMessageProps } from "./ChatMessage";
 describe("ChatMessage", () => {
   it("renders with correct role and content", () => {
     const mockMessage: ChatMessageProps = {
-      role: "user",
+      role: "human",
       content: "Test message",
     };
 
@@ -14,7 +14,7 @@ describe("ChatMessage", () => {
 
     // Check if correct role class is added
     const messageElement = screen.getByText("Test message").parentElement;
-    expect(messageElement).toHaveClass("chatMessageUser");
+    expect(messageElement).toHaveClass("chatMessageHuman");
 
     // Check if correct content is displayed
     expect(screen.getByText("Test message")).toBeInTheDocument();
@@ -22,7 +22,7 @@ describe("ChatMessage", () => {
 
   it("renders with assistant role correctly", () => {
     const mockMessage: ChatMessageProps = {
-      role: "assistant",
+      role: "AI",
       content: "Test assistant message",
     };
 
@@ -32,7 +32,7 @@ describe("ChatMessage", () => {
     const messageElement = screen.getByText(
       "Test assistant message"
     ).parentElement;
-    expect(messageElement).toHaveClass("chatMessageAssistant");
+    expect(messageElement).toHaveClass("chatMessageAI");
 
     // Check if correct content is displayed
     expect(screen.getByText("Test assistant message")).toBeInTheDocument();

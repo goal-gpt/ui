@@ -27,27 +27,11 @@ describe("useChat", () => {
     expect(result.current.chatHistory).toEqual([]);
   });
 
-  it("should clear the chat history", () => {
-    const { result } = renderHook(() => useChat());
-
-    // Simulate sending a message
-    act(() => {
-      result.current.sendMessage("Hello", [{ role: "user", content: "Hi" }]);
-    });
-
-    // Simulate clearing the chat
-    act(() => {
-      result.current.clear();
-    });
-
-    expect(result.current.chatHistory).toEqual([]);
-  });
-
   it("send message", async () => {
     const message = "Test message";
     const { result } = renderHook(() => useChat());
     act(() => {
-      result.current.sendMessage(message, []);
+      result.current.sendMessage(message);
     });
     expect(result.current.state).toBe("waiting");
 
@@ -75,9 +59,7 @@ describe("useChat", () => {
     const message = "Test message";
     const { result } = renderHook(() => useChat());
     await waitFor(() => {
-      expect(result.current.sendMessage(message, [])).rejects.toThrow(
-        FatalError
-      );
+      expect(result.current.sendMessage(message)).rejects.toThrow(FatalError);
     });
   });
 });
