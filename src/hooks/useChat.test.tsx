@@ -1,6 +1,7 @@
 import { act, renderHook, waitFor } from "@testing-library/react";
 
-import { FatalError, useChat } from "./useChat";
+import { createWrapper } from "../utils";
+import { useChat } from "./useChat";
 
 describe("useChat", () => {
   beforeEach(() => {
@@ -8,7 +9,7 @@ describe("useChat", () => {
       Promise.resolve({
         ok: true,
         status: 200,
-        json: () => Promise.resolve("Test response"),
+        json: () => Promise.resolve({ message: "Test response" }),
         headers: {
           get: () => "application/json",
         },
@@ -20,33 +21,37 @@ describe("useChat", () => {
     jest.restoreAllMocks();
   });
 
-  it("should initialize with correct defaults", () => {
-    const { result } = renderHook(() => useChat());
-    expect(result.current.state).toBe("idle");
-    expect(result.current.currentChat).toBeNull();
-    expect(result.current.chatHistory).toEqual([]);
+  it("should initialize with correct defaults", async () => {
+    const { result } = renderHook(() => useChat(), {
+      wrapper: createWrapper(),
+    });
+    await waitFor(() => {
+      expect(result.current.state).toBe("idle");
+      expect(result.current.currentChat).toBeNull();
+      expect(result.current.chatHistory).toEqual([]);
+    });
   });
 
-  it("send message", async () => {
+  it("can send messages", async () => {
     const message = "Test message";
-    const { result } = renderHook(() => useChat());
+    const { result } = renderHook(() => useChat(), {
+      wrapper: createWrapper(),
+    });
     act(() => {
       result.current.sendMessage(message);
     });
-    expect(result.current.state).toBe("waiting");
+    expect(result.current.state).toBe("loading");
 
-    act(() => {
-      waitFor(() => {
-        expect(result.current.state).toBe("idle");
-        expect(result.current.chatHistory).toEqual([
-          { role: "user", content: message },
-          { role: "assistant", content: "Test response" },
-        ]);
-      });
+    await waitFor(() => {
+      expect(result.current.state).toBe("success");
+      expect(result.current.chatHistory).toEqual([
+        { role: "human", content: message },
+        { role: "AI", content: "Test response" },
+      ]);
     });
   });
 
-  it("handle error", async () => {
+  it("handles errors", async () => {
     (fetch as jest.Mock).mockImplementationOnce(() =>
       Promise.resolve({
         ok: false,
@@ -57,9 +62,18 @@ describe("useChat", () => {
       })
     );
     const message = "Test message";
-    const { result } = renderHook(() => useChat());
+    const { result } = renderHook(() => useChat(), {
+      wrapper: createWrapper(),
+    });
+    act(() => {
+      result.current.sendMessage(message);
+    });
+
     await waitFor(() => {
-      expect(result.current.sendMessage(message)).rejects.toThrow(FatalError);
+      expect(result.current.state).toBe("error");
+      expect(result.current.chatHistory).toEqual([
+        { role: "human", content: message },
+      ]);
     });
   });
 });
