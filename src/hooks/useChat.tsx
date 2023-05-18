@@ -7,6 +7,8 @@ const API_PATH =
     ? "http://localhost:50321/functions/v1/sera"
     : process.env.NEXT_PUBLIC_SUPABASE_EDGE_FUNCTION_URL || "";
 
+const BEARER_TOKEN = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "";
+
 // const EventStreamContentType = "text/event-stream";
 const JsonContentType = "application/json";
 
@@ -44,7 +46,6 @@ export function useChat() {
    */
   const sendMessage = async (message: string) => {
     setState("waiting");
-    let chatContent = "";
 
     setChatHistory((chatHistory) => [
       ...chatHistory,
@@ -53,13 +54,20 @@ export function useChat() {
 
     const body = JSON.stringify({
       message,
+      chat: 99,
     });
+
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${BEARER_TOKEN}`,
+    };
 
     try {
       const response = await fetch(API_PATH, {
         method: "POST",
         body: body,
         signal: abortController.signal,
+        headers: headers,
       });
 
       const contentType = response.headers.get("content-type");
@@ -71,11 +79,10 @@ export function useChat() {
       }
 
       if (response.ok && response.status === 200) {
-        const data = await response.json();
-        chatContent = data;
+        const { text } = await response.json();
         setChatHistory((curr) => [
           ...curr,
-          { role: "AI", content: chatContent } as const,
+          { role: "AI", content: text } as const,
         ]);
         setCurrentChat(null);
         setState("idle");
