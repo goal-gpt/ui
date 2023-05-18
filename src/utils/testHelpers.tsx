@@ -17,7 +17,6 @@ interface Props {
 }
 
 export function createWrapper() {
-  // ✅ creates a new QueryClient for each test
   const queryClient = new QueryClient();
   return ({ children }: Props) => (
     <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
