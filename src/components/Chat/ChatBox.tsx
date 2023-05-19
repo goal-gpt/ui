@@ -10,12 +10,7 @@ function ChatBox() {
   // The content of the user input message box
   const [message, setMessage] = useState<string>("");
   const { chatHistory, sendMessage, state } = useChat();
-
-  // Focus the user on the input when state changes
   const inputRef = useRef<HTMLTextAreaElement>(null);
-  const focusInput = () => {
-    inputRef.current?.focus();
-  };
 
   useEffect(() => {
     focusInput();
@@ -25,8 +20,11 @@ function ChatBox() {
     resetInput();
   }, [message]);
 
+  const focusInput = () => {
+    inputRef.current?.focus();
+  };
+
   const resetInput = () => {
-    console.log(inputRef.current);
     if (inputRef.current) {
       inputRef.current.style.height = "auto";
       inputRef.current.style.height = `${inputRef.current.scrollHeight}px`;
