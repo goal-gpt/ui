@@ -22,6 +22,7 @@ export function useChat() {
   const [currentChat, setCurrentChat] = useState<string | null>(null);
   const [chatHistory, setChatHistory] = useState<ChatMessage[]>([]);
   const [state, setState] = useState<"idle" | "waiting" | "loading">("idle");
+  const [chatID, setChatID] = useState<number | null>(null);
 
   // Lets us cancel the stream
   const abortController = useMemo(() => new AbortController(), []);
@@ -54,7 +55,7 @@ export function useChat() {
 
     const body = JSON.stringify({
       message,
-      chat: 99,
+      chat: chatID,
     });
 
     const headers = {
@@ -79,11 +80,12 @@ export function useChat() {
       }
 
       if (response.ok && response.status === 200) {
-        const { text } = await response.json();
+        const { chat, text } = await response.json();
         setChatHistory((curr) => [
           ...curr,
           { role: "AI", content: text } as const,
         ]);
+        setChatID(chat);
         setCurrentChat(null);
         setState("idle");
       } else if (
