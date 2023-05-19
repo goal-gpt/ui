@@ -1,0 +1,11 @@
+.chatBox {
+  float: left;
+  overflow: auto;
+  height: 58vh;
+}
+
+.textArea {
+  resize: none;
+  max-height: 12rem;
+  overflow-y: auto;
+}

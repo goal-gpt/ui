@@ -18,7 +18,7 @@ describe("ChatBox", () => {
   it("renders without crashing", () => {
     render(<ChatBox />);
     expect(screen.getByPlaceholderText("Send a message")).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: /send/i })).toBeInTheDocument();
+    expect(screen.getByRole("button")).toBeInTheDocument();
   });
 
   it("inputs message correctly", async () => {

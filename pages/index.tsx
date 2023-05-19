@@ -1,5 +1,5 @@
 import React from "react";
-import { Col, Row } from "react-bootstrap";
+import { Col, Container, Row } from "react-bootstrap";
 
 import { ChatBox } from "../src/components/Chat";
 import { MainHeader } from "../src/components/MainHeader";
@@ -8,13 +8,15 @@ function Main() {
   return (
     <div className="main" role="main">
       <MainHeader />
-      <Row>
-        <Col md={3} xs={1} />
-        <Col>
-          <ChatBox />
-        </Col>
-        <Col md={3} xs={1} />
-      </Row>
+      <Container>
+        <Row>
+          <Col md={3} />
+          <Col>
+            <ChatBox />
+          </Col>
+          <Col md={3} />
+        </Row>
+      </Container>
     </div>
   );
 }

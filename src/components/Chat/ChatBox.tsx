@@ -1,9 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Container, Form, Row, Stack } from "react-bootstrap";
+import { Col, Container, Form, Row, Stack } from "react-bootstrap";
+import { ArrowUpRightCircle } from "react-bootstrap-icons";
 
 import { useChat } from "../../hooks/useChat";
 import { logger } from "../../utils";
 import { Button } from "../Button";
+import styles from "./ChatBox.module.scss";
 import { ChatMessage } from "./ChatMessage";
 
 function ChatBox() {
@@ -56,41 +58,42 @@ function ChatBox() {
     }
   };
 
+  console.log("state", state);
+
   return (
-    <div className="d-flex flex-column vh-100">
-      <Container className="overflow-y-auto flex-grow">
-        <Row className="flex flex-col">
-          {chatHistory.length === 0 ? (
-            <p>
-              Welcome to <b>eras</b>! Share any concerns, feelings or ideas
-              about money you have with us.
-            </p>
-          ) : (
-            chatHistory.map((chat, i) => <ChatMessage key={i} message={chat} />)
-          )}
-        </Row>
-      </Container>
-      <Row className="mt-3">
-        <Form onSubmit={handleFormSubmit} role="form">
-          <Stack direction="horizontal" gap={2}>
-            <Form.Control
-              as="textarea"
-              className="me-auto"
-              placeholder="Send a message"
-              rows={1}
-              style={{ resize: "none", maxHeight: "12rem", overflowY: "auto" }}
-              ref={inputRef}
-              value={message}
-              onChange={handleInputChange}
-              onKeyDown={handleKeyDown}
-            />
-            <Button className="w-25" type="submit" variant="secondary">
-              Send
-            </Button>
-          </Stack>
-        </Form>
+    <Container className="d-flex flex-column">
+      <div className={`${styles.chatBox}`}>
+        {chatHistory.length === 0 ? (
+          <p>
+            Welcome to <b>eras</b>! Share any concerns, feelings or ideas about
+            money you have with us.
+          </p>
+        ) : (
+          chatHistory.map((chat, i) => <ChatMessage key={i} message={chat} />)
+        )}
+      </div>
+      <Row className="align-items-end my-4">
+        <Col className="">
+          <Form onSubmit={handleFormSubmit} role="form">
+            <Stack direction="horizontal" gap={2}>
+              <Form.Control
+                as="textarea"
+                className={`me-auto ${styles.textArea}`}
+                placeholder="Send a message"
+                rows={1}
+                ref={inputRef}
+                value={message}
+                onChange={handleInputChange}
+                onKeyDown={handleKeyDown}
+              />
+              <Button className="w-auto" type="submit" variant="secondary">
+                <ArrowUpRightCircle />
+              </Button>
+            </Stack>
+          </Form>
+        </Col>
       </Row>
-    </div>
+    </Container>
   );
 }
 
