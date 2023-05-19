@@ -58,8 +58,6 @@ function ChatBox() {
     }
   };
 
-  console.log("state", state);
-
   return (
     <Container className="d-flex flex-column">
       <div className={`${styles.chatBox}`}>
