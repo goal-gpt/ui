@@ -12,7 +12,7 @@ function ChatBox() {
   const { chatHistory, sendMessage, state } = useChat();
 
   // Focus the user on the input when state changes
-  const inputRef = useRef<HTMLInputElement>(null);
+  const inputRef = useRef<HTMLTextAreaElement>(null);
   const focusInput = () => {
     inputRef.current?.focus();
   };
@@ -21,21 +21,45 @@ function ChatBox() {
     focusInput();
   }, [state]);
 
+  useEffect(() => {
+    resetInput();
+  }, [message]);
+
+  const resetInput = () => {
+    console.log(inputRef.current);
+    if (inputRef.current) {
+      inputRef.current.style.height = "auto";
+      inputRef.current.style.height = `${inputRef.current.scrollHeight}px`;
+    }
+  };
+
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
     const newMessage = message.trim();
     setMessage("");
     if (newMessage !== "") {
       try {
-        await sendMessage(newMessage);
+        sendMessage(newMessage);
       } catch (err) {
         logger.error(`Error while sending message: ${err}`);
       }
     }
   };
 
+  const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setMessage(e.target.value);
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      handleFormSubmit(e);
+    }
+  };
+
   return (
-    <>
+    <div className="d-flex flex-column vh-100">
       <Container className="overflow-y-auto flex-grow">
         <Row className="flex flex-col">
           {chatHistory.length === 0 ? (
@@ -52,10 +76,15 @@ function ChatBox() {
         <Form onSubmit={handleFormSubmit} role="form">
           <Stack direction="horizontal" gap={2}>
             <Form.Control
+              as="textarea"
               className="me-auto"
               placeholder="Send a message"
+              rows={1}
+              style={{ resize: "none", maxHeight: "12rem", overflowY: "auto" }}
+              ref={inputRef}
               value={message}
-              onChange={(e) => setMessage(e.target.value)}
+              onChange={handleInputChange}
+              onKeyDown={handleKeyDown}
             />
             <Button className="w-25" type="submit" variant="secondary">
               Send
@@ -63,7 +92,7 @@ function ChatBox() {
           </Stack>
         </Form>
       </Row>
-    </>
+    </div>
   );
 }
 
