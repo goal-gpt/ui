@@ -39,7 +39,10 @@ function ChatBox() {
       <Container className="overflow-y-auto flex-grow">
         <Row className="flex flex-col">
           {chatHistory.length === 0 ? (
-            <p>Start a conversation with the chatbot!</p>
+            <p>
+              Welcome to <b>eras</b>! Share any concerns, feelings or ideas
+              about money you have with us.
+            </p>
           ) : (
             chatHistory.map((chat, i) => <ChatMessage key={i} message={chat} />)
           )}

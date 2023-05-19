@@ -9,7 +9,7 @@ describe("useChat", () => {
       Promise.resolve({
         ok: true,
         status: 200,
-        json: () => Promise.resolve({ message: "Test response" }),
+        json: () => Promise.resolve({ chat: 42, text: "Test response" }),
         headers: {
           get: () => "application/json",
         },
@@ -44,6 +44,7 @@ describe("useChat", () => {
 
     await waitFor(() => {
       expect(result.current.state).toBe("success");
+      expect(result.current.chatID).toBe(42);
       expect(result.current.chatHistory).toEqual([
         { role: "human", content: message },
         { role: "AI", content: "Test response" },

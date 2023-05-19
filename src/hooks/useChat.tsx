@@ -23,6 +23,7 @@ export class RetriableError extends Error {}
 export function useChat() {
   const [currentChat, setCurrentChat] = useState<string | null>(null);
   const [chatHistory, setChatHistory] = useState<ChatMessage[]>([]);
+  const [chatID, setChatID] = useState<number | null>(null);
 
   // Mutation for sending a message to the server
   const sendMessageMutation = useMutation({
@@ -30,7 +31,7 @@ export function useChat() {
     mutationFn: async (message: string) => {
       const body = JSON.stringify({
         message,
-        chat: 99,
+        chat: chatID,
       });
       const headers = {
         "Content-Type": JsonContentType,
@@ -56,11 +57,12 @@ export function useChat() {
       }
     },
     onSuccess: async (res) => {
-      const { message } = await res.json();
+      const { chat, text } = await res.json();
       setChatHistory((curr) => [
         ...curr,
-        { role: "AI", content: message } as const,
+        { role: "AI", content: text } as const,
       ]);
+      setChatID(chat);
       setCurrentChat(null);
     },
     onSettled: () => {
@@ -82,5 +84,6 @@ export function useChat() {
     currentChat,
     chatHistory,
     state: sendMessageMutation.status,
+    chatID,
   };
 }
