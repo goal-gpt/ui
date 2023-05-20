@@ -4,7 +4,7 @@ import { Row } from "react-bootstrap";
 import styles from "./ChatMessage.module.scss";
 
 export interface ChatMessage {
-  role: "human" | "AI";
+  role: "human" | "ai";
   content: string;
 }
 interface Props {
@@ -13,8 +13,7 @@ interface Props {
 
 export function ChatMessage({ message }: Props) {
   const { role, content } = message;
-  const roleClass =
-    "chatMessage" + role.charAt(0).toUpperCase() + role.slice(1);
+  const roleClass = role === "ai" ? "chatMessageAI" : "chatMessageHuman";
 
   return (
     <Row>

@@ -43,7 +43,7 @@ export function useChat() {
         body,
       });
     },
-    onError: (error) => {
+    onError: (error: Error) => {
       if (error instanceof FatalError) {
         // Show a user-friendly error message for fatal errors
         logger.error("A serious error occurred. Please try again later.");
@@ -56,11 +56,11 @@ export function useChat() {
         console.error("Unexpected error during sendMessage:", error);
       }
     },
-    onSuccess: async (res) => {
+    onSuccess: async (res: Response) => {
       const { chat, text } = await res.json();
       setChatHistory((curr) => [
         ...curr,
-        { role: "AI", content: text } as const,
+        { role: "ai", content: text } as const,
       ]);
       setChatID(chat);
       setCurrentChat(null);

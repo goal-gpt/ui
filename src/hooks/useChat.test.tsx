@@ -47,7 +47,7 @@ describe("useChat", () => {
       expect(result.current.chatID).toBe(42);
       expect(result.current.chatHistory).toEqual([
         { role: "human", content: message },
-        { role: "AI", content: "Test response" },
+        { role: "ai", content: "Test response" },
       ]);
     });
   });
