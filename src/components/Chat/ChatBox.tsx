@@ -71,6 +71,8 @@ function ChatBox() {
     }
   };
 
+  const loading = chatHistory.at(-1)?.role === "human" && state === "loading";
+
   return (
     <Container className="d-flex flex-column">
       <div className={`${styles.chatBox}`}>
@@ -82,7 +84,7 @@ function ChatBox() {
         ) : (
           chatHistory.map((chat, i) => <ChatMessage key={i} message={chat} />)
         )}
-        {chatHistory.at(-1)?.role === "human" && state === "loading" ? (
+        {loading ? (
           <Row className="justify-content-center my-3">
             <Col className="text-center">
               <Spinner
