@@ -1,6 +1,8 @@
-import { useMemo, useState } from "react";
+import { useMutation } from "@tanstack/react-query";
+import { useState } from "react";
 
 import { ChatMessage } from "../components/Chat/ChatMessage";
+import { logger } from "../utils";
 
 const API_PATH =
   process.env.NODE_ENV === "development"
@@ -21,92 +23,67 @@ export class RetriableError extends Error {}
 export function useChat() {
   const [currentChat, setCurrentChat] = useState<string | null>(null);
   const [chatHistory, setChatHistory] = useState<ChatMessage[]>([]);
-  const [state, setState] = useState<"idle" | "waiting" | "loading">("idle");
   const [chatID, setChatID] = useState<number | null>(null);
 
-  // Lets us cancel the stream
-  const abortController = useMemo(() => new AbortController(), []);
-
-  // NOTE: this is not used yet
-  function cancel() {
-    setState("idle");
-    abortController.abort();
-    if (currentChat) {
-      const newHistory = [
-        ...chatHistory,
-        { role: "human", content: currentChat } as const,
-      ];
-
-      setChatHistory(newHistory);
+  // Mutation for sending a message to the server
+  const sendMessageMutation = useMutation({
+    mutationKey: ["sendMessage"],
+    mutationFn: async (message: string) => {
+      const body = JSON.stringify({
+        message,
+        chat: chatID,
+      });
+      const headers = {
+        "Content-Type": JsonContentType,
+        Authorization: `Bearer ${BEARER_TOKEN}`,
+      };
+      return fetch(API_PATH, {
+        method: "POST",
+        headers,
+        body,
+      });
+    },
+    onError: (error: Error) => {
+      if (error instanceof FatalError) {
+        // Show a user-friendly error message for fatal errors
+        logger.error("A serious error occurred. Please try again later.");
+      } else if (error instanceof RetriableError) {
+        // Attempt to retry the mutation
+        logger.error("An error occurred. Retrying...");
+        sendMessageMutation.mutate(currentChat || "");
+      } else {
+        // Log unexpected errors for debugging
+        console.error("Unexpected error during sendMessage:", error);
+      }
+    },
+    onSuccess: async (res: Response) => {
+      const { chat, text } = await res.json();
+      setChatHistory((curr) => [
+        ...curr,
+        { role: "ai", content: text } as const,
+      ]);
+      setChatID(chat);
+      setCurrentChat(null);
+    },
+    onSettled: () => {
       setCurrentChat("");
-    }
-  }
+    },
+  });
 
-  /**
-   * Sends a new message to the AI function and streams the response
-   */
-  const sendMessage = async (message: string) => {
-    setState("waiting");
-
+  const sendMessage = (message: string) => {
     setChatHistory((chatHistory) => [
       ...chatHistory,
       { role: "human", content: message },
     ]);
 
-    const body = JSON.stringify({
-      message,
-      chat: chatID,
-    });
-
-    const headers = {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${BEARER_TOKEN}`,
-    };
-
-    try {
-      const response = await fetch(API_PATH, {
-        method: "POST",
-        body: body,
-        signal: abortController.signal,
-        headers: headers,
-      });
-
-      const contentType = response.headers.get("content-type");
-
-      if (!contentType?.startsWith(JsonContentType)) {
-        throw new FatalError(
-          `Expected content-type to be application/json, Actual: ${contentType}`
-        );
-      }
-
-      if (response.ok && response.status === 200) {
-        const { chat, text } = await response.json();
-        setChatHistory((curr) => [
-          ...curr,
-          { role: "AI", content: text } as const,
-        ]);
-        setChatID(chat);
-        setCurrentChat(null);
-        setState("idle");
-      } else if (
-        response.status >= 400 &&
-        response.status < 500 &&
-        response.status !== 429
-      ) {
-        throw new FatalError();
-      } else {
-        throw new RetriableError();
-      }
-    } catch (error) {
-      if (error instanceof FatalError) {
-        throw error;
-      } else {
-        // handle other types of errors or rethrow
-      }
-    } finally {
-      setState("idle");
-    }
+    sendMessageMutation.mutate(message);
   };
 
-  return { sendMessage, currentChat, chatHistory, cancel, state };
+  return {
+    sendMessage,
+    currentChat,
+    chatHistory,
+    state: sendMessageMutation.status,
+    chatID,
+  };
 }

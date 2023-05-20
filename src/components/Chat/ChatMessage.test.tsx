@@ -22,7 +22,7 @@ describe("ChatMessage", () => {
 
   it("renders with assistant role correctly", () => {
     const mockMessage: ChatMessageProps = {
-      role: "AI",
+      role: "ai",
       content: "Test assistant message",
     };
 
