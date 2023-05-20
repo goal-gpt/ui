@@ -92,3 +92,8 @@ code {
 h1 {
   color: map-get($custom-colors, "tertiary");
 }
+
+.spinner-border,
+.spinner-grow {
+  animation: spinner-grow 2s linear infinite; // Adjust the '1s' to change the speed
+}
