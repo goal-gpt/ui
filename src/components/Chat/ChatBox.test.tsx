@@ -46,4 +46,48 @@ describe("ChatBox", () => {
     });
     expect(mockSendMessage).toHaveBeenCalledTimes(1);
   });
+
+  it("doesn't send message when state is loading", async () => {
+    const mockSendMessage = jest.fn();
+    (useChat as jest.Mock).mockReturnValue({
+      chatHistory: [],
+      sendMessage: mockSendMessage,
+      state: "loading",
+    });
+    render(<ChatBox />);
+    const input = screen.getByPlaceholderText("Send a message");
+    const form = screen.getByRole("form");
+    await act(async () => {
+      fireEvent.change(input, { target: { value: "Test message" } });
+      fireEvent.submit(form);
+    });
+    expect(mockSendMessage).not.toHaveBeenCalled();
+  });
+
+  it("clears the input after submitting a message", async () => {
+    const mockSendMessage = jest.fn();
+    (useChat as jest.Mock).mockReturnValue({
+      chatHistory: [],
+      sendMessage: mockSendMessage,
+      state: "idle",
+    });
+    render(<ChatBox />);
+    const input = screen.getByPlaceholderText("Send a message");
+    const form = screen.getByRole("form");
+    await act(async () => {
+      fireEvent.change(input, { target: { value: "Test message" } });
+      fireEvent.submit(form);
+    });
+    expect(input).toHaveValue("");
+  });
+
+  it("shows spinner when the last message is from a human and state is loading", async () => {
+    (useChat as jest.Mock).mockReturnValue({
+      chatHistory: [{ role: "human", message: "Test" }],
+      sendMessage: jest.fn(),
+      state: "loading",
+    });
+    render(<ChatBox />);
+    expect(screen.getByRole("status")).toBeInTheDocument();
+  });
 });

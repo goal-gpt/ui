@@ -2,6 +2,7 @@ import React from "react";
 import { Row } from "react-bootstrap";
 
 import styles from "./ChatMessage.module.scss";
+// import ReactMarkdown from "react-markdown";
 
 export interface ChatMessage {
   role: "human" | "ai";
@@ -18,6 +19,7 @@ export function ChatMessage({ message }: Props) {
   return (
     <Row>
       <div className={`${styles.chatMessage} ${styles[roleClass]}`}>
+        {/* <ReactMarkdown>{content}</ReactMarkdown> */}
         <p>{content}</p>
       </div>
     </Row>
