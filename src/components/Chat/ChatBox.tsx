@@ -36,6 +36,10 @@ function ChatBox() {
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    if (state === "loading") {
+      return;
+    }
+
     const newMessage = message.trim();
     setMessage("");
     if (newMessage !== "") {
@@ -51,10 +55,9 @@ function ChatBox() {
     setMessage(e.target.value);
   };
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+  const handleKeyDown = async (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === "Enter" && !e.shiftKey) {
-      e.preventDefault();
-      handleFormSubmit(e);
+      await handleFormSubmit(e);
     }
   };
 
@@ -84,7 +87,12 @@ function ChatBox() {
                 onChange={handleInputChange}
                 onKeyDown={handleKeyDown}
               />
-              <Button className="w-auto" type="submit" variant="secondary">
+              <Button
+                className="w-auto"
+                type="submit"
+                variant="secondary"
+                disabled={state === "loading"}
+              >
                 <ArrowUpRightCircle />
               </Button>
             </Stack>
