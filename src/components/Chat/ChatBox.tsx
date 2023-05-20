@@ -13,6 +13,7 @@ function ChatBox() {
   const [message, setMessage] = useState<string>("");
   const { chatHistory, sendMessage, state } = useChat();
   const inputRef = useRef<HTMLTextAreaElement>(null);
+  const bottomRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     focusInput();
@@ -21,6 +22,10 @@ function ChatBox() {
   useEffect(() => {
     resetInput();
   }, [message]);
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [chatHistory, state]);
 
   const focusInput = () => {
     inputRef.current?.focus();
@@ -31,6 +36,10 @@ function ChatBox() {
       inputRef.current.style.height = "auto";
       inputRef.current.style.height = `${inputRef.current.scrollHeight}px`;
     }
+  };
+
+  const scrollToBottom = () => {
+    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
   const handleFormSubmit = async (e: React.FormEvent) => {
@@ -45,6 +54,7 @@ function ChatBox() {
     if (newMessage !== "") {
       try {
         sendMessage(newMessage);
+        scrollToBottom();
       } catch (err) {
         logger.error(`Error while sending message: ${err}`);
       }
@@ -72,6 +82,7 @@ function ChatBox() {
         ) : (
           chatHistory.map((chat, i) => <ChatMessage key={i} message={chat} />)
         )}
+        <div ref={bottomRef} />
       </div>
       <Row className="align-items-end my-4">
         <Col className="">
