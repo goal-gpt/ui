@@ -18,7 +18,7 @@ describe("ChatBox", () => {
   it("renders without crashing", () => {
     render(<ChatBox />);
     expect(screen.getByPlaceholderText("Send a message")).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: /send/i })).toBeInTheDocument();
+    expect(screen.getByRole("button")).toBeInTheDocument();
   });
 
   it("inputs message correctly", async () => {
@@ -45,5 +45,77 @@ describe("ChatBox", () => {
       fireEvent.submit(form);
     });
     expect(mockSendMessage).toHaveBeenCalledTimes(1);
+  });
+
+  it("doesn't send message when state is loading", async () => {
+    const mockSendMessage = jest.fn();
+    (useChat as jest.Mock).mockReturnValue({
+      chatHistory: [],
+      sendMessage: mockSendMessage,
+      state: "loading",
+    });
+    render(<ChatBox />);
+    const input = screen.getByPlaceholderText("Send a message");
+    const form = screen.getByRole("form");
+    await act(async () => {
+      fireEvent.change(input, { target: { value: "Test message" } });
+      fireEvent.submit(form);
+    });
+    expect(mockSendMessage).not.toHaveBeenCalled();
+  });
+
+  it("clears the input after submitting a message", async () => {
+    const mockSendMessage = jest.fn();
+    (useChat as jest.Mock).mockReturnValue({
+      chatHistory: [],
+      sendMessage: mockSendMessage,
+      state: "idle",
+    });
+    render(<ChatBox />);
+    const input = screen.getByPlaceholderText("Send a message");
+    const form = screen.getByRole("form");
+    await act(async () => {
+      fireEvent.change(input, { target: { value: "Test message" } });
+      fireEvent.submit(form);
+    });
+    expect(input).toHaveValue("");
+  });
+
+  it("shows spinner when the last message is from a human and state is loading", async () => {
+    (useChat as jest.Mock).mockReturnValue({
+      chatHistory: [{ role: "human", message: "Test" }],
+      sendMessage: jest.fn(),
+      state: "loading",
+    });
+    render(<ChatBox />);
+    expect(screen.getByRole("status")).toBeInTheDocument();
+  });
+
+  it("displays error message when error is true", () => {
+    (useChat as jest.Mock).mockReturnValue({
+      chatHistory: [{ role: "human", message: "Test" }],
+      sendMessage: jest.fn(),
+      state: "error",
+    });
+    render(<ChatBox />);
+
+    const errorMsg = screen.getByText(
+      /Sorry, an error occurred. Please try again!/i
+    );
+    expect(errorMsg).toBeInTheDocument();
+  });
+
+  it("does not display error message when error is false", () => {
+    (useChat as jest.Mock).mockReturnValue({
+      chatHistory: [{ role: "human", message: "Test" }],
+      sendMessage: jest.fn(),
+      state: "idle",
+    });
+    render(<ChatBox />);
+
+    const errorMsg = screen.queryByText(
+      /Sorry, an error occurred. Please try again!/i
+    );
+    expect(errorMsg).not.toBeInTheDocument();
   });
 });

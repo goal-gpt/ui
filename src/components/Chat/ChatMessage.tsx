@@ -1,5 +1,5 @@
 import React from "react";
-import { Row } from "react-bootstrap";
+import ReactMarkdown from "react-markdown";
 
 import styles from "./ChatMessage.module.scss";
 
@@ -16,10 +16,8 @@ export function ChatMessage({ message }: Props) {
   const roleClass = role === "ai" ? "chatMessageAI" : "chatMessageHuman";
 
   return (
-    <Row>
-      <div className={`${styles.chatMessage} ${styles[roleClass]}`}>
-        <p>{content}</p>
-      </div>
-    </Row>
+    <div className={`${styles.chatMessage} ${styles[roleClass]}`}>
+      <ReactMarkdown children={content} />
+    </div>
   );
 }
