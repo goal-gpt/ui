@@ -90,4 +90,32 @@ describe("ChatBox", () => {
     render(<ChatBox />);
     expect(screen.getByRole("status")).toBeInTheDocument();
   });
+
+  it("displays error message when error is true", () => {
+    (useChat as jest.Mock).mockReturnValue({
+      chatHistory: [{ role: "human", message: "Test" }],
+      sendMessage: jest.fn(),
+      state: "error",
+    });
+    render(<ChatBox />);
+
+    const errorMsg = screen.getByText(
+      /Sorry, an error occurred. Please try again!/i
+    );
+    expect(errorMsg).toBeInTheDocument();
+  });
+
+  it("does not display error message when error is false", () => {
+    (useChat as jest.Mock).mockReturnValue({
+      chatHistory: [{ role: "human", message: "Test" }],
+      sendMessage: jest.fn(),
+      state: "idle",
+    });
+    render(<ChatBox />);
+
+    const errorMsg = screen.queryByText(
+      /Sorry, an error occurred. Please try again!/i
+    );
+    expect(errorMsg).not.toBeInTheDocument();
+  });
 });
