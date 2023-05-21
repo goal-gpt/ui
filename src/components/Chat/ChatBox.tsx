@@ -82,7 +82,7 @@ function ChatBox() {
 
   return (
     <Container className="d-flex flex-column">
-      <div className={`${styles.chatBox}`}>
+      <div className={`${styles.chatBox}`} role="log">
         {chatHistory.map((chat, i) => (
           <ChatMessage key={i} message={chat} />
         ))}
