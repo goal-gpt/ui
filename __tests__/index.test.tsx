@@ -22,7 +22,11 @@ describe("Main component", () => {
   it("checks that main is rendered", () => {
     const queryClient = new QueryClient();
     const { getByRole } = renderWithClient(queryClient, <Main />);
-    const headerImage = getByRole("main");
-    expect(headerImage).toBeInTheDocument();
+
+    const headerElement = getByRole("navigation");
+    expect(headerElement).toBeInTheDocument();
+
+    const chatElement = getByRole("log");
+    expect(chatElement).toBeInTheDocument();
   });
 });

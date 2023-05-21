@@ -6,7 +6,7 @@ import { MainHeader } from "../src/components/MainHeader";
 
 function Main() {
   return (
-    <div className="main" role="main">
+    <>
       <MainHeader />
       <Container>
         <Row>
@@ -17,7 +17,7 @@ function Main() {
           <Col md={3} />
         </Row>
       </Container>
-    </div>
+    </>
   );
 }
 
