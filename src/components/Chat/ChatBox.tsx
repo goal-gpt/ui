@@ -16,7 +16,9 @@ function ChatBox() {
   const bottomRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    sendMessage("");
+    if (chatHistory.length === 0) {
+      sendMessage("");
+    }
   }, []);
 
   useEffect(() => {
@@ -83,9 +85,11 @@ function ChatBox() {
   return (
     <Container className="d-flex flex-column">
       <div className={`${styles.chatBox}`} role="log">
-        {chatHistory.map((chat, i) => (
-          <ChatMessage key={i} message={chat} />
-        ))}
+        <div className={`${styles.chatHistoryContainer}`}>
+          {chatHistory.map((chat, i) => (
+            <ChatMessage key={i} message={chat} />
+          ))}
+        </div>
         {showSpinner ? (
           <Row className="justify-content-center my-3">
             <Col className="text-center">
