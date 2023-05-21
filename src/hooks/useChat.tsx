@@ -71,10 +71,12 @@ export function useChat() {
   });
 
   const sendMessage = (message: string) => {
-    setChatHistory((chatHistory) => [
-      ...chatHistory,
-      { role: "human", content: message },
-    ]);
+    if (message !== "") {
+      setChatHistory((chatHistory) => [
+        ...chatHistory,
+        { role: "human", content: message },
+      ]);
+    }
 
     sendMessageMutation.mutate(message);
   };

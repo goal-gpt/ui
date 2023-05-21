@@ -38,13 +38,14 @@ describe("ChatBox", () => {
       state: "idle",
     });
     render(<ChatBox />);
+    expect(mockSendMessage).toHaveBeenCalledTimes(1); // initial message on mount
     const input = screen.getByPlaceholderText("Send a message");
     const form = screen.getByRole("form");
     await act(async () => {
       fireEvent.change(input, { target: { value: "Test message" } });
       fireEvent.submit(form);
     });
-    expect(mockSendMessage).toHaveBeenCalledTimes(1);
+    expect(mockSendMessage).toHaveBeenCalledTimes(2);
   });
 
   it("doesn't send message when state is loading", async () => {
@@ -55,13 +56,14 @@ describe("ChatBox", () => {
       state: "loading",
     });
     render(<ChatBox />);
+    expect(mockSendMessage).toHaveBeenCalledTimes(1); // initial message on mount
     const input = screen.getByPlaceholderText("Send a message");
     const form = screen.getByRole("form");
     await act(async () => {
       fireEvent.change(input, { target: { value: "Test message" } });
       fireEvent.submit(form);
     });
-    expect(mockSendMessage).not.toHaveBeenCalled();
+    expect(mockSendMessage).toHaveBeenCalledTimes(1);
   });
 
   it("clears the input after submitting a message", async () => {
