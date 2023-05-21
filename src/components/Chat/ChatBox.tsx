@@ -72,6 +72,7 @@ function ChatBox() {
   };
 
   const loading = chatHistory.at(-1)?.role === "human" && state === "loading";
+  const error = state === "error";
 
   return (
     <Container className="d-flex flex-column">
@@ -95,6 +96,15 @@ function ChatBox() {
               >
                 <span className="visually-hidden">Loading...</span>
               </Spinner>
+            </Col>
+          </Row>
+        ) : null}
+        {error ? (
+          <Row className="justify-content-center my-3">
+            <Col className="text-center">
+              <p className="text-danger">
+                Sorry, an error occurred. Please try again!
+              </p>
             </Col>
           </Row>
         ) : null}
