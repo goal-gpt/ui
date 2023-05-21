@@ -16,6 +16,10 @@ function ChatBox() {
   const bottomRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    sendMessage("");
+  }, []);
+
+  useEffect(() => {
     focusInput();
   }, [state]);
 
@@ -71,21 +75,18 @@ function ChatBox() {
     }
   };
 
-  const loading = chatHistory.at(-1)?.role === "human" && state === "loading";
+  const showSpinner =
+    (chatHistory.at(-1)?.role === "human" && state === "loading") ||
+    (chatHistory.length === 0 && state === "idle");
   const error = state === "error";
 
   return (
     <Container className="d-flex flex-column">
       <div className={`${styles.chatBox}`}>
-        {chatHistory.length === 0 ? (
-          <p>
-            Welcome to <b>eras</b>! Share any concerns, feelings or ideas about
-            money you have with us.
-          </p>
-        ) : (
-          chatHistory.map((chat, i) => <ChatMessage key={i} message={chat} />)
-        )}
-        {loading ? (
+        {chatHistory.map((chat, i) => (
+          <ChatMessage key={i} message={chat} />
+        ))}
+        {showSpinner ? (
           <Row className="justify-content-center my-3">
             <Col className="text-center">
               <Spinner
