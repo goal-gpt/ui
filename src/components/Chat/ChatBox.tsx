@@ -83,7 +83,7 @@ function ChatBox() {
   const error = state === "error";
 
   return (
-    <Container className="d-flex flex-column">
+    <Container className="d-flex flex-column h-100">
       <div className={`${styles.chatBox}`} role="log">
         <div className={`${styles.chatHistoryContainer}`}>
           {chatHistory.map((chat, i) => (
@@ -115,31 +115,29 @@ function ChatBox() {
         ) : null}
         <div ref={bottomRef} />
       </div>
-      <Row className="align-items-end my-4">
-        <Col className="">
-          <Form onSubmit={handleFormSubmit} role="form">
-            <Stack direction="horizontal" gap={2}>
-              <Form.Control
-                as="textarea"
-                className={`me-auto ${styles.textArea}`}
-                placeholder="Send a message"
-                rows={1}
-                ref={inputRef}
-                value={message}
-                onChange={handleInputChange}
-                onKeyDown={handleKeyDown}
-              />
-              <Button
-                className="w-auto"
-                type="submit"
-                variant="secondary"
-                disabled={state === "loading"}
-              >
-                <ArrowUpRightCircle />
-              </Button>
-            </Stack>
-          </Form>
-        </Col>
+      <Row className="align-items-end my-3 flex-grow-2">
+        <Form onSubmit={handleFormSubmit} role="form">
+          <Stack direction="horizontal" gap={2}>
+            <Form.Control
+              as="textarea"
+              className={`me-auto ${styles.textArea}`}
+              placeholder="Send a message"
+              rows={1}
+              ref={inputRef}
+              value={message}
+              onChange={handleInputChange}
+              onKeyDown={handleKeyDown}
+            />
+            <Button
+              className="w-auto"
+              type="submit"
+              variant="secondary"
+              disabled={state === "loading"}
+            >
+              <ArrowUpRightCircle />
+            </Button>
+          </Stack>
+        </Form>
       </Row>
     </Container>
   );
