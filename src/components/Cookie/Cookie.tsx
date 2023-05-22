@@ -3,6 +3,7 @@ import CookieConsent from "react-cookie-consent";
 
 export function Cookie() {
   return (
+    // TODO: implement onHover for the button
     <CookieConsent
       location="bottom"
       buttonText="Accept"

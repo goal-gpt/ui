@@ -1,10 +1,10 @@
 import { render, screen } from "@testing-library/react";
 import React from "react";
 
-import { MainHeader } from "./MainHeader";
+import { Header } from "./Header";
 
 test("renders the logo", () => {
-  render(<MainHeader />);
+  render(<Header />);
   const headerImage = screen.getByAltText(
     /eras logo: yellow lines gradually reaching the horizon/i
   );

@@ -8,6 +8,8 @@ import { Poppins } from "next/font/google";
 import React, { useState } from "react";
 
 import { Cookie } from "../src/components/Cookie";
+import { Header } from "../src/components/Header";
+import { Database } from "../src/types/database";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -20,7 +22,9 @@ export default function App({
 }: AppProps<{
   initialSession: Session;
 }>) {
-  const [supabaseClient] = useState(() => createBrowserSupabaseClient());
+  const [supabaseClient] = useState(() =>
+    createBrowserSupabaseClient<Database>()
+  );
 
   const queryClient = new QueryClient();
 
@@ -33,6 +37,7 @@ export default function App({
           initialSession={pageProps.initialSession}
         >
           <main className={poppins.className}>
+            <Header />
             <Component {...pageProps} />
           </main>
         </SessionContextProvider>

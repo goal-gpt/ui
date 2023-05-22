@@ -2,8 +2,6 @@ import { NextPageContext } from "next";
 import React from "react";
 import { Container } from "react-bootstrap";
 
-import { MainHeader } from "../src/components/MainHeader";
-
 interface ErrorProps {
   statusCode?: number;
   message?: string;
@@ -12,7 +10,6 @@ interface ErrorProps {
 function Error({ statusCode, message }: ErrorProps) {
   return (
     <div id="error-page">
-      <MainHeader />
       <Container>
         <h1>Oops!</h1>
         {message ? (

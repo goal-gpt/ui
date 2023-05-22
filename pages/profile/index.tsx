@@ -4,7 +4,6 @@ import { Col, Container, ListGroup, Row } from "react-bootstrap";
 
 import { Button } from "../../src/components/Button";
 import { CardItemData } from "../../src/components/Card";
-import { MainHeader } from "../../src/components/MainHeader";
 import { cardItemData } from "../../src/services/cardItemData";
 
 interface CategoriesCounts {
@@ -64,7 +63,6 @@ function Profile() {
 
   return (
     <>
-      <MainHeader />
       <Container>
         <Row className="mb-3">
           <Col className="d-flex align-items-center justify-content-center">
