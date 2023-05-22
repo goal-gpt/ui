@@ -83,8 +83,11 @@ function ChatBox() {
   const error = state === "error";
 
   return (
-    <Container className="d-flex flex-column h-100">
-      <div className={`${styles.chatBox}`} role="log">
+    <Container
+      className="d-flex flex-column h-100"
+      style={{ display: "grid", gridTemplateRows: "auto 1fr auto" }}
+    >
+      <Row className={`${styles.chatBox}`} role="log">
         <div className={`${styles.chatHistoryContainer}`}>
           {chatHistory.map((chat, i) => (
             <ChatMessage key={i} message={chat} />
@@ -114,7 +117,7 @@ function ChatBox() {
           </Row>
         ) : null}
         <div ref={bottomRef} />
-      </div>
+      </Row>
       <Row className="align-items-end my-3 flex-grow-2">
         <Form onSubmit={handleFormSubmit} role="form">
           <Stack direction="horizontal" gap={2}>
