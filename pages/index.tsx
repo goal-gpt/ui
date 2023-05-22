@@ -10,11 +10,11 @@ function Main() {
       <MainHeader />
       <Container>
         <Row>
-          <Col md={3} />
-          <Col>
+          <Col md={2} sm={0} />
+          <Col md={8} sm={12}>
             <ChatBox />
           </Col>
-          <Col md={3} />
+          <Col md={2} sm={0} />
         </Row>
       </Container>
     </>
