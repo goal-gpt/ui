@@ -6,7 +6,7 @@ import Navbar from "react-bootstrap/Navbar";
 
 export function MainHeader() {
   return (
-    <Navbar bg="white" variant="white" className="mb-4" role="navigation">
+    <Navbar bg="white" variant="white" role="navigation">
       <Container>
         <Navbar.Brand as={Link} href="/">
           <Image
