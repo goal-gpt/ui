@@ -23,7 +23,8 @@ export function createWrapper() {
   );
 }
 
-export function renderWithClient(client: QueryClient, ui: React.ReactElement) {
+export function renderWithClient(ui: React.ReactElement) {
+  const client = new QueryClient();
   const { rerender, ...result } = render(
     <QueryClientProvider client={client}>{ui}</QueryClientProvider>
   );

@@ -1,8 +1,6 @@
 .chatBox {
-  flex-shrink: 1;
-  float: left;
   overflow-y: auto;
-  height: 58vh;
+  height: min(75vh, calc(80vh - 40px));
 }
 
 .textArea {

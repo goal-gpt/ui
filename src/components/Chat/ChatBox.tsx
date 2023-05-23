@@ -83,10 +83,7 @@ function ChatBox() {
   const error = state === "error";
 
   return (
-    <Container
-      className="d-flex flex-column h-100"
-      style={{ display: "grid", gridTemplateRows: "auto 1fr auto" }}
-    >
+    <Container className="d-flex flex-column mt-5">
       <Row className={`${styles.chatBox}`} role="log">
         <div className={`${styles.chatHistoryContainer}`}>
           {chatHistory.map((chat, i) => (
@@ -116,9 +113,9 @@ function ChatBox() {
             </Col>
           </Row>
         ) : null}
-        <div ref={bottomRef} />
       </Row>
-      <Row className="align-items-end my-3 flex-grow-2">
+      <Row className="mt-4">
+        <div ref={bottomRef} style={{ height: 0 }} />
         <Form onSubmit={handleFormSubmit} role="form">
           <Stack direction="horizontal" gap={2}>
             <Form.Control
@@ -141,6 +138,14 @@ function ChatBox() {
             </Button>
           </Stack>
         </Form>
+        <div>
+          <p className="text-center">
+            <small>
+              Sera may produce inaccurate information about people, places or
+              facts.
+            </small>
+          </p>
+        </div>
       </Row>
     </Container>
   );

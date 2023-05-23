@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 
 import { ChatBox } from "../src/components/Chat";
+import { Header } from "../src/components/Header";
 import { Database } from "../src/types/database";
 
 function Main() {
@@ -29,14 +30,22 @@ function Main() {
     fetchData();
   }, [user]);
 
+  console.log(chats);
+
+  // TODO: decide what design to go with
   return (
     <>
       <Container fluid>
         <Row>
-          <Col lg={3} md={2} sm={0}>
-            {chats.length > 0 ?? chats[0].id}
+          <Col lg={3} md={2} sm={0} className={`navbarContainer`}>
+            <Header />
           </Col>
-          <Col lg={6} md={8} sm={12}>
+          <Col
+            lg={6}
+            md={8}
+            sm={12}
+            className="d-flex flex-column h-100 justify-content-between"
+          >
             <ChatBox />
           </Col>
           <Col lg={3} md={2} sm={0} />

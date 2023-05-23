@@ -94,13 +94,14 @@ h1 {
   color: map-get($custom-colors, "tertiary");
 }
 
+.navbarContainer {
+  background-color: var(--bs-primary);
+  height: 100vh;
+}
+
 .spinner-border,
 .spinner-grow {
   animation: spinner-grow 2s linear infinite;
-}
-
-pre {
-  white-space: pre-wrap;
 }
 
 .supabase-auth-ui_ui-button {

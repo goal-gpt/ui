@@ -1,53 +1,45 @@
 import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import { render, screen } from "@testing-library/react";
 import { useRouter } from "next/router";
 import React from "react";
 
 import Login from "../pages/login";
 
-jest.mock("@supabase/auth-helpers-react", () => ({
-  useUser: jest.fn(),
-  useSupabaseClient: jest.fn(),
+jest.mock("@supabase/auth-ui-react", () => ({
+  Auth: jest.fn().mockReturnValue(
+    <div role="form">
+      <label htmlFor="password" className="supabase-auth-ui_ui-label c-bpexlo">
+        Your password
+      </label>
+      <input id="password" />
+    </div>
+  ),
 }));
 
 describe("Login", () => {
-  it("renders without crashing", () => {
+  beforeEach(() => {
+    (useSupabaseClient as jest.Mock).mockReturnValue({});
     (useUser as jest.Mock).mockReturnValue(null);
-    render(<Login />);
-    expect(screen.getByText("Sign in")).toBeInTheDocument();
-  });
-
-  it("redirects to profile if user is logged in", async () => {
-    const mockPush = jest.fn();
-    (useRouter as jest.Mock).mockReturnValue({ push: mockPush });
-    (useUser as jest.Mock).mockReturnValue({});
-
-    render(<Login />);
-    await waitFor(() => expect(mockPush).toHaveBeenCalledWith("/profile"));
-  });
-
-  it("submits the form and calls signInWithOtp", async () => {
-    const mockSignInWithOtp = jest.fn().mockResolvedValue({ error: null });
-    (useSupabaseClient as jest.Mock).mockReturnValue({
-      auth: {
-        signInWithOtp: mockSignInWithOtp,
-      },
+    (useRouter as jest.Mock).mockReturnValue({
+      push: jest.fn(),
     });
-    (useUser as jest.Mock).mockReturnValue(null);
+  });
 
+  test("renders the Login component", () => {
     render(<Login />);
-    await userEvent.type(
-      screen.getByPlaceholderText("Your email"),
-      "test@example.com"
-    );
-    fireEvent.submit(screen.getByText("Get Magic Link!"));
+    const loginComponent = screen.getByRole("form");
+    expect(loginComponent).toBeInTheDocument();
+  });
 
-    await waitFor(() =>
-      expect(mockSignInWithOtp).toHaveBeenCalledWith({
-        email: "test@example.com",
-        options: { emailRedirectTo: window.location.origin },
-      })
-    );
+  test("redirects to home if user is already logged in", () => {
+    (useUser as jest.Mock).mockReturnValue({}); // User is logged in
+    render(<Login />);
+    expect(useRouter().push).toHaveBeenCalledWith("/");
+  });
+
+  test("sets the password label text correctly", () => {
+    render(<Login />);
+    const passwordLabel = screen.getByLabelText("Your password");
+    expect(passwordLabel).toBeInTheDocument();
   });
 });

@@ -17,10 +17,13 @@
 }
 
 .chatMessageHuman p,
-.chatMessageAI p {
+.chatMessageAI p,
+.chatMessageHuman pre,
+.chatMessageAI pre {
   background-color: inherit;
   margin: 0;
   padding: 8px 16px;
   word-break: break-word;
   text-align: left;
+  white-space: pre-wrap;
 }

@@ -1,0 +1,18 @@
+.navbar {
+  height: min(75vh, calc(80vh - 20px));
+}
+
+.profileButton button {
+  color: gray;
+}
+
+.profileButton button:hover {
+  color: var(--bs-neutral-light);
+}
+
+.profileButton button::before {
+  display: none !important;
+}
+.profileButton button::after {
+  display: none !important;
+}
