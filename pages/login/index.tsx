@@ -29,7 +29,7 @@ function Login() {
       email,
       options: { emailRedirectTo: window.location.origin },
     });
-
+    toast("Check your email for the login link!", {});
     if (error) {
       logger.error(error.message);
       toast(`${error.message}`, {
@@ -64,7 +64,8 @@ function Login() {
       </Navbar>
 
       <div className="text-tertiary text-center">
-        Sign in to speak to Sera, your personal finance companion
+        <h5>Sign in to speak to Sera 🌅</h5>
+        <h6 className="mt-4">your personal finance companion</h6>
       </div>
       <Container className="d-flex align-items-center justify-content-center mt-4">
         <Col lg={4} md={3} sm={2} />
