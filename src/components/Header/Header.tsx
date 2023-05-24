@@ -1,6 +1,6 @@
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import Link from "next/link";
-import { useRouter } from "next/router";
+// import { useRouter } from "next/router";
 import React from "react";
 import { Container, Dropdown, DropdownButton, Row } from "react-bootstrap";
 import Image from "react-bootstrap/Image";
@@ -10,12 +10,10 @@ import styles from "./Header.module.scss";
 
 export function Header() {
   const supabaseClient = useSupabaseClient();
-  const router = useRouter();
 
   const handleSignout = async () => {
     const { error } = await supabaseClient.auth.signOut();
     if (error) console.error("Error signing out: ", error);
-    router.push("/login");
   };
 
   return (

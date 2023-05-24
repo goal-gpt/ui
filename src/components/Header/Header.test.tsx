@@ -1,6 +1,5 @@
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { useRouter } from "next/router";
 import React from "react";
 
 import { Header } from "./Header";
@@ -15,16 +14,11 @@ jest.mock("next/router", () => ({
 
 describe("Header component", () => {
   let mockSignOut: jest.Mock;
-  let mockRouterPush: jest.Mock;
 
   beforeEach(() => {
     mockSignOut = jest.fn().mockResolvedValue({ error: null });
-    mockRouterPush = jest.fn();
     (useSupabaseClient as jest.Mock).mockReturnValue({
       auth: { signOut: mockSignOut },
-    });
-    (useRouter as jest.Mock).mockReturnValue({
-      push: mockRouterPush,
     });
   });
 
@@ -50,7 +44,6 @@ describe("Header component", () => {
 
     waitFor(() => {
       expect(mockSignOut).toHaveBeenCalledTimes(1);
-      expect(mockRouterPush).toHaveBeenCalledWith("/login");
     });
   });
 });
