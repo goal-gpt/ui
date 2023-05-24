@@ -16,7 +16,6 @@ function Main() {
   >([]);
 
   useEffect(() => {
-    console.log("hi: ", user);
     async function fetchData() {
       const { data, error } = await supabaseClient.from("chat").select("*");
 
