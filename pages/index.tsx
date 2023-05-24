@@ -5,6 +5,7 @@ import { Col, Container, Row } from "react-bootstrap";
 
 import { ChatBox } from "../src/components/Chat";
 import { Header } from "../src/components/Header";
+import { Loading } from "../src/components/Loading";
 import { Database } from "../src/types/database";
 
 function Main() {
@@ -30,7 +31,7 @@ function Main() {
     fetchData();
   }, [user]);
 
-  if (!user) return <></>;
+  if (!user) return <Loading />;
 
   // TODO: decide what design to go with
   return (

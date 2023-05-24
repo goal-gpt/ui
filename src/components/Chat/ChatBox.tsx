@@ -1,10 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Col, Container, Form, Row, Spinner, Stack } from "react-bootstrap";
+import { Col, Container, Form, Row, Stack } from "react-bootstrap";
 import { ArrowUpRightCircle } from "react-bootstrap-icons";
 
 import { useChat } from "../../hooks/useChat";
 import { logger } from "../../utils";
 import { Button } from "../Button";
+import { Loading } from "../Loading";
 import styles from "./ChatBox.module.scss";
 import { ChatMessage } from "./ChatMessage";
 
@@ -90,20 +91,7 @@ function ChatBox() {
             <ChatMessage key={i} message={chat} />
           ))}
         </div>
-        {showSpinner ? (
-          <Row className="justify-content-center my-3">
-            <Col className="text-center">
-              <Spinner
-                animation="grow"
-                size="sm"
-                variant="primary"
-                role="status"
-              >
-                <span className="visually-hidden">Loading...</span>
-              </Spinner>
-            </Col>
-          </Row>
-        ) : null}
+        {showSpinner ? <Loading /> : null}
         {error ? (
           <Row className="justify-content-center my-3">
             <Col className="text-center">

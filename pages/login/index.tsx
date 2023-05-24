@@ -32,7 +32,7 @@ function Login() {
 
     if (error) {
       logger.error(error.message);
-      toast("Something went wrong! Please try again later.", {
+      toast(`${error.message}`, {
         type: TOAST_ERROR,
       });
       setStatus("idle");
