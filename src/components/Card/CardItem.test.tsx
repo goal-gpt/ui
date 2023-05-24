@@ -27,7 +27,7 @@ const mockCardItemData: CardItemProps = {
 };
 
 describe("CardItem component", () => {
-  test("renders correctly", async () => {
+  it("renders correctly", async () => {
     const { findByText } = render(<CardItem {...mockCardItemData} />);
 
     expect(await findByText("Test Title")).toBeInTheDocument();
@@ -35,7 +35,7 @@ describe("CardItem component", () => {
     expect(await findByText("example")).toBeInTheDocument();
   });
 
-  test("handles swipe correctly", () => {
+  it("handles swipe correctly", () => {
     const { getByRole } = render(<CardItem {...mockCardItemData} />);
     const card = getByRole("listitem");
 
@@ -44,7 +44,7 @@ describe("CardItem component", () => {
     expect(mockHandleSwipe).toHaveBeenCalled();
   });
 
-  test("card visibility changes when swiped off screen", async () => {
+  it("card visibility changes when swiped off screen", async () => {
     const { findByRole } = render(<CardItem {...mockCardItemData} />);
     const card = (await findByRole("listitem")).parentNode as HTMLElement;
 
@@ -65,7 +65,7 @@ describe("CardItem component", () => {
       data: { ...mockCardItemData.data, text: longText },
     };
 
-    test("truncates long text correctly on large screens", () => {
+    it("truncates long text correctly on large screens", () => {
       global.innerWidth = 800; // simulate large screen
       const { getByText, rerender } = render(
         <CardItem {...mockCardItemDataWithLongText} />
@@ -85,7 +85,7 @@ describe("CardItem component", () => {
       expect(getByText(`${longText.substring(0, 90)} ...`)).toBeInTheDocument();
     });
 
-    test("does not truncate short text", () => {
+    it("does not truncate short text", () => {
       const shortText = "A".repeat(50); // create a string of 50 'A's
       const mockCardItemDataWithShortText = {
         ...mockCardItemData,

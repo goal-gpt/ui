@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import type { AppProps } from "next/app";
 import { Poppins } from "next/font/google";
 import React, { useState } from "react";
+import { ToastContainer } from "react-toastify";
 
 import { Cookie } from "../src/components/Cookie";
 import { Database } from "../src/types/database";
@@ -37,6 +38,7 @@ export default function App({
         >
           <main className={poppins.className}>
             <Component {...pageProps} />
+            <ToastContainer />
           </main>
         </SessionContextProvider>
       </QueryClientProvider>

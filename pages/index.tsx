@@ -30,7 +30,7 @@ function Main() {
     fetchData();
   }, [user]);
 
-  console.log(chats);
+  if (!user) return <></>;
 
   // TODO: decide what design to go with
   return (
@@ -39,6 +39,7 @@ function Main() {
         <Row>
           <Col lg={3} md={2} sm={0} className={`navbarContainer`}>
             <Header />
+            <div>{chats && chats.length > 0 && "chats"}</div>
           </Col>
           <Col
             lg={6}

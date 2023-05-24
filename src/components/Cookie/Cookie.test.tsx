@@ -4,7 +4,7 @@ import React from "react";
 import { Cookie } from "./Cookie";
 
 describe("Cookie component", () => {
-  test("renders the cookie consent banner with the correct message", () => {
+  it("renders the cookie consent banner with the correct message", () => {
     render(<Cookie />);
 
     const consentMessage = screen.getByText(
@@ -14,7 +14,7 @@ describe("Cookie component", () => {
     expect(consentMessage).toBeInTheDocument();
   });
 
-  test("renders the accept button with the correct text", () => {
+  it("renders the accept button with the correct text", () => {
     render(<Cookie />);
 
     const acceptButton = screen.getByText("Accept");

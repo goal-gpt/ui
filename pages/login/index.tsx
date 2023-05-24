@@ -1,39 +1,52 @@
 import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
-import { Auth } from "@supabase/auth-ui-react";
-import { ThemeSupa } from "@supabase/auth-ui-shared";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
-import { Col, Container, Navbar, Row } from "react-bootstrap";
+import React, { FormEvent, useEffect, useState } from "react";
+import { Col, Container, Form, Navbar, Row } from "react-bootstrap";
 
-// const logo = "/eras-logo.png";
-// import logo from "/eras-logo.png";
+import { Button } from "../../src/components/Button";
+import { logger, toast, TOAST_ERROR, TOAST_INFO } from "../../src/utils";
 
 function Login() {
+  const [status, setStatus] = useState<"idle" | "loading" | "success">("idle");
+  const [email, setEmail] = useState<string>("");
   const supabaseClient = useSupabaseClient();
   const router = useRouter();
   const user = useUser();
-
-  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     if (user) {
       router.push("/");
       return;
     }
-    setLoading(false);
-    const passwordLabel = document.querySelector(
-      "label[for=password].supabase-auth-ui_ui-label"
-    ) as HTMLLabelElement;
-    if (passwordLabel) {
-      passwordLabel.innerHTML = "Your password";
+  }, [user]);
+
+  const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setStatus("loading");
+    const { error } = await supabaseClient.auth.signInWithOtp({
+      email,
+      options: { emailRedirectTo: window.location.origin },
+    });
+
+    if (error) {
+      logger.error(error.message);
+      toast("Something went wrong! Please try again later.", {
+        type: TOAST_ERROR,
+      });
+      setStatus("idle");
+    } else {
+      toast("Check your email for the login link!", { type: TOAST_INFO });
+      setStatus("success");
     }
-  }, []);
-  if (loading) return <></>;
+  };
 
   return (
-    <>
+    <Row
+      className="align-items-center align-content-center"
+      style={{ height: "70vh" }}
+    >
       <Navbar
         variant="white"
         className="d-flex flex-column justify-content"
@@ -50,54 +63,35 @@ function Login() {
         </Navbar.Brand>
       </Navbar>
 
-      <Container>
-        <Row className="mt-3">
-          <Col xl={4} lg={3} md={2} xs={1} />
-          <Col xl={4} lg={6} md={8} xs={10}>
-            <Auth
-              supabaseClient={supabaseClient}
-              providers={["google"]}
-              appearance={{
-                theme: ThemeSupa,
-                variables: {
-                  default: {
-                    colors: {
-                      brand: "var(--bs-primary)",
-                      brandAccent: "var(--bs-primary-semi-light)",
-                      brandButtonText: "var(--bs-primary-contrast)",
-                      defaultButtonBackground: "var(--bs-secondary)",
-                      defaultButtonBackgroundHover:
-                        "var(--bs-secondary-semi-light)",
-                      defaultButtonBorder: "transparent",
-                      defaultButtonText: "var(--bs-secondary-contrast)",
-                      dividerBackground: "var(--bs-tertiary)",
-                      inputBackground: "transparent",
-                      inputBorder: "silver",
-                      inputBorderHover: "gray",
-                      inputBorderFocus: "gray",
-                      inputText: "var(--bs-neutral-dark)",
-                      inputLabelText: "var(--bs-neutral-light)",
-                      inputPlaceholder: "gray",
-                      messageText: "var(--bs-neutral-dark)",
-                      messageTextDanger: "var(--bs-tertiary)",
-                      anchorTextColor: "var(--bs-neutral-dark)",
-                      anchorTextHoverColor: "gray",
-                    },
-                    fonts: {
-                      bodyFontFamily: `"Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif`,
-                      buttonFontFamily: `"Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif`,
-                      inputFontFamily: `"Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif`,
-                      labelFontFamily: `"Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif`,
-                    },
-                  },
-                },
-              }}
-            />
-          </Col>
-          <Col xl={4} lg={3} md={2} xs={1} />
-        </Row>
+      <div className="text-tertiary text-center">
+        Sign in to speak to Sera, your personal finance companion
+      </div>
+      <Container className="d-flex align-items-center justify-content-center mt-4">
+        <Col lg={4} md={3} sm={2} />
+        <Col className="d-flex align-items-center justify-content-center">
+          <Form onSubmit={handleLogin} className="w-75" role="form">
+            <Form.Group controlId="email" className="mb-3">
+              <Form.Control
+                type="email"
+                placeholder="Enter your email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="inputField"
+                required
+              />
+            </Form.Group>
+            <Button type="submit" disabled={status !== "idle"}>
+              {status === "loading"
+                ? "Loading..."
+                : status === "idle"
+                ? "Get your login link"
+                : "Check your email!"}
+            </Button>
+          </Form>
+        </Col>
+        <Col lg={4} md={3} sm={2} />
       </Container>
-    </>
+    </Row>
   );
 }
 

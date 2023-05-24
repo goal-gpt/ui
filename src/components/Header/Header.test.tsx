@@ -3,7 +3,7 @@ import React from "react";
 
 import { Header } from "./Header";
 
-test("renders the logo", () => {
+it("renders the logo", () => {
   render(<Header />);
   const headerImage = screen.getByAltText(
     /eras logo: yellow lines gradually reaching the horizon/i

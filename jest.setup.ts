@@ -11,10 +11,6 @@ jest.mock("@supabase/auth-helpers-react", () => ({
   useUser: jest.fn(),
 }));
 
-jest.mock("@supabase/auth-ui-react", () => ({
-  Auth: jest.fn(),
-}));
-
 Object.defineProperty(window.Element.prototype, "scrollIntoView", {
   writable: true,
   value: jest.fn(),
