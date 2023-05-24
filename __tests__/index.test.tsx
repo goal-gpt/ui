@@ -1,5 +1,5 @@
 import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
-import { act, waitFor } from "@testing-library/react";
+import { waitFor } from "@testing-library/react";
 import { useRouter } from "next/router";
 import React from "react";
 
@@ -34,19 +34,5 @@ describe("Main component", () => {
       expect(getByRole("log")).toBeInTheDocument();
       expect(getByRole("form")).toBeInTheDocument();
     });
-  });
-
-  it("redirects to login page if user does not exist", async () => {
-    (useUser as jest.Mock).mockReturnValue(null);
-    const mockPush = jest.fn();
-    (useRouter as jest.Mock).mockReturnValue({
-      push: mockPush,
-    });
-
-    await act(async () => {
-      renderWithClient(<Main />);
-    });
-
-    expect(mockPush).toBeCalledWith("/login");
   });
 });

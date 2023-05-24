@@ -29,7 +29,6 @@ function Login() {
       email,
       options: { emailRedirectTo: window.location.origin },
     });
-    toast("Check your email for the login link!", {});
     if (error) {
       logger.error(error.message);
       toast(`${error.message}`, {
