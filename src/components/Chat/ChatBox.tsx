@@ -38,10 +38,29 @@ function ChatBox() {
     inputRef.current?.focus();
   };
 
+  useEffect(() => {
+    const handleKeyUp = () => {
+      if (inputRef.current) {
+        inputRef.current.style.height = "0";
+        inputRef.current.style.height = `${inputRef.current.scrollHeight}px`;
+      }
+    };
+
+    const el = inputRef.current;
+    if (!el) return;
+    el.addEventListener("keyup", handleKeyUp);
+
+    // cleanup on unmount
+    return () => {
+      el.removeEventListener("keyup", handleKeyUp);
+    };
+  }, []);
+
   const resetInput = () => {
     if (inputRef.current) {
       inputRef.current.style.height = "auto";
       inputRef.current.style.height = `${inputRef.current.scrollHeight}px`;
+      inputRef.current.scrollTop = inputRef.current.scrollHeight;
     }
   };
 
@@ -101,30 +120,39 @@ function ChatBox() {
             </Col>
           </Row>
         ) : null}
-      </Row>
-      <Row className="mt-4">
         <div ref={bottomRef} style={{ height: 0 }} />
+      </Row>
+      <Row className="mt-5">
         <Form onSubmit={handleFormSubmit} role="form">
-          <Stack direction="horizontal" gap={2}>
-            <Form.Control
-              as="textarea"
-              className={`me-auto ${styles.textArea}`}
-              placeholder="Send a message"
-              rows={1}
-              ref={inputRef}
-              value={message}
-              onChange={handleInputChange}
-              onKeyDown={handleKeyDown}
-            />
-            <Button
-              className="w-auto"
-              type="submit"
-              variant="secondary"
-              disabled={state === "loading"}
+          <div className={styles.textAreaContainer}>
+            <Stack
+              direction="horizontal"
+              gap={2}
+              className={`${styles.messageForm}`}
             >
-              <ArrowUpRightCircle />
-            </Button>
-          </Stack>
+              <div className={styles.textAreaWrapper}>
+                <Form.Control
+                  as="textarea"
+                  className={`${styles.textArea}`}
+                  placeholder="Send a message"
+                  rows={1}
+                  ref={inputRef}
+                  value={message}
+                  onChange={handleInputChange}
+                  onKeyDown={handleKeyDown}
+                />
+              </div>
+              <Button
+                className={`w-auto ${styles.messageButton}`}
+                type="submit"
+                variant="secondary"
+                disabled={state === "loading"}
+                height="none"
+              >
+                <ArrowUpRightCircle />
+              </Button>
+            </Stack>
+          </div>
         </Form>
         <div>
           <p className="text-center me-4">

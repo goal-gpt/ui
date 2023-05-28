@@ -3,10 +3,31 @@
   height: min(75vh, calc(80vh - 40px));
 }
 
-.textArea {
-  resize: none;
+.textAreaContainer {
+  position: relative;
   max-height: 12rem;
-  overflow-y: auto;
+  width: 100%;
+}
+
+.textAreaWrapper {
+  position: absolute;
+  bottom: 0;
+  width: 90%;
+}
+
+.textArea {
+  max-height: 12rem;
+  width: 100%;
+}
+
+.messageForm {
+  align-items: center;
+}
+
+.messageButton {
+  position: absolute;
+  bottom: 0;
+  right: 0;
 }
 
 .chatHistoryContainer :first-child {
