@@ -8,7 +8,7 @@ import { Header } from "../src/components/Header";
 import { Loading } from "../src/components/Loading";
 import { Database } from "../src/types/database";
 
-function Main() {
+function Main({ isAuthChecking }: { isAuthChecking: boolean }) {
   const supabaseClient = useSupabaseClient<Database>();
   const user = useUser();
   const router = useRouter();
@@ -18,10 +18,8 @@ function Main() {
   >([]);
 
   useEffect(() => {
-    if (!user) {
-      router.push("/login");
-    } else {
-      async function fetchData() {
+    async function fetchData() {
+      if (user) {
         const { data, error } = await supabaseClient.from("chat").select("*");
 
         if (error) {
@@ -30,30 +28,34 @@ function Main() {
           setChats(data);
         }
       }
-
-      fetchData();
     }
+
+    fetchData();
   }, [user]);
 
-  if (!user) return <Loading />;
+  useEffect(() => {
+    if (!isAuthChecking && !user) {
+      router.push("/login");
+    }
+  }, [user, isAuthChecking]);
+  if (isAuthChecking || !user) return <Loading />;
 
   return (
     <>
       <Container fluid>
         <Row>
-          <Col lg={3} md={2} sm={0} className={`navbarContainer`}>
+          <Col md={3} sm={0} className={`d-none d-md-flex navbarContainer`}>
             <Header />
             <div>{chats && chats.length > 0 && "chats"}</div>
           </Col>
           <Col
-            lg={6}
-            md={8}
+            md={6}
             sm={12}
             className="d-flex flex-column h-100 justify-content-between"
           >
             <ChatBox />
           </Col>
-          <Col lg={3} md={2} sm={0} />
+          <Col md={3} sm={0} className="d-none d-md-flex" />
         </Row>
       </Container>
     </>

@@ -8,7 +8,7 @@ import { Col, Container, Form, Navbar, Row } from "react-bootstrap";
 import { Button } from "../../src/components/Button";
 import { logger, toast, TOAST_ERROR, TOAST_INFO } from "../../src/utils";
 
-function Login() {
+function Login({ isAuthChecking }: { isAuthChecking: boolean }) {
   const [status, setStatus] = useState<"idle" | "loading" | "success">("idle");
   const [email, setEmail] = useState<string>("");
   const supabaseClient = useSupabaseClient();
@@ -16,11 +16,11 @@ function Login() {
   const user = useUser();
 
   useEffect(() => {
-    if (user) {
+    if (!isAuthChecking && user) {
       router.push("/");
       return;
     }
-  }, [user]);
+  }, [user, isAuthChecking]);
 
   const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();

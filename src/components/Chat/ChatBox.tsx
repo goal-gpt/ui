@@ -127,10 +127,10 @@ function ChatBox() {
           </Stack>
         </Form>
         <div>
-          <p className="text-center">
+          <p className="text-center me-4">
             <small>
-              Sera may produce inaccurate information about people, places or
-              facts.
+              Sera tries her best to ensure accuracy - please verify her
+              information for your peace of mind.
             </small>
           </p>
         </div>
