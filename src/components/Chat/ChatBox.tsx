@@ -50,7 +50,6 @@ function ChatBox() {
     if (!el) return;
     el.addEventListener("keyup", handleKeyUp);
 
-    // cleanup on unmount
     return () => {
       el.removeEventListener("keyup", handleKeyUp);
     };
@@ -61,6 +60,10 @@ function ChatBox() {
       inputRef.current.style.height = "auto";
       inputRef.current.style.height = `${inputRef.current.scrollHeight}px`;
       inputRef.current.scrollTop = inputRef.current.scrollHeight;
+      document.documentElement.style.setProperty(
+        "--textarea-height",
+        `min(12rem, ${inputRef.current.scrollHeight}px)`
+      );
     }
   };
 
@@ -103,7 +106,7 @@ function ChatBox() {
   const error = state === "error";
 
   return (
-    <Container className="d-flex flex-column mt-5">
+    <Container className={`${styles.chatContainer}`}>
       <Row className={`${styles.chatBox}`} role="log">
         <div className={`${styles.chatHistoryContainer}`}>
           {chatHistory.map((chat, i) => (
@@ -122,13 +125,13 @@ function ChatBox() {
         ) : null}
         <div ref={bottomRef} style={{ height: 0 }} />
       </Row>
-      <Row className="mt-5">
+      <Row className="">
         <Form onSubmit={handleFormSubmit} role="form">
           <div className={styles.textAreaContainer}>
             <Stack
               direction="horizontal"
               gap={2}
-              className={`${styles.messageForm}`}
+              // className={`${styles.messageForm}`}
             >
               <div className={styles.textAreaWrapper}>
                 <Form.Control
