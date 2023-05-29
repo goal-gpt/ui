@@ -56,6 +56,7 @@ function Login({ isAuthChecking }: { isAuthChecking: boolean }) {
             alt="eras logo: yellow lines gradually reaching the horizon"
             className="d-inline-block align-top"
             src={"/eras-logo.png"}
+            priority
             height={140}
             width={200}
           />
