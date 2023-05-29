@@ -11,7 +11,7 @@
   overflow-y: auto;
   overflow-x: hidden;
   display: flex;
-  flex-direction: column;
+  flex-direction: column-reverse;
   flex-grow: 1;
   flex-wrap: nowrap;
 }
@@ -31,7 +31,6 @@
   flex-direction: row;
   flex-grow: 1;
   max-height: 12rem;
-  margin: 0.5rem 0;
   justify-content: space-between;
   width: 100%;
 }
