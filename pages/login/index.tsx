@@ -2,6 +2,7 @@ import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { NextSeo } from "next-seo";
 import React, { FormEvent, useEffect, useState } from "react";
 import { Col, Container, Form, Navbar, Row } from "react-bootstrap";
 
@@ -42,57 +43,60 @@ function Login({ isAuthChecking }: { isAuthChecking: boolean }) {
   };
 
   return (
-    <Row
-      className="align-items-center align-content-center"
-      style={{ height: "70vh" }}
-    >
-      <Navbar
-        variant="white"
-        className="d-flex flex-column justify-content"
-        role="navigation"
+    <>
+      <NextSeo title="personal finance companionship" />
+      <Row
+        className="align-items-center align-content-center"
+        style={{ height: "70vh" }}
       >
-        <Navbar.Brand as={Link} className="align-self-center" href="/">
-          <Image
-            alt="eras logo: yellow lines gradually reaching the horizon"
-            className="d-inline-block align-top"
-            src={"/eras-logo.png"}
-            priority
-            height={140}
-            width={200}
-          />
-        </Navbar.Brand>
-      </Navbar>
+        <Navbar
+          variant="white"
+          className="d-flex flex-column justify-content"
+          role="navigation"
+        >
+          <Navbar.Brand as={Link} className="align-self-center" href="/">
+            <Image
+              alt="eras logo: yellow lines gradually reaching the horizon"
+              className="d-inline-block align-top"
+              src={"/eras-logo.png"}
+              priority
+              height={140}
+              width={200}
+            />
+          </Navbar.Brand>
+        </Navbar>
 
-      <div className="text-tertiary text-center">
-        <h5>Sign in to speak to Sera 🌅</h5>
-        <h6 className="mt-4">your personal finance companion</h6>
-      </div>
-      <Container className="d-flex align-items-center justify-content-center mt-4">
-        <Col lg={4} md={3} sm={2} />
-        <Col className="d-flex align-items-center justify-content-center">
-          <Form onSubmit={handleLogin} className="w-75" role="form">
-            <Form.Group controlId="email" className="mb-3">
-              <Form.Control
-                type="email"
-                placeholder="Enter your email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="inputField"
-                required
-              />
-            </Form.Group>
-            <Button type="submit" disabled={status !== "idle"}>
-              {status === "loading"
-                ? "Loading..."
-                : status === "idle"
-                ? "Get your login link"
-                : "Check your email!"}
-            </Button>
-          </Form>
-        </Col>
-        <Col lg={4} md={3} sm={2} />
-      </Container>
-    </Row>
+        <div className="text-tertiary text-center">
+          <h5>Sign in to speak to Sera 🌅</h5>
+          <h6 className="mt-4">your personal finance companion</h6>
+        </div>
+        <Container className="d-flex align-items-center justify-content-center mt-4">
+          <Col lg={4} md={3} sm={2} />
+          <Col className="d-flex align-items-center justify-content-center">
+            <Form onSubmit={handleLogin} className="w-75" role="form">
+              <Form.Group controlId="email" className="mb-3">
+                <Form.Control
+                  type="email"
+                  placeholder="Enter your email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="inputField"
+                  required
+                />
+              </Form.Group>
+              <Button type="submit" disabled={status !== "idle"}>
+                {status === "loading"
+                  ? "Loading..."
+                  : status === "idle"
+                  ? "Get your login link"
+                  : "Check your email!"}
+              </Button>
+            </Form>
+          </Col>
+          <Col lg={4} md={3} sm={2} />
+        </Container>
+      </Row>
+    </>
   );
 }
 
