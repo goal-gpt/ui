@@ -1,5 +1,6 @@
 import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
 import { useRouter } from "next/router";
+import { NextSeo } from "next-seo";
 import React, { useEffect, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 
@@ -42,6 +43,7 @@ function Main({ isAuthChecking }: { isAuthChecking: boolean }) {
 
   return (
     <>
+      <NextSeo title="your personal finance companion" />
       <Container fluid>
         <Row>
           <Col md={2} sm={0} className={`d-none d-md-flex navbarContainer`}>
