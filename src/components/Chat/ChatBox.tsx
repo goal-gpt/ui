@@ -107,13 +107,9 @@ function ChatBox() {
 
   return (
     <Container className={`${styles.chatContainer}`}>
+      {/* The order of elements is reversed as we want the chat history to appear from the bottom using flex-direction: column-reverse*/}
       <Row className={`${styles.chatBox}`} role="log">
-        <div className={`${styles.chatHistoryContainer}`}>
-          {chatHistory.map((chat, i) => (
-            <ChatMessage key={i} message={chat} />
-          ))}
-        </div>
-        {showSpinner ? <Loading /> : null}
+        <div ref={bottomRef} style={{ height: 0 }} />
         {error ? (
           <Row className="justify-content-center my-3">
             <Col className="text-center">
@@ -123,9 +119,16 @@ function ChatBox() {
             </Col>
           </Row>
         ) : null}
-        <div ref={bottomRef} style={{ height: 0 }} />
+        {showSpinner ? <Loading /> : null}
+        <div className={`${styles.chatHistoryContainer}`}>
+          {chatHistory.map((chat, i) => (
+            <ChatMessage key={i} message={chat} />
+          ))}
+        </div>
       </Row>
-      <Row className="">
+      <Row className="my-3">
+        {/* TODO: implement suggestions here */}
+        <div className={`${styles.suggestions}`}>Hi!</div>
         <Form onSubmit={handleFormSubmit} role="form">
           <div className={styles.textAreaContainer}>
             <div className={styles.textAreaWrapper}>
