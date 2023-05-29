@@ -2,9 +2,8 @@
   display: flex;
   flex-direction: column;
   height: 95vh;
-  margin: 2.5vh 0;
+  margin: 2.5vh auto;
   justify-content: space-between;
-  flex-grow: 1;
   overflow-x: hidden;
 }
 
@@ -27,20 +26,25 @@
   border-bottom-right-radius: 10px;
 }
 
-.textAreaWrapper {
-  width: 90%;
-}
-
-.messageButton {
-  order: 2;
-}
-
 .textAreaContainer {
+  display: flex;
+  flex-direction: row;
+  flex-grow: 1;
   max-height: 12rem;
   margin: 0.5rem 0;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.textAreaWrapper {
+  margin: 0.5rem 0.5rem 0 0;
   width: 100%;
 }
 
 .textArea {
   max-height: 12rem;
+}
+
+.messageButton {
+  align-self: end;
 }

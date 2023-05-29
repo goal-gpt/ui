@@ -44,18 +44,20 @@ function Main({ isAuthChecking }: { isAuthChecking: boolean }) {
     <>
       <Container fluid>
         <Row>
-          <Col md={3} sm={0} className={`d-none d-md-flex navbarContainer`}>
+          <Col md={2} sm={0} className={`d-none d-md-flex navbarContainer`}>
             <Header />
             <div>{chats && chats.length > 0 && "chats"}</div>
           </Col>
+          <Col md={1} sm={0} className="d-none d-md-flex" />
           <Col
             md={6}
             sm={12}
-            className="d-flex flex-column h-100 justify-content-between"
+            className="d-flex flex-column justify-content-between"
           >
             <ChatBox />
           </Col>
-          <Col md={3} sm={0} className="d-none d-md-flex" />
+          <Col md={1} sm={0} className="d-none d-md-flex" />
+          <Col md={2} sm={0} className="d-none d-md-flex" />
         </Row>
       </Container>
     </>

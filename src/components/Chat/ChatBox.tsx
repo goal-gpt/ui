@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Col, Container, Form, Row, Stack } from "react-bootstrap";
+import { Col, Container, Form, Row } from "react-bootstrap";
 import { ArrowUpRightCircle } from "react-bootstrap-icons";
 
 import { useChat } from "../../hooks/useChat";
@@ -128,33 +128,28 @@ function ChatBox() {
       <Row className="">
         <Form onSubmit={handleFormSubmit} role="form">
           <div className={styles.textAreaContainer}>
-            <Stack
-              direction="horizontal"
-              gap={2}
-              // className={`${styles.messageForm}`}
+            <div className={styles.textAreaWrapper}>
+              <Form.Control
+                as="textarea"
+                className={`${styles.textArea}`}
+                placeholder="Send a message"
+                rows={1}
+                ref={inputRef}
+                value={message}
+                onChange={handleInputChange}
+                onKeyDown={handleKeyDown}
+              />
+            </div>
+            <Button
+              className={`${styles.messageButton}`}
+              type="submit"
+              variant="secondary"
+              disabled={state === "loading"}
+              height="auto"
+              width="auto"
             >
-              <div className={styles.textAreaWrapper}>
-                <Form.Control
-                  as="textarea"
-                  className={`${styles.textArea}`}
-                  placeholder="Send a message"
-                  rows={1}
-                  ref={inputRef}
-                  value={message}
-                  onChange={handleInputChange}
-                  onKeyDown={handleKeyDown}
-                />
-              </div>
-              <Button
-                className={`w-auto ${styles.messageButton}`}
-                type="submit"
-                variant="secondary"
-                disabled={state === "loading"}
-                height="none"
-              >
-                <ArrowUpRightCircle />
-              </Button>
-            </Stack>
+              <ArrowUpRightCircle />
+            </Button>
           </div>
         </Form>
         <div>
