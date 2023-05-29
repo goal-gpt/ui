@@ -128,7 +128,7 @@ function ChatBox() {
       </Row>
       <Row className="my-3">
         {/* TODO: implement suggestions here */}
-        <div className={`${styles.suggestions}`}>Hi!</div>
+        {/* <div className={`${styles.suggestions}`}>Hi!</div> */}
         <Form onSubmit={handleFormSubmit} role="form">
           <div className={styles.textAreaContainer}>
             <div className={styles.textAreaWrapper}>
