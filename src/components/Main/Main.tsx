@@ -4,7 +4,7 @@ import { Alert, Col, Row } from "react-bootstrap";
 import { cardItemData } from "../../services/cardItemData";
 import { logger } from "../../utils/logger";
 import { CardItemData, CardList } from "../Card";
-import { MainHeader } from "../MainHeader";
+import { Header } from "../Header";
 import { QuizModal } from "../Quiz";
 
 function Main() {
@@ -36,7 +36,7 @@ function Main() {
 
   return (
     <div className="main" role="main">
-      <MainHeader />
+      <Header />
       <Row>
         <Col md={3} xs={1} />
         <Col>

@@ -1,14 +1,19 @@
-.chatBox {
-  flex-shrink: 1;
-  float: left;
-  overflow-y: auto;
-  height: 58vh;
+.chatContainer {
+  display: flex;
+  flex-direction: column;
+  height: 95vh;
+  margin: 2.5vh auto;
+  justify-content: space-between;
+  overflow-x: hidden;
 }
 
-.textArea {
-  resize: none;
-  max-height: 12rem;
+.chatBox {
   overflow-y: auto;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  flex-wrap: nowrap;
 }
 
 .chatHistoryContainer :first-child {
@@ -19,4 +24,27 @@
 .chatHistoryContainer :last-child {
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
+}
+
+.textAreaContainer {
+  display: flex;
+  flex-direction: row;
+  flex-grow: 1;
+  max-height: 12rem;
+  margin: 0.5rem 0;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.textAreaWrapper {
+  margin: 0.5rem 0.5rem 0 0;
+  width: 100%;
+}
+
+.textArea {
+  max-height: 12rem;
+}
+
+.messageButton {
+  align-self: end;
 }

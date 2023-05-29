@@ -1,10 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Col, Container, Form, Row, Spinner, Stack } from "react-bootstrap";
+import { Col, Container, Form, Row } from "react-bootstrap";
 import { ArrowUpRightCircle } from "react-bootstrap-icons";
 
 import { useChat } from "../../hooks/useChat";
 import { logger } from "../../utils";
 import { Button } from "../Button";
+import { Loading } from "../Loading";
 import styles from "./ChatBox.module.scss";
 import { ChatMessage } from "./ChatMessage";
 
@@ -37,10 +38,32 @@ function ChatBox() {
     inputRef.current?.focus();
   };
 
+  useEffect(() => {
+    const handleKeyUp = () => {
+      if (inputRef.current) {
+        inputRef.current.style.height = "0";
+        inputRef.current.style.height = `${inputRef.current.scrollHeight}px`;
+      }
+    };
+
+    const el = inputRef.current;
+    if (!el) return;
+    el.addEventListener("keyup", handleKeyUp);
+
+    return () => {
+      el.removeEventListener("keyup", handleKeyUp);
+    };
+  }, []);
+
   const resetInput = () => {
     if (inputRef.current) {
       inputRef.current.style.height = "auto";
       inputRef.current.style.height = `${inputRef.current.scrollHeight}px`;
+      inputRef.current.scrollTop = inputRef.current.scrollHeight;
+      document.documentElement.style.setProperty(
+        "--textarea-height",
+        `min(12rem, ${inputRef.current.scrollHeight}px)`
+      );
     }
   };
 
@@ -83,27 +106,14 @@ function ChatBox() {
   const error = state === "error";
 
   return (
-    <Container className="d-flex flex-column h-100">
-      <div className={`${styles.chatBox}`} role="log">
+    <Container className={`${styles.chatContainer}`}>
+      <Row className={`${styles.chatBox}`} role="log">
         <div className={`${styles.chatHistoryContainer}`}>
           {chatHistory.map((chat, i) => (
             <ChatMessage key={i} message={chat} />
           ))}
         </div>
-        {showSpinner ? (
-          <Row className="justify-content-center my-3">
-            <Col className="text-center">
-              <Spinner
-                animation="grow"
-                size="sm"
-                variant="primary"
-                role="status"
-              >
-                <span className="visually-hidden">Loading...</span>
-              </Spinner>
-            </Col>
-          </Row>
-        ) : null}
+        {showSpinner ? <Loading /> : null}
         {error ? (
           <Row className="justify-content-center my-3">
             <Col className="text-center">
@@ -113,31 +123,43 @@ function ChatBox() {
             </Col>
           </Row>
         ) : null}
-        <div ref={bottomRef} />
-      </div>
-      <Row className="align-items-end my-3 flex-grow-2">
+        <div ref={bottomRef} style={{ height: 0 }} />
+      </Row>
+      <Row className="">
         <Form onSubmit={handleFormSubmit} role="form">
-          <Stack direction="horizontal" gap={2}>
-            <Form.Control
-              as="textarea"
-              className={`me-auto ${styles.textArea}`}
-              placeholder="Send a message"
-              rows={1}
-              ref={inputRef}
-              value={message}
-              onChange={handleInputChange}
-              onKeyDown={handleKeyDown}
-            />
+          <div className={styles.textAreaContainer}>
+            <div className={styles.textAreaWrapper}>
+              <Form.Control
+                as="textarea"
+                className={`${styles.textArea}`}
+                placeholder="Send a message"
+                rows={1}
+                ref={inputRef}
+                value={message}
+                onChange={handleInputChange}
+                onKeyDown={handleKeyDown}
+              />
+            </div>
             <Button
-              className="w-auto"
+              className={`${styles.messageButton}`}
               type="submit"
               variant="secondary"
               disabled={state === "loading"}
+              height="auto"
+              width="auto"
             >
               <ArrowUpRightCircle />
             </Button>
-          </Stack>
+          </div>
         </Form>
+        <div>
+          <p className="text-center me-4">
+            <small>
+              Sera tries her best to ensure accuracy - please verify her
+              information for your peace of mind.
+            </small>
+          </p>
+        </div>
       </Row>
     </Container>
   );

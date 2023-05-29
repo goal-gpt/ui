@@ -2,8 +2,6 @@ import Link from "next/link";
 import React from "react";
 import { Accordion, Col, Container, Row } from "react-bootstrap";
 
-import { MainHeader } from "../../src/components/MainHeader";
-
 type FAQItem = {
   id: string;
   title: string;
@@ -98,7 +96,6 @@ const faqs: FAQItem[] = [
 function Help() {
   return (
     <div className="help">
-      <MainHeader />
       <Container>
         <Row className="mb-3">
           <Col lg={2} md={1} sm={0} />

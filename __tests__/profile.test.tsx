@@ -19,14 +19,6 @@ jest.mock("../src/services/cardItemData", () => {
 });
 
 describe("Profile", () => {
-  it("renders the main header", () => {
-    const { getByAltText } = render(<Profile />);
-    const headerImage = getByAltText(
-      /eras logo: yellow lines gradually reaching the horizon/i
-    );
-    expect(headerImage).toBeInTheDocument();
-  });
-
   describe("There are no completed quizzes", () => {
     it("renders a message when no quizzes have been completed", () => {
       const { getByText } = render(<Profile />);

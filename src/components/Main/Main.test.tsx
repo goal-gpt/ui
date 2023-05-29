@@ -18,7 +18,7 @@ jest.mock("next/router", () => ({
 }));
 
 describe("Main component", () => {
-  test("checks that main is rendered", async () => {
+  it("checks that main is rendered", async () => {
     render(<Main />);
     const headerImage = await waitFor(() => screen.getByRole("main"));
     expect(headerImage).toBeInTheDocument();

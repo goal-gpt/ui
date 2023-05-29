@@ -1,32 +1,75 @@
-import { QueryClient } from "@tanstack/react-query";
+import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
+import { waitFor } from "@testing-library/react";
+import { useRouter } from "next/router";
 import React from "react";
 
 import Main from "../pages/index";
 import { renderWithClient } from "../src/utils";
 
-jest.mock("next/router", () => ({
-  useRouter() {
-    return {
-      route: "/status",
-      pathname: "/status",
-      query: { category: "budgeting" },
-      asPath: "",
-      back: () => {
-        return "/status";
-      },
-    };
-  },
-}));
-
 describe("Main component", () => {
-  it("checks that main is rendered", () => {
-    const queryClient = new QueryClient();
-    const { getByRole } = renderWithClient(queryClient, <Main />);
+  let mockedUser: object;
 
-    const headerElement = getByRole("navigation");
-    expect(headerElement).toBeInTheDocument();
+  beforeEach(() => {
+    (useSupabaseClient as jest.Mock).mockReturnValue({});
+    (useUser as jest.Mock).mockReturnValue(null);
+    (useRouter as jest.Mock).mockReturnValue({
+      push: jest.fn(),
+    });
+    mockedUser = { name: "John Doe", id: 1 };
+  });
 
-    const chatElement = getByRole("log");
-    expect(chatElement).toBeInTheDocument();
+  it("renders main areas", async () => {
+    (useUser as jest.Mock).mockReturnValue(mockedUser);
+    (useSupabaseClient as jest.Mock).mockReturnValue({
+      from: jest.fn().mockReturnValue({
+        select: jest
+          .fn()
+          .mockResolvedValue({ data: [{ id: 1, text: "Hello" }], error: null }),
+      }),
+    });
+
+    const { getByRole, getByText } = renderWithClient(
+      <Main isAuthChecking={false} />
+    );
+    await waitFor(() => {
+      expect(getByText("chats")).toBeInTheDocument();
+      expect(getByRole("log")).toBeInTheDocument();
+      expect(getByRole("form")).toBeInTheDocument();
+    });
+  });
+
+  it("renders login page if user is not logged in", async () => {
+    (useUser as jest.Mock).mockReturnValue(null);
+    (useSupabaseClient as jest.Mock).mockReturnValue({
+      from: jest.fn().mockReturnValue({
+        select: jest
+          .fn()
+          .mockResolvedValue({ data: [{ id: 1, text: "Hello" }], error: null }),
+      }),
+    });
+
+    const { getByText } = renderWithClient(<Main isAuthChecking={false} />);
+    waitFor(() => {
+      expect(getByText("Loading...")).toBeInTheDocument();
+      waitFor(() => {
+        expect(getByText("Sign in")).toBeInTheDocument();
+      });
+    });
+  });
+
+  it("renders loading page if user is not logged in", async () => {
+    (useUser as jest.Mock).mockReturnValue(null);
+    (useSupabaseClient as jest.Mock).mockReturnValue({
+      from: jest.fn().mockReturnValue({
+        select: jest
+          .fn()
+          .mockResolvedValue({ data: [{ id: 1, text: "Hello" }], error: null }),
+      }),
+    });
+
+    const { getByText } = renderWithClient(<Main isAuthChecking={true} />);
+    waitFor(() => {
+      expect(getByText("Loading...")).toBeInTheDocument();
+    });
   });
 });

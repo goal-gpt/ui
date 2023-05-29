@@ -41,7 +41,7 @@ describe("ChatBox", () => {
     expect(mockSendMessage).toHaveBeenCalledTimes(1); // initial message on mount
     const input = screen.getByPlaceholderText("Send a message");
     const form = screen.getByRole("form");
-    await act(async () => {
+    act(() => {
       fireEvent.change(input, { target: { value: "Test message" } });
       fireEvent.submit(form);
     });
@@ -59,7 +59,7 @@ describe("ChatBox", () => {
     expect(mockSendMessage).toHaveBeenCalledTimes(1); // initial message on mount
     const input = screen.getByPlaceholderText("Send a message");
     const form = screen.getByRole("form");
-    await act(async () => {
+    act(() => {
       fireEvent.change(input, { target: { value: "Test message" } });
       fireEvent.submit(form);
     });
@@ -76,7 +76,7 @@ describe("ChatBox", () => {
     render(<ChatBox />);
     const input = screen.getByPlaceholderText("Send a message");
     const form = screen.getByRole("form");
-    await act(async () => {
+    act(() => {
       fireEvent.change(input, { target: { value: "Test message" } });
       fireEvent.submit(form);
     });

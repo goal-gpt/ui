@@ -5,9 +5,11 @@ import { Session, SessionContextProvider } from "@supabase/auth-helpers-react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import type { AppProps } from "next/app";
 import { Poppins } from "next/font/google";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { ToastContainer } from "react-toastify";
 
 import { Cookie } from "../src/components/Cookie";
+import { Database } from "../src/types/database";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -20,20 +22,35 @@ export default function App({
 }: AppProps<{
   initialSession: Session;
 }>) {
-  const [supabaseClient] = useState(() => createBrowserSupabaseClient());
+  const [supabaseClient] = useState(() =>
+    createBrowserSupabaseClient<Database>()
+  );
 
   const queryClient = new QueryClient();
 
+  const [isAuthChecking, setIsAuthChecking] = useState(true);
+
+  useEffect(() => {
+    const checkUser = supabaseClient.auth.onAuthStateChange(() => {
+      setIsAuthChecking(false);
+    });
+
+    return () => {
+      checkUser.data?.subscription.unsubscribe();
+    };
+  }, []);
+
   return (
     <>
-      <Cookie />
       <QueryClientProvider client={queryClient}>
         <SessionContextProvider
           supabaseClient={supabaseClient}
           initialSession={pageProps.initialSession}
         >
           <main className={poppins.className}>
-            <Component {...pageProps} />
+            <Component {...pageProps} isAuthChecking={isAuthChecking} />
+            <ToastContainer />
+            <Cookie />
           </main>
         </SessionContextProvider>
       </QueryClientProvider>
