@@ -38,10 +38,24 @@ describe("Login", () => {
   });
 
   it("renders without crashing", () => {
-    render(<Login />);
+    render(<Login isAuthChecking={false} />);
     expect(useUser).toBeCalled();
     expect(useRouter).toBeCalled();
     expect(useSupabaseClient).toBeCalled();
+    const loginForm = screen.getByRole("form");
+    expect(loginForm).toBeInTheDocument();
+  });
+
+  it("renders the Login component if isAuthChecking is false", () => {
+    render(<Login isAuthChecking={false} />);
+    const loginComponent = screen.getByRole("form");
+    expect(loginComponent).toBeInTheDocument();
+  });
+
+  it("renders the Login component if isAuthChecking is true", async () => {
+    render(<Login isAuthChecking={true} />);
+    const loginComponent = screen.getByRole("form");
+    expect(loginComponent).toBeInTheDocument();
   });
 
   it("redirects to homepage if user exists", async () => {
@@ -49,14 +63,14 @@ describe("Login", () => {
     (useUser as jest.Mock).mockReturnValue(mockedUser);
 
     await act(async () => {
-      render(<Login />);
+      render(<Login isAuthChecking={false} />);
     });
 
     expect(mockPush).toBeCalledWith("/");
   });
 
   it("handles input change", async () => {
-    const { getByPlaceholderText } = render(<Login />);
+    const { getByPlaceholderText } = render(<Login isAuthChecking={false} />);
     const input = getByPlaceholderText("Enter your email");
 
     await act(async () => {
@@ -72,7 +86,9 @@ describe("Login", () => {
         signInWithOtp: jest.fn().mockResolvedValue({ error: null }),
       },
     });
-    const { getByText, getByPlaceholderText } = render(<Login />);
+    const { getByText, getByPlaceholderText } = render(
+      <Login isAuthChecking={false} />
+    );
     const input = getByPlaceholderText("Enter your email");
     const button = getByText("Get your login link");
 
@@ -91,15 +107,9 @@ describe("Login", () => {
     });
   });
 
-  it("renders the Login component", () => {
-    render(<Login />);
-    const loginComponent = screen.getByRole("form");
-    expect(loginComponent).toBeInTheDocument();
-  });
-
   it("redirects to home if user is already logged in", () => {
     (useUser as jest.Mock).mockReturnValue({}); // User is logged in
-    render(<Login />);
+    render(<Login isAuthChecking={false} />);
     expect(useRouter().push).toHaveBeenCalledWith("/");
   });
 });
