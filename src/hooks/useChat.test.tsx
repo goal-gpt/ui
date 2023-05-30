@@ -26,7 +26,7 @@ describe("useChat", () => {
       wrapper: createWrapper(),
     });
     await waitFor(() => {
-      expect(result.current.state).toBe("idle");
+      expect(result.current.chatStatus).toBe("idle");
       expect(result.current.currentChat).toBeNull();
       expect(result.current.chatHistory).toEqual([]);
     });
@@ -40,10 +40,10 @@ describe("useChat", () => {
     act(() => {
       result.current.sendMessage(message);
     });
-    expect(result.current.state).toBe("loading");
+    expect(result.current.chatStatus).toBe("loading");
 
     await waitFor(() => {
-      expect(result.current.state).toBe("success");
+      expect(result.current.chatStatus).toBe("success");
       expect(result.current.chatID).toBe(42);
       expect(result.current.chatHistory).toEqual([
         { role: "human", content: message },
@@ -71,7 +71,7 @@ describe("useChat", () => {
     });
 
     await waitFor(() => {
-      expect(result.current.state).toBe("error");
+      expect(result.current.chatStatus).toBe("error");
       expect(result.current.chatHistory).toEqual([
         { role: "human", content: message },
       ]);

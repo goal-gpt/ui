@@ -1,17 +1,31 @@
-import { act, fireEvent, render, screen } from "@testing-library/react";
+import {
+  act,
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+} from "@testing-library/react";
+import { useRouter } from "next/router";
 import React from "react";
 
 import { useChat } from "../../hooks/useChat";
 import ChatBox from "./ChatBox";
 
+jest.mock("next/router");
 jest.mock("../../hooks/useChat");
 
 describe("ChatBox", () => {
+  let mockPush: jest.Mock;
+
   beforeEach(() => {
+    mockPush = jest.fn();
     (useChat as jest.Mock).mockReturnValue({
       chatHistory: [],
       sendMessage: jest.fn(),
-      state: "idle",
+      chatStatus: "idle",
+    });
+    (useRouter as jest.Mock).mockReturnValue({
+      push: mockPush,
     });
   });
 
@@ -35,7 +49,7 @@ describe("ChatBox", () => {
     (useChat as jest.Mock).mockReturnValue({
       chatHistory: [],
       sendMessage: mockSendMessage,
-      state: "idle",
+      chatStatus: "idle",
     });
     render(<ChatBox />);
     expect(mockSendMessage).toHaveBeenCalledTimes(1); // initial message on mount
@@ -48,12 +62,12 @@ describe("ChatBox", () => {
     expect(mockSendMessage).toHaveBeenCalledTimes(2);
   });
 
-  it("doesn't send message when state is loading", async () => {
+  it("doesn't send message when chatStatus is loading", async () => {
     const mockSendMessage = jest.fn();
     (useChat as jest.Mock).mockReturnValue({
       chatHistory: [],
       sendMessage: mockSendMessage,
-      state: "loading",
+      chatStatus: "loading",
     });
     render(<ChatBox />);
     expect(mockSendMessage).toHaveBeenCalledTimes(1); // initial message on mount
@@ -71,7 +85,7 @@ describe("ChatBox", () => {
     (useChat as jest.Mock).mockReturnValue({
       chatHistory: [],
       sendMessage: mockSendMessage,
-      state: "idle",
+      chatStatus: "idle",
     });
     render(<ChatBox />);
     const input = screen.getByPlaceholderText("Send a message");
@@ -83,11 +97,11 @@ describe("ChatBox", () => {
     expect(input).toHaveValue("");
   });
 
-  it("shows spinner when the last message is from a human and state is loading", async () => {
+  it("shows spinner when the last message is from a human and chatStatus is loading", async () => {
     (useChat as jest.Mock).mockReturnValue({
       chatHistory: [{ role: "human", message: "Test" }],
       sendMessage: jest.fn(),
-      state: "loading",
+      chatStatus: "loading",
     });
     render(<ChatBox />);
     expect(screen.getByRole("status")).toBeInTheDocument();
@@ -97,7 +111,7 @@ describe("ChatBox", () => {
     (useChat as jest.Mock).mockReturnValue({
       chatHistory: [{ role: "human", message: "Test" }],
       sendMessage: jest.fn(),
-      state: "error",
+      chatStatus: "error",
     });
     render(<ChatBox />);
 
@@ -111,7 +125,7 @@ describe("ChatBox", () => {
     (useChat as jest.Mock).mockReturnValue({
       chatHistory: [{ role: "human", message: "Test" }],
       sendMessage: jest.fn(),
-      state: "idle",
+      chatStatus: "idle",
     });
     render(<ChatBox />);
 
@@ -119,5 +133,26 @@ describe("ChatBox", () => {
       /Sorry, an error occurred. Please try again!/i
     );
     expect(errorMsg).not.toBeInTheDocument();
+  });
+
+  it("sets the message from the query prop", () => {
+    render(<ChatBox query="Test message from query" />);
+    expect(screen.getByPlaceholderText("Send a message")).toHaveValue(
+      "Test message from query"
+    );
+  });
+
+  it("updates the URL after the component renders", async () => {
+    (useRouter as jest.Mock).mockReturnValue({
+      push: jest.fn(),
+    });
+    act(() => {
+      render(<ChatBox query="Test message from query" />);
+    });
+    waitFor(() => {
+      expect(mockPush).toHaveBeenCalledWith("/", undefined, {
+        shallow: true,
+      });
+    });
   });
 });

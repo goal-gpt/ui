@@ -85,7 +85,7 @@ export function useChat() {
     sendMessage,
     currentChat,
     chatHistory,
-    state: sendMessageMutation.status,
+    chatStatus: sendMessageMutation.status,
     chatID,
   };
 }
