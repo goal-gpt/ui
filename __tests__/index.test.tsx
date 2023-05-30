@@ -35,39 +35,4 @@ describe("Main component", () => {
       expect(getByRole("form")).toBeInTheDocument();
     });
   });
-
-  // it("renders login page if user is not logged in", async () => {
-  //   (useUser as jest.Mock).mockReturnValue(null);
-  //   (useSupabaseClient as jest.Mock).mockReturnValue({
-  //     from: jest.fn().mockReturnValue({
-  //       select: jest
-  //         .fn()
-  //         .mockResolvedValue({ data: [{ id: 1, text: "Hello" }], error: null }),
-  //     }),
-  //   });
-
-  //   const { getByText } = renderWithClient(<Main />);
-  //   waitFor(() => {
-  //     expect(getByText("Loading...")).toBeInTheDocument();
-  //     waitFor(() => {
-  //       expect(getByText("Sign in")).toBeInTheDocument();
-  //     });
-  //   });
-  // });
-
-  // it("renders loading page if user is not logged in", async () => {
-  //   (useUser as jest.Mock).mockReturnValue(null);
-  //   (useSupabaseClient as jest.Mock).mockReturnValue({
-  //     from: jest.fn().mockReturnValue({
-  //       select: jest
-  //         .fn()
-  //         .mockResolvedValue({ data: [{ id: 1, text: "Hello" }], error: null }),
-  //     }),
-  //   });
-
-  //   const { getByText } = renderWithClient(<Main isAuthChecking={true} />);
-  //   waitFor(() => {
-  //     expect(getByText("Loading...")).toBeInTheDocument();
-  //   });
-  // });
 });

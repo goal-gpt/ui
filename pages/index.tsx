@@ -7,7 +7,6 @@ import { Col, Container, Row } from "react-bootstrap";
 import { ChatBox } from "../src/components/Chat";
 import { Header } from "../src/components/Header";
 import { Database } from "../src/types/database";
-// import { Loading } from "../src/components/Loading";
 
 function Main() {
   const supabaseClient = useSupabaseClient<Database>();
@@ -35,15 +34,6 @@ function Main() {
 
     fetchData();
   }, [user]);
-
-  // Removed for now but will be useful when we want to mandate auth
-  // useEffect(() => {
-  //   if (!isAuthChecking && !user) {
-  //     router.push("/login");
-  //   }
-  // }, [user, isAuthChecking]);
-
-  // if (isAuthChecking || !user) return <Loading />;
 
   return (
     <>
