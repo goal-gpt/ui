@@ -13,7 +13,7 @@ describe("LoginToggle", () => {
   it("renders Login button if user is not logged in", () => {
     (useUser as jest.Mock).mockReturnValue(null);
     render(<LoginToggle />);
-    expect(screen.getByText("Login")).toBeInTheDocument();
+    expect(screen.getByText("Sign in")).toBeInTheDocument();
   });
 
   it("renders UserIndicator if user is logged in", () => {
@@ -28,7 +28,7 @@ describe("LoginToggle", () => {
     (useUser as jest.Mock).mockReturnValue(null);
 
     render(<LoginToggle />);
-    screen.getByText("Login").click();
+    screen.getByText("Sign in").click();
 
     expect(mockPush).toHaveBeenCalledWith("/login");
   });

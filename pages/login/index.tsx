@@ -8,6 +8,7 @@ import { Col, Container, Form, Navbar, Row } from "react-bootstrap";
 
 import { Button } from "../../src/components/Button";
 import { logger, toast, TOAST_ERROR, TOAST_INFO } from "../../src/utils";
+import styles from "./index.module.scss";
 
 function Login({ isAuthChecking }: { isAuthChecking: boolean }) {
   const [status, setStatus] = useState<"idle" | "loading" | "success">("idle");
@@ -72,7 +73,7 @@ function Login({ isAuthChecking }: { isAuthChecking: boolean }) {
         </div>
         <Container className="d-flex align-items-center justify-content-center mt-4">
           <Col lg={4} md={3} sm={2} />
-          <Col className="d-flex align-items-center justify-content-center">
+          <Col className="d-flex flex-column align-items-center justify-content-center">
             <Form onSubmit={handleLogin} className="w-75" role="form">
               <Form.Group controlId="email" className="mb-3">
                 <Form.Control
@@ -92,6 +93,9 @@ function Login({ isAuthChecking }: { isAuthChecking: boolean }) {
                   : "Check your email!"}
               </Button>
             </Form>
+            <Link className={`${styles.link} mt-4`} href="/">
+              <small>Or continue without signing in</small>
+            </Link>
           </Col>
           <Col lg={4} md={3} sm={2} />
         </Container>

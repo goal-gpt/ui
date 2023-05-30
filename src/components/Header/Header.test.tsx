@@ -1,12 +1,10 @@
-import { useSupabaseClient } from "@supabase/auth-helpers-react";
+import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import React from "react";
 
 import { Header } from "./Header";
 
-jest.mock("@supabase/auth-helpers-react", () => ({
-  useSupabaseClient: jest.fn(),
-}));
+jest.mock("@supabase/auth-helpers-react");
 
 jest.mock("next/router", () => ({
   useRouter: jest.fn(),
@@ -20,6 +18,7 @@ describe("Header component", () => {
     (useSupabaseClient as jest.Mock).mockReturnValue({
       auth: { signOut: mockSignOut },
     });
+    (useUser as jest.Mock).mockReturnValue(null);
   });
 
   afterEach(() => {
@@ -35,6 +34,7 @@ describe("Header component", () => {
   });
 
   it("calls sign out function when 'Sign out' is clicked", () => {
+    (useUser as jest.Mock).mockReturnValue({});
     const { getByText } = render(<Header />);
     const profileElement = getByText("Your profile");
     fireEvent.click(profileElement);
