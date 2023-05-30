@@ -1,59 +1,31 @@
+import { useRouter } from "next/router";
 import React, { useEffect, useRef, useState } from "react";
 import { Col, Container, Form, Row } from "react-bootstrap";
 import { ArrowUpRightCircle } from "react-bootstrap-icons";
 
-import { useChat } from "../../hooks/useChat";
+import { QueryStatus, useChat } from "../../hooks/useChat";
 import { logger } from "../../utils";
 import { Button } from "../Button";
 import { Loading } from "../Loading";
 import styles from "./ChatBox.module.scss";
-import { ChatMessage } from "./ChatMessage";
+import { ChatMessage, ChatRole } from "./ChatMessage";
 
-function ChatBox() {
+interface ChatBoxProps {
+  query: string;
+}
+
+function ChatBox({ query = "" }: ChatBoxProps) {
   // The content of the user input message box
   const [message, setMessage] = useState<string>("");
-  const { chatHistory, sendMessage, state } = useChat();
+  const { chatHistory, sendMessage, chatStatus } = useChat();
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
+  const router = useRouter();
 
-  useEffect(() => {
-    if (chatHistory.length === 0) {
-      sendMessage("");
-    }
-  }, []);
-
-  useEffect(() => {
-    focusInput();
-  }, [state]);
-
-  useEffect(() => {
-    resetInput();
-  }, [message]);
-
-  useEffect(() => {
-    scrollToBottom();
-  }, [chatHistory, state]);
-
+  // Helper functions
   const focusInput = () => {
     inputRef.current?.focus();
   };
-
-  useEffect(() => {
-    const handleKeyUp = () => {
-      if (inputRef.current) {
-        inputRef.current.style.height = "0";
-        inputRef.current.style.height = `${inputRef.current.scrollHeight}px`;
-      }
-    };
-
-    const el = inputRef.current;
-    if (!el) return;
-    el.addEventListener("keyup", handleKeyUp);
-
-    return () => {
-      el.removeEventListener("keyup", handleKeyUp);
-    };
-  }, []);
 
   const resetInput = () => {
     if (inputRef.current) {
@@ -71,10 +43,60 @@ function ChatBox() {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
+  // Effects
+  // Set query as first message and clear query from URL
+  useEffect(() => {
+    if (query) {
+      setMessage(query);
+      router.push("/", undefined, { shallow: true });
+    }
+  }, [query, router]);
+
+  // Send initial message to get Sera's introduction
+  useEffect(() => {
+    if (chatHistory.length === 0) {
+      sendMessage("");
+    }
+  }, []);
+
+  // Focus on input when chatStatus changes
+  useEffect(() => {
+    focusInput();
+  }, [chatStatus]);
+
+  // Reset input when message is sent
+  useEffect(() => {
+    resetInput();
+  }, [message]);
+
+  // Scroll to bottom when chat changes
+  useEffect(() => {
+    scrollToBottom();
+  }, [chatHistory, chatStatus]);
+
+  // Resize textarea to fit content
+  useEffect(() => {
+    const handleKeyUp = () => {
+      if (inputRef.current) {
+        inputRef.current.style.height = "0";
+        inputRef.current.style.height = `${inputRef.current.scrollHeight}px`;
+      }
+    };
+
+    const el = inputRef.current;
+    if (!el) return;
+    el.addEventListener("keyup", handleKeyUp);
+
+    return () => {
+      el.removeEventListener("keyup", handleKeyUp);
+    };
+  }, []);
+
+  // Event handlers
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (state === "loading") {
+    if (chatStatus === QueryStatus.Loading) {
       return;
     }
 
@@ -101,9 +123,10 @@ function ChatBox() {
   };
 
   const showSpinner =
-    (chatHistory.at(-1)?.role === "human" && state === "loading") ||
-    (chatHistory.length === 0 && state === "idle");
-  const error = state === "error";
+    (chatHistory.at(-1)?.role === ChatRole.Human &&
+      chatStatus === QueryStatus.Loading) ||
+    (chatHistory.length === 0 && chatStatus === QueryStatus.Idle);
+  const error = chatStatus === QueryStatus.Error;
 
   return (
     <Container className={`${styles.chatContainer}`}>
@@ -147,7 +170,7 @@ function ChatBox() {
               className={`${styles.messageButton}`}
               type="submit"
               variant="secondary"
-              disabled={state === "loading"}
+              disabled={chatStatus === QueryStatus.Loading}
               height="auto"
               width="auto"
             >
@@ -167,5 +190,9 @@ function ChatBox() {
     </Container>
   );
 }
+
+ChatBox.defaultProps = {
+  query: "",
+};
 
 export default ChatBox;

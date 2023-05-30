@@ -13,6 +13,8 @@ function Main({ isAuthChecking }: { isAuthChecking: boolean }) {
   const supabaseClient = useSupabaseClient<Database>();
   const user = useUser();
   const router = useRouter();
+  const { q: queryParam } = router.query || { q: "" };
+  const query = Array.isArray(queryParam) ? queryParam[0] : queryParam || "";
 
   const [chats, setChats] = useState<
     Database["public"]["Tables"]["chat"]["Row"][]
@@ -39,6 +41,7 @@ function Main({ isAuthChecking }: { isAuthChecking: boolean }) {
       router.push("/login");
     }
   }, [user, isAuthChecking]);
+
   if (isAuthChecking || !user) return <Loading />;
 
   return (
@@ -56,7 +59,7 @@ function Main({ isAuthChecking }: { isAuthChecking: boolean }) {
             sm={12}
             className="d-flex flex-column justify-content-between"
           >
-            <ChatBox />
+            <ChatBox query={query} />
           </Col>
           <Col md={1} sm={0} className="d-none d-md-flex" />
           <Col md={2} sm={0} className="d-none d-md-flex" />

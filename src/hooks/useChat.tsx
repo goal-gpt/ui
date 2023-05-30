@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 
-import { ChatMessage } from "../components/Chat/ChatMessage";
+import { ChatMessage, ChatRole } from "../components/Chat/ChatMessage";
 import { logger } from "../utils";
 
 const API_PATH =
@@ -16,6 +16,13 @@ const JsonContentType = "application/json";
 
 export class FatalError extends Error {}
 export class RetriableError extends Error {}
+
+export enum QueryStatus {
+  Idle = "idle",
+  Loading = "loading",
+  Error = "error",
+  Success = "success",
+}
 
 /**
  * A custom hook to handle the chat state and logic
@@ -60,7 +67,7 @@ export function useChat() {
       const { chat, text } = await res.json();
       setChatHistory((curr) => [
         ...curr,
-        { role: "ai", content: text } as const,
+        { role: ChatRole.AI, content: text } as const,
       ]);
       setChatID(chat);
       setCurrentChat(null);
@@ -74,7 +81,7 @@ export function useChat() {
     if (message !== "") {
       setChatHistory((chatHistory) => [
         ...chatHistory,
-        { role: "human", content: message },
+        { role: ChatRole.Human, content: message },
       ]);
     }
 
@@ -85,7 +92,7 @@ export function useChat() {
     sendMessage,
     currentChat,
     chatHistory,
-    state: sendMessageMutation.status,
+    chatStatus: sendMessageMutation.status as QueryStatus,
     chatID,
   };
 }

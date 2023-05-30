@@ -24,13 +24,9 @@ describe("Login", () => {
   let mockedUser: object | null;
 
   beforeEach(() => {
-    (useSupabaseClient as jest.Mock).mockReturnValue({});
-    (useUser as jest.Mock).mockReturnValue(null);
-    (useRouter as jest.Mock).mockReturnValue({
-      push: jest.fn(),
-    });
     mockPush = jest.fn();
     mockedUser = null;
+    (useSupabaseClient as jest.Mock).mockReturnValue({});
     (useUser as jest.Mock).mockReturnValue(mockedUser);
     (useRouter as jest.Mock).mockReturnValue({
       push: mockPush,
