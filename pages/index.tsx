@@ -6,10 +6,9 @@ import { Col, Container, Row } from "react-bootstrap";
 
 import { ChatBox } from "../src/components/Chat";
 import { Header } from "../src/components/Header";
-import { Loading } from "../src/components/Loading";
 import { Database } from "../src/types/database";
 
-function Main({ isAuthChecking }: { isAuthChecking: boolean }) {
+function Main() {
   const supabaseClient = useSupabaseClient<Database>();
   const user = useUser();
   const router = useRouter();
@@ -35,14 +34,6 @@ function Main({ isAuthChecking }: { isAuthChecking: boolean }) {
 
     fetchData();
   }, [user]);
-
-  useEffect(() => {
-    if (!isAuthChecking && !user) {
-      router.push("/login");
-    }
-  }, [user, isAuthChecking]);
-
-  if (isAuthChecking || !user) return <Loading />;
 
   return (
     <>

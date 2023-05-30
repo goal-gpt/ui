@@ -13,6 +13,7 @@ import { Cookie } from "../src/components/Cookie";
 import { Database } from "../src/types/database";
 
 const poppins = Poppins({
+  style: ["normal", "italic"],
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
 });

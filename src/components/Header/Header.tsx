@@ -1,6 +1,6 @@
-import { useSupabaseClient } from "@supabase/auth-helpers-react";
+import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
 import Link from "next/link";
-// import { useRouter } from "next/router";
+import { useRouter } from "next/router";
 import React from "react";
 import { Container, Dropdown, DropdownButton, Row } from "react-bootstrap";
 import Image from "react-bootstrap/Image";
@@ -10,10 +10,16 @@ import styles from "./Header.module.scss";
 
 export function Header() {
   const supabaseClient = useSupabaseClient();
+  const user = useUser();
+  const router = useRouter();
 
   const handleSignout = async () => {
     const { error } = await supabaseClient.auth.signOut();
     if (error) console.error("Error signing out: ", error);
+  };
+
+  const handleSignin = async () => {
+    router.push("/login");
   };
 
   return (
@@ -48,12 +54,12 @@ export function Header() {
           className={`${styles.profileButton} d-flex flex-column align-items-center`}
           onSelect={(e: string | null) => {
             if (e === "1") {
-              handleSignout();
+              user ? handleSignout() : handleSignin();
             }
           }}
         >
           <Dropdown.Item eventKey={1} href="#">
-            Sign out
+            {user ? "Sign out" : "Sign in"}
           </Dropdown.Item>
         </DropdownButton>
       </Row>
