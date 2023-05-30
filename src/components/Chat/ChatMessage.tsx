@@ -3,8 +3,13 @@ import ReactMarkdown from "react-markdown";
 
 import styles from "./ChatMessage.module.scss";
 
+export enum ChatRole {
+  Human = "human",
+  AI = "ai",
+}
+
 export interface ChatMessage {
-  role: "human" | "ai";
+  role: ChatRole;
   content: string;
 }
 interface Props {
@@ -13,7 +18,7 @@ interface Props {
 
 export function ChatMessage({ message }: Props) {
   const { role, content } = message;
-  const roleClass = role === "ai" ? "chatMessageAI" : "chatMessageHuman";
+  const roleClass = role === ChatRole.AI ? "chatMessageAI" : "chatMessageHuman";
 
   return (
     <div className={`${styles.chatMessage} ${styles[roleClass]}`}>

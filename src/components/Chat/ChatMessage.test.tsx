@@ -1,12 +1,16 @@
 import { render, screen } from "@testing-library/react";
 import React from "react";
 
-import { ChatMessage, ChatMessage as ChatMessageProps } from "./ChatMessage";
+import {
+  ChatMessage,
+  ChatMessage as ChatMessageProps,
+  ChatRole,
+} from "./ChatMessage";
 
 describe("ChatMessage", () => {
   it("renders with correct role and content", () => {
     const mockMessage: ChatMessageProps = {
-      role: "human",
+      role: ChatRole.Human,
       content: "Test message",
     };
 
@@ -22,7 +26,7 @@ describe("ChatMessage", () => {
 
   it("renders with assistant role correctly", () => {
     const mockMessage: ChatMessageProps = {
-      role: "ai",
+      role: ChatRole.AI,
       content: "Test assistant message",
     };
 

@@ -8,8 +8,9 @@ import {
 import { useRouter } from "next/router";
 import React from "react";
 
-import { useChat } from "../../hooks/useChat";
+import { QueryStatus, useChat } from "../../hooks/useChat";
 import ChatBox from "./ChatBox";
+import { ChatRole } from "./ChatMessage";
 
 jest.mock("next/router");
 jest.mock("../../hooks/useChat");
@@ -22,7 +23,7 @@ describe("ChatBox", () => {
     (useChat as jest.Mock).mockReturnValue({
       chatHistory: [],
       sendMessage: jest.fn(),
-      chatStatus: "idle",
+      chatStatus: QueryStatus.Idle,
     });
     (useRouter as jest.Mock).mockReturnValue({
       push: mockPush,
@@ -49,7 +50,7 @@ describe("ChatBox", () => {
     (useChat as jest.Mock).mockReturnValue({
       chatHistory: [],
       sendMessage: mockSendMessage,
-      chatStatus: "idle",
+      chatStatus: QueryStatus.Idle,
     });
     render(<ChatBox />);
     expect(mockSendMessage).toHaveBeenCalledTimes(1); // initial message on mount
@@ -67,7 +68,7 @@ describe("ChatBox", () => {
     (useChat as jest.Mock).mockReturnValue({
       chatHistory: [],
       sendMessage: mockSendMessage,
-      chatStatus: "loading",
+      chatStatus: QueryStatus.Loading,
     });
     render(<ChatBox />);
     expect(mockSendMessage).toHaveBeenCalledTimes(1); // initial message on mount
@@ -85,7 +86,7 @@ describe("ChatBox", () => {
     (useChat as jest.Mock).mockReturnValue({
       chatHistory: [],
       sendMessage: mockSendMessage,
-      chatStatus: "idle",
+      chatStatus: QueryStatus.Idle,
     });
     render(<ChatBox />);
     const input = screen.getByPlaceholderText("Send a message");
@@ -99,9 +100,9 @@ describe("ChatBox", () => {
 
   it("shows spinner when the last message is from a human and chatStatus is loading", async () => {
     (useChat as jest.Mock).mockReturnValue({
-      chatHistory: [{ role: "human", message: "Test" }],
+      chatHistory: [{ role: ChatRole.Human, message: "Test" }],
       sendMessage: jest.fn(),
-      chatStatus: "loading",
+      chatStatus: QueryStatus.Loading,
     });
     render(<ChatBox />);
     expect(screen.getByRole("status")).toBeInTheDocument();
@@ -109,9 +110,9 @@ describe("ChatBox", () => {
 
   it("displays error message when error is true", () => {
     (useChat as jest.Mock).mockReturnValue({
-      chatHistory: [{ role: "human", message: "Test" }],
+      chatHistory: [{ role: ChatRole.Human, message: "Test" }],
       sendMessage: jest.fn(),
-      chatStatus: "error",
+      chatStatus: QueryStatus.Error,
     });
     render(<ChatBox />);
 
@@ -123,9 +124,9 @@ describe("ChatBox", () => {
 
   it("does not display error message when error is false", () => {
     (useChat as jest.Mock).mockReturnValue({
-      chatHistory: [{ role: "human", message: "Test" }],
+      chatHistory: [{ role: ChatRole.Human, message: "Test" }],
       sendMessage: jest.fn(),
-      chatStatus: "idle",
+      chatStatus: QueryStatus.Idle,
     });
     render(<ChatBox />);
 

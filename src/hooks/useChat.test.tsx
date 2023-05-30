@@ -1,5 +1,6 @@
 import { act, renderHook, waitFor } from "@testing-library/react";
 
+import { ChatRole } from "../components/Chat";
 import { createWrapper } from "../utils";
 import { useChat } from "./useChat";
 
@@ -46,8 +47,8 @@ describe("useChat", () => {
       expect(result.current.chatStatus).toBe("success");
       expect(result.current.chatID).toBe(42);
       expect(result.current.chatHistory).toEqual([
-        { role: "human", content: message },
-        { role: "ai", content: "Test response" },
+        { role: ChatRole.Human, content: message },
+        { role: ChatRole.AI, content: "Test response" },
       ]);
     });
   });
@@ -73,7 +74,7 @@ describe("useChat", () => {
     await waitFor(() => {
       expect(result.current.chatStatus).toBe("error");
       expect(result.current.chatHistory).toEqual([
-        { role: "human", content: message },
+        { role: ChatRole.Human, content: message },
       ]);
     });
   });

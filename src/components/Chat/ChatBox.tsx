@@ -3,12 +3,12 @@ import React, { useEffect, useRef, useState } from "react";
 import { Col, Container, Form, Row } from "react-bootstrap";
 import { ArrowUpRightCircle } from "react-bootstrap-icons";
 
-import { useChat } from "../../hooks/useChat";
+import { QueryStatus, useChat } from "../../hooks/useChat";
 import { logger } from "../../utils";
 import { Button } from "../Button";
 import { Loading } from "../Loading";
 import styles from "./ChatBox.module.scss";
-import { ChatMessage } from "./ChatMessage";
+import { ChatMessage, ChatRole } from "./ChatMessage";
 
 interface ChatBoxProps {
   query: string;
@@ -96,7 +96,7 @@ function ChatBox({ query = "" }: ChatBoxProps) {
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (chatStatus === "loading") {
+    if (chatStatus === QueryStatus.Loading) {
       return;
     }
 
@@ -123,9 +123,10 @@ function ChatBox({ query = "" }: ChatBoxProps) {
   };
 
   const showSpinner =
-    (chatHistory.at(-1)?.role === "human" && chatStatus === "loading") ||
-    (chatHistory.length === 0 && chatStatus === "idle");
-  const error = chatStatus === "error";
+    (chatHistory.at(-1)?.role === ChatRole.Human &&
+      chatStatus === QueryStatus.Loading) ||
+    (chatHistory.length === 0 && chatStatus === QueryStatus.Idle);
+  const error = chatStatus === QueryStatus.Error;
 
   return (
     <Container className={`${styles.chatContainer}`}>
@@ -169,7 +170,7 @@ function ChatBox({ query = "" }: ChatBoxProps) {
               className={`${styles.messageButton}`}
               type="submit"
               variant="secondary"
-              disabled={chatStatus === "loading"}
+              disabled={chatStatus === QueryStatus.Loading}
               height="auto"
               width="auto"
             >
