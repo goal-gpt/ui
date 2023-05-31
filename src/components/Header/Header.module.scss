@@ -1,5 +1,19 @@
+.navContainer {
+  display: flex;
+  flex-direction: column;
+  height: 95vh;
+  margin: 2.5vh auto;
+  justify-content: space-between;
+  overflow-x: hidden;
+}
+
 .navbar {
-  height: min(75vh, calc(80vh - 20px));
+  overflow-y: auto;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  flex-wrap: nowrap;
 }
 
 .profileButton button {

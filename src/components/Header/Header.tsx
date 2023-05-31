@@ -23,7 +23,7 @@ export function Header() {
   };
 
   return (
-    <Container className="d-flex flex-column">
+    <Container className={`${styles.navContainer}`}>
       <Row className={`${styles.navbar}`}>
         <Navbar
           variant="white"
@@ -45,7 +45,7 @@ export function Header() {
           ></Navbar.Collapse>
         </Navbar>
       </Row>
-      <Row className="mt-5">
+      <Row className="my-4">
         <DropdownButton
           drop="up"
           variant="primary-light"
@@ -58,7 +58,7 @@ export function Header() {
             }
           }}
         >
-          <Dropdown.Item eventKey={1} href="#">
+          <Dropdown.Item as={Link} eventKey={1} href="#">
             {user ? "Sign out" : "Sign in"}
           </Dropdown.Item>
         </DropdownButton>
