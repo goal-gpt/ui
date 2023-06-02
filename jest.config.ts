@@ -9,17 +9,17 @@ const createJestConfig = nextJest({
 /** @type {import('jest').Config} */
 const config = {
   // Add more setup options before each test is run
-  setupFilesAfterEnv: ["<rootDir>/jest.setup.ts"],
+  setupFilesAfterEnv: ["<rootDir>/jest.setup.tsx"],
+  moduleDirectories: ["node_modules", "<rootDir>/"],
   testEnvironment: "jest-environment-jsdom",
-  // moduleNameMapper: {
-  //   "react-markdown":
-  //     "<rootDir>/node_modules/react-markdown/react-markdown.min.js",
-  // },
-  // transformIgnorePatterns: ["node_modules/(?!(remark-gfm|react-markdown)/)"],
-  // transform: {
-  //   "^.+\\.(ts|tsx)?$": "ts-jest",
-  //   "^.+\\.(js|jsx)$": "babel-jest",
-  // },
+  moduleNameMapper: {
+    "react-markdown":
+      "<rootDir>/node_modules/react-markdown/react-markdown.min.js",
+  },
+  transformIgnorePatterns: ["node_modules/(?!(remark-gfm|react-markdown)/)"],
+  transform: {
+    "^.+\\.[jt]sx?$": "babel-jest",
+  },
 };
 
 // createJestConfig is exported this way to ensure that next/jest can load the Next.js config which is async

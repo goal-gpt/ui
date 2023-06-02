@@ -19,7 +19,6 @@
   },
   "include": [
     "src",
-    "pages/old.tsx",
     "pages/_document.tsx",
     "pages/help",
     "pages/profile",
