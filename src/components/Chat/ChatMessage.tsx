@@ -1,5 +1,6 @@
 import React from "react";
 import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 import styles from "./ChatMessage.module.scss";
 
@@ -22,7 +23,7 @@ export function ChatMessage({ message }: Props) {
 
   return (
     <div className={`${styles.chatMessage} ${styles[roleClass]}`}>
-      <ReactMarkdown children={content} />
+      <ReactMarkdown remarkPlugins={[remarkGfm]} children={content} />
     </div>
   );
 }
