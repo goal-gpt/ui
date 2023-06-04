@@ -10,10 +10,29 @@ import React from "react";
 
 import { QueryStatus, useChat } from "../../hooks/useChat";
 import ChatBox from "./ChatBox";
+import { ChatContext } from "./ChatContext";
 import { ChatRole } from "./ChatMessage";
 
-jest.mock("next/router");
 jest.mock("../../hooks/useChat");
+jest.mock("react", () => {
+  const originalReact = jest.requireActual("react");
+  return {
+    ...originalReact,
+    useContext: jest.fn().mockImplementation((context) => {
+      if (context === ChatContext) {
+        return {
+          chatHistory: [],
+          sendMessage: jest.fn(),
+          chatStatus: QueryStatus.Idle,
+          currentChat: null,
+          currentPlan: { goal: "", steps: [] },
+          chatID: null,
+        };
+      }
+      return originalReact.useContext(context);
+    }),
+  };
+});
 
 describe("ChatBox", () => {
   let mockPush: jest.Mock;
@@ -28,6 +47,10 @@ describe("ChatBox", () => {
     (useRouter as jest.Mock).mockReturnValue({
       push: mockPush,
     });
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
   });
 
   it("renders without crashing", () => {

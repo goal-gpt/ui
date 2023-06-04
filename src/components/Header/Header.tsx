@@ -58,7 +58,7 @@ export function Header() {
             }
           }}
         >
-          <Dropdown.Item as={Link} eventKey={1} href="#">
+          <Dropdown.Item as={Link} eventKey={1} href="#" id="signin">
             {user ? "Sign out" : "Sign in"}
           </Dropdown.Item>
         </DropdownButton>

@@ -45,7 +45,7 @@ function Main() {
             <Header />
             <div>{chats && chats.length > 0 && "chats"}</div>
           </Col>
-          <Col md={1} sm={0} className="d-none d-md-flex" />
+          {/* <Col md={1} sm={0} className="d-none d-md-flex" /> */}
           <Col
             md={6}
             sm={12}
@@ -53,8 +53,7 @@ function Main() {
           >
             <ChatBox query={query} />
           </Col>
-          <Col md={1} sm={0} className="d-none d-md-flex" />
-          <Col md={2} sm={0} className="d-none d-md-flex">
+          <Col md={4} sm={0} className="d-none d-md-flex">
             <Plan />
           </Col>
         </Row>

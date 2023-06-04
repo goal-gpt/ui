@@ -1,13 +1,14 @@
 import { useRouter } from "next/router";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { Col, Container, Form, Row } from "react-bootstrap";
 import { ArrowUpRightCircle } from "react-bootstrap-icons";
 
-import { QueryStatus, useChat } from "../../hooks/useChat";
+import { QueryStatus } from "../../hooks/useChat";
 import { logger } from "../../utils";
 import { Button } from "../Button";
 import { Loading } from "../Loading";
 import styles from "./ChatBox.module.scss";
+import { ChatContext } from "./ChatContext";
 import { ChatMessage, ChatRole } from "./ChatMessage";
 
 interface ChatBoxProps {
@@ -17,7 +18,13 @@ interface ChatBoxProps {
 function ChatBox({ query = "" }: ChatBoxProps) {
   // The content of the user input message box
   const [message, setMessage] = useState<string>("");
-  const { chatHistory, sendMessage, chatStatus } = useChat();
+  const chatContext = useContext(ChatContext);
+  const { chatHistory, sendMessage, chatStatus } = chatContext || {
+    chatHistory: [],
+    sendMessage: () => "",
+    chatStatus: QueryStatus.Idle,
+  };
+
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
   const router = useRouter();

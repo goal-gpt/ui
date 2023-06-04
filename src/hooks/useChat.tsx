@@ -2,16 +2,11 @@ import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 
 import { ChatMessage, ChatRole } from "../components/Chat/ChatMessage";
+import { BASE_FUNCTION_URL, BEARER_TOKEN } from "../services/server";
 import { logger } from "../utils";
 
-const API_PATH =
-  process.env.NODE_ENV === "development"
-    ? "http://localhost:50321/functions/v1/sera"
-    : process.env.NEXT_PUBLIC_SUPABASE_EDGE_FUNCTION_URL || "";
+const API_PATH = BASE_FUNCTION_URL + "/sera";
 
-const BEARER_TOKEN = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "";
-
-// const EventStreamContentType = "text/event-stream";
 const JsonContentType = "application/json";
 
 export class FatalError extends Error {}
@@ -24,13 +19,36 @@ export enum QueryStatus {
   Success = "success",
 }
 
+export type Step = {
+  number: number;
+  action: string;
+};
+
+export type PlanType = {
+  goal: string;
+  steps: Step[];
+};
+
+export interface ChatHook {
+  sendMessage: (message: string) => void;
+  currentChat: string;
+  currentPlan: PlanType;
+  chatHistory: ChatMessage[];
+  chatStatus: QueryStatus;
+  chatID?: number;
+}
+
 /**
  * A custom hook to handle the chat state and logic
  */
 export function useChat() {
-  const [currentChat, setCurrentChat] = useState<string | null>(null);
+  const [currentChat, setCurrentChat] = useState<string>("");
   const [chatHistory, setChatHistory] = useState<ChatMessage[]>([]);
   const [chatID, setChatID] = useState<number | null>(null);
+  const [currentPlan, setCurrentPlan] = useState<PlanType>({
+    goal: "",
+    steps: [],
+  });
 
   // Mutation for sending a message to the server
   const sendMessageMutation = useMutation({
@@ -64,13 +82,22 @@ export function useChat() {
       }
     },
     onSuccess: async (res: Response) => {
-      const { chat, text } = await res.json();
+      const { chat: chatID, text, question, plan } = await res.json();
+
+      const content = question ? text + "\n" + question : text;
+
+      console.log(plan);
+      console.log(text);
+      if (plan) {
+        setCurrentPlan(plan as PlanType);
+      }
+
       setChatHistory((curr) => [
         ...curr,
-        { role: ChatRole.AI, content: text } as const,
+        { role: ChatRole.AI, content } as const,
       ]);
-      setChatID(chat);
-      setCurrentChat(null);
+      setChatID(chatID);
+      setCurrentChat("");
     },
     onSettled: () => {
       setCurrentChat("");
@@ -91,8 +118,9 @@ export function useChat() {
   return {
     sendMessage,
     currentChat,
+    currentPlan,
     chatHistory,
     chatStatus: sendMessageMutation.status as QueryStatus,
     chatID,
-  };
+  } as ChatHook;
 }

@@ -9,6 +9,7 @@ import { DefaultSeo } from "next-seo";
 import React, { useEffect, useState } from "react";
 import { ToastContainer } from "react-toastify";
 
+import { ChatProvider } from "../src/components/Chat";
 import { Cookie } from "../src/components/Cookie";
 import { Database } from "../src/types/database";
 
@@ -49,37 +50,39 @@ export default function App({
           supabaseClient={supabaseClient}
           initialSession={pageProps.initialSession}
         >
-          <main className={poppins.className}>
-            <DefaultSeo
-              defaultTitle="eras"
-              titleTemplate="eras | %s"
-              description="eras is your personal finance companion."
-              canonical="https://app.eras.fyi"
-              openGraph={{
-                title: "eras | your personal finance companion",
-                type: "website",
-                locale: "en_US",
-                url: "https://app.eras.fyi",
-                site_name: "eras",
-                images: [
-                  {
-                    url: "https://app.eras.fyi/_ipx/w_640,q_75/%2Feras-logo.png?url=%2Feras-logo.png&w=640&q=75",
-                    width: 200,
-                    height: 140,
-                    alt: "eras logo",
-                  },
-                ],
-              }}
-              twitter={{
-                handle: "@erasfyi",
-                site: "@erasfyi",
-                cardType: "summary",
-              }}
-            />
-            <Component {...pageProps} isAuthChecking={isAuthChecking} />
-            <ToastContainer />
-            <Cookie />
-          </main>
+          <ChatProvider>
+            <main className={poppins.className}>
+              <DefaultSeo
+                defaultTitle="eras"
+                titleTemplate="eras | %s"
+                description="eras is your personal finance companion."
+                canonical="https://app.eras.fyi"
+                openGraph={{
+                  title: "eras | your personal finance companion",
+                  type: "website",
+                  locale: "en_US",
+                  url: "https://app.eras.fyi",
+                  site_name: "eras",
+                  images: [
+                    {
+                      url: "https://app.eras.fyi/_ipx/w_640,q_75/%2Feras-logo.png?url=%2Feras-logo.png&w=640&q=75",
+                      width: 200,
+                      height: 140,
+                      alt: "eras logo",
+                    },
+                  ],
+                }}
+                twitter={{
+                  handle: "@erasfyi",
+                  site: "@erasfyi",
+                  cardType: "summary",
+                }}
+              />
+              <Component {...pageProps} isAuthChecking={isAuthChecking} />
+              <ToastContainer />
+              <Cookie />
+            </main>
+          </ChatProvider>
         </SessionContextProvider>
       </QueryClientProvider>
     </>

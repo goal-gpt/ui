@@ -16,9 +16,13 @@ git clone git://github.com/eras-fyi/ui.git
 npm install
 ```
 
-3. Run the application
+3. Add the right env vars
+- Create a copy of `.env.local.example` as `.env.local`
+- Fill in the values for the env vars in `.env.local`
+
+4. Run the application
 ```bash
 npm run dev
 ```
 
-4. Open the application in your browser (http://localhost:3000)
+5. Open the application in your browser (http://localhost:3000)
