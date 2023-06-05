@@ -13,6 +13,9 @@ import ChatBox from "./ChatBox";
 import { ChatContext } from "./ChatContext";
 import { ChatRole } from "./ChatMessage";
 
+let mockSendMessage: jest.Mock; // Initialised here to be used in useContext mock
+let mockChatStatus: QueryStatus;
+
 jest.mock("../../hooks/useChat");
 jest.mock("react", () => {
   const originalReact = jest.requireActual("react");
@@ -22,8 +25,8 @@ jest.mock("react", () => {
       if (context === ChatContext) {
         return {
           chatHistory: [],
-          sendMessage: jest.fn(),
-          chatStatus: QueryStatus.Idle,
+          sendMessage: mockSendMessage,
+          chatStatus: mockChatStatus,
           currentChat: null,
           currentPlan: { goal: "", steps: [] },
           chatID: null,
@@ -39,11 +42,8 @@ describe("ChatBox", () => {
 
   beforeEach(() => {
     mockPush = jest.fn();
-    (useChat as jest.Mock).mockReturnValue({
-      chatHistory: [],
-      sendMessage: jest.fn(),
-      chatStatus: QueryStatus.Idle,
-    });
+    mockSendMessage = jest.fn();
+    mockChatStatus = QueryStatus.Idle;
     (useRouter as jest.Mock).mockReturnValue({
       push: mockPush,
     });
@@ -69,12 +69,6 @@ describe("ChatBox", () => {
   });
 
   it("sends message on form submit", async () => {
-    const mockSendMessage = jest.fn();
-    (useChat as jest.Mock).mockReturnValue({
-      chatHistory: [],
-      sendMessage: mockSendMessage,
-      chatStatus: QueryStatus.Idle,
-    });
     render(<ChatBox />);
     expect(mockSendMessage).toHaveBeenCalledTimes(1); // initial message on mount
     const input = screen.getByPlaceholderText("Send a message");
@@ -87,12 +81,7 @@ describe("ChatBox", () => {
   });
 
   it("doesn't send message when chatStatus is loading", async () => {
-    const mockSendMessage = jest.fn();
-    (useChat as jest.Mock).mockReturnValue({
-      chatHistory: [],
-      sendMessage: mockSendMessage,
-      chatStatus: QueryStatus.Loading,
-    });
+    mockChatStatus = QueryStatus.Loading; // doesn't affect the initial message
     render(<ChatBox />);
     expect(mockSendMessage).toHaveBeenCalledTimes(1); // initial message on mount
     const input = screen.getByPlaceholderText("Send a message");
@@ -105,12 +94,6 @@ describe("ChatBox", () => {
   });
 
   it("clears the input after submitting a message", async () => {
-    const mockSendMessage = jest.fn();
-    (useChat as jest.Mock).mockReturnValue({
-      chatHistory: [],
-      sendMessage: mockSendMessage,
-      chatStatus: QueryStatus.Idle,
-    });
     render(<ChatBox />);
     const input = screen.getByPlaceholderText("Send a message");
     const form = screen.getByRole("form");
@@ -132,11 +115,7 @@ describe("ChatBox", () => {
   });
 
   it("displays error message when error is true", () => {
-    (useChat as jest.Mock).mockReturnValue({
-      chatHistory: [{ role: ChatRole.Human, message: "Test" }],
-      sendMessage: jest.fn(),
-      chatStatus: QueryStatus.Error,
-    });
+    mockChatStatus = QueryStatus.Error;
     render(<ChatBox />);
 
     const errorMsg = screen.getByText(
@@ -146,11 +125,6 @@ describe("ChatBox", () => {
   });
 
   it("does not display error message when error is false", () => {
-    (useChat as jest.Mock).mockReturnValue({
-      chatHistory: [{ role: ChatRole.Human, message: "Test" }],
-      sendMessage: jest.fn(),
-      chatStatus: QueryStatus.Idle,
-    });
     render(<ChatBox />);
 
     const errorMsg = screen.queryByText(

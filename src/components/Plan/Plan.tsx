@@ -7,16 +7,8 @@ export function Plan() {
   const { currentPlan } = chatContext || {
     currentPlan: null,
   };
-
-  if (
-    currentPlan === null ||
-    (currentPlan?.goal === "" && currentPlan?.steps.length === 0)
-  ) {
-    return null;
-  }
-
   const [visibleSteps, setVisibleSteps] = useState<Array<boolean>>(
-    new Array(currentPlan.steps.length).fill(false)
+    new Array(currentPlan ? currentPlan.steps.length : 0).fill(false)
   );
 
   const handleClick = (index: number) => {
@@ -27,8 +19,15 @@ export function Plan() {
     );
   };
 
+  if (
+    !currentPlan ||
+    (currentPlan?.goal === "" && currentPlan?.steps.length === 0)
+  ) {
+    return null;
+  }
+
   return (
-    <div>
+    <div className="my-5">
       <h5>Your plan</h5>
       <p>{currentPlan.goal}</p>
       <ol>

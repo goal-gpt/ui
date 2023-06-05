@@ -1,10 +1,19 @@
+import { rest } from "msw";
+import { setupServer } from "msw/node";
+
+import mockData from "../../__tests__/__mocks__/functions.json";
 import { toast } from "../utils";
 
 let BASE_FUNCTION_URL = "";
 
 switch (process.env.NEXT_PUBLIC_API_ENV) {
   case "mock":
-    BASE_FUNCTION_URL = "http://localhost:8888";
+    const server = setupServer(
+      rest.post("/sera", (req, res, ctx) => {
+        return res(ctx.json(mockData.sera));
+      })
+    );
+    server.listen();
     break;
   case "local":
     BASE_FUNCTION_URL = "http://localhost:50321/functions/v1";
