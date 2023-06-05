@@ -19,6 +19,10 @@ npm install
 3. Add the right env vars
 - Create a copy of `.env.local.example` as `.env.local`
 - Fill in the values for the env vars in `.env.local`
+- Note that `NEXT_PUBLIC_API_ENV` can be set to `mock`, `local` or `prod`:
+  - Using `mock`, a JSON response from `__tests__/__mocks__/functions.json` is returned for each message sent.
+  - Using `local`, a request is made to a locally deployed edge function served at `http://localhost:50321`.
+  - Using `prod`, the request is made to the edge function deployed in production.
 
 4. Run the application
 ```bash

@@ -45,7 +45,6 @@ function Main() {
             <Header />
             <div>{chats && chats.length > 0 && "chats"}</div>
           </Col>
-          {/* <Col md={1} sm={0} className="d-none d-md-flex" /> */}
           <Col
             md={6}
             sm={12}

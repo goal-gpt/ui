@@ -86,8 +86,6 @@ export function useChat() {
 
       const content = question ? text + "\n" + question : text;
 
-      console.log(plan);
-      console.log(text);
       if (plan) {
         setCurrentPlan(plan as PlanType);
       }

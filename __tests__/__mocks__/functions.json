@@ -7,11 +7,11 @@
       "steps": [
         {
           "number": 1,
-          "action": "Create a guest list and determine the number of guests"
+          "action": "Create a guest list and determine the number of guests. This will help you determine your budget and choose a venue"
         },
         {
           "number": 2,
-          "action": "Choose a venue that can accommodate your guest list and fits within your budget"
+          "action": "Choose a venue that can accommodate your guest list and fits within your budget. This will help you determine your budget and choose a venue"
         },
         {
           "number": 3,

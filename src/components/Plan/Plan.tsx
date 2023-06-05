@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import { Container } from "react-bootstrap";
 
 import { ChatContext } from "../Chat";
 
@@ -23,28 +24,32 @@ export function Plan() {
     !currentPlan ||
     (currentPlan?.goal === "" && currentPlan?.steps.length === 0)
   ) {
-    return null;
+    return <></>;
   }
 
   return (
-    <div className="my-5">
+    <Container className="my-5">
       <h5>Your plan</h5>
       <p>{currentPlan.goal}</p>
-      <ol>
-        {currentPlan.steps.map((step, index) => {
-          const [firstSentence, ...rest] = step.action.split(".");
-          if (firstSentence === "") {
-            return null;
-          }
+      {currentPlan.steps.length > 0 && (
+        <ol>
+          {currentPlan.steps.map((step, index) => {
+            const [firstSentence, ...rest] = step.action.split(".");
+            if (firstSentence === "") {
+              return null;
+            }
 
-          return (
-            <li key={index} onClick={() => handleClick(index)}>
-              {firstSentence + "."}
-              {visibleSteps[index] && rest.length > 0 && ". " + rest.join(".")}
-            </li>
-          );
-        })}
-      </ol>
-    </div>
+            return (
+              <li key={index} onClick={() => handleClick(index)}>
+                {`${firstSentence}.`}
+                {visibleSteps[index] && rest.length > 0 && (
+                  <p>{rest.join(".") + "."}</p>
+                )}
+              </li>
+            );
+          })}
+        </ol>
+      )}
+    </Container>
   );
 }
