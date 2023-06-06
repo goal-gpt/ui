@@ -2,7 +2,7 @@ import "@testing-library/jest-dom";
 
 import React from "react";
 
-process.env.NEXT_PUBLIC_API_ENV = "mock"; // Set the env var to use the mock API
+process.env.NEXT_PUBLIC_API_ENV = "mock"; // Set the test env var to use the mock API
 
 jest.mock("next/router", () => ({
   useRouter: jest.fn().mockReturnValue({
