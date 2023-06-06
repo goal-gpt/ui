@@ -27,3 +27,22 @@
   text-align: left;
   white-space: pre-wrap;
 }
+
+.chatMessage table {
+  display: block;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  padding: 8px 16px;
+}
+
+.chatMessage thead {
+  display: table-header-group;
+  vertical-align: middle;
+  border-color: inherit;
+}
+
+.chatMessage th,
+.chatMessage td {
+  padding: 0.5rem;
+  border: 1px solid var(--bs-primary);
+}
