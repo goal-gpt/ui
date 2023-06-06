@@ -2,9 +2,6 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { fireEvent, render } from "@testing-library/react";
 import React, { ReactNode } from "react";
 
-import { ChatContext } from "../components/Chat";
-import { ChatHook } from "../hooks/useChat";
-
 export function simulateSwipeLeft(element: ChildNode) {
   fireEvent.mouseDown(element, { clientX: 0, clientY: 100 });
 
@@ -38,15 +35,4 @@ export function renderWithClient(ui: React.ReactElement) {
         <QueryClientProvider client={client}>{rerenderUi}</QueryClientProvider>
       ),
   };
-}
-
-export function renderWithChatContext(
-  component: React.ReactElement,
-  currentPlan?: ChatHook
-) {
-  return render(
-    <ChatContext.Provider value={currentPlan || {}}>
-      <component />
-    </ChatContext.Provider>
-  );
 }

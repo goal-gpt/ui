@@ -1,86 +1,73 @@
-import { fireEvent, render, screen } from "@testing-library/react";
-import React, { useContext } from "react";
+import { fireEvent, render } from "@testing-library/react";
+import React, { ReactElement } from "react";
 
-// import { ChatHook, useChat } from "../../hooks/useChat";
+import { ChatHook } from "../../hooks/useChat";
 import { ChatContext } from "../Chat";
 import { Plan } from "./Plan";
-import { ChatHook } from "../../hooks/useChat";
 
-// jest.mock("react", () => {
-//   const originalReact = jest.requireActual("react");
-//   return {
-//     ...originalReact,
-//     useContext: jest.fn().mockImplementation((context) => {
-//       console.log(context);
-//       if (context === ChatContext) {
-//         return {
-//           currentPlan: { goal: "", steps: [] },
-//         };
-//       }
-//       return originalReact.useContext(context);
-//     }),
-//   };
-// });
-// jest.mock("../../hooks/useChat", () => ({
-//   useChat: jest.fn(),
-// }));
-// jest.mock("../Chat", () => ({
-//   ChatContext: {
-//     Consumer: ({ children }) => children(),
-//   },
-// }));
+const renderWithChatContext = (ui: ReactElement, currentPlan?: ChatHook) => {
+  return render(
+    <ChatContext.Provider value={currentPlan || null}>
+      {ui}
+    </ChatContext.Provider>
+  );
+};
+
+const planTitle = /Your action plan/i;
 
 describe("Plan", () => {
-  // let mockContext;
-  // let mockPlan;
-  // beforeEach(() => {
-  //   // (useContext as jest.Mock).mockReturnValue({
-  //   //   currentPlan: {
-  //   //     goal: "",
-  //   //     steps: [],
-  //   //   },
-  //   // });
-  //   mockPlan = {
-  //     goal: "",
-  //     steps: [],
-  //   };
-  //   mockContext = { currentPlan: mockPlan };
-  // });
-
   afterEach(() => {
     jest.clearAllMocks();
   });
 
   it("renders without crashing", () => {
-    render(
-      <ChatContext.Provider value={null}>
-        <Plan />
-      </ChatContext.Provider>
-    );
+    renderWithChatContext(<Plan />);
   });
 
-  // it("does not render if currentPlan is null", () => {
-  //   (useContext as jest.Mock).mockReturnValue({
-  //     currentPlan: null,
-  //   });
-  //   render(<Plan />);
-  //   const goal = screen.queryByText(/Your plan/i);
-  //   expect(goal).not.toBeInTheDocument();
-  // });
+  it("does not render if currentPlan is null", () => {
+    const { queryByText } = renderWithChatContext(<Plan />);
+    const plan = queryByText(planTitle);
+    expect(plan).not.toBeInTheDocument();
+  });
 
-  // it("does not render if currentPlan has no goal and steps", () => {
-  //   (useContext as jest.Mock).mockReturnValue({
-  //     currentPlan: {
-  //       goal: "",
-  //       steps: [],
-  //     },
-  //   });
-  //   render(<Plan />);
-  //   const goal = screen.queryByText(/Your plan/i);
-  //   expect(goal).not.toBeInTheDocument();
-  // });
+  it("does not render if currentPlan has no goal", () => {
+    let { queryByText } = renderWithChatContext(<Plan />, {
+      currentPlan: {
+        goal: "",
+        steps: [] as Array<{ number: number; action: string }>,
+      },
+    } as ChatHook);
+    let plan = queryByText(planTitle);
+    let steps = queryByText(/1/i);
+    expect(plan).not.toBeInTheDocument();
+    expect(steps).not.toBeInTheDocument();
 
-  it("renders the plan when currentPlan is not null", () => {
+    ({ queryByText } = renderWithChatContext(<Plan />, {
+      currentPlan: {
+        steps: [] as Array<{ number: number; action: string }>,
+      },
+    } as ChatHook));
+    plan = queryByText(planTitle);
+    steps = queryByText(/1/i);
+    expect(plan).not.toBeInTheDocument();
+    expect(steps).not.toBeInTheDocument();
+  });
+
+  it("renders the goal if currentPlan has no steps", () => {
+    const { queryByText } = renderWithChatContext(<Plan />, {
+      currentPlan: {
+        goal: "Test goal",
+      },
+    } as ChatHook);
+    const plan = queryByText(planTitle);
+    const goal = queryByText(/Test goal/i);
+    const steps = queryByText(/1/i);
+    expect(plan).toBeInTheDocument();
+    expect(goal).toBeInTheDocument();
+    expect(steps).not.toBeInTheDocument();
+  });
+
+  it("renders the full plan when currentPlan is not null", () => {
     const { getByText } = render(
       <ChatContext.Provider
         value={
@@ -95,8 +82,12 @@ describe("Plan", () => {
         <Plan />
       </ChatContext.Provider>
     );
+    const plan = getByText(planTitle);
     const goal = getByText(/Test Goal/i);
+    const step = getByText(/Test action./i);
+    expect(plan).toBeInTheDocument();
     expect(goal).toBeInTheDocument();
+    expect(step).toBeInTheDocument();
   });
 
   it("handles click on action to show the rest of the action", () => {

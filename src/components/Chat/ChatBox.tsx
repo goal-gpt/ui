@@ -141,7 +141,7 @@ function ChatBox({ query = "" }: ChatBoxProps) {
       <Row className={`${styles.chatBox}`} role="log">
         <div ref={bottomRef} style={{ height: 0 }} />
         {error ? (
-          <Row className="justify-content-center my-3">
+          <Row className="justify-content-center">
             <Col className="text-center">
               <p className="text-danger">
                 Sorry, an error occurred. Please try again!
@@ -156,7 +156,7 @@ function ChatBox({ query = "" }: ChatBoxProps) {
           ))}
         </div>
       </Row>
-      <Row className="my-3">
+      <Row className="mt-3">
         {/* TODO: implement suggestions here */}
         {/* <div className={`${styles.suggestions}`}>Hi!</div> */}
         <Form onSubmit={handleFormSubmit} role="form">
