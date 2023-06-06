@@ -1,17 +1,8 @@
-import { fireEvent, render } from "@testing-library/react";
-import React, { ReactElement } from "react";
+import { fireEvent } from "@testing-library/react";
+import React from "react";
 
-import { ChatHook } from "../../hooks/useChat";
-import { ChatContext } from "../Chat";
+import { renderWithChatContext } from "../../utils";
 import { Plan } from "./Plan";
-
-const renderWithChatContext = (ui: ReactElement, currentPlan?: ChatHook) => {
-  return render(
-    <ChatContext.Provider value={currentPlan || null}>
-      {ui}
-    </ChatContext.Provider>
-  );
-};
 
 const planTitle = /Your action plan/i;
 
@@ -36,7 +27,7 @@ describe("Plan", () => {
         goal: "",
         steps: [] as Array<{ number: number; action: string }>,
       },
-    } as ChatHook);
+    });
     let plan = queryByText(planTitle);
     let steps = queryByText(/1/i);
     expect(plan).not.toBeInTheDocument();
@@ -44,9 +35,10 @@ describe("Plan", () => {
 
     ({ queryByText } = renderWithChatContext(<Plan />, {
       currentPlan: {
+        goal: "",
         steps: [] as Array<{ number: number; action: string }>,
       },
-    } as ChatHook));
+    }));
     plan = queryByText(planTitle);
     steps = queryByText(/1/i);
     expect(plan).not.toBeInTheDocument();
@@ -57,8 +49,9 @@ describe("Plan", () => {
     const { queryByText } = renderWithChatContext(<Plan />, {
       currentPlan: {
         goal: "Test goal",
+        steps: [] as Array<{ number: number; action: string }>,
       },
-    } as ChatHook);
+    });
     const plan = queryByText(planTitle);
     const goal = queryByText(/Test goal/i);
     const steps = queryByText(/1/i);
@@ -68,20 +61,12 @@ describe("Plan", () => {
   });
 
   it("renders the full plan when currentPlan is not null", () => {
-    const { getByText } = render(
-      <ChatContext.Provider
-        value={
-          {
-            currentPlan: {
-              goal: "Test Goal",
-              steps: [{ number: 1, action: "Test action. Rest of action." }],
-            },
-          } as ChatHook
-        }
-      >
-        <Plan />
-      </ChatContext.Provider>
-    );
+    const { getByText } = renderWithChatContext(<Plan />, {
+      currentPlan: {
+        goal: "Test Goal",
+        steps: [{ number: 1, action: "Test action. Rest of action." }],
+      },
+    });
     const plan = getByText(planTitle);
     const goal = getByText(/Test Goal/i);
     const step = getByText(/Test action./i);
@@ -91,20 +76,12 @@ describe("Plan", () => {
   });
 
   it("handles click on action to show the rest of the action", () => {
-    const { getByText } = render(
-      <ChatContext.Provider
-        value={
-          {
-            currentPlan: {
-              goal: "Test Goal",
-              steps: [{ number: 1, action: "Test action. Rest of action." }],
-            },
-          } as ChatHook
-        }
-      >
-        <Plan />
-      </ChatContext.Provider>
-    );
+    const { getByText } = renderWithChatContext(<Plan />, {
+      currentPlan: {
+        goal: "Test Goal",
+        steps: [{ number: 1, action: "Test action. Rest of action." }],
+      },
+    });
     const action = getByText(/Test action./i);
     fireEvent.click(action);
     const restOfAction = getByText(/Rest of action./i);
