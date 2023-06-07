@@ -27,6 +27,7 @@ function Login({ isAuthChecking }: { isAuthChecking: boolean }) {
   const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setStatus("loading");
+    // TODO: convert to use react-query
     const { error } = await supabaseClient.auth.signInWithOtp({
       email,
       options: { emailRedirectTo: window.location.origin },

@@ -22,6 +22,7 @@
     "pages/_document.tsx",
     "pages/help",
     "pages/profile",
+    "src/typings.d.ts",
     "__tests__/help.test.tsx",
     "__tests__/profile.test.tsx"
   ],

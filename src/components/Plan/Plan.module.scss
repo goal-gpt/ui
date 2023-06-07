@@ -1,0 +1,22 @@
+.planContainer {
+  display: flex;
+  flex-direction: column;
+  max-height: 95vh;
+  margin: 2.5vh auto;
+  justify-content: flex-start;
+  overflow-x: scroll;
+}
+
+.planTitle {
+  color: var(--bs-tertiary);
+  font: bold italic 1rem "Times New Roman", Times, serif;
+  text-align: center;
+}
+
+.goal {
+  color: var(--bs-quaternary);
+}
+
+.listItem {
+  color: var(--bs-secondary);
+}

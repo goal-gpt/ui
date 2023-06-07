@@ -28,7 +28,7 @@ describe("useChat", () => {
     });
     await waitFor(() => {
       expect(result.current.chatStatus).toBe("idle");
-      expect(result.current.currentChat).toBeNull();
+      expect(result.current.currentChat).toBe("");
       expect(result.current.chatHistory).toEqual([]);
     });
   });

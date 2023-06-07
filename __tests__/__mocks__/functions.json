@@ -1,0 +1,52 @@
+{
+  "sera": {
+    "text": "Based on your budget, here's a sample action plan for your wedding:",
+    "question": "Do these steps seem like they would work for you?",
+    "plan": {
+      "goal": "Plan a wedding within a $30,000 budget",
+      "steps": [
+        {
+          "number": 1,
+          "action": "Create a guest list and determine the number of guests. This will help you determine your budget and choose a venue"
+        },
+        {
+          "number": 2,
+          "action": "Choose a venue that can accommodate your guest list and fits within your budget. This will help you determine your budget and choose a venue"
+        },
+        {
+          "number": 3,
+          "action": "Select a caterer and menu that fits within your budget and meets your dietary needs"
+        },
+        {
+          "number": 4,
+          "action": "Choose a photographer and videographer that fits within your budget and has a style you like"
+        },
+        {
+          "number": 5,
+          "action": "Select a florist and decor that fits within your budget and matches your wedding theme"
+        },
+        {
+          "number": 6,
+          "action": "Choose a wedding dress and attire for the wedding party that fits within your budget"
+        },
+        {
+          "number": 7,
+          "action": "Select a DJ or band that fits within your budget and plays music you and your guests will enjoy"
+        },
+        {
+          "number": 8,
+          "action": "Plan transportation for you and your guests, if necessary"
+        },
+        {
+          "number": 9,
+          "action": "Create a timeline for the wedding day and coordinate with vendors"
+        },
+        {
+          "number": 10,
+          "action": "Set aside a contingency fund for unexpected expenses"
+        }
+      ]
+    },
+    "chat": 100
+  }
+}
