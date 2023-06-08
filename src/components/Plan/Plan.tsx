@@ -1,6 +1,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import React, { useContext, useEffect, useState } from "react";
 import { Card, Container, ListGroup } from "react-bootstrap";
+import { CaretDown, CaretUp } from "react-bootstrap-icons";
 
 import { ChatContext } from "../Chat";
 import styles from "./Plan.module.scss";
@@ -14,9 +15,30 @@ interface StepProps {
   setExpanded: (expanded: Set<number>) => void;
 }
 
+export function processSentences(sentences: string[]) {
+  if (sentences.length === 0) {
+    return;
+  }
+
+  const result = sentences.map((sentence) => {
+    if (!sentence) {
+      return sentence;
+    }
+    // check if the sentence ends in a punctuation
+    else if (/[.!?]$/.test(sentence)) {
+      return sentence;
+    } else {
+      // add a "." at the end if there's no punctuation
+      return sentence + ".";
+    }
+  });
+
+  return result.filter(Boolean).join(" ");
+}
+
 export function Step({ step, index, expanded, setExpanded }: StepProps) {
   const isOpen = expanded.has(index);
-  const [firstSentence, ...rest] = step.action.split(".");
+  const [firstSentence, ...rest] = step.action.split(/[.!?]/);
 
   const handleClick = () => {
     if (rest.length === 0) {
@@ -34,6 +56,8 @@ export function Step({ step, index, expanded, setExpanded }: StepProps) {
     collapsed: { opacity: 0, height: 0 },
   };
 
+  const remainingSentences = processSentences(rest);
+
   return (
     <>
       <ListGroup.Item
@@ -42,7 +66,11 @@ export function Step({ step, index, expanded, setExpanded }: StepProps) {
         aria-controls={`fade-text-${index}`}
         aria-expanded={isOpen}
       >
-        <p className="my-0 text-neutral-dark">{`${index}. ${firstSentence}.`}</p>
+        <p className="my-0 text-neutral-dark">
+          {`${index}. ${firstSentence}. `}
+          {remainingSentences && (isOpen ? <CaretDown /> : <CaretUp />)}
+        </p>
+
         <AnimatePresence initial={false}>
           {isOpen && (
             <motion.div
@@ -54,7 +82,7 @@ export function Step({ step, index, expanded, setExpanded }: StepProps) {
               variants={variants}
               transition={{ duration: 0.8, ease: [0.04, 0.62, 0.23, 0.98] }}
             >
-              {rest.join(".") + "."}
+              {remainingSentences}
             </motion.div>
           )}
         </AnimatePresence>
