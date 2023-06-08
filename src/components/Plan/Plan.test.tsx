@@ -2,7 +2,7 @@ import { fireEvent } from "@testing-library/react";
 import React from "react";
 
 import { renderWithChatContext } from "../../utils";
-import { Plan } from "./Plan";
+import { Plan, processSentences } from "./Plan";
 
 const planTitle = /Your action plan/i;
 
@@ -86,5 +86,31 @@ describe("Plan", () => {
     fireEvent.click(action);
     const restOfAction = getByText(/Rest of action./i);
     expect(restOfAction).toBeInTheDocument();
+  });
+});
+
+describe("processSentences function", () => {
+  it("should return undefined for empty array", () => {
+    expect(processSentences([])).toBeUndefined();
+  });
+
+  it("should return sentences as they are if they end with punctuation", () => {
+    const sentences = ["Hello!", "How are you?"];
+    expect(processSentences(sentences)).toBe("Hello! How are you?");
+  });
+
+  it("should add a period at the end of sentences that do not end with punctuation", () => {
+    const sentences = ["Hello", "How are you"];
+    expect(processSentences(sentences)).toBe("Hello. How are you.");
+  });
+
+  it("should handle a mix of sentences with and without ending punctuation", () => {
+    const sentences = ["Hello!", "How are you"];
+    expect(processSentences(sentences)).toBe("Hello! How are you.");
+  });
+
+  it("should handle empty strings correctly", () => {
+    const sentences = ["Hello!", "", "How are you"];
+    expect(processSentences(sentences)).toBe("Hello! How are you.");
   });
 });
