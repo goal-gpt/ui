@@ -40,7 +40,7 @@ function ChatForm({ query = "" }: ChatFormProps) {
   // Set query as first message and clear query from URL
   useEffect(() => {
     if (query) {
-      setMessage(query);
+      sendMessage(query);
       router.push("/", undefined, { shallow: true });
     }
   }, [query, router]);

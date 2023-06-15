@@ -108,20 +108,19 @@ export function Plan() {
   }
 
   return (
-    <Container className={`${styles.planContainer}`}>
+    <Container>
       <motion.div
         animate={{ opacity: 1 }}
         initial={{ opacity: 0 }}
         transition={{ ease: "easeInOut", duration: 2 }}
       >
         <Card className={`${styles.card}`}>
-          <Card.Header className={`${styles.planTitle}`}>
-            Your action plan
-          </Card.Header>
-          <Card.Body>
+          <Card.Header>
             <Card.Title className={`${styles.goal}`}>
               {currentPlan.goal}
             </Card.Title>
+          </Card.Header>
+          <Card.Body className={`${styles.stepContainer}`}>
             {currentPlan.steps && currentPlan.steps.length > 0 && (
               <ListGroup variant="flush">
                 {currentPlan.steps.map((step) => (

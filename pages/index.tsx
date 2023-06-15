@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { useRouter } from "next/router";
 import { NextSeo } from "next-seo";
 import React from "react";
@@ -17,13 +18,20 @@ function Main() {
       <Container fluid>
         <Row>
           <Col md={3} sm={0} className={`d-none d-md-flex`}></Col>
-          <Col
-            md={6}
-            sm={12}
-            className="d-flex flex-column justify-content-between"
-          >
-            <Plan />
-            <ChatForm query={query} />
+          <Col md={6} sm={12} className="mainContainer">
+            <div className="logo d-flex flex-column justify-content-between align-items-center">
+              <Image
+                alt="eras logo: yellow lines gradually reaching the horizon"
+                src="/eras-text-below-logo.svg"
+                fill
+              />
+            </div>
+            <div className="flex-grow-1 overflow-auto my-1">
+              <Plan />
+            </div>
+            <div className="d-flex flex-column">
+              <ChatForm query={query} />
+            </div>
           </Col>
           <Col md={3} sm={0} className="d-none d-md-flex"></Col>
         </Row>

@@ -4,8 +4,6 @@ import React from "react";
 import { renderWithChatContext } from "../../utils";
 import { Plan, processSentences } from "./Plan";
 
-const planTitle = /Your action plan/i;
-
 describe("Plan", () => {
   afterEach(() => {
     jest.clearAllMocks();
@@ -15,12 +13,6 @@ describe("Plan", () => {
     renderWithChatContext(<Plan />);
   });
 
-  it("does not render if currentPlan is null", () => {
-    const { queryByText } = renderWithChatContext(<Plan />);
-    const plan = queryByText(planTitle);
-    expect(plan).not.toBeInTheDocument();
-  });
-
   it("does not render if currentPlan has no goal", () => {
     let { queryByText } = renderWithChatContext(<Plan />, {
       currentPlan: {
@@ -28,9 +20,7 @@ describe("Plan", () => {
         steps: [] as Array<{ number: number; action: string }>,
       },
     });
-    let plan = queryByText(planTitle);
     let steps = queryByText(/1/i);
-    expect(plan).not.toBeInTheDocument();
     expect(steps).not.toBeInTheDocument();
 
     ({ queryByText } = renderWithChatContext(<Plan />, {
@@ -39,9 +29,7 @@ describe("Plan", () => {
         steps: [] as Array<{ number: number; action: string }>,
       },
     }));
-    plan = queryByText(planTitle);
     steps = queryByText(/1/i);
-    expect(plan).not.toBeInTheDocument();
     expect(steps).not.toBeInTheDocument();
   });
 
@@ -52,10 +40,8 @@ describe("Plan", () => {
         steps: [] as Array<{ number: number; action: string }>,
       },
     });
-    const plan = queryByText(planTitle);
     const goal = queryByText(/Test goal/i);
     const steps = queryByText(/1/i);
-    expect(plan).toBeInTheDocument();
     expect(goal).toBeInTheDocument();
     expect(steps).not.toBeInTheDocument();
   });
@@ -67,10 +53,8 @@ describe("Plan", () => {
         steps: [{ number: 1, action: "Test action. Rest of action." }],
       },
     });
-    const plan = getByText(planTitle);
     const goal = getByText(/Test Goal/i);
     const step = getByText(/Test action./i);
-    expect(plan).toBeInTheDocument();
     expect(goal).toBeInTheDocument();
     expect(step).toBeInTheDocument();
   });

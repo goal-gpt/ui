@@ -8,9 +8,11 @@ import ChatForm from "./ChatForm";
 const formPlaceholderText = /Refine your plan.../i;
 describe("ChatForm", () => {
   let mockPush: jest.Mock;
+  let mockSendMessage: jest.Mock;
 
   beforeEach(() => {
     mockPush = jest.fn();
+    mockSendMessage = jest.fn();
     (useRouter as jest.Mock).mockReturnValue({
       push: mockPush,
     });
@@ -26,12 +28,20 @@ describe("ChatForm", () => {
     expect(getByPlaceholderText(formPlaceholderText)).toBeInTheDocument();
   });
 
-  it("sets the message from the query prop", () => {
+  it("sends the message from the query prop", () => {
     const testQuery = "Test message from query";
     const { getByPlaceholderText } = renderWithChatContext(
-      <ChatForm query={testQuery} />
+      <ChatForm query={testQuery} />,
+      {
+        sendMessage: mockSendMessage,
+      }
     );
-    expect(getByPlaceholderText(formPlaceholderText)).toHaveValue(testQuery);
+    expect(mockSendMessage).toHaveBeenCalledTimes(1);
+    expect(mockSendMessage).toHaveBeenCalledWith(testQuery);
+    expect(getByPlaceholderText(formPlaceholderText)).toHaveValue("");
+    expect(mockPush).toHaveBeenCalledWith("/", undefined, {
+      shallow: true,
+    });
   });
 
   it("updates the URL after the component renders", async () => {
