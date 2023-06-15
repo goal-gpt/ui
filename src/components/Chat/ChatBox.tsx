@@ -1,23 +1,15 @@
-import { useRouter } from "next/router";
-import React, { useContext, useEffect, useRef, useState } from "react";
-import { Col, Container, Form, Row } from "react-bootstrap";
-import { ArrowUpRightCircle } from "react-bootstrap-icons";
+import React, { useContext, useEffect, useRef } from "react";
+import { Col, Container, Row } from "react-bootstrap";
 
 import { QueryStatus } from "../../hooks/useChat";
-import { logger } from "../../utils";
-import { Button } from "../Button";
 import { Loading } from "../Loading";
 import styles from "./ChatBox.module.scss";
 import { ChatContext } from "./ChatContext";
+import ChatForm from "./ChatForm";
 import { ChatMessage, ChatRole } from "./ChatMessage";
 
-interface ChatBoxProps {
-  query: string;
-}
-
-function ChatBox({ query = "" }: ChatBoxProps) {
+function ChatBox() {
   // The content of the user input message box
-  const [message, setMessage] = useState<string>("");
   const chatContext = useContext(ChatContext);
   const { chatHistory, sendMessage, chatStatus } = chatContext || {
     chatHistory: [],
@@ -25,40 +17,14 @@ function ChatBox({ query = "" }: ChatBoxProps) {
     chatStatus: QueryStatus.Idle,
   };
 
-  const inputRef = useRef<HTMLTextAreaElement>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
-  const router = useRouter();
 
   // Helper functions
-  const focusInput = () => {
-    inputRef.current?.focus();
-  };
-
-  const resetInput = () => {
-    if (inputRef.current) {
-      inputRef.current.style.height = "auto";
-      inputRef.current.style.height = `${inputRef.current.scrollHeight}px`;
-      inputRef.current.scrollTop = inputRef.current.scrollHeight;
-      document.documentElement.style.setProperty(
-        "--textarea-height",
-        `min(12rem, ${inputRef.current.scrollHeight}px)`
-      );
-    }
-  };
-
   const scrollToBottom = () => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
   // Effects
-  // Set query as first message and clear query from URL
-  useEffect(() => {
-    if (query) {
-      setMessage(query);
-      router.push("/", undefined, { shallow: true });
-    }
-  }, [query, router]);
-
   // Send initial message to get Sera's introduction
   useEffect(() => {
     if (chatHistory.length === 0) {
@@ -66,68 +32,10 @@ function ChatBox({ query = "" }: ChatBoxProps) {
     }
   }, []);
 
-  // Focus on input when chatStatus changes
-  useEffect(() => {
-    focusInput();
-  }, [chatStatus]);
-
-  // Reset input when message is sent
-  useEffect(() => {
-    resetInput();
-  }, [message]);
-
   // Scroll to bottom when chat changes
   useEffect(() => {
     scrollToBottom();
   }, [chatHistory, chatStatus]);
-
-  // Resize textarea to fit content
-  useEffect(() => {
-    const handleKeyUp = () => {
-      if (inputRef.current) {
-        inputRef.current.style.height = "0";
-        inputRef.current.style.height = `${inputRef.current.scrollHeight}px`;
-      }
-    };
-
-    const el = inputRef.current;
-    if (!el) return;
-    el.addEventListener("keyup", handleKeyUp);
-
-    return () => {
-      el.removeEventListener("keyup", handleKeyUp);
-    };
-  }, []);
-
-  // Event handlers
-  const handleFormSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    if (chatStatus === QueryStatus.Loading) {
-      return;
-    }
-
-    const newMessage = message.trim();
-    setMessage("");
-    if (newMessage !== "") {
-      scrollToBottom();
-      try {
-        sendMessage(newMessage);
-      } catch (err) {
-        logger.error(`Error while sending message: ${err}`);
-      }
-    }
-  };
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setMessage(e.target.value);
-  };
-
-  const handleKeyDown = async (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.key === "Enter" && !e.shiftKey) {
-      await handleFormSubmit(e);
-    }
-  };
 
   const showSpinner =
     (chatHistory.at(-1)?.role === ChatRole.Human &&
@@ -159,32 +67,7 @@ function ChatBox({ query = "" }: ChatBoxProps) {
       <Row className="mt-3">
         {/* TODO: implement suggestions here */}
         {/* <div className={`${styles.suggestions}`}>Hi!</div> */}
-        <Form onSubmit={handleFormSubmit} role="form">
-          <div className={styles.textAreaContainer}>
-            <div className={styles.textAreaWrapper}>
-              <Form.Control
-                as="textarea"
-                className={`${styles.textArea}`}
-                placeholder="Send a message"
-                rows={1}
-                ref={inputRef}
-                value={message}
-                onChange={handleInputChange}
-                onKeyDown={handleKeyDown}
-              />
-            </div>
-            <Button
-              className={`${styles.messageButton}`}
-              type="submit"
-              variant="secondary"
-              disabled={chatStatus === QueryStatus.Loading}
-              height="auto"
-              width="auto"
-            >
-              <ArrowUpRightCircle />
-            </Button>
-          </div>
-        </Form>
+        <ChatForm />
         <div>
           <p className="text-center me-4">
             <small>
@@ -197,9 +80,5 @@ function ChatBox({ query = "" }: ChatBoxProps) {
     </Container>
   );
 }
-
-ChatBox.defaultProps = {
-  query: "",
-};
 
 export default ChatBox;

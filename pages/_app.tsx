@@ -5,6 +5,7 @@ import { Session, SessionContextProvider } from "@supabase/auth-helpers-react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import type { AppProps } from "next/app";
 import { Poppins } from "next/font/google";
+import Image from "next/image";
 import { DefaultSeo } from "next-seo";
 import React, { useEffect, useState } from "react";
 import { ToastContainer } from "react-toastify";
@@ -51,7 +52,7 @@ export default function App({
           initialSession={pageProps.initialSession}
         >
           <ChatProvider>
-            <main className={poppins.className}>
+            <main className={`${poppins.className}`}>
               <DefaultSeo
                 defaultTitle="eras"
                 titleTemplate="eras | %s"
@@ -78,7 +79,17 @@ export default function App({
                   cardType: "summary",
                 }}
               />
-              <Component {...pageProps} isAuthChecking={isAuthChecking} />
+              <div className="background">
+                <Image
+                  src="/man-at-sunrise.jpeg"
+                  alt="man looking at sunrise"
+                  style={{ objectFit: "cover" }}
+                  fill
+                />
+              </div>
+              <div className="content">
+                <Component {...pageProps} isAuthChecking={isAuthChecking} />
+              </div>
               <ToastContainer />
               <Cookie />
             </main>

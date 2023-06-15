@@ -28,10 +28,8 @@ describe("Main component", () => {
       }),
     });
 
-    const { getByRole, getByText } = renderWithClient(<Main />);
+    const { getByRole } = renderWithClient(<Main />);
     await waitFor(() => {
-      expect(getByText("chats")).toBeInTheDocument();
-      expect(getByRole("log")).toBeInTheDocument();
       expect(getByRole("form")).toBeInTheDocument();
     });
   });
