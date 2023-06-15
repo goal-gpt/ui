@@ -1,0 +1,21 @@
+.chatFormContainer {
+  display: flex;
+  flex-direction: row;
+  flex-grow: 1;
+  max-height: 12rem;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.textAreaWrapper {
+  margin: 0.5rem 0.5rem 0 0;
+  width: 100%;
+}
+
+.textArea {
+  max-height: 12rem;
+}
+
+.messageButton {
+  align-self: end;
+}

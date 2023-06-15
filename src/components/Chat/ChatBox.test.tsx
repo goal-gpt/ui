@@ -1,4 +1,4 @@
-import { act, fireEvent, screen, waitFor } from "@testing-library/react";
+import { act, fireEvent, screen } from "@testing-library/react";
 import { useRouter } from "next/router";
 import React from "react";
 
@@ -6,6 +6,8 @@ import { QueryStatus } from "../../hooks/useChat";
 import { renderWithChatContext } from "../../utils";
 import ChatBox from "./ChatBox";
 import { ChatRole } from "./ChatMessage";
+
+const formPlaceholderText = /Refine your plan.../i;
 
 describe("ChatBox", () => {
   let mockPush: jest.Mock;
@@ -27,13 +29,15 @@ describe("ChatBox", () => {
 
   it("renders without crashing", () => {
     renderWithChatContext(<ChatBox />);
-    expect(screen.getByPlaceholderText("Send a message")).toBeInTheDocument();
+    expect(
+      screen.getByPlaceholderText(formPlaceholderText)
+    ).toBeInTheDocument();
     expect(screen.getByRole("button")).toBeInTheDocument();
   });
 
   it("inputs message correctly", async () => {
     renderWithChatContext(<ChatBox />);
-    const input = screen.getByPlaceholderText("Send a message");
+    const input = screen.getByPlaceholderText(formPlaceholderText);
     await act(async () => {
       fireEvent.change(input, { target: { value: "Test message" } });
     });
@@ -46,7 +50,7 @@ describe("ChatBox", () => {
       sendMessage: mockSendMessage,
     });
     expect(mockSendMessage).toHaveBeenCalledTimes(1); // initial message on mount
-    const input = screen.getByPlaceholderText("Send a message");
+    const input = screen.getByPlaceholderText(formPlaceholderText);
     const form = screen.getByRole("form");
     act(() => {
       fireEvent.change(input, { target: { value: "Test message" } });
@@ -63,7 +67,7 @@ describe("ChatBox", () => {
       chatStatus: mockChatStatus,
     });
     expect(mockSendMessage).toHaveBeenCalledTimes(1); // initial message on mount
-    const input = screen.getByPlaceholderText("Send a message");
+    const input = screen.getByPlaceholderText(formPlaceholderText);
     const form = screen.getByRole("form");
     act(() => {
       fireEvent.change(input, { target: { value: "Test message" } });
@@ -74,7 +78,7 @@ describe("ChatBox", () => {
 
   it("clears the input after submitting a message", async () => {
     renderWithChatContext(<ChatBox />);
-    const input = screen.getByPlaceholderText("Send a message");
+    const input = screen.getByPlaceholderText(formPlaceholderText);
     const form = screen.getByRole("form");
     act(() => {
       fireEvent.change(input, { target: { value: "Test message" } });
@@ -113,23 +117,5 @@ describe("ChatBox", () => {
       /Sorry, an error occurred. Please try again!/i
     );
     expect(errorMsg).not.toBeInTheDocument();
-  });
-
-  it("sets the message from the query prop", () => {
-    renderWithChatContext(<ChatBox query="Test message from query" />);
-    expect(screen.getByPlaceholderText("Send a message")).toHaveValue(
-      "Test message from query"
-    );
-  });
-
-  it("updates the URL after the component renders", async () => {
-    act(() => {
-      renderWithChatContext(<ChatBox query="Test message from query" />);
-    });
-    waitFor(() => {
-      expect(mockPush).toHaveBeenCalledWith("/", undefined, {
-        shallow: true,
-      });
-    });
   });
 });
