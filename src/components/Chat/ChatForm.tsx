@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import React, { useContext, useEffect, useRef, useState } from "react";
-import { Form } from "react-bootstrap";
+import { Container, Form } from "react-bootstrap";
 import { ArrowUpRightCircle } from "react-bootstrap-icons";
 
 import { QueryStatus } from "../../hooks/useChat";
@@ -98,32 +98,34 @@ function ChatForm({ query = "" }: ChatFormProps) {
   };
 
   return (
-    <Form onSubmit={handleFormSubmit} role="form">
-      <div className={styles.chatFormContainer}>
-        <div className={styles.textAreaWrapper}>
-          <Form.Control
-            as="textarea"
-            className={`${styles.textArea}`}
-            placeholder="Refine your plan..."
-            rows={1}
-            ref={inputRef}
-            value={message}
-            onChange={handleInputChange}
-            onKeyDown={handleKeyDown}
-          />
+    <Container>
+      <Form onSubmit={handleFormSubmit} role="form">
+        <div className={styles.chatFormContainer}>
+          <div className={styles.textAreaWrapper}>
+            <Form.Control
+              as="textarea"
+              className={`${styles.textArea}`}
+              placeholder="Refine your plan..."
+              rows={1}
+              ref={inputRef}
+              value={message}
+              onChange={handleInputChange}
+              onKeyDown={handleKeyDown}
+            />
+          </div>
+          <Button
+            className={`${styles.messageButton}`}
+            type="submit"
+            variant="secondary"
+            disabled={chatStatus === QueryStatus.Loading}
+            height="auto"
+            width="auto"
+          >
+            <ArrowUpRightCircle />
+          </Button>
         </div>
-        <Button
-          className={`${styles.messageButton}`}
-          type="submit"
-          variant="secondary"
-          disabled={chatStatus === QueryStatus.Loading}
-          height="auto"
-          width="auto"
-        >
-          <ArrowUpRightCircle />
-        </Button>
-      </div>
-    </Form>
+      </Form>
+    </Container>
   );
 }
 

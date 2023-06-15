@@ -67,7 +67,7 @@ export function Step({ step, index, expanded, setExpanded }: StepProps) {
         aria-expanded={isOpen}
       >
         <p className="my-0 text-neutral-dark">
-          {`${index}. ${firstSentence}. `}
+          {`Step ${index}: ${firstSentence}. `}
           {remainingSentences && (isOpen ? <CaretDown /> : <CaretUp />)}
         </p>
 
