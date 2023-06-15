@@ -1,3 +1,7 @@
+.card {
+  border: none;
+}
+
 .planContainer {
   display: flex;
   flex-direction: column;
@@ -13,8 +17,15 @@
   text-align: center;
 }
 
+.stepContainer {
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
 .goal {
   color: var(--bs-quaternary);
+  margin: 0;
+  text-align: center;
 }
 
 .listItem {

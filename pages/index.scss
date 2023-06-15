@@ -116,6 +116,25 @@ main {
   z-index: 0;
 }
 
+.logo {
+  position: relative;
+  align-self: center;
+  overflow: hidden;
+  min-height: 80px;
+  min-width: 80px;
+  height: 12vh;
+  width: 12vh;
+}
+
+.mainContainer {
+  display: flex;
+  flex-direction: column;
+  height: 97vh;
+  margin: 2.5vh auto 0.5vh;
+  justify-content: space-between;
+  overflow-x: hidden;
+}
+
 .spinner-border,
 .spinner-grow {
   animation: spinner-grow 2s linear infinite;
