@@ -135,7 +135,11 @@ main {
   overflow-x: hidden;
 }
 
-.spinner-border,
 .spinner-grow {
   animation: spinner-grow 2s linear infinite;
+}
+
+.spinner-border {
+  animation-duration: 1.5s;
+  border-width: 1px;
 }

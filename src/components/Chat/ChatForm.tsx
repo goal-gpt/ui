@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import React, { useContext, useEffect, useRef, useState } from "react";
-import { Container, Form } from "react-bootstrap";
+import { Container, Form, Spinner } from "react-bootstrap";
 import { ArrowUpRightCircle } from "react-bootstrap-icons";
 
 import { QueryStatus } from "../../hooks/useChat";
@@ -121,7 +121,20 @@ function ChatForm({ query = "" }: ChatFormProps) {
             height="auto"
             width="auto"
           >
-            <ArrowUpRightCircle />
+            {chatStatus === QueryStatus.Loading ? (
+              <Spinner
+                aria-hidden="true"
+                as="span"
+                animation="border"
+                size="sm"
+                variant="neutral-dark"
+                role="status"
+              >
+                <span className="visually-hidden">Loading...</span>
+              </Spinner>
+            ) : (
+              <ArrowUpRightCircle />
+            )}
           </Button>
         </div>
       </Form>
