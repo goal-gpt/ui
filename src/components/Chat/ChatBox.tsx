@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useRef } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 
 import { QueryStatus } from "../../hooks/useChat";
-import { Loading } from "../Loading";
+import { Status } from "../Status";
 import styles from "./ChatBox.module.scss";
 import { ChatContext } from "./ChatContext";
 import ChatForm from "./ChatForm";
@@ -57,7 +57,7 @@ function ChatBox() {
             </Col>
           </Row>
         ) : null}
-        {showSpinner ? <Loading /> : null}
+        {showSpinner ? <Status /> : null}
         <div className={`${styles.chatHistoryContainer}`}>
           {chatHistory.map((chat, i) => (
             <ChatMessage key={i} message={chat} />

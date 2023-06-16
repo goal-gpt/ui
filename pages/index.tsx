@@ -6,6 +6,7 @@ import { Col, Container, Row } from "react-bootstrap";
 
 import { ChatForm } from "../src/components/Chat";
 import { Plan } from "../src/components/Plan";
+import { Status } from "../src/components/Status";
 
 function Main() {
   const router = useRouter();
@@ -28,6 +29,7 @@ function Main() {
             </div>
             <div className="flex-grow-1 overflow-auto my-1">
               <Plan />
+              <Status />
             </div>
             <div className="d-flex flex-column">
               <ChatForm query={query} />
