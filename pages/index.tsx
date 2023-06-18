@@ -4,7 +4,7 @@ import { NextSeo } from "next-seo";
 import React from "react";
 import { Col, Container, Row } from "react-bootstrap";
 
-import { ChatForm } from "../src/components/Chat";
+import { ChatBox, ChatForm } from "../src/components/Chat";
 import { Plan } from "../src/components/Plan";
 import { Status } from "../src/components/Status";
 
@@ -27,6 +27,7 @@ function Main() {
                 fill
               />
             </div>
+            <ChatBox />
             <div className="flex-grow-1 overflow-auto my-1">
               <Plan />
               <Status />

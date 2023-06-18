@@ -14,10 +14,14 @@ export interface ChatMessage {
   content: string;
 }
 interface Props {
-  message: ChatMessage;
+  message?: ChatMessage;
 }
 
 export function ChatMessage({ message }: Props) {
+  if (!message) {
+    return null;
+  }
+
   const { role, content } = message;
   const roleClass = role === ChatRole.AI ? "chatMessageAI" : "chatMessageHuman";
 

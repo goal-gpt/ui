@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { Card, Container, ListGroup } from "react-bootstrap";
 import { CaretDown, CaretUp } from "react-bootstrap-icons";
 
+import { PlanType } from "../../hooks/useChat";
 import { ChatContext } from "../Chat";
 import styles from "./Plan.module.scss";
 
@@ -25,7 +26,7 @@ export function processSentences(sentences: string[]) {
       return sentence;
     }
     // check if the sentence ends in a punctuation
-    else if (/[.!?]$/.test(sentence)) {
+    if (/[.!?]$/.test(sentence)) {
       return sentence;
     } else {
       // add a "." at the end if there's no punctuation
@@ -38,7 +39,7 @@ export function processSentences(sentences: string[]) {
 
 export function Step({ step, index, expanded, setExpanded }: StepProps) {
   const isOpen = expanded.has(index);
-  const [firstSentence, ...rest] = step.action.split(/[.!?]/);
+  const [firstSentence, ...rest] = step.action.split(/(?<=[.!?])\s+/);
 
   const handleClick = () => {
     if (rest.length === 0) {
@@ -67,7 +68,7 @@ export function Step({ step, index, expanded, setExpanded }: StepProps) {
         aria-expanded={isOpen}
       >
         <p className="my-0 text-neutral-dark">
-          {`Step ${index}: ${firstSentence}. `}
+          {`Step ${index}: ${firstSentence} `}
           {remainingSentences && (isOpen ? <CaretDown /> : <CaretUp />)}
         </p>
 
@@ -91,6 +92,15 @@ export function Step({ step, index, expanded, setExpanded }: StepProps) {
   );
 }
 
+const isValidPlan = (plan: PlanType | null) => {
+  const isNullOrUndefined = !plan;
+  const isEmptyObject = !isNullOrUndefined && Object.keys(plan).length === 0;
+  const hasEmptyGoalAndSteps =
+    !isNullOrUndefined && plan.goal === "" && plan.steps?.length === 0;
+
+  return !isNullOrUndefined && !isEmptyObject && !hasEmptyGoalAndSteps;
+};
+
 export function Plan() {
   const chatContext = useContext(ChatContext);
   const { currentPlan } = chatContext || {
@@ -103,7 +113,15 @@ export function Plan() {
     setExpanded(new Set<number>());
   }, [currentPlan?.steps]);
 
-  if (!currentPlan || (!currentPlan?.goal && currentPlan.steps?.length === 0)) {
+  if (!isValidPlan(currentPlan)) {
+    return null;
+  }
+
+  if (
+    !currentPlan ||
+    Object.keys(currentPlan).length === 0 ||
+    (currentPlan?.goal === "" && currentPlan.steps?.length === 0)
+  ) {
     return <></>;
   }
 
@@ -125,6 +143,7 @@ export function Plan() {
               <ListGroup variant="flush">
                 {currentPlan.steps.map((step) => (
                   <Step
+                    key={step.number}
                     step={step}
                     index={step.number}
                     expanded={expanded}
