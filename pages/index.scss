@@ -135,6 +135,12 @@ main {
   overflow-x: hidden;
 }
 
+@media screen and (max-width: 768px) {
+  .mainContainer {
+    height: 85vh;
+  }
+}
+
 .spinner-grow {
   animation: spinner-grow 2s linear infinite;
 }
