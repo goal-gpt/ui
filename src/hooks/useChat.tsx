@@ -82,9 +82,9 @@ export function useChat() {
       }
     },
     onSuccess: async (res: Response) => {
-      const { chat: chatID, text, question, plan } = await res.json();
+      const { chat: chatID, text, plan } = await res.json();
 
-      const content = question ? text + "\n" + question : text;
+      const content = text;
 
       if (plan) {
         setCurrentPlan(plan as PlanType);

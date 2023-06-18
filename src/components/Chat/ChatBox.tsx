@@ -2,18 +2,15 @@ import React, { useContext, useEffect, useRef } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 
 import { QueryStatus } from "../../hooks/useChat";
-import { Status } from "../Status";
 import styles from "./ChatBox.module.scss";
 import { ChatContext } from "./ChatContext";
-import ChatForm from "./ChatForm";
 import { ChatMessage, ChatRole } from "./ChatMessage";
 
 function ChatBox() {
   // The content of the user input message box
   const chatContext = useContext(ChatContext);
-  const { chatHistory, sendMessage, chatStatus } = chatContext || {
+  const { chatHistory, chatStatus } = chatContext || {
     chatHistory: [],
-    sendMessage: () => "",
     chatStatus: QueryStatus.Idle,
   };
 
@@ -25,23 +22,32 @@ function ChatBox() {
   };
 
   // Effects
+  // TODO: decide if we want this back
   // Send initial message to get Sera's introduction
-  useEffect(() => {
-    if (chatHistory.length === 0) {
-      sendMessage("");
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (chatHistory.length === 0) {
+  //     sendMessage("");
+  //   }
+  // }, []);
 
   // Scroll to bottom when chat changes
   useEffect(() => {
     scrollToBottom();
   }, [chatHistory, chatStatus]);
 
-  const showSpinner =
-    (chatHistory.at(-1)?.role === ChatRole.Human &&
-      chatStatus === QueryStatus.Loading) ||
-    (chatHistory.length === 0 && chatStatus === QueryStatus.Idle);
   const error = chatStatus === QueryStatus.Error;
+
+  const getLastAIChat = () => {
+    if (chatHistory.length === 0) {
+      return;
+    }
+
+    const lastAIChat = chatHistory
+      .slice()
+      .reverse()
+      .find((chat) => chat.role === ChatRole.AI);
+    return lastAIChat;
+  };
 
   return (
     <Container className={`${styles.chatContainer}`}>
@@ -57,24 +63,14 @@ function ChatBox() {
             </Col>
           </Row>
         ) : null}
-        {showSpinner ? <Status /> : null}
         <div className={`${styles.chatHistoryContainer}`}>
-          {chatHistory.map((chat, i) => (
-            <ChatMessage key={i} message={chat} />
-          ))}
-        </div>
-      </Row>
-      <Row className="mt-3">
-        {/* TODO: implement suggestions here */}
-        {/* <div className={`${styles.suggestions}`}>Hi!</div> */}
-        <ChatForm />
-        <div>
-          <p className="text-center me-4">
-            <small>
-              Sera tries her best to ensure accuracy - please verify her
-              information for your peace of mind.
-            </small>
-          </p>
+          {/* For now, just show the last AI message */}
+          {chatHistory.length > 0 ? (
+            <ChatMessage
+              key={chatHistory.length - 1}
+              message={getLastAIChat()}
+            />
+          ) : null}
         </div>
       </Row>
     </Container>
