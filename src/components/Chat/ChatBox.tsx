@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef } from "react";
+import React, { useContext, useRef } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 
 import { QueryStatus } from "../../hooks/useChat";
@@ -17,9 +17,9 @@ function ChatBox() {
   const bottomRef = useRef<HTMLDivElement>(null);
 
   // Helper functions
-  const scrollToBottom = () => {
-    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
+  // const scrollToBottom = () => {
+  //   bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+  // };
 
   // Effects
   // TODO: decide if we want this back
@@ -31,9 +31,9 @@ function ChatBox() {
   // }, []);
 
   // Scroll to bottom when chat changes
-  useEffect(() => {
-    scrollToBottom();
-  }, [chatHistory, chatStatus]);
+  // useEffect(() => {
+  //   scrollToBottom();
+  // }, [chatHistory, chatStatus]);
 
   const error = chatStatus === QueryStatus.Error;
 
