@@ -102,7 +102,7 @@ export function Step({ step, index, expanded, setExpanded }: StepProps) {
   );
 }
 
-export const isValidPlan = (plan: PlanType | null): plan is PlanType => {
+const isValidPlan = (plan: PlanType | null): plan is PlanType => {
   const isNullOrUndefined = !plan;
   const isEmptyObject = !isNullOrUndefined && Object.keys(plan).length === 0;
   const hasEmptyGoalAndSteps =
