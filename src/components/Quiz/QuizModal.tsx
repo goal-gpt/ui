@@ -4,7 +4,6 @@ import { Alert } from "react-bootstrap";
 import Modal from "react-bootstrap/Modal";
 
 import { CardItemData } from "../Card";
-import { FeedbackForm } from "../Feedback";
 import { QuizForm } from "./QuizForm";
 import styles from "./QuizModal.module.scss";
 
@@ -112,7 +111,6 @@ export function QuizModal({ card, show, handleClose }: QuizModalProps) {
             </p>
           )}
         </Alert>
-        <FeedbackForm quiz={card?.link} />
       </Modal.Body>
     </Modal>
   );
