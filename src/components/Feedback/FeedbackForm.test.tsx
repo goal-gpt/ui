@@ -1,155 +1,158 @@
 import "@testing-library/jest-dom/extend-expect";
 
-import { fireEvent, render, waitFor } from "@testing-library/react";
+import { render, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import React from "react";
 
 import { logger, sendEmailJS } from "../../utils";
-import { FeedbackForm, FeedbackFormProps } from "./FeedbackForm";
+import { FeedbackForm } from "./FeedbackForm";
 
-jest.mock("../../utils/email");
-const emailjsMock = sendEmailJS as jest.MockedFunction<typeof sendEmailJS>;
-
-jest.mock("../../utils/logger");
-const loggerMock = logger.info as jest.MockedFunction<typeof logger.info>;
+jest.mock("../../utils");
 
 describe("FeedbackForm", () => {
-  const defaultProps: FeedbackFormProps = {
-    quiz: "sampleQuiz",
-  };
-  const OLD_ENV = process.env;
-
   beforeEach(() => {
-    emailjsMock.mockReset();
-    loggerMock.mockReset();
-    jest.resetModules();
-    process.env = { ...OLD_ENV }; // Make a copy
+    (sendEmailJS as jest.Mock).mockResolvedValue({ status: 200, text: "OK" });
   });
 
-  afterAll(() => {
-    process.env = OLD_ENV; // Restore old environment
-    jest.clearAllMocks();
+  afterEach(() => {
+    jest.resetAllMocks();
   });
 
   it("should render the form correctly", () => {
-    const { getByLabelText, getByText } = render(
-      <FeedbackForm {...defaultProps} />
+    const { getByRole } = render(<FeedbackForm />);
+
+    expect(
+      getByRole("button", { name: /Share your feedback!/i })
+    ).toBeInTheDocument();
+  });
+
+  it("handles user input in textareas", async () => {
+    const { getByRole } = render(<FeedbackForm />);
+
+    await userEvent.click(
+      getByRole("button", { name: /Share your feedback!/i })
     );
 
-    expect(getByLabelText("Share your feedback")).toBeInTheDocument();
-    expect(getByText("Submit")).toBeInTheDocument();
-  });
-
-  it("handles user input", async () => {
-    const { getByRole } = render(<FeedbackForm {...defaultProps} />);
-    const input = getByRole("textbox");
-
-    await userEvent.type(input, "This is my feedback");
-    expect(input).toHaveValue("This is my feedback");
-  });
-
-  it("should toggle thumbs up and thumbs down correctly", () => {
-    const { getByRole } = render(<FeedbackForm quiz="test" />);
-
-    const thumbsUp = getByRole("button", { name: /hand-thumbs-up/i });
-    const thumbsDown = getByRole("button", { name: /hand-thumbs-down/i });
-
-    // Clicking thumbs up
-    fireEvent.click(thumbsUp);
-    const thumbsUpFill = getByRole("button", { name: /hand-thumbs-up-fill/i });
-    expect(thumbsUpFill).toBeInTheDocument();
-    expect(thumbsDown).toBeInTheDocument();
-
-    // Clicking thumbs up fill (to unset it)
-    fireEvent.click(thumbsUpFill);
-    expect(
-      getByRole("button", { name: /hand-thumbs-up/i })
-    ).toBeInTheDocument();
-    expect(thumbsUpFill).not.toBeInTheDocument();
-    expect(thumbsDown).toBeInTheDocument();
-
-    // Clicking thumbs down
-    fireEvent.click(thumbsDown);
-    const thumbsDownFill = getByRole("button", {
-      name: /hand-thumbs-down-fill/i,
+    const commentInput = getByRole("textbox", {
+      name: /Share any comments.../i,
     });
-    expect(
-      getByRole("button", { name: /hand-thumbs-up/i })
-    ).toBeInTheDocument();
-    expect(thumbsDown).not.toBeInTheDocument();
-    expect(thumbsDownFill).toBeInTheDocument();
+    await userEvent.type(commentInput, "Great feedback!");
+    expect(commentInput).toHaveValue("Great feedback!");
 
-    // Clicking thumbs down fill (to unset it)
-    fireEvent.click(thumbsDownFill);
-    expect(
-      getByRole("button", { name: /hand-thumbs-up/i })
-    ).toBeInTheDocument();
-    expect(
-      getByRole("button", { name: /hand-thumbs-down/i })
-    ).toBeInTheDocument();
-    expect(thumbsDownFill).not.toBeInTheDocument();
-    expect(thumbsUpFill).not.toBeInTheDocument();
+    const emailInput = getByRole("textbox", { name: /...and your email!/i });
+    await userEvent.type(emailInput, "test@example.com");
+    expect(emailInput).toHaveValue("test@example.com");
   });
 
-  it("should allow submitting the form", async () => {
-    const { getByLabelText, getByRole, getByText, queryByText } = render(
-      <FeedbackForm quiz="test" />
+  it("should toggle thumbs up and thumbs down correctly", async () => {
+    const { getByLabelText, getByRole } = render(<FeedbackForm />);
+    await userEvent.click(
+      getByRole("button", { name: /Share your feedback!/i })
     );
 
-    const thumbsUp = getByRole("button", { name: /thumbs-up/i });
-    const comments = getByLabelText("Share your feedback");
-    const submitButton = getByText("Submit");
+    const thumbsUp = getByLabelText(/hand-thumbs-up/i);
+    const thumbsDown = getByLabelText(/hand-thumbs-down/i);
 
-    fireEvent.click(thumbsUp);
-    userEvent.type(comments, "This is a test comment.");
-    fireEvent.click(submitButton);
+    expect(thumbsUp).toBeInTheDocument();
+    expect(thumbsDown).toBeInTheDocument();
 
-    await waitFor(() => {
-      expect(queryByText("This is a test comment.")).not.toBeInTheDocument();
+    await userEvent.click(thumbsUp);
+    expect(getByLabelText(/hand-thumbs-up-fill/i)).toBeInTheDocument();
+    expect(getByLabelText(/hand-thumbs-down/i)).toBeInTheDocument();
+
+    await userEvent.click(thumbsUp); // Clicking thumbs up fill to unset it
+    expect(getByLabelText(/hand-thumbs-up/i)).toBeInTheDocument();
+    expect(getByLabelText(/hand-thumbs-down/i)).toBeInTheDocument();
+
+    await userEvent.click(thumbsDown);
+    expect(getByLabelText(/hand-thumbs-down-fill/i)).toBeInTheDocument();
+    expect(getByLabelText(/hand-thumbs-up/i)).toBeInTheDocument();
+
+    await userEvent.click(thumbsDown); // Clicking thumbs down fill to unset it
+    expect(getByLabelText(/hand-thumbs-down/i)).toBeInTheDocument();
+    expect(getByLabelText(/hand-thumbs-up/i)).toBeInTheDocument();
+  });
+
+  it("should send email with feedback", async () => {
+    const { getByLabelText, getByRole } = render(<FeedbackForm />);
+    await userEvent.click(
+      getByRole("button", { name: /Share your feedback!/i })
+    );
+
+    await userEvent.click(getByLabelText(/hand-thumbs-up/i));
+    await userEvent.type(
+      getByLabelText(/Share any comments.../i),
+      "Great feedback!"
+    );
+    await userEvent.type(
+      getByLabelText(/...and your email!/i),
+      "test@example.com"
+    );
+    await userEvent.click(getByRole("button", { name: /Submit/i }));
+
+    expect(sendEmailJS).toHaveBeenCalledTimes(1);
+    expect(sendEmailJS).toHaveBeenCalledWith({
+      rating: "up",
+      comments: "Great feedback!",
+      email: "test@example.com",
     });
   });
 
-  it("should display a spinner while sending an email and clear the form on success", async () => {
-    process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID = "test_service";
-    process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID = "test_template";
-    process.env.NEXT_PUBLIC_EMAILJS_USER_ID = "test_id";
-    emailjsMock.mockResolvedValue({ status: 200, text: "OK" });
+  it("should show a loading spinner when sending feedback, clear the form on success and close the form", async () => {
+    const { getByLabelText, getByRole } = render(<FeedbackForm />);
+    await userEvent.click(
+      getByRole("button", { name: /Share your feedback!/i })
+    );
+    await userEvent.click(getByLabelText(/hand-thumbs-up/i));
+    await userEvent.type(
+      getByLabelText(/Share any comments.../i),
+      "Great feedback!"
+    );
+    await userEvent.type(
+      getByLabelText(/...and your email!/i),
+      "test@example.com"
+    );
 
-    const { getByRole, getByLabelText } = render(<FeedbackForm quiz="test" />);
+    userEvent.click(getByRole("button", { name: /Submit/i }));
 
-    const commentsInput = getByLabelText(/share your feedback/i);
-    fireEvent.change(commentsInput, { target: { value: "Great quiz!" } });
-
-    const submitButton = getByRole("button", { name: /submit/i });
-    fireEvent.click(submitButton);
-
-    expect(getByRole("status")).toBeInTheDocument();
-
-    await waitFor(() => {
-      expect(emailjsMock).toHaveBeenCalledTimes(1);
-      expect(emailjsMock).toHaveBeenCalledWith({
-        comments: "Great quiz!",
-        quiz: "test",
-        rating: "none",
-      });
-    });
-    expect(loggerMock).toHaveBeenCalledWith("SUCCESS!", 200, "OK");
-    await waitFor(() => expect(commentsInput).toHaveValue(""));
+    await waitFor(() => expect(getByRole("status")).toBeInTheDocument());
+    expect(getByLabelText(/Share any comments.../i)).toHaveValue("");
+    expect(getByLabelText(/...and your email!/i)).toHaveValue("");
+    expect(getByLabelText(/hand-thumbs-up/i)).toBeInTheDocument();
+    await waitFor(() =>
+      expect(
+        getByRole("button", { name: /Share your feedback!/i })
+      ).toBeInTheDocument()
+    );
   });
 
   it("should log an error message if sending the email fails", async () => {
-    const error = new Error("Send email failed");
-    emailjsMock.mockRejectedValue(error);
+    (sendEmailJS as jest.Mock).mockRejectedValue(
+      new Error("Send email failed")
+    );
+    const { getByLabelText, getByRole } = render(<FeedbackForm />);
+    await userEvent.click(
+      getByRole("button", { name: /Share your feedback!/i })
+    );
+    await userEvent.click(getByLabelText(/hand-thumbs-up/i));
+    await userEvent.type(
+      getByLabelText(/Share any comments.../i),
+      "Great feedback!"
+    );
+    await userEvent.type(
+      getByLabelText(/...and your email!/i),
+      "test@example.com"
+    );
 
-    const { getByRole, getByLabelText } = render(<FeedbackForm quiz="test" />);
+    userEvent.click(getByRole("button", { name: /Submit/i }));
 
-    const commentsInput = getByLabelText(/share your feedback/i);
-    fireEvent.change(commentsInput, { target: { value: "Great quiz!" } });
-
-    const submitButton = getByRole("button", { name: /submit/i });
-    fireEvent.click(submitButton);
-
-    await waitFor(() => expect(emailjsMock).toHaveBeenCalledTimes(1));
-    expect(loggerMock).toHaveBeenCalledWith("FAILED...", error);
+    await waitFor(() => {
+      expect(getByRole("status")).toBeInTheDocument();
+      expect(sendEmailJS).toHaveBeenCalledTimes(1);
+      expect(logger.info).toHaveBeenCalledWith(
+        "Failed to send feedback...",
+        new Error("Send email failed")
+      );
+    });
   });
 });

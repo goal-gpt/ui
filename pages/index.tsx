@@ -5,6 +5,7 @@ import React from "react";
 import { Col, Container, Row } from "react-bootstrap";
 
 import { ChatBox, ChatForm } from "../src/components/Chat";
+import { FeedbackForm } from "../src/components/Feedback";
 import { Plan } from "../src/components/Plan";
 import { Status } from "../src/components/Status";
 
@@ -34,6 +35,10 @@ function Main() {
             </div>
             <div className="d-flex flex-column">
               <ChatForm query={query} />
+
+              <div className="align-self-center">
+                <FeedbackForm />
+              </div>
             </div>
           </Col>
           <Col md={3} sm={0} className="d-none d-md-flex"></Col>
