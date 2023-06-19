@@ -39,7 +39,8 @@ export function processSentences(sentences: string[]) {
 
 export function Step({ step, index, expanded, setExpanded }: StepProps) {
   const isOpen = expanded.has(index);
-  const [firstSentence, ...rest] = step.action.split(/(?<=[.!?])\s+/);
+
+  const [firstSentence, ...rest] = step.action.split(/\s*(?=[.!?])\s+/);
 
   const handleClick = () => {
     if (rest.length === 0) {
