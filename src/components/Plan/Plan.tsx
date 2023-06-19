@@ -40,7 +40,16 @@ export function processSentences(sentences: string[]) {
 export function Step({ step, index, expanded, setExpanded }: StepProps) {
   const isOpen = expanded.has(index);
 
-  const [firstSentence, ...rest] = step.action.split(/\s*(?=[.!?])\s+/);
+  let adjustedAction = step.action;
+
+  // Add a period at the end if it's not present
+  if (!/[.!?]\s*$/.test(step.action)) {
+    adjustedAction += ".";
+  }
+
+  // Now use match to split into sentences
+  const sentences = adjustedAction.match(/.*?[.!?](?=\s|[A-Z]|$)/g) || [];
+  const [firstSentence, ...rest] = sentences.map((s) => s.trim());
 
   const handleClick = () => {
     if (rest.length === 0) {
