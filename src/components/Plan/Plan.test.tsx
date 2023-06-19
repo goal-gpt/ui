@@ -97,7 +97,7 @@ describe("Plan", () => {
     },
     {
       step: { action: "This sentence has no punctuation at the end" },
-      expectedFirstSentence: "This sentence has no punctuation at the end",
+      expectedFirstSentence: "This sentence has no punctuation at the end.",
     },
     {
       step: {
@@ -110,17 +110,16 @@ describe("Plan", () => {
     {
       step: {
         action:
-          "This is a sentence with etc.) in the middle. This is another sentence.",
+          "This is (a sentence with etc.) in the middle. This is another sentence.",
       },
-      expectedFirstSentence: "This is a sentence with etc.\\) in the middle.",
+      expectedFirstSentence: "This is (a sentence with etc.) in the middle.",
     },
     {
       step: {
         action:
           "This is a sentence with parentheses (like this). This is another sentence.",
       },
-      expectedFirstSentence:
-        "This is a sentence with parentheses \\(like this\\).",
+      expectedFirstSentence: "This is a sentence with parentheses (like this).",
     },
     {
       step: {
@@ -149,7 +148,7 @@ describe("Plan", () => {
 
       // Check that the first sentence is rendered correctly
       expect(
-        getByText(new RegExp(`Step 0: ${testCase.expectedFirstSentence}`))
+        getByText(`Step 0: ${testCase.expectedFirstSentence}`)
       ).toBeTruthy();
     });
   });
