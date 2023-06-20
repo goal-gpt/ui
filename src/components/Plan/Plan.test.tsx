@@ -1,8 +1,8 @@
-import { fireEvent, render } from "@testing-library/react";
 import React from "react";
 
+import { Step } from "../../hooks/useChat";
 import { renderWithChatContext } from "../../utils";
-import { Plan, processSentences, Step } from "./Plan";
+import { Plan } from "./Plan";
 
 describe("Plan", () => {
   afterEach(() => {
@@ -17,7 +17,7 @@ describe("Plan", () => {
     let { queryByText } = renderWithChatContext(<Plan />, {
       currentPlan: {
         goal: "",
-        steps: [] as Array<{ number: number; action: string }>,
+        steps: [] as Array<Step>,
       },
     });
     let steps = queryByText(/1/i);
@@ -26,7 +26,7 @@ describe("Plan", () => {
     ({ queryByText } = renderWithChatContext(<Plan />, {
       currentPlan: {
         goal: "",
-        steps: [] as Array<{ number: number; action: string }>,
+        steps: [] as Array<Step>,
       },
     }));
     steps = queryByText(/1/i);
@@ -37,7 +37,7 @@ describe("Plan", () => {
     const { queryByText } = renderWithChatContext(<Plan />, {
       currentPlan: {
         goal: "Test goal",
-        steps: [] as Array<{ number: number; action: string }>,
+        steps: [] as Array<Step>,
       },
     });
     const goal = queryByText(/Test goal/i);
@@ -50,132 +50,51 @@ describe("Plan", () => {
     const { getByText } = renderWithChatContext(<Plan />, {
       currentPlan: {
         goal: "Test Goal",
-        steps: [{ number: 1, action: "Test action. Rest of action." }],
+        steps: [
+          {
+            number: 1,
+            action: { name: "Test action.", description: "Rest of action." },
+          },
+        ],
       },
     });
     const goal = getByText(/Test Goal/i);
     const step = getByText(/Test action./i);
+    const description = getByText(/Rest of action./i);
     expect(goal).toBeInTheDocument();
     expect(step).toBeInTheDocument();
+    expect(description).toBeInTheDocument();
   });
 
-  it("handles click on action to show the rest of the action", () => {
+  it("shows all the steps in the plan", () => {
     const { getByText } = renderWithChatContext(<Plan />, {
       currentPlan: {
         goal: "Test Goal",
-        steps: [{ number: 1, action: "Test action. Rest of action." }],
+        steps: [
+          {
+            number: 1,
+            action: {
+              name: "Test action 1.",
+              description: "Rest of action 1.",
+            },
+          },
+          {
+            number: 2,
+            action: {
+              name: "Test action 2.",
+              description: "Rest of action 2.",
+            },
+          },
+        ],
       },
     });
-    const action = getByText(/Test action./i);
-    fireEvent.click(action);
-    const restOfAction = getByText(/Rest of action./i);
-    expect(restOfAction).toBeInTheDocument();
-  });
-
-  const testCases = [
-    {
-      step: { action: "This is a single sentence." },
-      expectedFirstSentence: "This is a single sentence.",
-    },
-    {
-      step: {
-        action: "This is the first sentence. This is the second sentence.",
-      },
-      expectedFirstSentence: "This is the first sentence.",
-    },
-    {
-      step: { action: "Is this a question? Yes, it is!" },
-      expectedFirstSentence: "Is this a question?",
-    },
-    {
-      step: { action: "This sentence ends with an exclamation point!" },
-      expectedFirstSentence: "This sentence ends with an exclamation point!",
-    },
-    {
-      step: { action: "This sentence ends with a question mark?" },
-      expectedFirstSentence: "This sentence ends with a question mark?",
-    },
-    {
-      step: { action: "This sentence has no punctuation at the end" },
-      expectedFirstSentence: "This sentence has no punctuation at the end.",
-    },
-    {
-      step: {
-        action:
-          "These sentences have no spaces after the punctuation.This is the second sentence.This is the third sentence.",
-      },
-      expectedFirstSentence:
-        "These sentences have no spaces after the punctuation.",
-    },
-    {
-      step: {
-        action:
-          "This is (a sentence with etc.) in the middle. This is another sentence.",
-      },
-      expectedFirstSentence: "This is (a sentence with etc.) in the middle.",
-    },
-    {
-      step: {
-        action:
-          "This is a sentence with parentheses (like this). This is another sentence.",
-      },
-      expectedFirstSentence: "This is a sentence with parentheses (like this).",
-    },
-    {
-      step: {
-        action:
-          "What about sentences with quotation marks? 'This is a quote.' This is another sentence.",
-      },
-      expectedFirstSentence: "What about sentences with quotation marks?",
-    },
-  ];
-
-  testCases.forEach((testCase, index) => {
-    it(`renders first sentence correctly for test case ${index}`, () => {
-      // Mock the setExpanded function
-      const setExpanded = jest.fn();
-      const expanded = new Set<number>();
-
-      // Render the Step component with the test step
-      const { getByText } = render(
-        <Step
-          step={testCase.step}
-          index={0}
-          expanded={expanded}
-          setExpanded={setExpanded}
-        />
-      );
-
-      // Check that the first sentence is rendered correctly
-      expect(
-        getByText(`Step 0: ${testCase.expectedFirstSentence}`)
-      ).toBeTruthy();
-    });
-  });
-});
-
-describe("processSentences function", () => {
-  it("should return undefined for empty array", () => {
-    expect(processSentences([])).toBeUndefined();
-  });
-
-  it("should return sentences as they are if they end with punctuation", () => {
-    const sentences = ["Hello!", "How are you?"];
-    expect(processSentences(sentences)).toBe("Hello! How are you?");
-  });
-
-  it("should add a period at the end of sentences that do not end with punctuation", () => {
-    const sentences = ["Hello", "How are you"];
-    expect(processSentences(sentences)).toBe("Hello. How are you.");
-  });
-
-  it("should handle a mix of sentences with and without ending punctuation", () => {
-    const sentences = ["Hello!", "How are you"];
-    expect(processSentences(sentences)).toBe("Hello! How are you.");
-  });
-
-  it("should handle empty strings correctly", () => {
-    const sentences = ["Hello!", "", "How are you"];
-    expect(processSentences(sentences)).toBe("Hello! How are you.");
+    const step1 = getByText(/Test action 1./i);
+    const description1 = getByText(/Rest of action 1./i);
+    const step2 = getByText(/Test action 2./i);
+    const description2 = getByText(/Rest of action 2./i);
+    expect(step1).toBeInTheDocument();
+    expect(description1).toBeInTheDocument();
+    expect(step2).toBeInTheDocument();
+    expect(description2).toBeInTheDocument();
   });
 });

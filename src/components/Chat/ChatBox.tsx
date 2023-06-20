@@ -1,7 +1,6 @@
 import React, { useContext, useRef } from "react";
-import { Col, Container, Row } from "react-bootstrap";
+import { Container, Row } from "react-bootstrap";
 
-import { QueryStatus } from "../../hooks/useChat";
 import styles from "./ChatBox.module.scss";
 import { ChatContext } from "./ChatContext";
 import { ChatMessage, ChatRole } from "./ChatMessage";
@@ -9,9 +8,8 @@ import { ChatMessage, ChatRole } from "./ChatMessage";
 function ChatBox() {
   // The content of the user input message box
   const chatContext = useContext(ChatContext);
-  const { chatHistory, chatStatus } = chatContext || {
+  const { chatHistory } = chatContext || {
     chatHistory: [],
-    chatStatus: QueryStatus.Idle,
   };
 
   const bottomRef = useRef<HTMLDivElement>(null);
@@ -35,8 +33,6 @@ function ChatBox() {
   //   scrollToBottom();
   // }, [chatHistory, chatStatus]);
 
-  const error = chatStatus === QueryStatus.Error;
-
   const getLastAIChat = () => {
     if (chatHistory.length === 0) {
       return;
@@ -54,15 +50,6 @@ function ChatBox() {
       {/* The order of elements is reversed as we want the chat history to appear from the bottom using flex-direction: column-reverse*/}
       <Row className={`${styles.chatBox}`} role="log">
         <div ref={bottomRef} style={{ height: 0 }} />
-        {error ? (
-          <Row className="justify-content-center">
-            <Col className="text-center">
-              <p className="text-danger">
-                Sorry, an error occurred. Please try again!
-              </p>
-            </Col>
-          </Row>
-        ) : null}
         <div className={`${styles.chatHistoryContainer}`}>
           {/* For now, just show the last AI message */}
           {chatHistory.length > 0 ? (

@@ -28,14 +28,15 @@ function Main() {
                 fill
               />
             </div>
-            <ChatBox />
+            <div className="flex-grow-2">
+              <ChatBox />
+            </div>
             <div className="flex-grow-1 overflow-auto my-1">
               <Plan />
               <Status />
             </div>
             <div className="d-flex flex-column">
               <ChatForm query={query} />
-
               <div className="align-self-center">
                 <FeedbackForm />
               </div>
