@@ -1,6 +1,6 @@
 import "@testing-library/jest-dom/extend-expect";
 
-import { render, waitFor } from "@testing-library/react";
+import { act, render, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import React from "react";
 
@@ -29,10 +29,13 @@ describe("FeedbackForm", () => {
   it("handles user input in textareas", async () => {
     const { getByRole } = render(<FeedbackForm />);
 
-    await userEvent.click(
-      getByRole("button", { name: /Share your feedback!/i })
-    );
+    act(() => {
+      userEvent.click(getByRole("button", { name: /Share your feedback!/i }));
+    });
 
+    await waitFor(() => {
+      expect(getByRole("button", { name: /Submit/i })).toBeInTheDocument();
+    });
     const commentInput = getByRole("textbox", {
       name: /Share any comments.../i,
     });
@@ -88,8 +91,12 @@ describe("FeedbackForm", () => {
       getByLabelText(/...and your email!/i),
       "test@example.com"
     );
-    await userEvent.click(getByRole("button", { name: /Submit/i }));
 
+    act(() => {
+      userEvent.click(getByRole("button", { name: /Submit/i }));
+    });
+
+    await waitFor(() => expect(getByRole("status")).toBeInTheDocument());
     expect(sendEmailJS).toHaveBeenCalledTimes(1);
     expect(sendEmailJS).toHaveBeenCalledWith({
       rating: "up",
@@ -113,7 +120,9 @@ describe("FeedbackForm", () => {
       "test@example.com"
     );
 
-    userEvent.click(getByRole("button", { name: /Submit/i }));
+    act(() => {
+      userEvent.click(getByRole("button", { name: /Submit/i }));
+    });
 
     await waitFor(() => expect(getByRole("status")).toBeInTheDocument());
     expect(getByLabelText(/Share any comments.../i)).toHaveValue("");
@@ -144,7 +153,9 @@ describe("FeedbackForm", () => {
       "test@example.com"
     );
 
-    userEvent.click(getByRole("button", { name: /Submit/i }));
+    act(() => {
+      userEvent.click(getByRole("button", { name: /Submit/i }));
+    });
 
     await waitFor(() => {
       expect(getByRole("status")).toBeInTheDocument();

@@ -21,7 +21,10 @@ export enum QueryStatus {
 
 export type Step = {
   number: number;
-  action: string;
+  action: {
+    name: string;
+    description: string;
+  };
 };
 
 export type PlanType = {
