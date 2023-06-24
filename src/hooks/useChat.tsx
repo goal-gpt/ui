@@ -24,6 +24,7 @@ export type Step = {
   action: {
     name: string;
     description: string;
+    ideas: Record<string, string>;
   };
 };
 

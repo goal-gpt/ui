@@ -12,13 +12,20 @@ interface StepProps {
 }
 
 export function StepComponent({ step, index }: StepProps) {
-  const { name, description } = step.action;
+  const { name, description, ideas } = step.action;
 
   return (
     <>
       <ListGroup.Item className="border-none" key={name}>
         <h6 className="my-1 text-neutral-dark">{`Step ${index}: ${name} `}</h6>
         {description && <p className="mb-0">{description}</p>}
+        {ideas && (
+          <ul className="mb-0">
+            {Object.entries(ideas).map(([key, value]) => (
+              <li key={key}>{value}</li>
+            ))}
+          </ul>
+        )}
       </ListGroup.Item>
     </>
   );
