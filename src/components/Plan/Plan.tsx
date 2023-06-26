@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import React, { useContext } from "react";
-import { Card, Container, ListGroup } from "react-bootstrap";
+import { Accordion, Card, Container } from "react-bootstrap";
 
 import { PlanType, Step } from "../../hooks/useChat";
 import { ChatContext } from "../Chat";
@@ -11,23 +11,27 @@ interface StepProps {
   index: number;
 }
 
-export function StepComponent({ step, index }: StepProps) {
+export function StepAccordionItem({ step, index }: StepProps) {
   const { name, description, ideas } = step.action;
 
   return (
-    <>
-      <ListGroup.Item className="border-none" key={name}>
-        <h6 className="my-1 text-neutral-dark">{`Step ${index}: ${name} `}</h6>
+    <Accordion.Item className="border-none" eventKey={step.number.toString()}>
+      <Accordion.Header className="my-1">{`Step ${index}: ${name} `}</Accordion.Header>
+      <Accordion.Body>
         {description && <p className="mb-0">{description}</p>}
         {ideas && (
-          <ul className="mb-0">
-            {Object.entries(ideas).map(([key, value]) => (
-              <li key={key}>{value}</li>
-            ))}
-          </ul>
+          <>
+            {/* <br /> */}
+            <h6 className="my-2">✏️ Ideas</h6>
+            <ul className="mb-0">
+              {Object.entries(ideas).map(([key, value]) => (
+                <li key={key}>{value}</li>
+              ))}
+            </ul>
+          </>
         )}
-      </ListGroup.Item>
-    </>
+      </Accordion.Body>
+    </Accordion.Item>
   );
 }
 
@@ -65,15 +69,18 @@ export function Plan() {
           </Card.Header>
           <Card.Body className={`${styles.stepContainer}`}>
             {currentPlan.steps && currentPlan.steps.length > 0 && (
-              <ListGroup variant="flush">
+              <Accordion
+                flush={true}
+                defaultActiveKey={currentPlan.steps[0].number.toString()}
+              >
                 {currentPlan.steps.map((step) => (
-                  <StepComponent
+                  <StepAccordionItem
                     key={step.number}
                     step={step}
                     index={step.number}
                   />
                 ))}
-              </ListGroup>
+              </Accordion>
             )}
           </Card.Body>
         </Card>
