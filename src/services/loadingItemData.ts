@@ -96,13 +96,7 @@ export const loadingItemData: LoadingItemData[] = [
   },
   {
     text: "Setting financial goals allows you to put hopes and dreams into action.",
-    source: "Rebecca Lake",
-    link: "https://www.thebalancemoney.com/how-to-set-savings-and-financial-goals-5095454",
-    type: LoadingItemType.Quote,
-  },
-  {
-    text: "Setting financial goals allows you to put hopes and dreams into action.",
-    source: "Rebecca Lake",
+    source: "The Balance Money",
     link: "https://www.thebalancemoney.com/how-to-set-savings-and-financial-goals-5095454",
     type: LoadingItemType.Quote,
   },
