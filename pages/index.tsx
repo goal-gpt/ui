@@ -40,6 +40,15 @@ function Main() {
               <div className="align-self-center">
                 <FeedbackForm />
               </div>
+              <div className="align-self-center">
+                <p className="my-2 small">
+                  Disclaimer: the information provided on this website is for
+                  general information and educational purposes only and should
+                  not be construed as professional financial advice, legal
+                  advice, tax advice, investment advice, or other professional
+                  advice.
+                </p>
+              </div>
             </div>
           </Col>
           <Col md={3} sm={0} className="d-none d-md-flex"></Col>
