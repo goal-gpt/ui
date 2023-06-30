@@ -32,8 +32,8 @@ function Main() {
               <ChatBox />
             </div>
             <div
-              className="flex-grow-1 overflow-auto my-1"
-              style={{ overflowX: "hidden" }}
+              className="flex-grow-1 my-1"
+              style={{ overflowX: "hidden", overflowY: "auto" }}
             >
               <Plan />
               <Status />
