@@ -28,6 +28,14 @@ export interface Database {
           updated_at?: string;
           user_id?: string | null;
         };
+        Relationships: [
+          {
+            foreignKeyName: "chat_user_id_fkey";
+            columns: ["user_id"];
+            referencedRelation: "users";
+            referencedColumns: ["id"];
+          }
+        ];
       };
       chat_line: {
         Row: {
@@ -51,29 +59,14 @@ export interface Database {
           message?: string | null;
           sender?: string | null;
         };
-      };
-      chat_line_duplicate_public: {
-        Row: {
-          chat: number | null;
-          id: number;
-          inserted_at: string;
-          message: string | null;
-          sender: string | null;
-        };
-        Insert: {
-          chat?: number | null;
-          id?: number;
-          inserted_at?: string;
-          message?: string | null;
-          sender?: string | null;
-        };
-        Update: {
-          chat?: number | null;
-          id?: number;
-          inserted_at?: string;
-          message?: string | null;
-          sender?: string | null;
-        };
+        Relationships: [
+          {
+            foreignKeyName: "chat_line_chat_fkey";
+            columns: ["chat"];
+            referencedRelation: "chat";
+            referencedColumns: ["id"];
+          }
+        ];
       };
       content: {
         Row: {
@@ -112,6 +105,14 @@ export interface Database {
           updated_at?: string;
           user_id?: string | null;
         };
+        Relationships: [
+          {
+            foreignKeyName: "content_user_id_fkey";
+            columns: ["user_id"];
+            referencedRelation: "users";
+            referencedColumns: ["id"];
+          }
+        ];
       };
       document: {
         Row: {
@@ -119,6 +120,7 @@ export interface Database {
           embedding: string | null;
           id: number;
           inserted_at: string;
+          raw_content: string;
           updated_at: string;
         };
         Insert: {
@@ -126,6 +128,7 @@ export interface Database {
           embedding?: string | null;
           id?: number;
           inserted_at?: string;
+          raw_content: string;
           updated_at?: string;
         };
         Update: {
@@ -133,8 +136,17 @@ export interface Database {
           embedding?: string | null;
           id?: number;
           inserted_at?: string;
+          raw_content?: string;
           updated_at?: string;
         };
+        Relationships: [
+          {
+            foreignKeyName: "document_content_fkey";
+            columns: ["content"];
+            referencedRelation: "content";
+            referencedColumns: ["id"];
+          }
+        ];
       };
       plan: {
         Row: {
@@ -164,6 +176,14 @@ export interface Database {
           updated_at?: string;
           user_id?: string | null;
         };
+        Relationships: [
+          {
+            foreignKeyName: "plan_user_id_fkey";
+            columns: ["user_id"];
+            referencedRelation: "users";
+            referencedColumns: ["id"];
+          }
+        ];
       };
       profile: {
         Row: {
@@ -199,13 +219,35 @@ export interface Database {
           updated_at?: string;
           username?: string | null;
         };
+        Relationships: [
+          {
+            foreignKeyName: "profile_id_fkey";
+            columns: ["id"];
+            referencedRelation: "users";
+            referencedColumns: ["id"];
+          }
+        ];
       };
     };
     Views: {
       [_ in never]: never;
     };
     Functions: {
-      [_ in never]: never;
+      match_documents: {
+        Args: {
+          query_embedding: string;
+          match_threshold: number;
+          match_count: number;
+        };
+        Returns: {
+          id: number;
+          content: number;
+          raw_content: string;
+          similarity: number;
+          link: string;
+          title: string;
+        }[];
+      };
     };
     Enums: {
       [_ in never]: never;

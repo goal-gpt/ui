@@ -71,7 +71,7 @@ export const loadingItemData: LoadingItemData[] = [
     type: LoadingItemType.Fact,
   },
   {
-    text: '"Financial literacy" means "a  combination of awareness, knowledge, skills, attitudes and behaviour necessary to make sound financial decisions and ultimately achieve individual financial well-being."',
+    text: '"Financial literacy" means "a combination of awareness, knowledge, skills, attitudes and behaviour necessary to make sound financial decisions and ultimately achieve individual financial well-being."',
     source: "OECD",
     link: "https://www.oecd.org/financial/education/oecd-infe-2020-international-survey-of-adult-financial-literacy.pdf",
     type: LoadingItemType.Fact,
