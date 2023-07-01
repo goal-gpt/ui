@@ -31,6 +31,7 @@ export type Step = {
 export type PlanType = {
   goal: string;
   steps: Step[];
+  links?: string[];
 };
 
 export interface ChatHook {
@@ -86,12 +87,16 @@ export function useChat() {
       }
     },
     onSuccess: async (res: Response) => {
-      const { chat: chatID, text, plan } = await res.json();
+      const { chat: chatID, text, plan, links } = await res.json();
 
       const content = text;
 
       if (plan) {
-        setCurrentPlan(plan as PlanType);
+        let planObj = plan;
+        if (links) {
+          planObj = { ...plan, links };
+        }
+        setCurrentPlan(planObj as PlanType);
       }
 
       setChatHistory((curr) => [

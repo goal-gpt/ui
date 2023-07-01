@@ -53,7 +53,11 @@ describe("Plan", () => {
         steps: [
           {
             number: 1,
-            action: { name: "Test action.", description: "Rest of action." },
+            action: {
+              name: "Test action.",
+              description: "Rest of action.",
+              ideas: {},
+            },
           },
         ],
       },
@@ -76,6 +80,7 @@ describe("Plan", () => {
             action: {
               name: "Test action 1.",
               description: "Rest of action 1.",
+              ideas: {},
             },
           },
           {
@@ -83,6 +88,7 @@ describe("Plan", () => {
             action: {
               name: "Test action 2.",
               description: "Rest of action 2.",
+              ideas: {},
             },
           },
         ],
