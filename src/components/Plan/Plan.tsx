@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import Link from "next/link";
 import React, { useContext } from "react";
 import { Accordion, Card, Container } from "react-bootstrap";
 
@@ -81,6 +82,26 @@ export function Plan() {
                   />
                 ))}
               </Accordion>
+            )}
+
+            {currentPlan.links && currentPlan.links.length > 0 && (
+              <div>
+                <h6 className="my-2">🔗 Links</h6>
+                <ul>
+                  {currentPlan.links.map((link) => {
+                    let [title, url] = link.split("](");
+                    title = title.replace(/^\[/, "");
+                    url = url.replace(/\)$/, "");
+                    return (
+                      <li key={link}>
+                        <Link href={url} target="_blank" rel="noreferrer">
+                          {title}
+                        </Link>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
             )}
           </Card.Body>
         </Card>

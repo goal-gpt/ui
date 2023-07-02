@@ -44,10 +44,9 @@ function Main() {
                 <FeedbackForm />
               </div>
               <div className="align-self-center">
-                <p className="my-2 small">
-                  Disclaimer: this website's information is for informational
-                  purposes only and should not be construed as professional
-                  advice.
+                <p className="my-2 small text-center">
+                  Disclaimer: responses are for informational purposes only and
+                  should not be construed as professional advice.
                 </p>
               </div>
             </div>
