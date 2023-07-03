@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import type { AppProps } from "next/app";
 import { Poppins } from "next/font/google";
 import Image from "next/image";
+import Script from "next/script";
 import { DefaultSeo } from "next-seo";
 import React, { useEffect, useState } from "react";
 import { ToastContainer } from "react-toastify";
@@ -53,6 +54,11 @@ export default function App({
         >
           <ChatProvider>
             <main className={`${poppins.className}`}>
+              <Script
+                defer
+                data-domain="eras.fyi"
+                src="https://plausible.io/js/script.outbound-links.tagged-events.js"
+              />
               <DefaultSeo
                 defaultTitle="eras"
                 titleTemplate="eras | %s"
