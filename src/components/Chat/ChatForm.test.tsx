@@ -1,4 +1,4 @@
-import { act, fireEvent, waitFor } from "@testing-library/react";
+import { act, fireEvent } from "@testing-library/react";
 import { useRouter } from "next/router";
 import React from "react";
 
@@ -97,20 +97,15 @@ describe("ChatForm", () => {
       fireEvent.submit(form);
     });
     expect(input).toHaveValue("");
-
-    waitFor(() => {
-      expect(input).toHaveValue("");
-    });
   });
 
   it("updates the URL after the component renders", async () => {
+    const testQuery = "Test query";
     act(() => {
-      renderWithChatContext(<ChatForm />);
+      renderWithChatContext(<ChatForm query={testQuery} />);
     });
-    waitFor(() => {
-      expect(mockPush).toHaveBeenCalledWith("/", undefined, {
-        shallow: true,
-      });
+    expect(mockPush).toHaveBeenCalledWith("/", undefined, {
+      shallow: true,
     });
   });
 });

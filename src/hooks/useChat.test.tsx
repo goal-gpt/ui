@@ -1,16 +1,20 @@
-import { act, renderHook, waitFor } from "@testing-library/react";
+import { act, cleanup, renderHook, waitFor } from "@testing-library/react";
 
 import { ChatRole } from "../components/Chat";
 import { createWrapper } from "../utils";
 import { useChat } from "./useChat";
 
+const originalFetch = global.fetch;
+
 describe("useChat", () => {
+  const testResponse = "Test response";
+
   beforeEach(() => {
     global.fetch = jest.fn(() =>
       Promise.resolve({
         ok: true,
         status: 200,
-        json: () => Promise.resolve({ chat: 42, text: "Test response" }),
+        json: () => Promise.resolve({ chat: 42, text: testResponse }),
         headers: {
           get: () => "application/json",
         },
@@ -19,7 +23,9 @@ describe("useChat", () => {
   });
 
   afterAll(() => {
+    cleanup();
     jest.restoreAllMocks();
+    global.fetch = originalFetch;
   });
 
   it("should initialize with correct defaults", async () => {
@@ -48,13 +54,13 @@ describe("useChat", () => {
       expect(result.current.chatID).toBe(42);
       expect(result.current.chatHistory).toEqual([
         { role: ChatRole.Human, content: message },
-        { role: ChatRole.AI, content: "Test response" },
+        { role: ChatRole.AI, content: testResponse },
       ]);
     });
   });
 
   it("handles errors", async () => {
-    (fetch as jest.Mock).mockImplementationOnce(() =>
+    global.fetch = jest.fn(() =>
       Promise.resolve({
         ok: false,
         status: 400,
@@ -62,7 +68,7 @@ describe("useChat", () => {
           get: () => "application/json",
         },
       })
-    );
+    ) as jest.Mock;
     const message = "Test message";
     const { result } = renderHook(() => useChat(), {
       wrapper: createWrapper(),
@@ -71,7 +77,7 @@ describe("useChat", () => {
       result.current.sendMessage(message);
     });
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(result.current.chatStatus).toBe("error");
       expect(result.current.chatHistory).toEqual([
         { role: ChatRole.Human, content: message },
