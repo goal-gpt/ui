@@ -16,7 +16,6 @@ interface ChatFormProps {
 
 function ChatForm({ query = "" }: ChatFormProps) {
   const [message, setMessage] = useState<string>("");
-  const [disabledText, setDisabledText] = useState<boolean>(false);
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const router = useRouter();
   const chatContext = useContext(ChatContext);
@@ -53,19 +52,6 @@ function ChatForm({ query = "" }: ChatFormProps) {
     resetInput();
   }, [message]);
 
-  // Reset input only after chatStatus changes
-  useEffect(() => {
-    if (
-      chatStatus === QueryStatus.Success ||
-      chatStatus === QueryStatus.Error
-    ) {
-      setMessage("");
-      setDisabledText(false);
-    } else {
-      setDisabledText(true);
-    }
-  }, [chatStatus]);
-
   // Resize textarea to fit content
   useEffect(() => {
     const handleKeyUp = () => {
@@ -93,6 +79,7 @@ function ChatForm({ query = "" }: ChatFormProps) {
     }
 
     const newMessage = message.trim();
+    setMessage("");
     if (newMessage !== "") {
       try {
         plausible("chatmessage"); // Plausible: Track chat message
@@ -127,7 +114,6 @@ function ChatForm({ query = "" }: ChatFormProps) {
               value={message}
               onChange={handleInputChange}
               onKeyDown={handleKeyDown}
-              disabled={disabledText}
             />
           </div>
           <Button

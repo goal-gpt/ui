@@ -96,7 +96,7 @@ describe("ChatForm", () => {
       fireEvent.change(input, { target: { value: "Test message" } });
       fireEvent.submit(form);
     });
-    expect(input).toHaveValue("Test message");
+    expect(input).toHaveValue("");
 
     waitFor(() => {
       expect(input).toHaveValue("");
