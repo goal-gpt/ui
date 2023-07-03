@@ -1,4 +1,5 @@
 import { useRouter } from "next/router";
+import { usePlausible } from "next-plausible";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { Container, Form, Spinner } from "react-bootstrap";
 import { ArrowUpRightCircle } from "react-bootstrap-icons";
@@ -22,6 +23,7 @@ function ChatForm({ query = "" }: ChatFormProps) {
     sendMessage: () => "",
     chatStatus: QueryStatus.Idle,
   };
+  const plausible = usePlausible();
 
   // Helper functions
   const resetInput = () => {
@@ -80,6 +82,7 @@ function ChatForm({ query = "" }: ChatFormProps) {
     setMessage("");
     if (newMessage !== "") {
       try {
+        plausible("chatmessage"); // Plausible: Track chat message
         sendMessage(newMessage);
       } catch (err) {
         logger.error(`Error while sending message: ${err}`);
@@ -99,11 +102,7 @@ function ChatForm({ query = "" }: ChatFormProps) {
 
   return (
     <Container>
-      <Form
-        className="plausible-event-name=chatmessage"
-        onSubmit={handleFormSubmit}
-        role="form"
-      >
+      <Form onSubmit={handleFormSubmit} role="form">
         <div className={styles.chatFormContainer}>
           <div className={styles.textAreaWrapper}>
             <Form.Control
