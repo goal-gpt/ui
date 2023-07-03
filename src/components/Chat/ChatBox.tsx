@@ -52,7 +52,7 @@ function ChatBox() {
         <div ref={bottomRef} style={{ height: 0 }} />
         <div className={`${styles.chatHistoryContainer}`}>
           {/* For now, just show the last AI message */}
-          {chatHistory.length > 0 ? (
+          {chatHistory.length > 0 && chatHistory[0].content !== "" ? (
             <ChatMessage
               key={chatHistory.length - 1}
               message={getLastAIChat()}

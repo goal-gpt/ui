@@ -96,7 +96,11 @@ describe("ChatForm", () => {
       fireEvent.change(input, { target: { value: "Test message" } });
       fireEvent.submit(form);
     });
-    expect(input).toHaveValue("");
+    expect(input).toHaveValue("Test message");
+
+    waitFor(() => {
+      expect(input).toHaveValue("");
+    });
   });
 
   it("updates the URL after the component renders", async () => {

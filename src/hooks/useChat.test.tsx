@@ -71,7 +71,7 @@ describe("useChat", () => {
       result.current.sendMessage(message);
     });
 
-    await waitFor(() => {
+    waitFor(() => {
       expect(result.current.chatStatus).toBe("error");
       expect(result.current.chatHistory).toEqual([
         { role: ChatRole.Human, content: message },
