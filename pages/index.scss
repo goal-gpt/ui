@@ -76,8 +76,7 @@ $theme-colors: map-merge($theme-colors, $custom-colors);
 @import "react-toastify/dist/ReactToastify.min.css";
 
 // Add additional default code here
-body,
-main {
+body {
   margin: 0;
   font-family: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI",
     "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
