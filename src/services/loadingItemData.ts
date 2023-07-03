@@ -101,7 +101,7 @@ export const loadingItemData: LoadingItemData[] = [
     type: LoadingItemType.Quote,
   },
   {
-    text: "In 2022, low financial literacy cost U.S. adults on average $1819.",
+    text: "In 2022, low financial literacy cost U.S. adults on average $1,819.",
     source: "National Financial Educators Council",
     link: "https://www.financialeducatorscouncil.org/financial-illiteracy-costs-2/",
     type: LoadingItemType.Fact,
