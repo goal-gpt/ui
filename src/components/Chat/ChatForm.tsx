@@ -99,7 +99,11 @@ function ChatForm({ query = "" }: ChatFormProps) {
 
   return (
     <Container>
-      <Form onSubmit={handleFormSubmit} role="form">
+      <Form
+        className="plausible-event-name=chatmessage"
+        onSubmit={handleFormSubmit}
+        role="form"
+      >
         <div className={styles.chatFormContainer}>
           <div className={styles.textAreaWrapper}>
             <Form.Control
