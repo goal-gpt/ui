@@ -1,5 +1,5 @@
 import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import React from "react";
 
 import { Header } from "./Header";
@@ -42,8 +42,6 @@ describe("Header component", () => {
     const signOutElement = getByText("Sign out");
     fireEvent.click(signOutElement);
 
-    waitFor(() => {
-      expect(mockSignOut).toHaveBeenCalledTimes(1);
-    });
+    expect(mockSignOut).toHaveBeenCalledTimes(1);
   });
 });

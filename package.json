@@ -76,6 +76,7 @@
     "start": "next start",
     "build": "next build",
     "test": "jest test --silent --watch",
+    "test:verbose": "jest test --watch",
     "test-prod": "jest test --silent --coverage --watchAll=false",
     "format": "prettier --write \"**/*.{js,jsx,json,md,ts,tsx}\"",
     "lint": "next lint",

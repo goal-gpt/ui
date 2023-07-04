@@ -1,7 +1,8 @@
 import { useMutation } from "@tanstack/react-query";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { ChatMessage, ChatRole } from "../components/Chat/ChatMessage";
+import { getLocalStorage, setLocalStorage } from "../services/browserTools";
 import { BASE_FUNCTION_URL, BEARER_TOKEN } from "../services/server";
 import { logger } from "../utils";
 
@@ -28,9 +29,18 @@ export type Step = {
   };
 };
 
+// TODO: add date updated to plan
+// TODO: make links into their own type
 export type PlanType = {
   goal: string;
   steps: Step[];
+  links?: string[];
+};
+
+export type ChatResponse = {
+  chat: number | null; // TODO: convert to -1 for no chat
+  text: string;
+  plan?: PlanType;
   links?: string[];
 };
 
@@ -54,6 +64,46 @@ export function useChat() {
     goal: "",
     steps: [],
   });
+
+  const getInitialResponse = (): ChatResponse => {
+    const storedResponse = getLocalStorage("chatResponse");
+    if (storedResponse) {
+      return JSON.parse(storedResponse);
+    } else {
+      return {
+        chat: null,
+        text: "",
+        plan: {
+          goal: "",
+          steps: [],
+          links: [],
+        },
+      };
+    }
+  };
+
+  const [response, setResponse] = useState<ChatResponse>(getInitialResponse);
+
+  // Effects
+  useEffect(() => {
+    setLocalStorage("chatResponse", JSON.stringify(response));
+    const { chat: chatID, text, plan, links } = response;
+    if (plan) {
+      let planObj: object = plan;
+      if (links) {
+        planObj = { ...plan, links };
+      }
+      setCurrentPlan(planObj as PlanType);
+    }
+    if (text && text !== "") {
+      setChatHistory((curr) => [
+        ...curr,
+        { role: ChatRole.AI, content: text } as const,
+      ]);
+    }
+    setChatID(chatID);
+    setCurrentChat("");
+  }, [response]);
 
   // Mutation for sending a message to the server
   const sendMessageMutation = useMutation({
@@ -88,23 +138,7 @@ export function useChat() {
     },
     onSuccess: async (res: Response) => {
       const { chat: chatID, text, plan, links } = await res.json();
-
-      const content = text;
-
-      if (plan) {
-        let planObj = plan;
-        if (links) {
-          planObj = { ...plan, links };
-        }
-        setCurrentPlan(planObj as PlanType);
-      }
-
-      setChatHistory((curr) => [
-        ...curr,
-        { role: ChatRole.AI, content } as const,
-      ]);
-      setChatID(chatID);
-      setCurrentChat("");
+      setResponse({ chat: chatID, text, plan, links } as ChatResponse);
     },
     onSettled: () => {
       setCurrentChat("");
