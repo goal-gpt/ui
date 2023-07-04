@@ -45,8 +45,8 @@ function Main() {
               </div>
               <div className="align-self-center">
                 <p className="my-2 small text-center">
-                  Disclaimer: responses are for informational purposes only and
-                  should not be construed as professional advice.
+                  Disclaimer: responses provide information only and should not
+                  be taken as professional advice.
                 </p>
               </div>
             </div>
