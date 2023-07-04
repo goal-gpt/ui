@@ -2,11 +2,11 @@ import { act, fireEvent } from "@testing-library/react";
 import { useRouter } from "next/router";
 import React from "react";
 
-import { QueryStatus } from "../../hooks/useChat";
+import { PlanType, QueryStatus } from "../../hooks/useChat";
 import { renderWithChatContext } from "../../utils";
 import ChatForm from "./ChatForm";
 
-const formPlaceholderText = /Refine your plan.../i;
+const formPlaceholderText = /What plan would you like to make\?/i;
 describe("ChatForm", () => {
   let mockPush: jest.Mock;
   let mockSendMessage: jest.Mock;
@@ -86,12 +86,17 @@ describe("ChatForm", () => {
     expect(mockSendMessage).toHaveBeenCalledTimes(0);
   });
 
-  it("clears the input after submitting a message", async () => {
+  it("clears the input and updates placeholder after submitting a message", async () => {
     const { getByPlaceholderText, getByRole } = renderWithChatContext(
-      <ChatForm />
+      <ChatForm />,
+      {
+        currentPlan: { goal: "test goal" } as PlanType,
+        sendMessage: mockSendMessage,
+      }
     );
-    const input = getByPlaceholderText(formPlaceholderText);
+    const input = getByPlaceholderText("Refine your plan...");
     const form = getByRole("form");
+
     act(() => {
       fireEvent.change(input, { target: { value: "Test message" } });
       fireEvent.submit(form);

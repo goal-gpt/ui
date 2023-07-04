@@ -7,6 +7,7 @@ import { ArrowUpRightCircle } from "react-bootstrap-icons";
 import { QueryStatus } from "../../hooks/useChat";
 import { logger } from "../../utils";
 import { Button } from "../Button";
+import { isValidPlan } from "../Plan";
 import { ChatContext } from "./ChatContext";
 import styles from "./ChatForm.module.scss";
 
@@ -19,7 +20,7 @@ function ChatForm({ query = "" }: ChatFormProps) {
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const router = useRouter();
   const chatContext = useContext(ChatContext);
-  const { sendMessage, chatStatus } = chatContext || {
+  const { currentPlan, sendMessage, chatStatus } = chatContext || {
     sendMessage: () => "",
     chatStatus: QueryStatus.Idle,
   };
@@ -108,7 +109,11 @@ function ChatForm({ query = "" }: ChatFormProps) {
             <Form.Control
               as="textarea"
               className={`${styles.textArea}`}
-              placeholder="Refine your plan..."
+              placeholder={
+                isValidPlan(currentPlan || null)
+                  ? "Refine your plan..."
+                  : "What plan would you like to make?"
+              }
               rows={1}
               ref={inputRef}
               value={message}
