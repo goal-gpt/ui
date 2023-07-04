@@ -36,7 +36,7 @@ export function StepAccordionItem({ step, index }: StepProps) {
   );
 }
 
-const isValidPlan = (plan: PlanType | null): plan is PlanType => {
+export const isValidPlan = (plan: PlanType | null): plan is PlanType => {
   const isNullOrUndefined = !plan;
   const isEmptyObject = !isNullOrUndefined && Object.keys(plan).length === 0;
   const hasEmptyGoalAndSteps =
