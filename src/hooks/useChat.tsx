@@ -76,8 +76,8 @@ export function useChat() {
         plan: {
           goal: "",
           steps: [],
+          links: [],
         },
-        links: [],
       };
     }
   };
@@ -85,13 +85,6 @@ export function useChat() {
   const [response, setResponse] = useState<ChatResponse>(getInitialResponse);
 
   // Effects
-  useEffect(() => {
-    const storedResponse = getLocalStorage("chatResponse");
-    if (storedResponse) {
-      setResponse(JSON.parse(storedResponse));
-    }
-  }, []);
-
   useEffect(() => {
     setLocalStorage("chatResponse", JSON.stringify(response));
     const { chat: chatID, text, plan, links } = response;
