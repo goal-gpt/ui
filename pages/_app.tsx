@@ -53,7 +53,7 @@ export default function App({
           initialSession={pageProps.initialSession}
         >
           <PlausibleProvider
-            domain="example.com"
+            domain="eras.fyi"
             enabled
             trackOutboundLinks
             taggedEvents
