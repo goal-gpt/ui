@@ -81,6 +81,7 @@ describe("Plan", () => {
         },
       }
     );
+
     const goal = getByText(edgeResponse.sera.plan.goal);
     const step1 = getByText(edgeResponse.sera.plan.steps[0].action.name, {
       exact: false,
