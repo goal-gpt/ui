@@ -1,5 +1,6 @@
 import React from "react";
 
+import edgeResponse from "../../../__tests__/__mocks__/functions.json";
 import { Step } from "../../hooks/useChat";
 import { renderWithChatContext } from "../../utils";
 import { Plan } from "./Plan";
@@ -71,36 +72,56 @@ describe("Plan", () => {
   });
 
   it("shows all the steps in the plan", () => {
-    const { getByText } = renderWithChatContext(<Plan />, {
-      currentPlan: {
-        goal: "Test Goal",
-        steps: [
-          {
-            number: 1,
-            action: {
-              name: "Test action 1.",
-              description: "Rest of action 1.",
-              ideas: {},
-            },
-          },
-          {
-            number: 2,
-            action: {
-              name: "Test action 2.",
-              description: "Rest of action 2.",
-              ideas: {},
-            },
-          },
-        ],
-      },
+    const { getAllByText, getAllByRole, getByText } = renderWithChatContext(
+      <Plan />,
+      {
+        currentPlan: {
+          ...edgeResponse.sera.plan,
+          links: edgeResponse.sera.links,
+        },
+      }
+    );
+
+    const goal = getByText(edgeResponse.sera.plan.goal);
+    const step1 = getByText(edgeResponse.sera.plan.steps[0].action.name, {
+      exact: false,
     });
-    const step1 = getByText(/Test action 1./i);
-    const description1 = getByText(/Rest of action 1./i);
-    const step2 = getByText(/Test action 2./i);
-    const description2 = getByText(/Rest of action 2./i);
+    const description1 = getByText(
+      edgeResponse.sera.plan.steps[0].action.description
+    );
+    const ideaHeaders = getAllByText(/✏️ Ideas/i);
+    const idea1 = getByText(
+      edgeResponse.sera.plan.steps[0].action.ideas.mostObvious
+    );
+    const idea2 = getByText(
+      edgeResponse.sera.plan.steps[0].action.ideas.leastObvious
+    );
+    const idea3 = getByText(
+      edgeResponse.sera.plan.steps[0].action.ideas.inventiveOrImaginative
+    );
+    const idea4 = getByText(
+      edgeResponse.sera.plan.steps[0].action.ideas.rewardingOrSustainable
+    );
+    const linkHeader = getByText(/🔗 Links/i);
+    const links = getAllByRole("link");
+    expect(goal).toBeInTheDocument();
     expect(step1).toBeInTheDocument();
     expect(description1).toBeInTheDocument();
-    expect(step2).toBeInTheDocument();
-    expect(description2).toBeInTheDocument();
+    expect(ideaHeaders.length).toBe(5);
+    expect(idea1).toBeInTheDocument();
+    expect(idea2).toBeInTheDocument();
+    expect(idea3).toBeInTheDocument();
+    expect(idea4).toBeInTheDocument();
+    expect(linkHeader).toBeInTheDocument();
+    expect(links.length).toBe(5);
+    expect(links[0].innerHTML).toMatch(
+      /5 smart budgeting tips for first-time savers/i
+    );
+    expect(links[1].innerHTML).toMatch(/8 Ways To Budget During Inflation/i);
+    expect(links[2].innerHTML).toMatch(/Household budgeting/i);
+    expect(links[3].innerHTML).toMatch(
+      /How to Set Financial Goals for Your Future/i
+    );
+    expect(links[4].innerHTML).toMatch(/Systematic investing/i);
   });
 });
