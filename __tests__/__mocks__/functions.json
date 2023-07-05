@@ -1,75 +1,83 @@
 {
   "sera": {
-    "text": "Based on your budget, here's a sample action plan for your wedding:",
-    "question": "Do these steps seem like they would work for you?",
+    "text": "Congratulations on your upcoming wedding! Here is a plan to help you manage your wedding expenses and save money for your future.",
     "plan": {
-      "goal": "Plan a wedding within a $30,000 budget",
+      "goal": "Plan a wedding within a budget",
       "steps": [
         {
           "number": 1,
           "action": {
-            "name": "Create a guest list and determine the number of guests",
-            "description": "This will help you determine your budget and choose a venue"
+            "name": "Set a budget",
+            "description": "Determine how much you can afford to spend on your wedding.",
+            "ideas": {
+              "mostObvious": "Calculate your total wedding budget by considering your savings, contributions from family, and any additional funds you can allocate.",
+              "leastObvious": "Consider using a wedding budget calculator or app to help you allocate funds to different aspects of your wedding.",
+              "inventiveOrImaginative": "Create a wedding budget vision board to visually represent your financial goals and inspire you to stick to your budget.",
+              "rewardingOrSustainable": "Allocate a portion of your wedding budget towards a future financial goal, such as a down payment on a house or starting an emergency fund."
+            }
           }
         },
         {
           "number": 2,
           "action": {
-            "name": "Choose a venue that can accommodate your guest list and fits within your budget",
-            "description": "This will help you determine your budget and choose a venue"
+            "name": "Prioritize your expenses",
+            "description": "Decide which aspects of your wedding are most important to you and allocate your budget accordingly.",
+            "ideas": {
+              "mostObvious": "Discuss with your partner and make a list of the top three priorities for your wedding, such as venue, food, and photography.",
+              "leastObvious": "Consider alternative options for expensive aspects of your wedding, such as renting a wedding dress or opting for a smaller guest list.",
+              "inventiveOrImaginative": "Explore DIY options for decorations, invitations, or wedding favors to save money and add a personal touch to your wedding.",
+              "rewardingOrSustainable": "Allocate a portion of your budget towards experiences or memories that will last beyond the wedding day, such as a honeymoon or pre-wedding photoshoot."
+            }
           }
         },
         {
           "number": 3,
           "action": {
-            "name": "Select a caterer and menu that fits within your budget and meets your dietary needs"
+            "name": "Research and negotiate",
+            "description": "Take the time to research vendors, compare prices, and negotiate for the best deals.",
+            "ideas": {
+              "mostObvious": "Research multiple vendors for each aspect of your wedding, such as venues, caterers, and photographers, and compare their prices and reviews.",
+              "leastObvious": "Consider reaching out to local small businesses or independent vendors who may offer competitive prices and personalized services.",
+              "inventiveOrImaginative": "Explore non-traditional wedding venues, such as parks, art galleries, or community centers, which may offer more affordable options.",
+              "rewardingOrSustainable": "Negotiate with vendors to see if they can offer any discounts or package deals, especially if you're booking multiple services with them."
+            }
           }
         },
         {
           "number": 4,
           "action": {
-            "name": "Choose a photographer and videographer that fits within your budget and has a style you like.",
-            "description": "This will help you determine your budget and choose a venue!"
+            "name": "Track your expenses",
+            "description": "Keep a record of all your wedding expenses to stay within your budget.",
+            "ideas": {
+              "mostObvious": "Create a spreadsheet or use a wedding budgeting app to track your expenses and compare them to your allocated budget.",
+              "leastObvious": "Set up email alerts or notifications for your wedding-related expenses to ensure you're aware of any unexpected charges or overspending.",
+              "inventiveOrImaginative": "Create a separate email address or folder dedicated to wedding-related communication and receipts to keep everything organized.",
+              "rewardingOrSustainable": "Consider using cashback or rewards credit cards for your wedding expenses to earn some extra benefits or cashback."
+            }
           }
         },
         {
           "number": 5,
           "action": {
-            "name": "Select a florist and decor that fits within your budget and matches your wedding theme"
-          }
-        },
-        {
-          "number": 6,
-          "action": {
-            "name": "Choose a wedding dress and attire for the wedding party that fits within your budget"
-          }
-        },
-        {
-          "number": 7,
-          "action": {
-            "name": "Select a DJ or band that fits within your budget and plays music you and your guests will enjoy"
-          }
-        },
-        {
-          "number": 8,
-          "action": {
-            "name": "Plan transportation for you and your guests, if necessary"
-          }
-        },
-        {
-          "number": 9,
-          "action": {
-            "name": "Create a timeline for the wedding day and coordinate with vendors"
-          }
-        },
-        {
-          "number": 10,
-          "action": {
-            "name": "Set aside a contingency fund for unexpected expenses"
+            "name": "Find ways to save",
+            "description": "Explore creative ways to save money on your wedding without compromising on your vision.",
+            "ideas": {
+              "mostObvious": "Consider DIY options for aspects like centerpieces, wedding favors, or even the wedding cake.",
+              "leastObvious": "Rent or borrow items that you'll only use for the wedding, such as decorations or specialty attire.",
+              "inventiveOrImaginative": "Host a potluck-style rehearsal dinner or ask close friends and family to contribute their talents, such as playing music or creating a photo booth.",
+              "rewardingOrSustainable": "Sell or donate wedding items after the event to recoup some of the costs and reduce waste."
+            }
           }
         }
       ]
     },
+    "links": [
+      "[How to Set Financial Goals for Your Future](https://www.investopedia.com/articles/personal-finance/100516/setting-financial-goals)",
+      "[5 smart budgeting tips for first-time savers](https://n26.com/en-eu/blog/budgeting-tips)",
+      "[Household budgeting](https://www.bogleheads.org/wiki/Household_budgeting)",
+      "[8 Ways To Budget During Inflation](https://www.forbes.com/advisor/personal-finance/how-to-budget-during-inflation/)",
+      "[Systematic investing](https://www.bogleheads.org/wiki/Systematic_investing)"
+    ],
     "chat": 100
   }
 }

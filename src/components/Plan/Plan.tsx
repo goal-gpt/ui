@@ -88,18 +88,24 @@ export function Plan() {
               <div>
                 <h6 className="my-2">🔗 Links</h6>
                 <ul>
-                  {currentPlan.links.map((link) => {
-                    let [title, url] = link.split("](");
-                    title = title.replace(/^\[/, "");
-                    url = url.replace(/\)$/, "");
-                    return (
-                      <li key={link}>
-                        <Link href={url} target="_blank" rel="noreferrer">
-                          {title}
+                  {currentPlan.links
+                    .map((link) => {
+                      let [title, url] = link.split("](");
+                      title = title.replace(/^\[/, "");
+                      url = url.replace(/\)$/, "");
+                      return {
+                        title,
+                        url,
+                      };
+                    })
+                    .sort((a, b) => a.title.localeCompare(b.title))
+                    .map((link) => (
+                      <li key={link.url}>
+                        <Link href={link.url} target="_blank" rel="noreferrer">
+                          {link.title}
                         </Link>
                       </li>
-                    );
-                  })}
+                    ))}
                 </ul>
               </div>
             )}
