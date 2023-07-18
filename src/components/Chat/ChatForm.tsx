@@ -43,7 +43,14 @@ function ChatForm({ query = "" }: ChatFormProps) {
   // Set query as first message and clear query from URL
   useEffect(() => {
     if (query) {
-      sendMessage(query);
+      if (currentPlan) {
+        alert(
+          "You already have a plan in progress, your message will refine the existing plan. We are in the process of adding functionality for new plans - come back later to check it out!"
+        );
+        setMessage(query);
+      } else {
+        sendMessage(query);
+      }
       router.push("/", undefined, { shallow: true });
     }
   }, [query, router]);
