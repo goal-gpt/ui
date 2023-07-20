@@ -20,13 +20,16 @@ export enum QueryStatus {
   Success = "success",
 }
 
+export type StepAction = {
+  name: string;
+  description: string;
+  ideas: Record<string, string>;
+  rawLinks?: string[];
+};
+
 export type Step = {
   number: number;
-  action: {
-    name: string;
-    description: string;
-    ideas: Record<string, string>;
-  };
+  action: StepAction;
 };
 
 // TODO: add date updated to plan
@@ -76,7 +79,6 @@ export function useChat() {
         plan: {
           goal: "",
           steps: [],
-          links: [],
         },
       };
     }
