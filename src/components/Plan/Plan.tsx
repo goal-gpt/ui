@@ -10,10 +10,15 @@ import styles from "./Plan.module.scss";
 interface StepProps {
   step: Step;
   index: number;
+  links: string[];
 }
 
-export function StepAccordionItem({ step, index }: StepProps) {
-  const { name, description, ideas } = step.action;
+export function StepAccordionItem({ step, index, links }: StepProps) {
+  const { name, description, ideas, rawLinks } = step.action;
+  const linksToDisplay = links.filter((link) => {
+    const { url } = splitLink(link);
+    return rawLinks?.includes(url) || false;
+  });
 
   return (
     <Accordion.Item className="border-none" eventKey={step.number.toString()}>
@@ -22,7 +27,6 @@ export function StepAccordionItem({ step, index }: StepProps) {
         {description && <p className="mb-0">{description}</p>}
         {ideas && (
           <>
-            {/* <br /> */}
             <h6 className="my-2">✏️ Ideas</h6>
             <ul className="mb-0">
               {Object.entries(ideas).map(([key, value]) => (
@@ -31,10 +35,43 @@ export function StepAccordionItem({ step, index }: StepProps) {
             </ul>
           </>
         )}
+        {linksToDisplay && linksToDisplay.length > 0 && (
+          <>
+            <p className="my-2">🤓 Read more</p>
+            <ul>{convertToLinkList(linksToDisplay)}</ul>
+          </>
+        )}
       </Accordion.Body>
     </Accordion.Item>
   );
 }
+
+const convertToLinkList = (links: string[]) => {
+  return links
+    .map((link) => splitLink(link))
+    .sort((a, b) => a.title.localeCompare(b.title))
+    .map((link) => convertToListItem(link));
+};
+
+const splitLink = (link: string) => {
+  let [title, url] = link.split("](");
+  title = title.replace(/^\[/, "");
+  url = url.replace(/\)$/, "");
+  return {
+    title,
+    url,
+  };
+};
+
+const convertToListItem = (link: { title: string; url: string }) => {
+  return (
+    <li key={link.url}>
+      <Link href={link.url} target="_blank" rel="noreferrer">
+        {link.title}
+      </Link>
+    </li>
+  );
+};
 
 export const isValidPlan = (plan: PlanType | null): plan is PlanType => {
   const isNullOrUndefined = !plan;
@@ -79,6 +116,7 @@ export function Plan() {
                     key={step.number}
                     step={step}
                     index={step.number}
+                    links={currentPlan.links || []}
                   />
                 ))}
               </Accordion>
@@ -86,27 +124,8 @@ export function Plan() {
 
             {currentPlan.links && currentPlan.links.length > 0 && (
               <div>
-                <h6 className="my-2">🔗 Links</h6>
-                <ul>
-                  {currentPlan.links
-                    .map((link) => {
-                      let [title, url] = link.split("](");
-                      title = title.replace(/^\[/, "");
-                      url = url.replace(/\)$/, "");
-                      return {
-                        title,
-                        url,
-                      };
-                    })
-                    .sort((a, b) => a.title.localeCompare(b.title))
-                    .map((link) => (
-                      <li key={link.url}>
-                        <Link href={link.url} target="_blank" rel="noreferrer">
-                          {link.title}
-                        </Link>
-                      </li>
-                    ))}
-                </ul>
+                <h6 className="my-2">🔗 Our sources</h6>
+                <ul>{convertToLinkList(currentPlan.links)}</ul>
               </div>
             )}
           </Card.Body>

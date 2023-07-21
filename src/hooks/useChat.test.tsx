@@ -44,7 +44,6 @@ describe("useChat", () => {
     expect(result.current.currentPlan).toEqual({
       goal: "",
       steps: [],
-      links: [],
     });
   });
 

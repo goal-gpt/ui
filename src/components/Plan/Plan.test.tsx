@@ -48,7 +48,7 @@ describe("Plan", () => {
   });
 
   it("renders the full plan when currentPlan is not null", () => {
-    const { getByText } = renderWithChatContext(<Plan />, {
+    const { getByText, queryAllByText } = renderWithChatContext(<Plan />, {
       currentPlan: {
         goal: "Test Goal",
         steps: [
@@ -58,17 +58,21 @@ describe("Plan", () => {
               name: "Test action.",
               description: "Rest of action.",
               ideas: {},
+              rawLinks: ["https://example.com"],
             },
           },
         ],
+        links: ["[Example link](https://example.com)"],
       },
     });
     const goal = getByText(/Test Goal/i);
     const step = getByText(/Test action./i);
     const description = getByText(/Rest of action./i);
+    const link = queryAllByText(/Example link/i);
     expect(goal).toBeInTheDocument();
     expect(step).toBeInTheDocument();
     expect(description).toBeInTheDocument();
+    expect(link.length).toBe(2);
   });
 
   it("shows all the steps in the plan", () => {
@@ -102,7 +106,7 @@ describe("Plan", () => {
     const idea4 = getByText(
       edgeResponse.sera.plan.steps[0].action.ideas.rewardingOrSustainable
     );
-    const linkHeader = getByText(/🔗 Links/i);
+    const linkHeader = getByText(/🔗 Our sources/i);
     const links = getAllByRole("link");
     expect(goal).toBeInTheDocument();
     expect(step1).toBeInTheDocument();
@@ -113,15 +117,24 @@ describe("Plan", () => {
     expect(idea3).toBeInTheDocument();
     expect(idea4).toBeInTheDocument();
     expect(linkHeader).toBeInTheDocument();
-    expect(links.length).toBe(5);
+    expect(links.length).toBe(11);
     expect(links[0].innerHTML).toMatch(
       /5 smart budgeting tips for first-time savers/i
     );
-    expect(links[1].innerHTML).toMatch(/8 Ways To Budget During Inflation/i);
-    expect(links[2].innerHTML).toMatch(/Household budgeting/i);
-    expect(links[3].innerHTML).toMatch(
+    expect(links[1].innerHTML).toMatch(/Household budgeting/i);
+    expect(links[2].innerHTML).toMatch(
       /How to Set Financial Goals for Your Future/i
     );
-    expect(links[4].innerHTML).toMatch(/Systematic investing/i);
+    expect(links.at(-5)?.innerHTML).toMatch(
+      /5 smart budgeting tips for first-time savers/i
+    );
+    expect(links.at(-4)?.innerHTML).toMatch(
+      /8 Ways To Budget During Inflation/i
+    );
+    expect(links.at(-3)?.innerHTML).toMatch(/Household budgeting/i);
+    expect(links.at(-2)?.innerHTML).toMatch(
+      /How to Set Financial Goals for Your Future/i
+    );
+    expect(links.at(-1)?.innerHTML).toMatch(/Systematic investing/i);
   });
 });
