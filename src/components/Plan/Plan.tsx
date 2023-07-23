@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import React, { useContext } from "react";
 import { Accordion, Card, Container } from "react-bootstrap";
+import ReactMarkdown from "react-markdown";
 
 import { PlanType, Step } from "../../hooks/useChat";
 import { ChatContext } from "../Chat";
@@ -20,11 +21,14 @@ export function StepAccordionItem({ step, index, links }: StepProps) {
     return rawLinks?.includes(url) || false;
   });
 
+  console.log("description: ", description);
   return (
     <Accordion.Item className="border-none" eventKey={step.number.toString()}>
       <Accordion.Header className="my-1">{`Step ${index}: ${name} `}</Accordion.Header>
       <Accordion.Body>
-        {description && <p className="mb-0">{description}</p>}
+        {description && (
+          <ReactMarkdown className="mb-0">{description}</ReactMarkdown>
+        )}
         {ideas && (
           <>
             <h6 className="my-2">✏️ Ideas</h6>
