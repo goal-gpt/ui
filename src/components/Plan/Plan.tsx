@@ -21,7 +21,6 @@ export function StepAccordionItem({ step, index, links }: StepProps) {
     return rawLinks?.includes(url) || false;
   });
 
-  console.log("description: ", description);
   return (
     <Accordion.Item className="border-none" eventKey={step.number.toString()}>
       <Accordion.Header className="my-1">{`Step ${index}: ${name} `}</Accordion.Header>
