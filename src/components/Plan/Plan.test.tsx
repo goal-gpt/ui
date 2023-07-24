@@ -66,8 +66,8 @@ describe("Plan", () => {
       },
     });
     const goal = getByText(/Test Goal/i);
-    const step = getByText(/Test action./i);
-    const description = getByText(/Rest of action./i);
+    const step = getByText(/Test action\./i);
+    const description = getByText(/Rest of action\./i);
     const link = queryAllByText(/Example link/i);
     expect(goal).toBeInTheDocument();
     expect(step).toBeInTheDocument();
