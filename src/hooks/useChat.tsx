@@ -24,7 +24,6 @@ export type StepAction = {
   name: string;
   description: string;
   ideas: Record<string, string>;
-  rawLinks?: string[];
 };
 
 export type Step = {

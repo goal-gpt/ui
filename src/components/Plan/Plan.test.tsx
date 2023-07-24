@@ -58,7 +58,6 @@ describe("Plan", () => {
               name: "Test action.",
               description: "Rest of action.",
               ideas: {},
-              rawLinks: ["https://example.com"],
             },
           },
         ],
@@ -72,7 +71,7 @@ describe("Plan", () => {
     expect(goal).toBeInTheDocument();
     expect(step).toBeInTheDocument();
     expect(description).toBeInTheDocument();
-    expect(link.length).toBe(2);
+    expect(link.length).toBe(1);
   });
 
   it("shows all the steps in the plan", () => {
@@ -117,14 +116,7 @@ describe("Plan", () => {
     expect(idea3).toBeInTheDocument();
     expect(idea4).toBeInTheDocument();
     expect(linkHeader).toBeInTheDocument();
-    expect(links.length).toBe(11);
-    expect(links[0].innerHTML).toMatch(
-      /5 smart budgeting tips for first-time savers/i
-    );
-    expect(links[1].innerHTML).toMatch(/Household budgeting/i);
-    expect(links[2].innerHTML).toMatch(
-      /How to Set Financial Goals for Your Future/i
-    );
+    expect(links.length).toBe(5);
     expect(links.at(-5)?.innerHTML).toMatch(
       /5 smart budgeting tips for first-time savers/i
     );

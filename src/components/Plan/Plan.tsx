@@ -11,15 +11,10 @@ import styles from "./Plan.module.scss";
 interface StepProps {
   step: Step;
   index: number;
-  links: string[];
 }
 
-export function StepAccordionItem({ step, index, links }: StepProps) {
-  const { name, description, ideas, rawLinks } = step.action;
-  const linksToDisplay = links.filter((link) => {
-    const { url } = splitLink(link);
-    return rawLinks?.includes(url) || false;
-  });
+export function StepAccordionItem({ step, index }: StepProps) {
+  const { name, description, ideas } = step.action;
 
   return (
     <Accordion.Item className="border-none" eventKey={step.number.toString()}>
@@ -36,12 +31,6 @@ export function StepAccordionItem({ step, index, links }: StepProps) {
                 <li key={key}>{value}</li>
               ))}
             </ul>
-          </>
-        )}
-        {linksToDisplay && linksToDisplay.length > 0 && (
-          <>
-            <p className="my-2">🤓 Read more</p>
-            <ul>{convertToLinkList(linksToDisplay)}</ul>
           </>
         )}
       </Accordion.Body>
@@ -119,7 +108,6 @@ export function Plan() {
                     key={step.number}
                     step={step}
                     index={step.number}
-                    links={currentPlan.links || []}
                   />
                 ))}
               </Accordion>
