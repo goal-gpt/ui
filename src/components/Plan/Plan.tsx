@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import React, { useContext } from "react";
 import { Accordion, Card, Container } from "react-bootstrap";
+import ReactMarkdown from "react-markdown";
 
 import { PlanType, Step } from "../../hooks/useChat";
 import { ChatContext } from "../Chat";
@@ -10,21 +11,20 @@ import styles from "./Plan.module.scss";
 interface StepProps {
   step: Step;
   index: number;
-  links: string[];
 }
 
-export function StepAccordionItem({ step, index, links }: StepProps) {
-  const { name, description, ideas, rawLinks } = step.action;
-  const linksToDisplay = links.filter((link) => {
-    const { url } = splitLink(link);
-    return rawLinks?.includes(url) || false;
-  });
+export function StepAccordionItem({ step, index }: StepProps) {
+  const { name, description, ideas } = step.action;
 
   return (
     <Accordion.Item className="border-none" eventKey={step.number.toString()}>
       <Accordion.Header className="my-1">{`Step ${index}: ${name} `}</Accordion.Header>
       <Accordion.Body>
-        {description && <p className="mb-0">{description}</p>}
+        {description && (
+          <ReactMarkdown linkTarget="_blank" className="mb-0">
+            {description}
+          </ReactMarkdown>
+        )}
         {ideas && (
           <>
             <h6 className="my-2">✏️ Ideas</h6>
@@ -33,12 +33,6 @@ export function StepAccordionItem({ step, index, links }: StepProps) {
                 <li key={key}>{value}</li>
               ))}
             </ul>
-          </>
-        )}
-        {linksToDisplay && linksToDisplay.length > 0 && (
-          <>
-            <p className="my-2">🤓 Read more</p>
-            <ul>{convertToLinkList(linksToDisplay)}</ul>
           </>
         )}
       </Accordion.Body>
@@ -116,7 +110,6 @@ export function Plan() {
                     key={step.number}
                     step={step}
                     index={step.number}
-                    links={currentPlan.links || []}
                   />
                 ))}
               </Accordion>
