@@ -21,7 +21,9 @@ export function StepAccordionItem({ step, index }: StepProps) {
       <Accordion.Header className="my-1">{`Step ${index}: ${name} `}</Accordion.Header>
       <Accordion.Body>
         {description && (
-          <ReactMarkdown className="mb-0">{description}</ReactMarkdown>
+          <ReactMarkdown linkTarget="_blank" className="mb-0">
+            {description}
+          </ReactMarkdown>
         )}
         {ideas && (
           <>
