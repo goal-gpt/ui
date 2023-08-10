@@ -28,7 +28,7 @@ export function StepAccordionItem({ step, index }: StepProps) {
         {ideas && (
           <>
             <h6 className="my-2">✏️ Ideas</h6>
-            <ul className="mb-0">
+            <ul className="mb-0 tw-list-image-checkmark">
               {Object.entries(ideas).map(([key, value]) => (
                 <li key={key}>{value}</li>
               ))}
