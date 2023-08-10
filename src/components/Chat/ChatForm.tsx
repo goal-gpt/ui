@@ -21,6 +21,7 @@ function ChatForm({ query = "" }: ChatFormProps) {
   const router = useRouter();
   const chatContext = useContext(ChatContext);
   const { currentPlan, sendMessage, chatStatus } = chatContext || {
+    currentPlan: null,
     sendMessage: () => "",
     chatStatus: QueryStatus.Idle,
   };
@@ -43,7 +44,7 @@ function ChatForm({ query = "" }: ChatFormProps) {
   // Set query as first message and clear query from URL
   useEffect(() => {
     if (query) {
-      if (currentPlan) {
+      if (isValidPlan(currentPlan)) {
         alert(
           "You already have a plan in progress, your message will refine the existing plan. We are in the process of adding functionality for new plans - come back later to check it out!"
         );
@@ -53,7 +54,7 @@ function ChatForm({ query = "" }: ChatFormProps) {
       }
       router.push("/", undefined, { shallow: true });
     }
-  }, [query, router]);
+  }, [query]);
 
   // Reset input when message is sent
   useEffect(() => {
