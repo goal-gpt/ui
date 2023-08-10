@@ -18,6 +18,7 @@ import { Database } from "../src/types/database";
 const poppins = Poppins({
   style: ["normal", "italic"],
   subsets: ["latin"],
+  variable: "--font-poppins",
   weight: ["400", "500", "600", "700"],
 });
 
@@ -59,7 +60,7 @@ export default function App({
             taggedEvents
           >
             <ChatProvider>
-              <main className={`${poppins.className}`}>
+              <main className={`${poppins.variable} tw-font-sans`}>
                 <DefaultSeo
                   defaultTitle="eras"
                   titleTemplate="eras | %s"
