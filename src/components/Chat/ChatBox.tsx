@@ -35,7 +35,7 @@ function ChatBox() {
 
   const getLastAIChat = () => {
     if (chatHistory.length === 0) {
-      return;
+      return null;
     }
 
     const lastAIChat = chatHistory
@@ -47,7 +47,7 @@ function ChatBox() {
 
   return (
     <Container className={`${styles.chatContainer}`}>
-      {/* The order of elements is reversed as we want the chat history to appear from the bottom using flex-direction: column-reverse*/}
+      {/* The order of elements is reversed as we want the chat history to appear from the bottom using flex-direction: column-reverse */}
       <Row className={`${styles.chatBox}`} role="log">
         <div ref={bottomRef} style={{ height: 0 }} />
         <div className={`${styles.chatHistoryContainer}`}>

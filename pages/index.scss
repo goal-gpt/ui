@@ -1,6 +1,4 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+
 
 // Import Bootstrap functions and variables first
 @import "../node_modules/bootstrap/scss/_functions";
@@ -31,7 +29,7 @@ $custom-colors: (
 // Merge custom-colors with Bootstrap's $theme-colors
 $theme-colors: map-merge($theme-colors, $custom-colors);
 
-// @import "../node_modules/bootstrap/scss/bootstrap";
+@import "../node_modules/bootstrap/scss/bootstrap";
 @import "../node_modules/bootstrap/scss/_maps";
 @import "../node_modules/bootstrap/scss/_mixins";
 @import "../node_modules/bootstrap/scss/_utilities";
@@ -79,6 +77,10 @@ $theme-colors: map-merge($theme-colors, $custom-colors);
 // Other SCSS files
 @import "react-toastify/dist/ReactToastify.min.css";
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 // Add additional default code here
 body {
   margin: 0;
@@ -112,15 +114,15 @@ main {
   z-index: -1;
   opacity: 0.3;
 }
-
+/* 
 .content {
   position: relative;
   width: 100%;
   height: 100%;
   z-index: 0;
-}
+} */
 
-.logo {
+/* .logo {
   position: relative;
   align-self: center;
   overflow: hidden;
@@ -128,22 +130,22 @@ main {
   min-width: 80px;
   height: 12vh;
   width: 12vh;
-}
+} */
 
-.mainContainer {
+/* .mainContainer {
   display: flex;
   flex-direction: column;
   height: 97vh;
   margin: 2.5vh auto 0.5vh;
   justify-content: space-between;
   overflow-x: hidden;
-}
+} */
 
-@media screen and (max-width: 768px) {
+/* @media screen and (max-width: 768px) {
   .mainContainer {
     height: 95vh;
   }
-}
+} */
 
 .spinner-grow {
   animation: spinner-grow 2s linear infinite;

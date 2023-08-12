@@ -9,12 +9,12 @@ export enum ChatRole {
   AI = "ai",
 }
 
-export interface ChatMessage {
+export interface IChatMessage {
   role: ChatRole;
   content: string;
 }
 interface Props {
-  message?: ChatMessage;
+  message: IChatMessage | null;
 }
 
 export function ChatMessage({ message }: Props) {
@@ -27,7 +27,7 @@ export function ChatMessage({ message }: Props) {
 
   return (
     <div className={`${styles.chatMessage} ${styles[roleClass]}`}>
-      <ReactMarkdown remarkPlugins={[remarkGfm]} children={content} />
+      <ReactMarkdown remarkPlugins={[remarkGfm]}>{content}</ReactMarkdown>
     </div>
   );
 }

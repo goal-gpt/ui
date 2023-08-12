@@ -1,11 +1,10 @@
-import Image from "next/image";
 import { useRouter } from "next/router";
 import { NextSeo } from "next-seo";
 import React from "react";
-import { Col, Container, Row } from "react-bootstrap";
 
 import { ChatBox, ChatForm } from "../src/components/Chat";
 import { FeedbackForm } from "../src/components/Feedback";
+import { Logo } from "../src/components/Logo/Logo";
 import { Plan } from "../src/components/Plan";
 import { Status } from "../src/components/Status";
 
@@ -17,43 +16,33 @@ function Main() {
   return (
     <>
       <NextSeo title="your personal finance companion" />
-      <Container fluid>
-        <Row>
-          <Col md={3} sm={0} className={`d-none d-md-flex`}></Col>
-          <Col md={6} sm={12} className="mainContainer">
-            <div className="logo d-flex flex-column justify-content-between align-items-center">
-              <Image
-                alt="eras logo: yellow lines gradually reaching the horizon"
-                src="/eras-text-below-logo.svg"
-                fill
-              />
+      <div className="flex flex-col">
+        <div className="mx-auto max-w-screen-lg">
+          <Logo />
+          <div className="grow-2">
+            <ChatBox />
+          </div>
+          <div
+            className="grow-1 my-1"
+            style={{ overflowX: "hidden", overflowY: "auto" }}
+          >
+            <Plan />
+            <Status />
+          </div>
+          <div className="d-flex flex-column">
+            <ChatForm query={query} />
+            <div className="align-self-center">
+              <FeedbackForm />
             </div>
-            <div className="flex-grow-2">
-              <ChatBox />
+            <div className="align-self-center">
+              <p className="small my-2 text-center">
+                Disclaimer: responses provide information only and should not be
+                taken as professional advice.
+              </p>
             </div>
-            <div
-              className="flex-grow-1 my-1"
-              style={{ overflowX: "hidden", overflowY: "auto" }}
-            >
-              <Plan />
-              <Status />
-            </div>
-            <div className="d-flex flex-column">
-              <ChatForm query={query} />
-              <div className="align-self-center">
-                <FeedbackForm />
-              </div>
-              <div className="align-self-center">
-                <p className="my-2 small text-center">
-                  Disclaimer: responses provide information only and should not
-                  be taken as professional advice.
-                </p>
-              </div>
-            </div>
-          </Col>
-          <Col md={3} sm={0} className="d-none d-md-flex"></Col>
-        </Row>
-      </Container>
+          </div>
+        </div>
+      </div>
     </>
   );
 }

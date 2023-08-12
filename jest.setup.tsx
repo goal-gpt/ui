@@ -1,6 +1,8 @@
+// eslint-disable-next-line
 import "@testing-library/jest-dom";
 
 import React from "react";
+import type * as ReactDom from "react-dom";
 
 process.env.NEXT_PUBLIC_API_ENV = "mock"; // Set the test env var to use the mock API
 
@@ -15,9 +17,15 @@ jest.mock("@supabase/auth-helpers-react", () => ({
   useUser: jest.fn(),
 }));
 
-jest.mock("react-markdown", () => (props) => {
+// eslint-disable-next-line
+jest.mock("react-markdown", () => (props: any) => {
   return <div>{props.children}</div>;
 });
+
+jest.mock("react-dom", () => ({
+  ...jest.requireActual<typeof ReactDom>("react-dom"),
+  preload: jest.fn(),
+}));
 
 jest.mock("remark-gfm", () => () => {}); // eslint-disable-line @typescript-eslint/no-empty-function
 

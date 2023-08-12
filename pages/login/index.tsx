@@ -3,7 +3,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { NextSeo } from "next-seo";
-import React, { FormEvent, useEffect, useState } from "react";
+import type { FormEvent } from "react";
+import React, { useEffect, useState } from "react";
 import { Col, Container, Form, Navbar, Row } from "react-bootstrap";
 
 import { Button } from "../../src/components/Button";
@@ -20,7 +21,6 @@ function Login({ isAuthChecking }: { isAuthChecking: boolean }) {
   useEffect(() => {
     if (!isAuthChecking && user) {
       router.push("/");
-      return;
     }
   }, [user, isAuthChecking]);
 
@@ -87,11 +87,9 @@ function Login({ isAuthChecking }: { isAuthChecking: boolean }) {
                 />
               </Form.Group>
               <Button type="submit" disabled={status !== "idle"}>
-                {status === "loading"
-                  ? "Loading..."
-                  : status === "idle"
-                  ? "Get your login link"
-                  : "Check your email!"}
+                {(status === "loading" && "Loading...") ||
+                  (status === "idle" && "Get your login link") ||
+                  "Check your email!"}
               </Button>
             </Form>
             <Link className={`${styles.link} mt-4`} href="/">

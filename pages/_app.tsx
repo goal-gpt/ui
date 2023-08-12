@@ -1,11 +1,11 @@
 import "./index.scss";
 
 import { createBrowserSupabaseClient } from "@supabase/auth-helpers-nextjs";
-import { Session, SessionContextProvider } from "@supabase/auth-helpers-react";
+import type { Session } from "@supabase/auth-helpers-react";
+import { SessionContextProvider } from "@supabase/auth-helpers-react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import type { AppProps } from "next/app";
 import { Poppins } from "next/font/google";
-import Image from "next/image";
 import PlausibleProvider from "next-plausible";
 import { DefaultSeo } from "next-seo";
 import React, { useEffect, useState } from "react";
@@ -13,7 +13,7 @@ import { ToastContainer } from "react-toastify";
 
 import { ChatProvider } from "../src/components/Chat";
 import { Cookie } from "../src/components/Cookie";
-import { Database } from "../src/types/database";
+import type { Database } from "../src/types/database";
 
 const poppins = Poppins({
   style: ["normal", "italic"],
@@ -29,7 +29,7 @@ export default function App({
   initialSession: Session;
 }>) {
   const [supabaseClient] = useState(() =>
-    createBrowserSupabaseClient<Database>()
+    createBrowserSupabaseClient<Database>(),
   );
 
   const queryClient = new QueryClient();
@@ -60,7 +60,7 @@ export default function App({
             taggedEvents
           >
             <ChatProvider>
-              <main className={`${poppins.variable} tw-font-sans`}>
+              <main className={`${poppins.variable} font-sans antialiased`}>
                 <DefaultSeo
                   defaultTitle="eras"
                   titleTemplate="eras | %s"
@@ -87,14 +87,14 @@ export default function App({
                     cardType: "summary",
                   }}
                 />
-                <div className="background">
+                {/* <div className="background">
                   <Image
                     src="/man-at-sunrise.jpeg"
                     alt="man looking at sunrise"
                     style={{ objectFit: "cover" }}
                     fill
                   />
-                </div>
+                </div> */}
                 <div className="content">
                   <Component {...pageProps} isAuthChecking={isAuthChecking} />
                 </div>

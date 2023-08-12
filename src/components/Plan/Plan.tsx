@@ -4,8 +4,8 @@ import React, { useContext } from "react";
 import { Accordion, Card, Container } from "react-bootstrap";
 import ReactMarkdown from "react-markdown";
 
-import { PlanType, Step } from "../../hooks/useChat";
-import { ChatContext } from "../Chat";
+import type { PlanType, Step } from "../../hooks/useChat";
+import { ChatContext } from "../Chat/ChatContext";
 import styles from "./Plan.module.scss";
 
 interface StepProps {
@@ -28,7 +28,7 @@ export function StepAccordionItem({ step, index }: StepProps) {
         {ideas && (
           <>
             <h6 className="my-2">✏️ Ideas</h6>
-            <ul className="mb-0 tw-list-image-checkmark">
+            <ul className="mb-0 list-image-checkmark">
               {Object.entries(ideas).map(([key, value]) => (
                 <li key={key}>{value}</li>
               ))}
@@ -40,24 +40,18 @@ export function StepAccordionItem({ step, index }: StepProps) {
   );
 }
 
-const convertToLinkList = (links: string[]) => {
-  return links
-    .map((link) => splitLink(link))
-    .sort((a, b) => a.title.localeCompare(b.title))
-    .map((link) => convertToListItem(link));
-};
-
 const splitLink = (link: string) => {
   let [title, url] = link.split("](");
-  title = title.replace(/^\[/, "");
-  url = url.replace(/\)$/, "");
+  title = title?.replace(/^\[/, "");
+  url = url?.replace(/\)$/, "");
   return {
     title,
     url,
   };
 };
 
-const convertToListItem = (link: { title: string; url: string }) => {
+const convertToListItem = (link?: { title: string; url: string }) => {
+  if (!link) return null;
   return (
     <li key={link.url}>
       <Link href={link.url} target="_blank" rel="noreferrer">
@@ -65,6 +59,12 @@ const convertToListItem = (link: { title: string; url: string }) => {
       </Link>
     </li>
   );
+};
+const convertToLinkList = (links: string[]) => {
+  return links
+    .map((link) => splitLink(link))
+    .sort((a, b) => a.title?.localeCompare(b.title || "") || 0)
+    .map((link) => convertToListItem(link as { title: string; url: string }));
 };
 
 export const isValidPlan = (plan: PlanType | null): plan is PlanType => {
@@ -103,7 +103,7 @@ export function Plan() {
             {currentPlan.steps && currentPlan.steps.length > 0 && (
               <Accordion
                 flush={true}
-                defaultActiveKey={currentPlan.steps[0].number.toString()}
+                defaultActiveKey={currentPlan.steps[0]!.number.toString()}
               >
                 {currentPlan.steps.map((step) => (
                   <StepAccordionItem

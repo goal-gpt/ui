@@ -83,7 +83,7 @@ describe("Login", () => {
       },
     });
     const { getByText, getByPlaceholderText } = render(
-      <Login isAuthChecking={false} />
+      <Login isAuthChecking={false} />,
     );
     const input = getByPlaceholderText("Enter your email");
     const button = getByText("Get your login link");
@@ -97,7 +97,7 @@ describe("Login", () => {
     await waitFor(() => {
       expect(toast).toHaveBeenCalledWith(
         "Check your email for the login link!",
-        { type: "info" }
+        { type: "info" },
       );
       expect(getByText("Check your email!")).toBeInTheDocument();
     });

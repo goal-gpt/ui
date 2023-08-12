@@ -1,6 +1,7 @@
 import React, { createContext } from "react";
 
-import { ChatHook, useChat } from "../../hooks/useChat";
+import type { ChatHook } from "@/hooks/useChat";
+import { useChat } from "@/hooks/useChat";
 
 type ChatProviderProps = {
   children: React.ReactNode;
