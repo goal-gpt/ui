@@ -65,24 +65,6 @@ function ChatBox() {
       </div>
     </div>
   );
-
-  // return (
-  //   <Container className={`${styles.chatContainer}`}>
-  //     {/* The order of elements is reversed as we want the chat history to appear from the bottom using flex-direction: column-reverse */}
-  //     <Row className={`${styles.chatBox}`} role="log">
-  //       <div ref={bottomRef} style={{ height: 0 }} />
-  //       <div className={`${styles.chatHistoryContainer}`}>
-  //         {/* For now, just show the last AI message */}
-  //         {chatHistory.length > 0 && chatHistory[0]!.content !== "" ? (
-  //           <ChatMessage
-  //             key={chatHistory.length - 1}
-  //             message={getLastAIChat()}
-  //           />
-  //         ) : null}
-  //       </div>
-  //     </Row>
-  //   </Container>
-  // );
 }
 
 export default ChatBox;
