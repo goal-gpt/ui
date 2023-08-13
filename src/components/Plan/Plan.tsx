@@ -17,16 +17,10 @@ export function StepAccordionItem({ step, index, isFirst }: StepProps) {
   const [isOpen, setIsOpen] = useState(isFirst || false);
 
   return (
-    <div
-      className={`${
-        isFirst || isOpen ? "" : " border-t dark:border-slate-700"
-      }`}
-    >
+    <div className={`mb-2 rounded-t-lg shadow`}>
       <button
-        className={`flex w-full items-center justify-between rounded-lg p-4 text-left text-slate-800 transition hover:bg-blue-50 dark:text-slate-300${
-          isOpen
-            ? " bg-blue-100 hover:bg-blue-200 dark:bg-blue-800 dark:hover:bg-blue-700"
-            : " hover:bg-blue-50 dark:hover:bg-blue-900"
+        className={`flex w-full items-center justify-between rounded-t-lg bg-blue-300 p-4 text-left text-slate-800 transition hover:bg-blue-400 dark:bg-blue-600 dark:text-slate-300 dark:hover:bg-blue-800${
+          isOpen ? "" : " shadow-md"
         }`}
         onClick={() => setIsOpen(!isOpen)}
       >
@@ -34,7 +28,7 @@ export function StepAccordionItem({ step, index, isFirst }: StepProps) {
         <span className="dark:text-slate-300">{isOpen ? "-" : "+"}</span>
       </button>
       {isOpen && (
-        <div className="px-4 py-2 dark:bg-slate-800 dark:text-slate-200">
+        <div className="px-4 py-2 dark:bg-slate-700 dark:text-slate-200">
           {description && (
             <ReactMarkdown linkTarget="_blank">{description}</ReactMarkdown>
           )}
@@ -114,39 +108,39 @@ export function Plan() {
         initial={{ opacity: 0 }}
         transition={{ ease: "easeInOut", duration: 2 }}
       >
-        <div className="rounded border bg-slate-50 shadow-xl dark:border-slate-700 dark:bg-slate-800">
-          <div className="bg-slate-100 p-4 dark:bg-slate-700">
-            <h2
-              className={`text-center text-xl font-medium text-blue-800 dark:text-blue-200`}
-            >
-              {currentPlan.goal}
-            </h2>
-          </div>
-          <div className={`p-4`}>
-            {currentPlan.steps && currentPlan.steps.length > 0 && (
-              <div>
-                {currentPlan.steps.map((step) => (
-                  <StepAccordionItem
-                    key={step.number}
-                    step={step}
-                    index={step.number}
-                    isFirst={step.number === 1}
-                  />
-                ))}
-              </div>
-            )}
+        <div className="flex flex-row items-center justify-between rounded-t-lg bg-slate-100 p-4 dark:bg-slate-700">
+          <h2 className="text-center text-xl font-medium text-blue-800 dark:text-blue-200">
+            {currentPlan.goal}
+          </h2>
+          {/* TODO: implement functionality for this */}
+          {/* <button className="rounded bg-blue-500 px-4 py-2 text-white shadow hover:bg-blue-600 hover:shadow-xl dark:bg-blue-700 hover:dark:bg-blue-800">
+            Subscribe for detailed plan
+          </button> */}
+        </div>
+        <div className="rounded-b-lg bg-slate-50 p-4 dark:bg-slate-800">
+          {currentPlan.steps && currentPlan.steps.length > 0 && (
+            <div>
+              {currentPlan.steps.map((step) => (
+                <StepAccordionItem
+                  key={step.number}
+                  step={step}
+                  index={step.number}
+                  isFirst={step.number === 1}
+                />
+              ))}
+            </div>
+          )}
 
-            {currentPlan.links && currentPlan.links.length > 0 && (
-              <div>
-                <h6 className="my-2 text-slate-800  dark:text-slate-300">
-                  🔗 Our sources
-                </h6>
-                <ul className="text-gray-800 dark:text-gray-300">
-                  {convertToLinkList(currentPlan.links)}
-                </ul>
-              </div>
-            )}
-          </div>
+          {currentPlan.links && currentPlan.links.length > 0 && (
+            <div>
+              <h6 className="my-2 text-slate-800  dark:text-slate-300">
+                🔗 Our sources
+              </h6>
+              <ul className="text-gray-800 dark:text-gray-300">
+                {convertToLinkList(currentPlan.links)}
+              </ul>
+            </div>
+          )}
         </div>
       </motion.div>
     </div>

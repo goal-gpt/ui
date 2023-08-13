@@ -30,7 +30,7 @@ function Main() {
             <div>
               <ChatForm query={query} />
               <div className="align-self-center">
-                <p className="small my-2 text-center dark:text-slate-300">
+                <p className="my-2 text-center text-xs dark:text-slate-300">
                   Disclaimer: responses provide information only and should not
                   be taken as professional advice.
                 </p>

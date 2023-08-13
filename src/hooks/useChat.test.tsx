@@ -3,7 +3,8 @@ import { act, cleanup, renderHook, waitFor } from "@testing-library/react";
 import { ChatRole } from "../components/Chat";
 import { getLocalStorage, setLocalStorage } from "../services/browserTools";
 import { createWrapper } from "../utils";
-import { PlanType, QueryStatus, useChat } from "./useChat";
+import type { PlanType } from "./useChat";
+import { QueryStatus, useChat } from "./useChat";
 
 jest.mock("../services/browserTools");
 
@@ -23,7 +24,7 @@ describe("useChat", () => {
         headers: {
           get: () => "application/json",
         },
-      })
+      }),
     ) as jest.Mock;
   });
 
@@ -59,7 +60,7 @@ describe("useChat", () => {
         text: "Hello, test!",
         plan: storedPlan,
         links: [],
-      })
+      }),
     );
 
     const { result } = renderHook(() => useChat(), {
@@ -109,7 +110,7 @@ describe("useChat", () => {
         text: "Hello, test!",
         plan: initialPlan,
         links: [],
-      })
+      }),
     );
 
     const newPlan: PlanType = {
@@ -130,7 +131,7 @@ describe("useChat", () => {
         headers: {
           get: () => "application/json",
         },
-      })
+      }),
     ) as jest.Mock;
 
     const { result } = renderHook(() => useChat(), {
@@ -158,7 +159,7 @@ describe("useChat", () => {
           text: "Hello again, test!",
           plan: newPlan,
           links: [],
-        })
+        }),
       );
       expect(result.current.chatStatus).toBe("success");
       expect(result.current.chatHistory).toEqual([
@@ -177,7 +178,7 @@ describe("useChat", () => {
         headers: {
           get: () => "application/json",
         },
-      })
+      }),
     ) as jest.Mock;
     const message = "Test message";
     const { result } = renderHook(() => useChat(), {

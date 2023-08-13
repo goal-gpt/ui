@@ -61,10 +61,13 @@ const Sidebar = () => {
         </button>
         <div className="h-full overflow-y-auto bg-gray-100 px-3 py-4 dark:bg-gray-800">
           <div className="mx-auto mb-4 flex flex-row justify-center border-b-2 border-slate-300 pb-4 dark:border-slate-700">
-            <Logo xl />
+            <Link href="/">
+              <Logo xl />
+            </Link>
           </div>
           <ul className="space-y-2 font-medium">
-            <li>
+            {/* TODO: keeping this here as it's likely the next piece of functionality to build */}
+            {/* <li>
               <Link
                 href="#"
                 className="group flex items-center rounded-lg p-2 text-gray-900 hover:bg-gray-200 dark:text-white dark:hover:bg-gray-700"
@@ -83,7 +86,7 @@ const Sidebar = () => {
                   Your Plans
                 </span>
               </Link>
-            </li>
+            </li> */}
             <li>
               <Link
                 href="/login"
