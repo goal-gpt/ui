@@ -1,7 +1,5 @@
-import {
-  LoadingItemData,
-  LoadingItemType,
-} from "../components/Status/LoadingItem";
+import type { LoadingItemData } from "../components/Status/LoadingItem";
+import { LoadingItemType } from "../components/Status/LoadingItem";
 
 export const loadingItemData: LoadingItemData[] = [
   {

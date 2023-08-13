@@ -3,7 +3,7 @@ import React, { forwardRef, useState } from "react";
 import { Card } from "react-bootstrap";
 
 import styles from "./Card.module.scss";
-import { API } from "./CardList";
+import type { API } from "./CardList";
 
 export const TinderCard = dynamic(() => import("react-tinder-card"), {
   ssr: false,
@@ -120,7 +120,5 @@ export const CardItem = forwardRef<API, CardItemProps>(
         </Card>
       </TinderCard>
     );
-  }
+  },
 );
-
-export default CardItem;

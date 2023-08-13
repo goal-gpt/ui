@@ -6,6 +6,8 @@ import { Container, Dropdown, DropdownButton, Row } from "react-bootstrap";
 import Image from "react-bootstrap/Image";
 import Navbar from "react-bootstrap/Navbar";
 
+import { logger } from "@/utils";
+
 import styles from "./Header.module.scss";
 
 export function Header() {
@@ -15,7 +17,7 @@ export function Header() {
 
   const handleSignout = async () => {
     const { error } = await supabaseClient.auth.signOut();
-    if (error) console.error("Error signing out: ", error);
+    if (error) logger.error("Error signing out: ", error);
   };
 
   const handleSignin = async () => {
@@ -54,7 +56,11 @@ export function Header() {
           className={`${styles.profileButton} d-flex flex-column align-items-center`}
           onSelect={(e: string | null) => {
             if (e === "1") {
-              user ? handleSignout() : handleSignin();
+              if (user) {
+                handleSignout();
+              } else {
+                handleSignin();
+              }
             }
           }}
         >

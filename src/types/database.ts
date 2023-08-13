@@ -34,7 +34,7 @@ export interface Database {
             columns: ["user_id"];
             referencedRelation: "users";
             referencedColumns: ["id"];
-          }
+          },
         ];
       };
       chat_line: {
@@ -65,7 +65,7 @@ export interface Database {
             columns: ["chat"];
             referencedRelation: "chat";
             referencedColumns: ["id"];
-          }
+          },
         ];
       };
       content: {
@@ -111,7 +111,7 @@ export interface Database {
             columns: ["user_id"];
             referencedRelation: "users";
             referencedColumns: ["id"];
-          }
+          },
         ];
       };
       document: {
@@ -145,7 +145,7 @@ export interface Database {
             columns: ["content"];
             referencedRelation: "content";
             referencedColumns: ["id"];
-          }
+          },
         ];
       };
       plan: {
@@ -182,7 +182,7 @@ export interface Database {
             columns: ["user_id"];
             referencedRelation: "users";
             referencedColumns: ["id"];
-          }
+          },
         ];
       };
       profile: {
@@ -225,7 +225,7 @@ export interface Database {
             columns: ["id"];
             referencedRelation: "users";
             referencedColumns: ["id"];
-          }
+          },
         ];
       };
     };

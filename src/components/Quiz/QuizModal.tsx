@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Alert } from "react-bootstrap";
 import Modal from "react-bootstrap/Modal";
 
-import { CardItemData } from "../Card";
+import type { CardItemData } from "../Card";
 import { QuizForm } from "./QuizForm";
 import styles from "./QuizModal.module.scss";
 
@@ -41,7 +41,7 @@ export function QuizModal({ card, show, handleClose }: QuizModalProps) {
     setMessage(
       motivationalMessages[
         Math.floor(Math.random() * motivationalMessages.length)
-      ]
+      ],
     );
   }, [card]);
 

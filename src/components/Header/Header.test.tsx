@@ -28,7 +28,7 @@ describe("Header component", () => {
   it("renders the logo", () => {
     render(<Header />);
     const headerImage = screen.getByAltText(
-      /eras logo: yellow lines gradually reaching the horizon/i
+      /eras logo: yellow lines gradually reaching the horizon/i,
     );
     expect(headerImage).toBeInTheDocument();
   });

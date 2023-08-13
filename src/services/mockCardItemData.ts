@@ -1,4 +1,4 @@
-import { CardItemData } from "../components/Card";
+import type { CardItemData } from "../components/Card";
 
 export const cardItemData: CardItemData[] = [
   {

@@ -1,4 +1,5 @@
-import React, { ReactNode, useContext, useEffect, useState } from "react";
+import type { ReactNode } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Carousel, Col, Row, Spinner } from "react-bootstrap";
 
 import { QueryStatus } from "../../hooks/useChat";
@@ -22,15 +23,15 @@ export function Status() {
   const getLoadingText = (
     index: number,
     type: LoadingItemType,
-    text: string
+    text: string,
   ): ReactNode => {
     // Delay initially showing anything
     if (index === 0) return "";
     if (index % 4 === 0) return "Working on your personalized action plan...";
-    if (type == LoadingItemType.Fact) return `Did you know: ${text}`;
+    if (type === LoadingItemType.Fact) return `Did you know: ${text}`;
 
     // Return italicized text when the LoadingItemType is Quote
-    if (type == LoadingItemType.Quote) return <i>{`"${text}"`}</i>;
+    if (type === LoadingItemType.Quote) return <i>{`"${text}"`}</i>;
 
     return `"${text}"`;
   };

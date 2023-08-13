@@ -1,4 +1,5 @@
-/* eslint @typescript-eslint/no-var-requires: "off" */
+/* eslint-disable */
+// @ts-nocheck
 
 require("dotenv").config({ path: ".env.local" });
 const { exec } = require("child_process");

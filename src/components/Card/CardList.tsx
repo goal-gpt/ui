@@ -4,8 +4,8 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 
 import { Button } from "../Button";
-import { CardItemData } from "./CardItem";
-import CardItem from "./CardItem";
+import type { CardItemData } from "./CardItem";
+import { CardItem } from "./CardItem";
 
 // The API interface in react-tinder-card wasn't exported, so it's copied here
 export interface API {
@@ -37,7 +37,7 @@ export function CardList({
 
   // Remove cards whose links are stored in localstorage
   const filterByCompletion = (
-    unfilteredCards: CardItemData[]
+    unfilteredCards: CardItemData[],
   ): CardItemData[] => {
     const completedContentLinks = getCompletedContentLinks();
 
@@ -52,7 +52,7 @@ export function CardList({
   // If no category is supplied, use all cards.
   // Otherwise, use cards with a matching category
   const filterByCategory = (
-    unfilteredCards: CardItemData[]
+    unfilteredCards: CardItemData[],
   ): CardItemData[] => {
     return category === undefined
       ? unfilteredCards
@@ -61,7 +61,7 @@ export function CardList({
           // And that "financial-planning" will match "financial planning"
           const categoryWithoutHyphens = category.replaceAll("-", " ");
           const categoriesWithoutHyphens = item.categories.map((c) =>
-            c.replaceAll("-", " ")
+            c.replaceAll("-", " "),
           );
 
           return categoriesWithoutHyphens.includes(categoryWithoutHyphens);
@@ -81,10 +81,10 @@ export function CardList({
   const swiped = (direction: string, index: number) => {
     updateCurrentIndex(index - 1);
     if (direction === "left" || direction === "down") {
-      removeCard(cards[index]);
+      removeCard(cards[index] as CardItemData);
       setAnySkipped(true);
     } else {
-      selectCard(cards[index]);
+      selectCard(cards[index] as CardItemData);
     }
   };
 
@@ -116,7 +116,7 @@ export function CardList({
     // TODO: instead of throwing an error we might want to redirect to a `categories` page
     if (cardsToShow.length === 0)
       throw new Error(
-        "Sorry, we do not have any content in that category. But please check back later. We are constantly adding new content!"
+        "Sorry, we do not have any content in that category. But please check back later. We are constantly adding new content!",
       );
     setCards(cardsToShow.sort(() => Math.random() - 0.5));
     setCurrentIndex(cardsToShow.length - 1);
@@ -164,7 +164,7 @@ export function CardList({
               />
             ))}
           </Row>
-          <Row className="mt-3 justify-content-between">
+          <Row className="justify-content-between mt-3">
             <Col md={3} xs={1} />
             <Col className="d-flex align-items-center justify-content-center">
               <Button

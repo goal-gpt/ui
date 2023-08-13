@@ -30,7 +30,7 @@ describe("ChatBox", () => {
     renderWithChatContext(<ChatBox />);
 
     const errorMsg = screen.queryByText(
-      /Sorry, an error occurred. Please try again!/i
+      /Sorry, an error occurred. Please try again!/i,
     );
     expect(errorMsg).not.toBeInTheDocument();
   });

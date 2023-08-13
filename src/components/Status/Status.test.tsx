@@ -38,7 +38,7 @@ describe("Loading component", () => {
       chatStatus: QueryStatus.Error,
     });
     const errorMessage = getByText(
-      "Sorry, an error occurred. Please try again!"
+      "Sorry, an error occurred. Please try again!",
     );
     expect(errorMessage).toBeInTheDocument();
   });

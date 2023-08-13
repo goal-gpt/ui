@@ -1,8 +1,5 @@
-import {
-  Matcher,
-  render,
-  SelectorMatcherOptions,
-} from "@testing-library/react";
+import type { Matcher, SelectorMatcherOptions } from "@testing-library/react";
+import { render } from "@testing-library/react";
 import React from "react";
 
 import Profile from "../pages/profile";
@@ -11,7 +8,7 @@ import { cardItemData } from "../src/services/cardItemData";
 jest.mock("../src/services/cardItemData", () => {
   const {
     cardItemData: mockCards,
-  } = require("../src/services/mockCardItemData"); // eslint-disable-line @typescript-eslint/no-var-requires
+  } = require("../src/services/mockCardItemData"); // eslint-disable-line
 
   return {
     cardItemData: mockCards,
@@ -23,7 +20,7 @@ describe("Profile", () => {
     it("renders a message when no quizzes have been completed", () => {
       const { getByText } = render(<Profile />);
       const messageElement = getByText(
-        /once you've completed some quizzes, come back here to track your progress!/i
+        /once you've completed some quizzes, come back here to track your progress!/i,
       );
       expect(messageElement).toBeInTheDocument();
     });
@@ -32,7 +29,7 @@ describe("Profile", () => {
   describe("There are completed quizzes", () => {
     let getByTextHTMLElement: (
       id: Matcher,
-      options?: SelectorMatcherOptions | undefined
+      options?: SelectorMatcherOptions | undefined,
     ) => HTMLElement;
     beforeEach(() => {
       const completedCardLinks = cardItemData
@@ -48,21 +45,21 @@ describe("Profile", () => {
 
     it("displays the number of quizzes completed when at least one quiz is completed", () => {
       const quizzesCompletedElement = getByTextHTMLElement(
-        /# of quizzes completed: 2/i
+        /# of quizzes completed: 2/i,
       );
       expect(quizzesCompletedElement).toBeInTheDocument();
     });
 
     it("displays the number of categories covered when at least one quiz is completed", () => {
       const categoriesCoveredElement = getByTextHTMLElement(
-        /# of categories covered: 4/i
+        /# of categories covered: 4/i,
       );
       expect(categoriesCoveredElement).toBeInTheDocument();
     });
 
     it("displays the number of quizzes per covered category when at least one quiz is completed", () => {
       const quizzesPerCategoryElement = getByTextHTMLElement(
-        /# of quizzes per covered category/i
+        /# of quizzes per covered category/i,
       );
       expect(quizzesPerCategoryElement).toBeInTheDocument();
       const category0 = getByTextHTMLElement("category0: 1");
@@ -73,7 +70,7 @@ describe("Profile", () => {
 
     it("displays the amount of consumed content when at least one quiz is completed", () => {
       const consumedContentElement = getByTextHTMLElement(
-        /amount of tested content: over 200 words/i
+        /amount of tested content: over 200 words/i,
       );
       expect(consumedContentElement).toBeInTheDocument();
     });

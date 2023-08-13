@@ -2,6 +2,7 @@ export const getLocalStorage = (name: string) => {
   if (typeof window !== "undefined") {
     return localStorage.getItem(name);
   }
+  return null;
 };
 
 export const setLocalStorage = (name: string, data: string) => {

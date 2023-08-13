@@ -27,7 +27,7 @@ describe("Main component", () => {
   it("renders the welcome message", () => {
     const { getByText } = render(<Main />);
     const welcomeMessage = getByText(
-      "Improving your personal finance skills is a journey. We are glad to be on it with you!"
+      "Improving your personal finance skills is a journey. We are glad to be on it with you!",
     );
 
     expect(welcomeMessage).toBeInTheDocument();
@@ -40,7 +40,7 @@ describe("Main component", () => {
     fireEvent.click(closeButton);
 
     const welcomeMessage = queryByText(
-      "Improving your personal finance skills is a journey. We are glad to be on it with you!"
+      "Improving your personal finance skills is a journey. We are glad to be on it with you!",
     );
 
     expect(welcomeMessage).not.toBeInTheDocument();

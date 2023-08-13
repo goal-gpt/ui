@@ -1,8 +1,9 @@
 import { fireEvent, render } from "@testing-library/react";
 import React from "react";
 
-import { QuestionItem } from "../Card";
-import { Question, QuestionProps } from "./Question";
+import type { QuestionItem } from "../Card";
+import type { QuestionProps } from "./Question";
+import { Question } from "./Question";
 
 const formValues = {};
 const setFormValues = jest.fn();
@@ -27,11 +28,11 @@ describe("Question", () => {
 
     it("renders a multiple-choice question correctly", () => {
       const { getByText, getByLabelText } = render(
-        <Question {...questionProps} />
+        <Question {...questionProps} />,
       );
 
       expect(
-        getByText("1. What is the capital of France?")
+        getByText("1. What is the capital of France?"),
       ).toBeInTheDocument();
       expect(getByLabelText("Paris")).toBeInTheDocument();
       expect(getByLabelText("London")).toBeInTheDocument();
@@ -63,7 +64,7 @@ describe("Question", () => {
 
     it("renders a fill-in-the-blank question correctly", () => {
       const { getByText, getByLabelText } = render(
-        <Question {...questionProps} />
+        <Question {...questionProps} />,
       );
 
       expect(getByText("1. The capital of France is .")).toBeInTheDocument();
