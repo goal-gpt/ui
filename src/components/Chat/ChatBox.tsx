@@ -1,7 +1,5 @@
 import React, { useContext, useRef } from "react";
-import { Container, Row } from "react-bootstrap";
 
-import styles from "./ChatBox.module.scss";
 import { ChatContext } from "./ChatContext";
 import { ChatMessage, ChatRole } from "./ChatMessage";
 
@@ -46,11 +44,16 @@ function ChatBox() {
   };
 
   return (
-    <Container className={`${styles.chatContainer}`}>
+    <div
+      className={`mx-auto flex flex-col justify-between overflow-x-hidden px-4`}
+    >
       {/* The order of elements is reversed as we want the chat history to appear from the bottom using flex-direction: column-reverse */}
-      <Row className={`${styles.chatBox}`} role="log">
-        <div ref={bottomRef} style={{ height: 0 }} />
-        <div className={`${styles.chatHistoryContainer}`}>
+      <div
+        className={`flex grow flex-col-reverse flex-nowrap overflow-y-auto overflow-x-hidden`}
+        role="log"
+      >
+        <div ref={bottomRef} className="h-0" />
+        <div>
           {/* For now, just show the last AI message */}
           {chatHistory.length > 0 && chatHistory[0]!.content !== "" ? (
             <ChatMessage
@@ -59,9 +62,27 @@ function ChatBox() {
             />
           ) : null}
         </div>
-      </Row>
-    </Container>
+      </div>
+    </div>
   );
+
+  // return (
+  //   <Container className={`${styles.chatContainer}`}>
+  //     {/* The order of elements is reversed as we want the chat history to appear from the bottom using flex-direction: column-reverse */}
+  //     <Row className={`${styles.chatBox}`} role="log">
+  //       <div ref={bottomRef} style={{ height: 0 }} />
+  //       <div className={`${styles.chatHistoryContainer}`}>
+  //         {/* For now, just show the last AI message */}
+  //         {chatHistory.length > 0 && chatHistory[0]!.content !== "" ? (
+  //           <ChatMessage
+  //             key={chatHistory.length - 1}
+  //             message={getLastAIChat()}
+  //           />
+  //         ) : null}
+  //       </div>
+  //     </Row>
+  //   </Container>
+  // );
 }
 
 export default ChatBox;

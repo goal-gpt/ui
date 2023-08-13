@@ -22,7 +22,7 @@ describe("FeedbackForm", () => {
     const { getByRole } = render(<FeedbackForm />);
 
     expect(
-      getByRole("button", { name: /Share your feedback!/i })
+      getByRole("button", { name: /Share your feedback!/i }),
     ).toBeInTheDocument();
   });
 
@@ -50,7 +50,7 @@ describe("FeedbackForm", () => {
   it("should toggle thumbs up and thumbs down correctly", async () => {
     const { getByLabelText, getByRole } = render(<FeedbackForm />);
     await userEvent.click(
-      getByRole("button", { name: /Share your feedback!/i })
+      getByRole("button", { name: /Share your feedback!/i }),
     );
 
     const thumbsUp = getByLabelText(/hand-thumbs-up/i);
@@ -79,17 +79,17 @@ describe("FeedbackForm", () => {
   it("should send email with feedback", async () => {
     const { getByLabelText, getByRole } = render(<FeedbackForm />);
     await userEvent.click(
-      getByRole("button", { name: /Share your feedback!/i })
+      getByRole("button", { name: /Share your feedback!/i }),
     );
 
     await userEvent.click(getByLabelText(/hand-thumbs-up/i));
     await userEvent.type(
       getByLabelText(/Share any comments.../i),
-      "Great feedback!"
+      "Great feedback!",
     );
     await userEvent.type(
       getByLabelText(/...and your email!/i),
-      "test@example.com"
+      "test@example.com",
     );
 
     act(() => {
@@ -108,16 +108,16 @@ describe("FeedbackForm", () => {
   it("should show a loading spinner when sending feedback, clear the form on success and close the form", async () => {
     const { getByLabelText, getByRole } = render(<FeedbackForm />);
     await userEvent.click(
-      getByRole("button", { name: /Share your feedback!/i })
+      getByRole("button", { name: /Share your feedback!/i }),
     );
     await userEvent.click(getByLabelText(/hand-thumbs-up/i));
     await userEvent.type(
       getByLabelText(/Share any comments.../i),
-      "Great feedback!"
+      "Great feedback!",
     );
     await userEvent.type(
       getByLabelText(/...and your email!/i),
-      "test@example.com"
+      "test@example.com",
     );
 
     act(() => {
@@ -130,27 +130,27 @@ describe("FeedbackForm", () => {
     expect(getByLabelText(/hand-thumbs-up/i)).toBeInTheDocument();
     await waitFor(() =>
       expect(
-        getByRole("button", { name: /Share your feedback!/i })
-      ).toBeInTheDocument()
+        getByRole("button", { name: /Share your feedback!/i }),
+      ).toBeInTheDocument(),
     );
   });
 
   it("should log an error message if sending the email fails", async () => {
     (sendEmailJS as jest.Mock).mockRejectedValue(
-      new Error("Send email failed")
+      new Error("Send email failed"),
     );
     const { getByLabelText, getByRole } = render(<FeedbackForm />);
     await userEvent.click(
-      getByRole("button", { name: /Share your feedback!/i })
+      getByRole("button", { name: /Share your feedback!/i }),
     );
     await userEvent.click(getByLabelText(/hand-thumbs-up/i));
     await userEvent.type(
       getByLabelText(/Share any comments.../i),
-      "Great feedback!"
+      "Great feedback!",
     );
     await userEvent.type(
       getByLabelText(/...and your email!/i),
-      "test@example.com"
+      "test@example.com",
     );
 
     act(() => {
@@ -162,7 +162,7 @@ describe("FeedbackForm", () => {
       expect(sendEmailJS).toHaveBeenCalledTimes(1);
       expect(logger.info).toHaveBeenCalledWith(
         "Failed to send feedback...",
-        new Error("Send email failed")
+        new Error("Send email failed"),
       );
     });
   });

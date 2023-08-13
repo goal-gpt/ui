@@ -5,7 +5,6 @@ import React from "react";
 import { Layout } from "@/components/Layout/Layout";
 
 import { ChatBox, ChatForm } from "../src/components/Chat";
-import { FeedbackForm } from "../src/components/Feedback";
 import { Plan } from "../src/components/Plan";
 import { Status } from "../src/components/Status";
 
@@ -28,11 +27,8 @@ function Main() {
               <Plan />
               <Status />
             </div>
-            <div className="flex flex-col">
+            <div>
               <ChatForm query={query} />
-              <div className="align-self-center">
-                <FeedbackForm />
-              </div>
               <div className="align-self-center">
                 <p className="small my-2 text-center dark:text-slate-300">
                   Disclaimer: responses provide information only and should not

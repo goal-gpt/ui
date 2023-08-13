@@ -27,6 +27,7 @@ const Logo = (props: ILogoProps) => {
         preserveAspectRatio="xMinYMin"
         style={{ overflow: "visible" }}
       >
+        <desc>eras logo</desc>
         <path
           fill="#0B1C38"
           d="M431,298h-10c0-66.7-54.3-121-121-121s-121,54.3-121,121h-10c0-72.2,58.8-131,131-131S431,225.8,431,298z"

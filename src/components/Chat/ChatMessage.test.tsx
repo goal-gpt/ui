@@ -1,11 +1,8 @@
 import { render, screen } from "@testing-library/react";
 import React from "react";
 
-import {
-  ChatMessage,
-  ChatMessage as ChatMessageProps,
-  ChatRole,
-} from "./ChatMessage";
+import type { IChatMessage as ChatMessageProps } from "./ChatMessage";
+import { ChatMessage, ChatRole } from "./ChatMessage";
 
 describe("ChatMessage", () => {
   it("renders with correct role and content", () => {
@@ -18,7 +15,8 @@ describe("ChatMessage", () => {
 
     // Check if correct role class is added
     const messageElement = screen.getByText("Test message").parentElement;
-    expect(messageElement).toHaveClass("chatMessageHuman");
+    expect(messageElement).toHaveClass("items-end");
+    expect(messageElement).not.toHaveClass("items-start");
 
     // Check if correct content is displayed
     expect(screen.getByText("Test message")).toBeInTheDocument();
@@ -34,9 +32,10 @@ describe("ChatMessage", () => {
 
     // Check if correct role class is added
     const messageElement = screen.getByText(
-      "Test assistant message"
+      "Test assistant message",
     ).parentElement;
-    expect(messageElement).toHaveClass("chatMessageAI");
+    expect(messageElement).toHaveClass("items-start");
+    expect(messageElement).not.toHaveClass("items-end");
 
     // Check if correct content is displayed
     expect(screen.getByText("Test assistant message")).toBeInTheDocument();
