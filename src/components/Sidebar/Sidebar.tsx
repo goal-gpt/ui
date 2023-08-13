@@ -39,7 +39,7 @@ const Sidebar = () => {
       >
         <button
           type="button"
-          className="absolute right-2.5 top-3 ml-auto inline-flex h-8 w-8 items-center justify-center rounded-lg bg-transparent text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-white sm:hidden"
+          className="absolute right-2.5 top-3 ml-auto inline-flex h-8 w-8 items-center justify-center rounded-lg bg-transparent text-sm text-gray-400 hover:bg-gray-300 hover:text-gray-800 dark:hover:bg-gray-600 dark:hover:text-white sm:hidden"
           onClick={() => setIsOpen(false)}
         >
           <svg
@@ -59,7 +59,7 @@ const Sidebar = () => {
           </svg>
           <span className="sr-only">Close modal</span>
         </button>
-        <div className="h-full overflow-y-auto bg-gray-100 px-3 py-4 dark:bg-gray-800">
+        <div className="h-full overflow-y-auto bg-gray-200 px-3 py-4 dark:bg-gray-800">
           <div className="mx-auto mb-4 flex flex-row justify-center border-b-2 border-slate-300 pb-4 dark:border-slate-700">
             <Link href="/">
               <Logo xl />
@@ -90,10 +90,10 @@ const Sidebar = () => {
             <li>
               <Link
                 href="/login"
-                className="group flex items-center rounded-lg p-2 text-gray-900 hover:bg-gray-200 dark:text-white dark:hover:bg-gray-700"
+                className="group flex items-center rounded-md p-2 hover:bg-gray-400 dark:hover:bg-gray-700"
               >
                 <svg
-                  className="h-5 w-5 transition duration-75 group-hover:text-gray-800 dark:text-gray-500 dark:group-hover:text-white"
+                  className="h-5 w-5 transition duration-75 group-hover:text-gray-900 dark:text-gray-500 dark:group-hover:text-gray-300"
                   aria-hidden="true"
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -107,7 +107,7 @@ const Sidebar = () => {
                     d="M1 8h11m0 0L8 4m4 4-4 4m4-11h3a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-3"
                   />
                 </svg>
-                <span className="ml-3 text-gray-700 group-hover:text-gray-900 dark:text-gray-400 group-hover:dark:text-gray-200">
+                <span className="ml-3 group-hover:text-gray-900 dark:text-gray-400 group-hover:dark:text-gray-100">
                   Sign In
                 </span>
               </Link>
