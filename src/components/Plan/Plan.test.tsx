@@ -50,33 +50,29 @@ describe("Plan", () => {
     expect(steps).not.toBeInTheDocument();
   });
 
-  it("renders the full plan when currentPlan is not null", async () => {
-    const { getByText, queryAllByText, getByRole } = renderWithChatContext(
-      <Plan />,
-      {
-        currentPlan: {
-          goal: "Test Goal",
-          steps: [
-            {
-              number: 1,
-              action: {
-                name: "Test action.",
-                description: "Rest of action.",
-                ideas: {},
-              },
+  it("renders the full plan when currentPlan is not null", () => {
+    const { getByText, queryAllByText } = renderWithChatContext(<Plan />, {
+      currentPlan: {
+        goal: "Test Goal",
+        steps: [
+          {
+            number: 1,
+            action: {
+              name: "Test action.",
+              description: "Rest of action.",
+              ideas: {},
             },
-          ],
-          links: ["[Example link](https://example.com)"],
-        },
+          },
+        ],
+        links: ["[Example link](https://example.com)"],
       },
-    );
+    });
     const goal = getByText(/Test Goal/i);
     const step = getByText(/Test action\./i);
-    expect(goal).toBeInTheDocument();
-    expect(step).toBeInTheDocument();
-    await user.click(getByRole("button", { name: /Step 1/i }));
     const description = getByText(/Rest of action\./i);
     const link = queryAllByText(/Example link/i);
+    expect(goal).toBeInTheDocument();
+    expect(step).toBeInTheDocument();
     expect(description).toBeInTheDocument();
     expect(link.length).toBe(1);
   });
@@ -89,7 +85,6 @@ describe("Plan", () => {
           links: edgeResponse.sera.links,
         },
       });
-    await user.click(getByRole("button", { name: /Step 1/i }));
     await user.click(getByRole("button", { name: /Step 2/i }));
     await user.click(getByRole("button", { name: /Step 3/i }));
     await user.click(getByRole("button", { name: /Step 4/i }));
