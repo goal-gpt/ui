@@ -1,11 +1,14 @@
+import userEvent from "@testing-library/user-event";
 import React from "react";
 
 import edgeResponse from "../../../__tests__/__mocks__/functions.json";
-import { Step } from "../../hooks/useChat";
+import type { Step } from "../../hooks/useChat";
 import { renderWithChatContext } from "../../utils";
 import { Plan } from "./Plan";
 
 describe("Plan", () => {
+  const user = userEvent.setup();
+
   afterEach(() => {
     jest.clearAllMocks();
   });
@@ -47,63 +50,65 @@ describe("Plan", () => {
     expect(steps).not.toBeInTheDocument();
   });
 
-  it("renders the full plan when currentPlan is not null", () => {
-    const { getByText, queryAllByText } = renderWithChatContext(<Plan />, {
-      currentPlan: {
-        goal: "Test Goal",
-        steps: [
-          {
-            number: 1,
-            action: {
-              name: "Test action.",
-              description: "Rest of action.",
-              ideas: {},
+  it("renders the full plan when currentPlan is not null", async () => {
+    const { getByText, queryAllByText, getByRole } = renderWithChatContext(
+      <Plan />,
+      {
+        currentPlan: {
+          goal: "Test Goal",
+          steps: [
+            {
+              number: 1,
+              action: {
+                name: "Test action.",
+                description: "Rest of action.",
+                ideas: {},
+              },
             },
-          },
-        ],
-        links: ["[Example link](https://example.com)"],
+          ],
+          links: ["[Example link](https://example.com)"],
+        },
       },
-    });
+    );
     const goal = getByText(/Test Goal/i);
     const step = getByText(/Test action\./i);
-    const description = getByText(/Rest of action\./i);
-    const link = queryAllByText(/Example link/i);
     expect(goal).toBeInTheDocument();
     expect(step).toBeInTheDocument();
+    await user.click(getByRole("button", { name: /Step 1/i }));
+    const description = getByText(/Rest of action\./i);
+    const link = queryAllByText(/Example link/i);
     expect(description).toBeInTheDocument();
     expect(link.length).toBe(1);
   });
 
-  it("shows all the steps in the plan", () => {
-    const { getAllByText, getAllByRole, getByText } = renderWithChatContext(
-      <Plan />,
-      {
+  it("shows all the steps in the plan", async () => {
+    const { getAllByText, getAllByRole, getByRole, getByText } =
+      renderWithChatContext(<Plan />, {
         currentPlan: {
           ...edgeResponse.sera.plan,
           links: edgeResponse.sera.links,
         },
-      }
-    );
+      });
+    await user.click(getByRole("button", { name: /Step 1/i }));
+    await user.click(getByRole("button", { name: /Step 2/i }));
+    await user.click(getByRole("button", { name: /Step 3/i }));
+    await user.click(getByRole("button", { name: /Step 4/i }));
+    await user.click(getByRole("button", { name: /Step 5/i }));
 
     const goal = getByText(edgeResponse.sera.plan.goal);
-    const step1 = getByText(edgeResponse.sera.plan.steps[0].action.name, {
+    const expectedStep = edgeResponse.sera.plan.steps[0] as Step;
+    const step1 = getByText(expectedStep.action.name, {
       exact: false,
     });
-    const description1 = getByText(
-      edgeResponse.sera.plan.steps[0].action.description
-    );
+    const description1 = getByText(expectedStep.action.description);
     const ideaHeaders = getAllByText(/✏️ Ideas/i);
-    const idea1 = getByText(
-      edgeResponse.sera.plan.steps[0].action.ideas.mostObvious
-    );
-    const idea2 = getByText(
-      edgeResponse.sera.plan.steps[0].action.ideas.leastObvious
-    );
+    const idea1 = getByText(expectedStep.action.ideas.mostObvious as string);
+    const idea2 = getByText(expectedStep.action.ideas.leastObvious as string);
     const idea3 = getByText(
-      edgeResponse.sera.plan.steps[0].action.ideas.inventiveOrImaginative
+      expectedStep.action.ideas.inventiveOrImaginative as string,
     );
     const idea4 = getByText(
-      edgeResponse.sera.plan.steps[0].action.ideas.rewardingOrSustainable
+      expectedStep.action.ideas.rewardingOrSustainable as string,
     );
     const linkHeader = getByText(/🔗 Our sources/i);
     const links = getAllByRole("link");
@@ -118,14 +123,14 @@ describe("Plan", () => {
     expect(linkHeader).toBeInTheDocument();
     expect(links.length).toBe(5);
     expect(links.at(-5)?.innerHTML).toMatch(
-      /5 smart budgeting tips for first-time savers/i
+      /5 smart budgeting tips for first-time savers/i,
     );
     expect(links.at(-4)?.innerHTML).toMatch(
-      /8 Ways To Budget During Inflation/i
+      /8 Ways To Budget During Inflation/i,
     );
     expect(links.at(-3)?.innerHTML).toMatch(/Household budgeting/i);
     expect(links.at(-2)?.innerHTML).toMatch(
-      /How to Set Financial Goals for Your Future/i
+      /How to Set Financial Goals for Your Future/i,
     );
     expect(links.at(-1)?.innerHTML).toMatch(/Systematic investing/i);
   });

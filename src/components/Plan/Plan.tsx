@@ -1,12 +1,10 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
-import React, { useContext } from "react";
-import { Accordion, Card, Container } from "react-bootstrap";
+import React, { useContext, useState } from "react";
 import ReactMarkdown from "react-markdown";
 
 import type { PlanType, Step } from "../../hooks/useChat";
 import { ChatContext } from "../Chat/ChatContext";
-import styles from "./Plan.module.scss";
 
 interface StepProps {
   step: Step;
@@ -15,28 +13,39 @@ interface StepProps {
 
 export function StepAccordionItem({ step, index }: StepProps) {
   const { name, description, ideas } = step.action;
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <Accordion.Item className="border-none" eventKey={step.number.toString()}>
-      <Accordion.Header className="my-1">{`Step ${index}: ${name} `}</Accordion.Header>
-      <Accordion.Body>
-        {description && (
-          <ReactMarkdown linkTarget="_blank" className="mb-0">
-            {description}
-          </ReactMarkdown>
-        )}
-        {ideas && (
-          <>
-            <h6 className="my-2">✏️ Ideas</h6>
-            <ul className="mb-0 list-image-checkmark">
-              {Object.entries(ideas).map(([key, value]) => (
-                <li key={key}>{value}</li>
-              ))}
-            </ul>
-          </>
-        )}
-      </Accordion.Body>
-    </Accordion.Item>
+    <div className="border-b">
+      <button
+        className={`flex w-full items-center justify-between rounded-lg p-4 text-left${
+          isOpen && " bg-blue-100"
+        }`}
+        onClick={() => setIsOpen(!isOpen)}
+      >
+        {`Step ${index}: ${name} `}
+        <span>{isOpen ? "-" : "+"}</span>
+      </button>
+      {isOpen && (
+        <div className="px-4 py-2">
+          {description && (
+            <ReactMarkdown linkTarget="_blank">{description}</ReactMarkdown>
+          )}
+          {ideas && (
+            <>
+              <h6 className="my-2">✏️ Ideas</h6>
+              <ul className="list-image-checkmark pl-5">
+                {Object.entries(ideas).map(([key, value]) => (
+                  <li className="my-1 ml-2" key={key}>
+                    {value}
+                  </li>
+                ))}
+              </ul>
+            </>
+          )}
+        </div>
+      )}
+    </div>
   );
 }
 
@@ -54,7 +63,12 @@ const convertToListItem = (link?: { title: string; url: string }) => {
   if (!link) return null;
   return (
     <li key={link.url}>
-      <Link href={link.url} target="_blank" rel="noreferrer">
+      <Link
+        className="font-medium text-blue-600 underline transition-all duration-300 hover:text-blue-700 hover:decoration-transparent dark:text-blue-500 hover:dark:text-blue-400"
+        href={link.url}
+        target="_blank"
+        rel="noreferrer"
+      >
         {link.title}
       </Link>
     </li>
@@ -87,24 +101,21 @@ export function Plan() {
   }
 
   return (
-    <Container>
+    <div className="mx-auto px-4">
       <motion.div
         animate={{ opacity: 1 }}
         initial={{ opacity: 0 }}
         transition={{ ease: "easeInOut", duration: 2 }}
       >
-        <Card className={`${styles.card}`}>
-          <Card.Header>
-            <Card.Title className={`${styles.goal}`}>
+        <div className={`rounded border`}>
+          <div className="bg-gray-100 p-4">
+            <h2 className={`text-center text-xl text-blue-800`}>
               {currentPlan.goal}
-            </Card.Title>
-          </Card.Header>
-          <Card.Body className={`${styles.stepContainer}`}>
+            </h2>
+          </div>
+          <div className={`p-4`}>
             {currentPlan.steps && currentPlan.steps.length > 0 && (
-              <Accordion
-                flush={true}
-                defaultActiveKey={currentPlan.steps[0]!.number.toString()}
-              >
+              <div>
                 {currentPlan.steps.map((step) => (
                   <StepAccordionItem
                     key={step.number}
@@ -112,7 +123,7 @@ export function Plan() {
                     index={step.number}
                   />
                 ))}
-              </Accordion>
+              </div>
             )}
 
             {currentPlan.links && currentPlan.links.length > 0 && (
@@ -121,9 +132,9 @@ export function Plan() {
                 <ul>{convertToLinkList(currentPlan.links)}</ul>
               </div>
             )}
-          </Card.Body>
-        </Card>
+          </div>
+        </div>
       </motion.div>
-    </Container>
+    </div>
   );
 }
