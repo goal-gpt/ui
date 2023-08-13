@@ -5,7 +5,7 @@ import { Card } from "react-bootstrap";
 import styles from "./Card.module.scss";
 import type { API } from "./CardList";
 
-export const TinderCard = dynamic(() => import("react-tinder-card"), {
+export const TinderCard: any = dynamic(() => import("react-tinder-card"), {
   ssr: false,
 });
 
