@@ -28,7 +28,7 @@ export function QuizForm({
     if (!card) return false;
 
     const results = card.questionItems.map((questionItem) => {
-      const formValue: string = formValues[questionItem.question];
+      const formValue: string = formValues[questionItem.question] || "";
 
       if (!formValue) return false;
 

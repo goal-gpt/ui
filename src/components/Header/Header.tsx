@@ -3,11 +3,11 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
 import { Container, Dropdown, DropdownButton, Row } from "react-bootstrap";
-import Image from "react-bootstrap/Image";
 import Navbar from "react-bootstrap/Navbar";
 
 import { logger } from "@/utils";
 
+import { Logo } from "../Logo/Logo";
 import styles from "./Header.module.scss";
 
 export function Header() {
@@ -33,12 +33,7 @@ export function Header() {
           role="navigation"
         >
           <Navbar.Brand as={Link} className="align-self-center" href="/">
-            <Image
-              alt="eras logo: yellow lines gradually reaching the horizon"
-              className="d-inline-block align-top"
-              src="/eras-logo.png"
-              height="95px"
-            />
+            <Logo />
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="header-nav" />
           <Navbar.Collapse
