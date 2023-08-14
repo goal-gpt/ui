@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useState } from "react";
 
 import { QueryStatus } from "../../hooks/useChat";
 import { loadingItemData } from "../../services/loadingItemData";
-import { ChatContext } from "../Chat";
+import { ChatContext } from "../Chat/ChatContext";
 import type { LoadingItemData } from "./LoadingItem";
 import { LoadingItemType } from "./LoadingItem";
 
@@ -11,7 +11,7 @@ type CarouselProps = {
   items: LoadingItemData[];
 };
 
-function Carousel({ items }: CarouselProps) {
+export function Carousel({ items }: CarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isFading, setIsFading] = useState(false);
 
@@ -65,6 +65,15 @@ function Carousel({ items }: CarouselProps) {
   );
 }
 
+export function StatusIndicator() {
+  return (
+    <div className="text-center" role="status">
+      <div className="h-4 w-4 animate-spin rounded-full border-t-2 border-blue-600 dark:border-blue-300 dark:text-slate-200"></div>
+      <span className="sr-only">Loading...</span>
+    </div>
+  );
+}
+
 export function Status() {
   const chatContext = useContext(ChatContext);
   const { chatStatus } = chatContext || {
@@ -97,10 +106,7 @@ export function Status() {
   return (
     <>
       <div className="my-3 flex justify-center overflow-x-hidden">
-        <div className="text-center" role="status">
-          <div className="h-4 w-4 animate-spin rounded-full border-t-2 border-blue-600 dark:border-blue-300 dark:text-slate-200"></div>
-          <span className="sr-only">Loading...</span>
-        </div>
+        <StatusIndicator />
       </div>
       <div className="my-4 flex justify-center overflow-x-hidden">
         <div className="text-center">

@@ -5,6 +5,7 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import { QueryStatus } from "../../hooks/useChat";
 import { logger } from "../../utils";
 import { isValidPlan } from "../Plan";
+import { StatusIndicator } from "../Status";
 import { ChatContext } from "./ChatContext";
 
 interface ChatFormProps {
@@ -130,16 +131,23 @@ function ChatForm({ query = "" }: ChatFormProps) {
           <button
             type="submit"
             className="absolute bottom-1.5 right-1.5 cursor-pointer rounded-full p-2  shadow-md hover:bg-blue-100 dark:text-blue-500 dark:hover:bg-slate-600 md:bottom-3 md:right-3 md:p-2"
+            disabled={chatStatus === QueryStatus.Loading}
           >
-            <svg
-              className="h-5 w-5 rotate-90 fill-blue-600 dark:fill-blue-500"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 18 20"
-            >
-              <path d="m17.914 18.594-8-18a1 1 0 0 0-1.828 0l-8 18a1 1 0 0 0 1.157 1.376L8 18.281V9a1 1 0 0 1 2 0v9.281l6.758 1.689a1 1 0 0 0 1.156-1.376Z" />
-            </svg>
-            <span className="sr-only">Send message</span>
+            {chatStatus === QueryStatus.Loading ? (
+              <StatusIndicator />
+            ) : (
+              <>
+                <svg
+                  className="h-5 w-5 rotate-90 fill-blue-600 dark:fill-blue-500"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 18 20"
+                >
+                  <path d="m17.914 18.594-8-18a1 1 0 0 0-1.828 0l-8 18a1 1 0 0 0 1.157 1.376L8 18.281V9a1 1 0 0 1 2 0v9.281l6.758 1.689a1 1 0 0 0 1.156-1.376Z" />
+                </svg>
+                <span className="sr-only">Send message</span>
+              </>
+            )}
           </button>
         </div>
       </form>
