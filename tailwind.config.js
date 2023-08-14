@@ -7,7 +7,6 @@ module.exports = {
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/**/*.{js,ts,jsx,tsx,mdx}",
   ],
-  prefix: "tw-",
   theme: {
     fontSize: {
       xs: "0.75rem",

@@ -14,4 +14,4 @@ function LoginToggle() {
   return <UserIndicator />;
 }
 
-export default LoginToggle;
+export { LoginToggle };

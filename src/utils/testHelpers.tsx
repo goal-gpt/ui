@@ -1,9 +1,10 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { fireEvent, render } from "@testing-library/react";
-import React, { ReactElement, ReactNode } from "react";
+import type { ReactElement, ReactNode } from "react";
+import React from "react";
 
-import { ChatContext } from "../components/Chat";
-import { ChatHook } from "../hooks/useChat";
+import { ChatContext } from "../components/Chat/ChatContext";
+import { type ChatHook } from "../hooks/useChat";
 
 export function simulateSwipeLeft(element: ChildNode) {
   fireEvent.mouseDown(element, { clientX: 0, clientY: 100 });
@@ -29,24 +30,24 @@ export function createWrapper() {
 export function renderWithClient(ui: ReactElement) {
   const client = new QueryClient();
   const { rerender, ...result } = render(
-    <QueryClientProvider client={client}>{ui}</QueryClientProvider>
+    <QueryClientProvider client={client}>{ui}</QueryClientProvider>,
   );
   return {
     ...result,
     rerender: (rerenderUi: ReactElement) =>
       rerender(
-        <QueryClientProvider client={client}>{rerenderUi}</QueryClientProvider>
+        <QueryClientProvider client={client}>{rerenderUi}</QueryClientProvider>,
       ),
   };
 }
 
 export function renderWithChatContext(
   ui: ReactElement,
-  mockChat?: Partial<ChatHook>
+  mockChat?: Partial<ChatHook>,
 ) {
   return render(
     <ChatContext.Provider value={(mockChat as ChatHook) || null}>
       {ui}
-    </ChatContext.Provider>
+    </ChatContext.Provider>,
   );
 }

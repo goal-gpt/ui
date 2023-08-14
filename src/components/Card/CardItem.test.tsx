@@ -2,7 +2,8 @@ import { act, render } from "@testing-library/react";
 import React from "react";
 
 import { simulateSwipeLeft } from "../../utils";
-import { CardItem, CardItemProps } from "./CardItem";
+import type { CardItemProps } from "./CardItem";
+import { CardItem } from "./CardItem";
 
 const mockHandleSwipe = jest.fn();
 
@@ -68,11 +69,11 @@ describe("CardItem component", () => {
     it("truncates long text correctly on large screens", () => {
       global.innerWidth = 800; // simulate large screen
       const { getByText, rerender } = render(
-        <CardItem {...mockCardItemDataWithLongText} />
+        <CardItem {...mockCardItemDataWithLongText} />,
       );
 
       expect(
-        getByText(`${longText.substring(0, 400)} ...`)
+        getByText(`${longText.substring(0, 400)} ...`),
       ).toBeInTheDocument();
 
       global.innerWidth = 500; // simulate small screen
@@ -93,7 +94,7 @@ describe("CardItem component", () => {
       };
 
       const { getByText } = render(
-        <CardItem {...mockCardItemDataWithShortText} />
+        <CardItem {...mockCardItemDataWithShortText} />,
       );
 
       expect(getByText(shortText)).toBeInTheDocument();

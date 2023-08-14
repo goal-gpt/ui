@@ -2,8 +2,9 @@ import { render, screen } from "@testing-library/react";
 import React from "react";
 
 import { cardItemData } from "../../services/mockCardItemData";
-import { CardItemData } from "../Card";
-import { motivationalMessages, QuizModal, QuizModalProps } from ".";
+import type { CardItemData } from "../Card";
+import type { QuizModalProps } from ".";
+import { motivationalMessages, QuizModal } from ".";
 
 describe("QuizModal", () => {
   let mockHandleClose: jest.Mock;
@@ -12,7 +13,7 @@ describe("QuizModal", () => {
   let testProps: QuizModalProps;
 
   beforeEach(() => {
-    mockCard = cardItemData[0];
+    mockCard = cardItemData[0] as CardItemData;
     mockHandleClose = jest.fn();
     mockShow = true;
     testProps = {

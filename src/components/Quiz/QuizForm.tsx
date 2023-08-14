@@ -1,8 +1,9 @@
-import React, { SetStateAction, useState } from "react";
+import type { SetStateAction } from "react";
+import React, { useState } from "react";
 import { Form } from "react-bootstrap";
 
 import { Button } from "../Button";
-import { CardItemData } from "../Card/CardItem";
+import type { CardItemData } from "../Card/CardItem";
 import { Question } from "./Question";
 
 export interface QuizFormValues {
@@ -27,7 +28,7 @@ export function QuizForm({
     if (!card) return false;
 
     const results = card.questionItems.map((questionItem) => {
-      const formValue: string = formValues[questionItem.question];
+      const formValue: string = formValues[questionItem.question] || "";
 
       if (!formValue) return false;
 

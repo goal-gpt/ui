@@ -3,7 +3,7 @@ import { render, screen } from "@testing-library/react";
 import { useRouter } from "next/router";
 import React from "react";
 
-import LoginToggle from "./LoginToggle";
+import { LoginToggle } from "./LoginToggle";
 
 jest.mock("@supabase/auth-helpers-react", () => ({
   useUser: jest.fn(),

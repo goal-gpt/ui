@@ -2,7 +2,8 @@ import { act, fireEvent } from "@testing-library/react";
 import { useRouter } from "next/router";
 import React from "react";
 
-import { PlanType, QueryStatus } from "../../hooks/useChat";
+import type { PlanType } from "../../hooks/useChat";
+import { QueryStatus } from "../../hooks/useChat";
 import { renderWithChatContext } from "../../utils";
 import ChatForm from "./ChatForm";
 
@@ -37,7 +38,7 @@ describe("ChatForm", () => {
       <ChatForm query={testQuery} />,
       {
         sendMessage: mockSendMessage,
-      }
+      },
     );
     expect(mockSendMessage).toHaveBeenCalledTimes(1);
     expect(mockSendMessage).toHaveBeenCalledWith(testQuery);
@@ -53,7 +54,7 @@ describe("ChatForm", () => {
       {
         chatHistory: [],
         sendMessage: mockSendMessage,
-      }
+      },
     );
     expect(mockSendMessage).toHaveBeenCalledTimes(0);
 
@@ -74,7 +75,7 @@ describe("ChatForm", () => {
         chatHistory: [],
         sendMessage: mockSendMessage,
         chatStatus: mockChatStatus,
-      }
+      },
     );
     expect(mockSendMessage).toHaveBeenCalledTimes(0); // initial message on mount
     const input = getByPlaceholderText(formPlaceholderText);
@@ -92,7 +93,7 @@ describe("ChatForm", () => {
       {
         currentPlan: { goal: "test goal" } as PlanType,
         sendMessage: mockSendMessage,
-      }
+      },
     );
     const input = getByPlaceholderText("Refine your plan...");
     const form = getByRole("form");

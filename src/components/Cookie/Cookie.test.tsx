@@ -8,7 +8,7 @@ describe("Cookie component", () => {
     render(<Cookie />);
 
     const consentMessage = screen.getByText(
-      /This website uses cookies and storage to help you with your financial journey. By using this website, you agree to our use of cookies and storage./i
+      /This website uses cookies and storage to help you with your financial journey. By using this website, you agree to our use of cookies and storage./i,
     );
 
     expect(consentMessage).toBeInTheDocument();

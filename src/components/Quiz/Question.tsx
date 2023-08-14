@@ -1,8 +1,9 @@
-import React, { SetStateAction, useEffect, useState } from "react";
+import type { SetStateAction } from "react";
+import React, { useEffect, useState } from "react";
 import { FloatingLabel, Form, Row } from "react-bootstrap";
 
-import { QuestionItem } from "../Card";
-import { QuizFormValues } from "./QuizForm";
+import type { QuestionItem } from "../Card";
+import type { QuizFormValues } from "./QuizForm";
 
 export type QuestionType = "multiple-choice" | "fill-in-the-blank";
 
@@ -27,18 +28,18 @@ export function Question({
   useEffect(() => {
     if (questionItem.incorrectAnswers) {
       const unsortedResponses = [questionItem.correctAnswer].concat(
-        questionItem.incorrectAnswers
+        questionItem.incorrectAnswers,
       );
 
       // Try to ensure responses with "all" or "none" of the above are at the bottom
       const responsesWithAbove = unsortedResponses.filter((r) =>
-        r.includes("above")
+        r.includes("above"),
       );
       const responsesWithoutAbove = unsortedResponses.filter(
-        (r) => !r.includes("above")
+        (r) => !r.includes("above"),
       );
       const randomizedResponses = responsesWithoutAbove.sort(
-        () => Math.random() - 0.5
+        () => Math.random() - 0.5,
       );
 
       setResponses(randomizedResponses.concat(responsesWithAbove));
@@ -56,7 +57,7 @@ export function Question({
 
   const questionWithBlankSpan = (
     question: string,
-    answer: string
+    answer: string,
   ): JSX.Element => {
     const answerIndex = question.indexOf(answer);
     const questionBeforeBlank = question.substring(0, answerIndex);
@@ -73,7 +74,7 @@ export function Question({
 
   const getQuestionWithBlankUnderscores = (
     question: string,
-    answer: string
+    answer: string,
   ): string => {
     return question.replace(answer, "__________");
   };
@@ -118,7 +119,7 @@ export function Question({
               {questionIndex + 1}.{" "}
               {questionWithBlankSpan(
                 questionItem.question,
-                questionItem.correctAnswer
+                questionItem.correctAnswer,
               )}
             </div>
           </Form.Label>
@@ -129,7 +130,7 @@ export function Question({
             <Form.Control
               name={getQuestionWithBlankUnderscores(
                 questionItem.question,
-                questionItem.correctAnswer
+                questionItem.correctAnswer,
               )}
               onChange={(e) => {
                 // Set value for this questionItem

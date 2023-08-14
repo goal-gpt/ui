@@ -3,7 +3,8 @@ import { Alert, Col, Row } from "react-bootstrap";
 
 import { cardItemData } from "../../services/cardItemData";
 import { logger } from "../../utils/logger";
-import { CardItemData, CardList } from "../Card";
+import type { CardItemData } from "../Card";
+import { CardList } from "../Card";
 import { Header } from "../Header";
 import { QuizModal } from "../Quiz";
 

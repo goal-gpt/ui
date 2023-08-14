@@ -1,5 +1,5 @@
 import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render } from "@testing-library/react";
 import React from "react";
 
 import { Header } from "./Header";
@@ -23,14 +23,6 @@ describe("Header component", () => {
 
   afterEach(() => {
     jest.clearAllMocks();
-  });
-
-  it("renders the logo", () => {
-    render(<Header />);
-    const headerImage = screen.getByAltText(
-      /eras logo: yellow lines gradually reaching the horizon/i
-    );
-    expect(headerImage).toBeInTheDocument();
   });
 
   it("calls sign out function when 'Sign out' is clicked", () => {

@@ -1,12 +1,13 @@
 import { useMutation } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 
-import { ChatMessage, ChatRole } from "../components/Chat/ChatMessage";
+import type { IChatMessage } from "../components/Chat/ChatMessage";
+import { ChatRole } from "../components/Chat/ChatMessage";
 import { getLocalStorage, setLocalStorage } from "../services/browserTools";
 import { BASE_FUNCTION_URL, BEARER_TOKEN } from "../services/server";
-import { logger } from "../utils";
+import { logger } from "../utils/logger";
 
-const API_PATH = BASE_FUNCTION_URL + "/sera";
+const API_PATH = `${BASE_FUNCTION_URL}/sera`;
 
 const JsonContentType = "application/json";
 
@@ -50,7 +51,7 @@ export interface ChatHook {
   sendMessage: (message: string) => void;
   currentChat: string;
   currentPlan: PlanType;
-  chatHistory: ChatMessage[];
+  chatHistory: IChatMessage[];
   chatStatus: QueryStatus;
   chatID?: number;
 }
@@ -60,7 +61,7 @@ export interface ChatHook {
  */
 export function useChat() {
   const [currentChat, setCurrentChat] = useState<string>("");
-  const [chatHistory, setChatHistory] = useState<ChatMessage[]>([]);
+  const [chatHistory, setChatHistory] = useState<IChatMessage[]>([]);
   const [chatID, setChatID] = useState<number | null>(null);
   const [currentPlan, setCurrentPlan] = useState<PlanType>({
     goal: "",
@@ -71,16 +72,15 @@ export function useChat() {
     const storedResponse = getLocalStorage("chatResponse");
     if (storedResponse) {
       return JSON.parse(storedResponse);
-    } else {
-      return {
-        chat: null,
-        text: "",
-        plan: {
-          goal: "",
-          steps: [],
-        },
-      };
     }
+    return {
+      chat: null,
+      text: "",
+      plan: {
+        goal: "",
+        steps: [],
+      },
+    };
   };
 
   const [response, setResponse] = useState<ChatResponse>(getInitialResponse);
@@ -88,7 +88,7 @@ export function useChat() {
   // Effects
   useEffect(() => {
     setLocalStorage("chatResponse", JSON.stringify(response));
-    const { chat: chatID, text, plan, links } = response;
+    const { chat: resChatID, text, plan, links } = response;
     if (plan) {
       let planObj: object = plan;
       if (links) {
@@ -102,7 +102,7 @@ export function useChat() {
         { role: ChatRole.AI, content: text } as const,
       ]);
     }
-    setChatID(chatID);
+    setChatID(resChatID);
     setCurrentChat("");
   }, [response]);
 
@@ -134,12 +134,12 @@ export function useChat() {
         sendMessageMutation.mutate(currentChat || "");
       } else {
         // Log unexpected errors for debugging
-        console.error("Unexpected error during sendMessage:", error);
+        logger.error("Unexpected error during sendMessage:", error);
       }
     },
     onSuccess: async (res: Response) => {
-      const { chat: chatID, text, plan, links } = await res.json();
-      setResponse({ chat: chatID, text, plan, links } as ChatResponse);
+      const { chat: resChatID, text, plan, links } = await res.json();
+      setResponse({ chat: resChatID, text, plan, links } as ChatResponse);
     },
     onSettled: () => {
       setCurrentChat("");
@@ -148,8 +148,8 @@ export function useChat() {
 
   const sendMessage = (message: string) => {
     if (message !== "") {
-      setChatHistory((chatHistory) => [
-        ...chatHistory,
+      setChatHistory((originalChatHistory) => [
+        ...originalChatHistory,
         { role: ChatRole.Human, content: message },
       ]);
     }

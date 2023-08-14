@@ -4,7 +4,8 @@ import React from "react";
 
 import { cardItemData } from "../../services/mockCardItemData";
 import { simulateSwipeLeft } from "../../utils";
-import { CardList, CardListProps } from "./CardList";
+import type { CardListProps } from "./CardList";
+import { CardList } from "./CardList";
 
 describe("CardList component", () => {
   let mockSelectCard: jest.Mock;
@@ -58,7 +59,7 @@ describe("CardList component", () => {
     (useRouter as jest.Mock).mockReturnValue({ query });
 
     expect(() => render(<CardList {...mockCardListProps} />)).toThrow(
-      "Sorry, we do not have any content in that category. But please check back later. We are constantly adding new content!"
+      "Sorry, we do not have any content in that category. But please check back later. We are constantly adding new content!",
     );
   });
 
@@ -70,7 +71,7 @@ describe("CardList component", () => {
 
     it("displays a message about reaching the end", () => {
       const { getByRole, getByText } = render(
-        <CardList {...mockCardListProps} />
+        <CardList {...mockCardListProps} />,
       );
       const cardItems = getByRole("list");
 
@@ -79,7 +80,7 @@ describe("CardList component", () => {
       }
 
       const reachedTheEndText = getByText(
-        "Looks like you've reached the end. Please check back later. We add new content regularly!"
+        "Looks like you've reached the end. Please check back later. We add new content regularly!",
       );
 
       expect(reachedTheEndText).toBeInTheDocument();
@@ -87,7 +88,7 @@ describe("CardList component", () => {
 
     it("provides a link to reset skipped or missed cards if cards have been skipped", () => {
       const { getByRole, getByLabelText, queryByLabelText } = render(
-        <CardList {...mockCardListProps} />
+        <CardList {...mockCardListProps} />,
       );
       const cardItems = getByRole("list");
 
@@ -111,7 +112,7 @@ describe("CardList component", () => {
 
     it("provides a link to uncompleted cards in all categories if there are any uncompleted cards in other categories", () => {
       const { getByRole, getByLabelText } = render(
-        <CardList {...mockCardListProps} />
+        <CardList {...mockCardListProps} />,
       );
       const cardItems = getByRole("list");
 
@@ -134,7 +135,7 @@ describe("CardList component", () => {
         .mockReturnValue(JSON.stringify([cardItemData[0].link]));
 
       const { getByRole, queryByLabelText } = render(
-        <CardList {...mockCardListProps} />
+        <CardList {...mockCardListProps} />,
       );
       const cardItems = getByRole("list");
 

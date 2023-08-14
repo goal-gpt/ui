@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Col, Container, ListGroup, Row } from "react-bootstrap";
 
 import { Button } from "../../src/components/Button";
-import { CardItemData } from "../../src/components/Card";
+import type { CardItemData } from "../../src/components/Card";
 import { cardItemData } from "../../src/services/cardItemData";
 
 interface CategoriesCounts {
@@ -16,18 +16,18 @@ function Profile() {
   const [completedCards, setCompletedCards] = useState<CardItemData[]>([]);
   const [hasMetrics, setHasMetrics] = useState<boolean>(false);
   const [categoriesCounts, setCategoriesCounts] = useState<CategoriesCounts>(
-    {}
+    {},
   );
   const [wordCount, setWordCount] = useState<number>(0);
 
   useEffect(() => {
     const completedCardLinks: string[] = JSON.parse(
-      localStorage.getItem("eras.completedCardLinks") || "[]"
+      localStorage.getItem("eras.completedCardLinks") || "[]",
     );
     setCompletedCards(
       cardItemData.filter((card) => {
         return completedCardLinks.includes(card.link);
-      })
+      }),
     );
   }, []);
 
@@ -51,7 +51,7 @@ function Profile() {
     const totalSpaces = completedCards.reduce(
       (accumulator, currentValue) =>
         accumulator + (currentValue.testedContent?.match(/ /g)?.length || 0),
-      0
+      0,
     );
     setWordCount(totalSpaces);
   }, [completedCards]);
@@ -106,13 +106,13 @@ function Profile() {
         <Row>
           {user ? (
             <Row className="d-flex align-items-center justify-content-center">
-              <div className="text-center my-3">You&apos;re logged in!</div>
+              <div className="my-3 text-center">You&apos;re logged in!</div>
               <Button className="w-25 h-50" onClick={handleUserLogout}>
                 Logout
               </Button>
             </Row>
           ) : (
-            <div className="text-center my-3">
+            <div className="my-3 text-center">
               You must be logged in to see this.
             </div>
           )}

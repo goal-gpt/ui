@@ -1,10 +1,78 @@
-import React, { ReactNode, useContext, useEffect, useState } from "react";
-import { Carousel, Col, Row, Spinner } from "react-bootstrap";
+import type { ReactNode } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import { QueryStatus } from "../../hooks/useChat";
 import { loadingItemData } from "../../services/loadingItemData";
-import { ChatContext } from "../Chat";
+import { ChatContext } from "../Chat/ChatContext";
+import type { LoadingItemData } from "./LoadingItem";
 import { LoadingItemType } from "./LoadingItem";
+
+type CarouselProps = {
+  items: LoadingItemData[];
+};
+
+export function Carousel({ items }: CarouselProps) {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isFading, setIsFading] = useState(false);
+
+  useEffect(() => {
+    const changeItem = () => {
+      setIsFading(true);
+      setTimeout(() => {
+        setCurrentIndex((prevIndex) => (prevIndex + 1) % items.length);
+        setIsFading(false);
+      }, 1000); // This is the duration of the fade-out effect
+    };
+
+    const interval = setInterval(changeItem, 5000);
+
+    // Clear the interval when the component is unmounted
+    return () => clearInterval(interval);
+  }, [items]);
+
+  const getLoadingText = (
+    index: number,
+    type: LoadingItemType,
+    text: string,
+  ): ReactNode => {
+    // Delay initially showing anything
+    if (index === 0) return "";
+    if (index % 4 === 0) return "Working on your personalized action plan...";
+    if (type === LoadingItemType.Fact) return `Did you know: ${text}`;
+
+    // Return italicized text when the LoadingItemType is Quote
+    if (type === LoadingItemType.Quote) return <i>{`"${text}"`}</i>;
+
+    return `"${text}"`;
+  };
+
+  return (
+    <div className="my-4 flex justify-center overflow-x-hidden">
+      <div
+        className={`px-4 transition-all duration-1000 ${
+          isFading ? "opacity-0" : "opacity-100"
+        }`}
+      >
+        <p className="text-center text-slate-800 dark:text-slate-200">
+          {getLoadingText(
+            currentIndex,
+            items[currentIndex]!.type,
+            items[currentIndex]!.text,
+          )}
+        </p>
+      </div>
+    </div>
+  );
+}
+
+export function StatusIndicator() {
+  return (
+    <div className="text-center" role="status">
+      <div className="h-4 w-4 animate-spin rounded-full border-t-2 border-blue-600 dark:border-blue-300 dark:text-slate-200"></div>
+      <span className="sr-only">Loading...</span>
+    </div>
+  );
+}
 
 export function Status() {
   const chatContext = useContext(ChatContext);
@@ -19,66 +87,34 @@ export function Status() {
     setRandomizedItems(shuffledItems);
   }, [loadingItemData]);
 
-  const getLoadingText = (
-    index: number,
-    type: LoadingItemType,
-    text: string
-  ): ReactNode => {
-    // Delay initially showing anything
-    if (index === 0) return "";
-    if (index % 4 === 0) return "Working on your personalized action plan...";
-    if (type == LoadingItemType.Fact) return `Did you know: ${text}`;
-
-    // Return italicized text when the LoadingItemType is Quote
-    if (type == LoadingItemType.Quote) return <i>{`"${text}"`}</i>;
-
-    return `"${text}"`;
-  };
-
   if (chatStatus === QueryStatus.Success || chatStatus === QueryStatus.Idle) {
     return null;
   }
 
   if (chatStatus === QueryStatus.Error) {
     return (
-      <Row className="justify-content-center">
-        <Col className="text-center">
-          <p className="text-danger">
+      <div className="flex justify-center">
+        <div className="text-center">
+          <p className="text-red-500">
             Sorry, an error occurred. Please try again!
           </p>
-        </Col>
-      </Row>
+        </div>
+      </div>
     );
   }
 
   return (
     <>
-      <Row
-        className="justify-content-center my-3"
-        style={{ overflowX: "hidden" }}
-      >
-        <Col className="text-center">
-          <Spinner animation="grow" size="sm" variant="primary" role="status">
-            <span className="visually-hidden">Loading...</span>
-          </Spinner>
-        </Col>
-      </Row>
-      <Row
-        className="justify-content-center my-4"
-        style={{ overflowX: "hidden" }}
-      >
-        <Col className="text-center">
-          <Carousel controls={false} indicators={false} interval={4000} fade>
-            {randomizedItems.map((item, index) => (
-              <Carousel.Item key={index} style={{ transitionDuration: "1s" }}>
-                <p className="text-center">
-                  {getLoadingText(index, item.type, item.text)}
-                </p>
-              </Carousel.Item>
-            ))}
-          </Carousel>
-        </Col>
-      </Row>
+      <div className="my-3 flex justify-center overflow-x-hidden">
+        <StatusIndicator />
+      </div>
+      <div className="my-4 flex justify-center overflow-x-hidden">
+        <div className="text-center">
+          <div>
+            <Carousel items={randomizedItems} />
+          </div>
+        </div>
+      </div>
     </>
   );
 }

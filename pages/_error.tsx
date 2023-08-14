@@ -1,6 +1,5 @@
-import { NextPageContext } from "next";
+import type { NextPageContext } from "next";
 import React from "react";
-import { Container } from "react-bootstrap";
 
 interface ErrorProps {
   statusCode?: number;
@@ -10,15 +9,13 @@ interface ErrorProps {
 function Error({ statusCode, message }: ErrorProps) {
   return (
     <div id="error-page">
-      <Container>
-        <h1>Oops!</h1>
-        {message ? (
-          <p>{message}</p>
-        ) : (
-          <p>Sorry, an unexpected error has occurred.</p>
-        )}
-        {statusCode && <p>Error code: {statusCode}</p>}
-      </Container>
+      <h1>Oops!</h1>
+      {message ? (
+        <p>{message}</p>
+      ) : (
+        <p>Sorry, an unexpected error has occurred.</p>
+      )}
+      {statusCode && <p>Error code: {statusCode}</p>}
     </div>
   );
 }
