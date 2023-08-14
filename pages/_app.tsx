@@ -63,10 +63,10 @@ export default function App({
               <DefaultSeo
                 defaultTitle="eras"
                 titleTemplate="eras | %s"
-                description="eras is your personal finance companion."
+                description="eras is your personal finance guide."
                 canonical="https://app.eras.fyi"
                 openGraph={{
-                  title: "eras | your personal finance companion",
+                  title: "eras | personal finance guidance",
                   type: "website",
                   locale: "en_US",
                   url: "https://app.eras.fyi",

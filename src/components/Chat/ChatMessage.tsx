@@ -24,7 +24,7 @@ export function ChatMessage({ message }: Props) {
   const { role, content } = message;
 
   const messageClass = className({
-    "flex flex-col p-2 rounded-md my-2": true,
+    "flex flex-col p-2 rounded-md": true,
     "items-start bg-blue-300 dark:bg-blue-700 dark:text-slate-300":
       role === ChatRole.AI,
     "items-end bg-blue-600 dark:bg-blue-300": role === ChatRole.Human,

@@ -8,38 +8,40 @@ const Sidebar = () => {
 
   return (
     <>
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        aria-controls="default-sidebar"
-        type="button"
-        className="ml-3 mt-2 inline-flex h-12 items-center rounded-lg p-2 text-sm text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600 sm:hidden"
-      >
-        <span className="sr-only">Open sidebar</span>
-        <svg
-          className="h-6 w-6"
-          aria-hidden="true"
-          fill="currentColor"
-          viewBox="0 0 20 20"
-          xmlns="http://www.w3.org/2000/svg"
+      <div className="fixed h-12 w-full bg-blue-500 shadow-md dark:bg-blue-800 sm:hidden">
+        <button
+          onClick={() => setIsOpen(!isOpen)}
+          aria-controls="default-sidebar"
+          type="button"
+          className="ml-2 mt-1 inline-flex h-10 items-center rounded-lg p-2 py-0 text-sm text-slate-700 hover:bg-blue-600 hover:text-slate-800 focus:outline-none focus:ring-2 focus:ring-slate-500 dark:text-slate-200 dark:hover:bg-blue-600 dark:hover:text-slate-100 dark:focus:ring-slate-500 sm:hidden"
         >
-          <path
-            clip-rule="evenodd"
-            fill-rule="evenodd"
-            d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"
-          ></path>
-        </svg>
-      </button>
+          <span className="sr-only">Open sidebar</span>
+          <svg
+            className="h-6 w-6"
+            aria-hidden="true"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              clipRule="evenodd"
+              fillRule="evenodd"
+              d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"
+            ></path>
+          </svg>
+        </button>
+      </div>
 
       <aside
         id="default-sidebar"
-        className={`fixed left-0 top-0 z-40 h-screen w-64 transition-transform sm:translate-x-0 ${
+        className={`fixed left-0 top-0 h-screen w-64 transition-transform sm:translate-x-0 ${
           isOpen ? "translate-x-0" : "-translate-x-full"
         }`}
         aria-label="Sidebar"
       >
         <button
           type="button"
-          className="absolute right-2.5 top-3 ml-auto inline-flex h-8 w-8 items-center justify-center rounded-lg bg-transparent text-sm text-gray-400 hover:bg-gray-300 hover:text-gray-800 dark:hover:bg-gray-600 dark:hover:text-white sm:hidden"
+          className="absolute right-2.5 top-3 ml-auto inline-flex h-8 w-8 items-center justify-center rounded-lg bg-transparent text-sm text-gray-600 hover:bg-gray-400 hover:text-gray-800 dark:hover:bg-gray-600 dark:hover:text-white sm:hidden"
           onClick={() => setIsOpen(false)}
         >
           <svg
@@ -101,9 +103,9 @@ const Sidebar = () => {
                 >
                   <path
                     stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
                     d="M1 8h11m0 0L8 4m4 4-4 4m4-11h3a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-3"
                   />
                 </svg>

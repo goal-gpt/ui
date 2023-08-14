@@ -108,7 +108,7 @@ export function Plan() {
         initial={{ opacity: 0 }}
         transition={{ ease: "easeInOut", duration: 2 }}
       >
-        <div className="flex flex-row items-center justify-between rounded-t-lg bg-slate-100 p-4 dark:bg-slate-700">
+        <div className="flex flex-row items-center justify-between rounded-t-lg bg-slate-200 p-4 dark:bg-slate-700">
           <h2 className="text-center text-xl font-medium text-blue-800 dark:text-blue-200">
             {currentPlan.goal}
           </h2>
@@ -117,7 +117,7 @@ export function Plan() {
             Subscribe for detailed plan
           </button> */}
         </div>
-        <div className="rounded-b-lg bg-slate-50 p-4 dark:bg-slate-800">
+        <div className="rounded-b-lg bg-slate-100 p-4 dark:bg-slate-800">
           {currentPlan.steps && currentPlan.steps.length > 0 && (
             <div>
               {currentPlan.steps.map((step) => (
