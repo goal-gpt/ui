@@ -20,7 +20,6 @@
     "classnames": "^2.3.2",
     "dotenv": "^16.0.3",
     "framer-motion": "^10.12.16",
-    "install": "^0.13.0",
     "next": "^13.3.1",
     "next-plausible": "^3.8.0",
     "next-seo": "^6.0.0",
