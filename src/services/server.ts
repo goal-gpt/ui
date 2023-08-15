@@ -1,20 +1,25 @@
-import { rest } from "msw";
-import { setupServer } from "msw/node";
-
 import mockData from "../../__tests__/__mocks__/functions.json";
 import { logger } from "../utils/logger";
 
 let BASE_FUNCTION_URL = ""; // eslint-disable-line import/no-mutable-exports
 
+async function setupMockServer() {
+  const { rest } = await import("msw");
+  const { setupServer } = await import("msw/node");
+
+  const server = setupServer(
+    rest.post("/sera", (_, res, ctx) => {
+      return res(ctx.json(mockData.sera));
+    }),
+  );
+  server.listen();
+}
+
 switch (process.env.NEXT_PUBLIC_API_ENV) {
   case "mock":
-    // eslint-disable-next-line
-    const server = setupServer(
-      rest.post("/sera", (_, res, ctx) => {
-        return res(ctx.json(mockData.sera));
-      }),
-    );
-    server.listen();
+    setupMockServer().catch((error) => {
+      logger.error("Error setting up mock server:", error);
+    });
     break;
   case "local":
     BASE_FUNCTION_URL = "http://localhost:50321/functions/v1";

@@ -1,4 +1,4 @@
-import "./index.scss";
+import "./index.css";
 
 import { createBrowserSupabaseClient } from "@supabase/auth-helpers-nextjs";
 import type { Session } from "@supabase/auth-helpers-react";
@@ -10,7 +10,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import PlausibleProvider from "next-plausible";
 import { DefaultSeo } from "next-seo";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { ToastContainer } from "react-toastify";
 
 import { AppConfig } from "@/utils/AppConfig";
@@ -27,6 +27,28 @@ const poppins = Poppins({
   weight: ["400", "500", "600", "700"],
 });
 
+const openGraphData = {
+  title: "eras | personal finance guidance",
+  type: "website",
+  locale: "en_US",
+  url: "https://app.eras.fyi",
+  site_name: "eras",
+  images: [
+    {
+      url: "https://app.eras.fyi/_ipx/w_640,q_75/%2Feras-logo.png?url=%2Feras-logo.png&w=640&q=75",
+      width: 200,
+      height: 140,
+      alt: "eras logo",
+    },
+  ],
+};
+
+const twitterData = {
+  handle: "@erasfyi",
+  site: "@erasfyi",
+  cardType: "summary",
+};
+
 export default function App({
   Component,
   pageProps,
@@ -37,7 +59,7 @@ export default function App({
     createBrowserSupabaseClient<Database>(),
   );
 
-  const queryClient = new QueryClient();
+  const queryClient = useMemo(() => new QueryClient(), []);
   const router = useRouter();
 
   const [isAuthChecking, setIsAuthChecking] = useState(true);
@@ -102,27 +124,9 @@ export default function App({
                 defaultTitle={AppConfig.title}
                 titleTemplate={`${AppConfig.site_name} | %s`}
                 description={AppConfig.description}
-                canonical="https://app.eras.fyi"
-                openGraph={{
-                  title: "eras | personal finance guidance",
-                  type: "website",
-                  locale: "en_US",
-                  url: "https://app.eras.fyi",
-                  site_name: "eras",
-                  images: [
-                    {
-                      url: "https://app.eras.fyi/_ipx/w_640,q_75/%2Feras-logo.png?url=%2Feras-logo.png&w=640&q=75",
-                      width: 200,
-                      height: 140,
-                      alt: "eras logo",
-                    },
-                  ],
-                }}
-                twitter={{
-                  handle: "@erasfyi",
-                  site: "@erasfyi",
-                  cardType: "summary",
-                }}
+                canonical={AppConfig.url}
+                openGraph={openGraphData}
+                twitter={twitterData}
               />
               <main className={`${poppins.variable} font-sans antialiased`}>
                 <Component {...pageProps} isAuthChecking={isAuthChecking} />
