@@ -20,6 +20,7 @@ import { Cookie } from "../src/components/Cookie";
 import type { Database } from "../src/types/database";
 
 const poppins = Poppins({
+  preload: true,
   style: ["normal", "italic"],
   subsets: ["latin"],
   variable: "--font-poppins",
