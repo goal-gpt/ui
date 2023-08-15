@@ -20,7 +20,7 @@ function ChatForm({ query = "" }: ChatFormProps) {
   const { currentPlan, sendMessage, chatStatus } = chatContext || {
     currentPlan: null,
     sendMessage: () => "",
-    chatStatus: QueryStatus.Idle,
+    chatStatus: QueryStatus.Loading,
   };
   const plausible = usePlausible();
 

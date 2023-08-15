@@ -16,7 +16,7 @@ describe("ChatForm", () => {
   beforeEach(() => {
     mockPush = jest.fn();
     mockSendMessage = jest.fn();
-    mockChatStatus = QueryStatus.Idle;
+    mockChatStatus = QueryStatus.Loading;
     (useRouter as jest.Mock).mockReturnValue({
       push: mockPush,
     });

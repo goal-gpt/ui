@@ -132,7 +132,7 @@ describe("CardList component", () => {
       // So there are no uncompleted cards in other categories
       jest
         .spyOn(Object.getPrototypeOf(window.localStorage), "getItem")
-        .mockReturnValue(JSON.stringify([cardItemData[0].link]));
+        .mockReturnValue(JSON.stringify([cardItemData[0]!.link]));
 
       const { getByRole, queryByLabelText } = render(
         <CardList {...mockCardListProps} />,

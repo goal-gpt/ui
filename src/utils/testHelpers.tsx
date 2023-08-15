@@ -6,14 +6,16 @@ import React from "react";
 import { ChatContext } from "../components/Chat/ChatContext";
 import { type ChatHook } from "../hooks/useChat";
 
-export function simulateSwipeLeft(element: ChildNode) {
-  fireEvent.mouseDown(element, { clientX: 0, clientY: 100 });
+export function simulateSwipeLeft(element?: ChildNode) {
+  if (element) {
+    fireEvent.mouseDown(element, { clientX: 0, clientY: 100 });
 
-  // Simulate the movement of the swipe
-  fireEvent.mouseMove(element, { clientX: -2000, clientY: 100 });
+    // Simulate the movement of the swipe
+    fireEvent.mouseMove(element, { clientX: -2000, clientY: 100 });
 
-  // Simulate the end of the swipe
-  fireEvent.mouseUp(element);
+    // Simulate the end of the swipe
+    fireEvent.mouseUp(element);
+  }
 }
 
 interface Props {

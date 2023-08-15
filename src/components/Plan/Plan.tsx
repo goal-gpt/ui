@@ -5,6 +5,7 @@ import ReactMarkdown from "react-markdown";
 
 import type { PlanType, Step } from "../../hooks/useChat";
 import { ChatContext } from "../Chat/ChatContext";
+import { SubscribeButton } from "../Subscribe/SubscribeButton";
 
 interface StepProps {
   step: Step;
@@ -60,19 +61,31 @@ const splitLink = (link: string) => {
   };
 };
 
-const convertToListItem = (link?: { title: string; url: string }) => {
-  if (!link) return null;
+const convertToListItem = (link: { title: string; url: string }) => {
   return (
     <li key={link.url}>
       <Link
-        className="font-medium text-blue-600 underline transition-all duration-300 hover:text-blue-700 hover:decoration-transparent dark:text-blue-500 hover:dark:text-blue-400"
         href={link.url}
         target="_blank"
-        rel="noreferrer"
+        rel="noopener noreferrer"
+        className="group block rounded bg-slate-200 p-2 shadow transition-shadow duration-300 hover:bg-slate-300 hover:shadow-lg dark:bg-slate-700 dark:hover:bg-slate-600 dark:hover:text-slate-100"
       >
-        {link.title}
+        <h3 className="text-md font-semibold text-slate-600 group-hover:text-slate-800 dark:text-slate-300 group-hover:dark:text-slate-100">
+          {link.title}
+        </h3>
+        <p className="truncate text-sm text-gray-500">{link.url}</p>
       </Link>
     </li>
+    // <li key={link.url}>
+    //   <Link
+    //     className="font-medium text-blue-600 underline transition-all duration-300 hover:text-blue-700 hover:decoration-transparent dark:text-blue-500 hover:dark:text-blue-400"
+    //     href={link.url}
+    //     target="_blank"
+    //     rel="noreferrer"
+    //   >
+    //     {link.title}
+    //   </Link>
+    // </li>
   );
 };
 const convertToLinkList = (links: string[]) => {
@@ -112,10 +125,6 @@ export function Plan() {
           <h2 className="text-center text-xl font-medium text-blue-800 dark:text-blue-200">
             {currentPlan.goal}
           </h2>
-          {/* TODO: implement functionality for this */}
-          {/* <button className="rounded bg-blue-500 px-4 py-2 text-white shadow hover:bg-blue-600 hover:shadow-xl dark:bg-blue-700 hover:dark:bg-blue-800">
-            Subscribe for detailed plan
-          </button> */}
         </div>
         <div className="rounded-b-lg bg-slate-100 p-4 dark:bg-slate-800">
           {currentPlan.steps && currentPlan.steps.length > 0 && (
@@ -133,14 +142,18 @@ export function Plan() {
 
           {currentPlan.links && currentPlan.links.length > 0 && (
             <div>
-              <h6 className="my-2 text-slate-800  dark:text-slate-300">
+              <h6 className="my-2 text-slate-700  dark:text-slate-300">
                 🔗 Our sources
               </h6>
-              <ul className="text-gray-800 dark:text-gray-300">
+              <ul className="mb-2 grid grid-cols-1 gap-2 text-sm text-gray-800 dark:text-gray-300 sm:grid-cols-2">
                 {convertToLinkList(currentPlan.links)}
               </ul>
             </div>
           )}
+          <div className="mx-auto flex w-full">
+            <p>Ready?</p>
+            <SubscribeButton>Subscribe for a detailed plan</SubscribeButton>
+          </div>
         </div>
       </motion.div>
     </div>
