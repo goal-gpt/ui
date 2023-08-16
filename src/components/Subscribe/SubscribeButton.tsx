@@ -1,5 +1,7 @@
+import type { FormEvent } from "react";
 import { useState } from "react";
 
+import { Modal } from "../Modal/Modal";
 import { SubscribeForm } from "./SubscribeForm";
 
 type SubscribeButtonProps = {
@@ -13,6 +15,11 @@ const SubscribeButton = (props: SubscribeButtonProps) => {
     setShowForm(true);
   };
 
+  const toggleModalVisibility = (e: FormEvent) => {
+    e.preventDefault();
+    setShowForm(!showForm);
+  };
+
   return (
     <>
       <button
@@ -21,7 +28,9 @@ const SubscribeButton = (props: SubscribeButtonProps) => {
       >
         {props.children}
       </button>
-      {showForm && <SubscribeForm onClose={() => setShowForm(false)} />}
+      <Modal show={showForm} toggleModal={toggleModalVisibility}>
+        <SubscribeForm />
+      </Modal>
     </>
   );
 };

@@ -151,7 +151,6 @@ export function Plan() {
             </div>
           )}
           <div className="mx-auto flex w-full">
-            <p>Ready?</p>
             <SubscribeButton>Subscribe for a detailed plan</SubscribeButton>
           </div>
         </div>

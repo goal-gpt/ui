@@ -1,61 +1,38 @@
-import type { FormEvent } from "react";
-import { useState } from "react";
+import { useUser } from "@supabase/auth-helpers-react";
+import { useRouter } from "next/router";
+import Script from "next/script";
+import { createElement } from "react";
 
-import { useLogin } from "@/hooks/useLogin";
+export const SubscribeForm = () => {
+  const user = useUser();
+  const router = useRouter();
 
-export const SubscribeForm = ({ onClose }: { onClose: () => void }) => {
-  const [stage, setStage] = useState(0); // 0: email input, 1: name input
-  const [email, setEmail] = useState("");
-  const [name, setName] = useState("");
-
-  const { sendOtp, status, error } = useLogin();
-
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault();
-    if (stage === 0) {
-      setStage(1);
-    } else if (stage === 1) {
-      sendOtp({ email, name });
-      if (status !== "error") {
-        onClose();
-      }
-    }
-  };
+  if (!user) {
+    return (
+      <>
+        <p>You need to login to subscribe.</p>
+        <button onClick={() => router.push(`/login`)}>Go to login</button>
+      </>
+    );
+  }
 
   return (
-    <form onSubmit={handleSubmit} className="mt-4">
-      {stage === 0 && (
-        <div>
-          <input
-            type="email"
-            placeholder="Enter your email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="rounded border p-2"
-          />
-        </div>
-      )}
-
-      {stage === 1 && (
-        <div>
-          <input
-            type="text"
-            placeholder="Enter your name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            className="rounded border p-2"
-          />
-        </div>
-      )}
-
-      <button
-        type="submit"
-        className="mt-2 rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
-      >
-        {stage === 0 ? "Next" : "Submit"}
-      </button>
-
-      {error && <p className="mt-2 text-red-500">{error.message}</p>}
-    </form>
+    <>
+      <Script async src="https://js.stripe.com/v3/buy-button.js"></Script>
+      <div className="mt-1.5">
+        {/* {createElement("stripe-buy-button", {
+          "buy-button-id": "buy_btn_1NfqbLIZjiI9A9sbV8lI7Tas",
+          "publishable-key":
+            "pk_live_51MU39nIZjiI9A9sbd4nUdnSrnP4CTP3Jq7xbbzxZrmLq97c9T2uNvJ0Y1nU8oaqQ8QOCzNyoPAVY28QGO68ACjRK005eMRSBOv",
+          "customer-email": user.email,
+        })} */}
+        {createElement("stripe-buy-button", {
+          "buy-button-id": "buy_btn_1Nfr7RIZjiI9A9sbjyYt92qf",
+          "publishable-key":
+            "pk_test_51MU39nIZjiI9A9sbYTt8kca36ijB0Kxs3DVY2trWbGz56ZvaLAlWB6VYK7ai0gh0wN7Za0F0Uilheo7D9N4gnnTO00wpRJdeZM",
+          "customer-email": user.email,
+        })}
+      </div>
+    </>
   );
 };
