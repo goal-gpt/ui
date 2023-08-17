@@ -11,13 +11,10 @@ import { useLogin } from "@/hooks/useLogin";
 import styles from "./index.module.scss";
 
 function Login({ isAuthChecking }: { isAuthChecking: boolean }) {
-  // const [status, setStatus] = useState<"idle" | "loading" | "success">("idle");
   const router = useRouter();
   const user = useUser();
   const [email, setEmail] = useState<string>("");
   const { sendOtp, status } = useLogin(); // Use the useLogin hook
-
-  // const supabaseClient = useSupabaseClient();
 
   useEffect(() => {
     if (!isAuthChecking && user) {
@@ -25,25 +22,6 @@ function Login({ isAuthChecking }: { isAuthChecking: boolean }) {
     }
   }, [user, isAuthChecking]);
 
-  // const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
-  //   e.preventDefault();
-  //   setStatus("loading");
-  //   // TODO: convert to use react-query
-  //   const { error } = await supabaseClient.auth.signInWithOtp({
-  //     email,
-  //     options: { emailRedirectTo: window.location.origin },
-  //   });
-  //   if (error) {
-  //     logger.error(error.message);
-  //     toast(`${error.message}`, {
-  //       type: TOAST_ERROR,
-  //     });
-  //     setStatus("idle");
-  //   } else {
-  //     toast("Check your email for the login link!", { type: TOAST_INFO });
-  //     setStatus("success");
-  //   }
-  // };
   const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     sendOtp({ email });

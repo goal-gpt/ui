@@ -76,16 +76,6 @@ const convertToListItem = (link: { title: string; url: string }) => {
         <p className="truncate text-sm text-gray-500">{link.url}</p>
       </Link>
     </li>
-    // <li key={link.url}>
-    //   <Link
-    //     className="font-medium text-blue-600 underline transition-all duration-300 hover:text-blue-700 hover:decoration-transparent dark:text-blue-500 hover:dark:text-blue-400"
-    //     href={link.url}
-    //     target="_blank"
-    //     rel="noreferrer"
-    //   >
-    //     {link.title}
-    //   </Link>
-    // </li>
   );
 };
 const convertToLinkList = (links: string[]) => {

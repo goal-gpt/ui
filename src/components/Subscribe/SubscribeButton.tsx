@@ -23,7 +23,7 @@ const SubscribeButton = (props: SubscribeButtonProps) => {
   return (
     <>
       <button
-        className="mx-auto rounded bg-blue-500 px-4 py-2 font-medium text-white shadow hover:bg-blue-600 hover:shadow-xl dark:bg-blue-700 hover:dark:bg-blue-800"
+        className="mx-auto mt-2 rounded bg-blue-500 px-4 py-2 font-medium text-white shadow hover:bg-blue-600 hover:shadow-xl dark:bg-blue-700 hover:dark:bg-blue-800"
         onClick={showSubscribeForm}
       >
         {props.children}
