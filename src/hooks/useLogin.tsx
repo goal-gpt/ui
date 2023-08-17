@@ -7,7 +7,7 @@ import type { QueryStatus } from "./useChat";
 
 type UserDetails = {
   email: string;
-  name: string;
+  name?: string;
 };
 
 type LoginHook = {
@@ -20,7 +20,7 @@ export function useLogin(): LoginHook {
   const supabaseClient = useSupabaseClient();
   const sendOtpMutation = useMutation({
     mutationKey: ["sendOtp"],
-    mutationFn: async ({ email, name }: UserDetails) => {
+    mutationFn: ({ email, name }: UserDetails) => {
       return supabaseClient.auth.signInWithOtp({
         email,
         options: {
@@ -34,6 +34,9 @@ export function useLogin(): LoginHook {
     },
     onSuccess: (data) => {
       // Handle the success state, e.g., move to the next stage or close the form
+      if (data.error) {
+        throw new Error(data.error.message);
+      }
       logger.info("OTP sent successfully:", data);
     },
   });

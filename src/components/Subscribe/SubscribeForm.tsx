@@ -1,11 +1,27 @@
 import { useUser } from "@supabase/auth-helpers-react";
+import error from "next/error";
+// import error from "next/error";
 import { useRouter } from "next/router";
-import Script from "next/script";
-import { createElement } from "react";
+import type { FormEvent } from "react";
+import { useState } from "react";
 
 export const SubscribeForm = () => {
+  const [stage, setStage] = useState(0); // 0: name input, 1: location input
+  const [name, setName] = useState("");
+  const [location, setLocation] = useState("");
+  // const { sendOtp, error } = useLogin();
   const user = useUser();
   const router = useRouter();
+
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    if (stage === 0) {
+      setStage(1);
+    } else if (stage === 1) {
+      setStage(2);
+      // sendOtp({ name, location });
+    }
+  };
 
   if (!user) {
     return (
@@ -17,22 +33,39 @@ export const SubscribeForm = () => {
   }
 
   return (
-    <>
-      <Script async src="https://js.stripe.com/v3/buy-button.js"></Script>
-      <div className="mt-1.5">
-        {/* {createElement("stripe-buy-button", {
-          "buy-button-id": "buy_btn_1NfqbLIZjiI9A9sbV8lI7Tas",
-          "publishable-key":
-            "pk_live_51MU39nIZjiI9A9sbd4nUdnSrnP4CTP3Jq7xbbzxZrmLq97c9T2uNvJ0Y1nU8oaqQ8QOCzNyoPAVY28QGO68ACjRK005eMRSBOv",
-          "customer-email": user.email,
-        })} */}
-        {createElement("stripe-buy-button", {
-          "buy-button-id": "buy_btn_1Nfr7RIZjiI9A9sbjyYt92qf",
-          "publishable-key":
-            "pk_test_51MU39nIZjiI9A9sbYTt8kca36ijB0Kxs3DVY2trWbGz56ZvaLAlWB6VYK7ai0gh0wN7Za0F0Uilheo7D9N4gnnTO00wpRJdeZM",
-          "customer-email": user.email,
-        })}
-      </div>
-    </>
+    <form onSubmit={handleSubmit} className="mt-4">
+      {stage === 0 && (
+        <div>
+          <input
+            type="text"
+            placeholder="Enter your name (optional)"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            className="mx-auto w-3/4 rounded border p-2"
+          />
+        </div>
+      )}
+
+      {stage === 1 && (
+        <div>
+          <input
+            type="text"
+            placeholder="Enter your location (optional)"
+            value={location}
+            onChange={(e) => setLocation(e.target.value)}
+            className="rounded border p-2"
+          />
+        </div>
+      )}
+
+      <button
+        type="submit"
+        className="mt-2 rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+      >
+        {stage < 2 ? "Next" : "Submit"}
+      </button>
+
+      {error && <p className="mt-2 text-red-500">{error.name}</p>}
+    </form>
   );
 };

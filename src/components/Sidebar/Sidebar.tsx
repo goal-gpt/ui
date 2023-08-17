@@ -1,3 +1,4 @@
+import { useUser } from "@supabase/auth-helpers-react";
 import Link from "next/link";
 import React, { useState } from "react";
 
@@ -5,6 +6,7 @@ import { Logo } from "../Logo/Logo";
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const user = useUser();
 
   return (
     <>
@@ -91,7 +93,7 @@ const Sidebar = () => {
             </li> */}
             <li>
               <Link
-                href="/login"
+                href={user ? "/logout" : "/login"}
                 className="group flex items-center rounded-md p-2 hover:bg-gray-400 dark:hover:bg-gray-700"
               >
                 <svg
@@ -110,7 +112,7 @@ const Sidebar = () => {
                   />
                 </svg>
                 <span className="ml-3 group-hover:text-gray-900 dark:text-gray-400 group-hover:dark:text-gray-100">
-                  Sign In
+                  {user ? "Sign Out" : "Sign In"}
                 </span>
               </Link>
             </li>
