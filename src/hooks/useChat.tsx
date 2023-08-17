@@ -14,6 +14,7 @@ const JsonContentType = "application/json";
 export class FatalError extends Error {}
 export class RetriableError extends Error {}
 
+// Using a different QueryStatus from tanstack because they use "idle" despite it not being part of their QueryStatus
 export enum QueryStatus {
   Idle = "idle",
   Loading = "loading",
