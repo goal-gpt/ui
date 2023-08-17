@@ -151,7 +151,7 @@ export function Plan() {
             </div>
           )}
           <div className="mx-auto flex w-full">
-            <SubscribeButton>Subscribe for a detailed plan</SubscribeButton>
+            <SubscribeButton>Make this into a detailed plan</SubscribeButton>
           </div>
         </div>
       </motion.div>
