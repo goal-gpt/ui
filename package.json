@@ -21,7 +21,7 @@
     "dotenv": "^16.0.3",
     "framer-motion": "^10.12.16",
     "next": "^13.3.1",
-    "next-plausible": "^3.8.0",
+    "next-plausible": "^3.11.1",
     "next-seo": "^6.0.0",
     "npm": "^9.7.2",
     "pino": "^8.11.0",
