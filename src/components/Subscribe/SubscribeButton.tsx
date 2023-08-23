@@ -3,6 +3,8 @@ import { useRouter } from "next/router";
 import type { FormEvent } from "react";
 import { useEffect, useState } from "react";
 
+import { logger } from "@/utils";
+
 import { Modal } from "../Modal/Modal";
 import { SubscribeForm } from "./SubscribeForm";
 
@@ -28,9 +30,18 @@ const SubscribeButton = (props: SubscribeButtonProps) => {
     setShowForm(!showForm);
   };
 
+  logger.info("subscribe button");
+  logger.info("toSubscribe", toSubscribe);
+
   useEffect(() => {
-    if (toSubscribe === "true" && user) {
+    logger.info("subscribe button useeffect");
+    logger.info("toSubscribe", toSubscribe);
+    logger.info("router", router.query);
+    logger.info("user", user);
+    if (toSubscribe === "true") {
+      // if (user) {
       setShowForm(true);
+      // }
       router.push("/", undefined, { shallow: true });
     }
   }, [toSubscribe]);

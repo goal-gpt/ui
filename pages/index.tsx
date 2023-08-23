@@ -3,6 +3,7 @@ import { NextSeo } from "next-seo";
 import React from "react";
 
 import { Layout } from "@/components/Layout/Layout";
+import { logger } from "@/utils";
 
 import { ChatBox, ChatForm } from "../src/components/Chat";
 import { Plan } from "../src/components/Plan";
@@ -12,6 +13,8 @@ function Main() {
   const router = useRouter();
   const { q: queryParam } = router.query || { q: "" };
   const query = Array.isArray(queryParam) ? queryParam[0] : queryParam || "";
+
+  logger.info("router query", router.query);
 
   return (
     <>
