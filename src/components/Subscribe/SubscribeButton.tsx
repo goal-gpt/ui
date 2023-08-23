@@ -1,5 +1,7 @@
+import { useUser } from "@supabase/auth-helpers-react";
+import { useRouter } from "next/router";
 import type { FormEvent } from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { Modal } from "../Modal/Modal";
 import { SubscribeForm } from "./SubscribeForm";
@@ -10,6 +12,8 @@ type SubscribeButtonProps = {
 
 const SubscribeButton = (props: SubscribeButtonProps) => {
   const [showForm, setShowForm] = useState(false);
+  const router = useRouter();
+  const user = useUser();
 
   const showSubscribeForm = () => {
     setShowForm(true);
@@ -19,6 +23,12 @@ const SubscribeButton = (props: SubscribeButtonProps) => {
     e.preventDefault();
     setShowForm(!showForm);
   };
+
+  useEffect(() => {
+    if (router.query && router.query.isSubscribed === "true" && user) {
+      setShowForm(true);
+    }
+  }, []);
 
   return (
     <>
