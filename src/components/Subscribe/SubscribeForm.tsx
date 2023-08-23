@@ -54,7 +54,9 @@ export const SubscribeForm = () => {
         </h3>
         <button
           className="my-2 rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
-          onClick={() => router.push(`/login`)}
+          onClick={() =>
+            router.push({ pathname: "/login", query: { subscribe: true } })
+          }
         >
           Go to login
         </button>

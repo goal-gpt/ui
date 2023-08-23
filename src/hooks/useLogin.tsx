@@ -8,10 +8,11 @@ import type { QueryStatus } from "./useChat";
 type UserDetails = {
   email: string;
   name?: string;
+  subscribe?: boolean;
 };
 
 type LoginHook = {
-  sendOtp: ({ email, name }: UserDetails) => void;
+  sendOtp: (obj: UserDetails) => void;
   status: QueryStatus;
   error: any;
 };
@@ -20,12 +21,13 @@ export function useLogin(): LoginHook {
   const supabaseClient = useSupabaseClient();
   const sendOtpMutation = useMutation({
     mutationKey: ["sendOtp"],
-    mutationFn: ({ email, name }: UserDetails) => {
+    mutationFn: ({ email, name, subscribe }: UserDetails) => {
+      const qs = subscribe ? "?isSubscribed=true" : "";
       return supabaseClient.auth.signInWithOtp({
         email,
         options: {
           data: { name },
-          emailRedirectTo: window.location.origin,
+          emailRedirectTo: `${window.location.origin}/${qs}`,
         },
       });
     },
@@ -41,8 +43,8 @@ export function useLogin(): LoginHook {
     },
   });
 
-  const sendOtp = ({ email, name }: UserDetails) => {
-    sendOtpMutation.mutate({ email, name });
+  const sendOtp = (obj: UserDetails) => {
+    sendOtpMutation.mutate(obj);
   };
 
   return {

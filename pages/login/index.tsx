@@ -24,7 +24,7 @@ function Login({ isAuthChecking }: { isAuthChecking: boolean }) {
 
   const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    sendOtp({ email });
+    sendOtp({ email, subscribe: !!router.query.subscribe });
   };
 
   return (
