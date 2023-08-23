@@ -14,6 +14,10 @@ const SubscribeButton = (props: SubscribeButtonProps) => {
   const [showForm, setShowForm] = useState(false);
   const router = useRouter();
   const user = useUser();
+  const { isSubscribed: queryParam } = router.query || { isSubscribed: false };
+  const toSubscribe = Array.isArray(queryParam)
+    ? queryParam[0]
+    : queryParam || "";
 
   const showSubscribeForm = () => {
     setShowForm(true);
@@ -25,10 +29,11 @@ const SubscribeButton = (props: SubscribeButtonProps) => {
   };
 
   useEffect(() => {
-    if (router.query && router.query.isSubscribed === "true" && user) {
+    if (toSubscribe === "true" && user) {
       setShowForm(true);
+      router.push("/", undefined, { shallow: true });
     }
-  }, [router.query]);
+  }, [toSubscribe]);
 
   return (
     <>
