@@ -28,7 +28,7 @@ const SubscribeButton = (props: SubscribeButtonProps) => {
     if (router.query && router.query.isSubscribed === "true" && user) {
       setShowForm(true);
     }
-  }, []);
+  }, [router.query]);
 
   return (
     <>
