@@ -8,7 +8,7 @@ interface LayoutProps {
 
 export function Layout({ children }: LayoutProps) {
   return (
-    <div className="dark:bg-slate-900">
+    <div className="absolute inset-0 h-screen w-screen dark:bg-slate-900">
       <div className="fixed left-0 top-0 z-40">
         <Sidebar />
       </div>

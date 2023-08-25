@@ -15,7 +15,7 @@ function Main() {
 
   return (
     <>
-      <NextSeo title="personal finance guidance" />
+      <NextSeo title="personal guidance" />
       <Layout>
         <div className="dark:bg-slate-900">
           <div className="mx-auto flex h-screen max-w-screen-lg flex-col">
